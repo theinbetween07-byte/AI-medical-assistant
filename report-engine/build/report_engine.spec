@@ -15,10 +15,20 @@ from PyInstaller.utils.hooks import collect_submodules
 # spec 中的相对路径以 build/ 为基准，这里统一解析回工程根目录
 ROOT = os.path.abspath(os.path.join(SPECPATH, os.pardir))
 
-# 术语库/抽取规则在仓库 data/terms；兼容旧布局 report-engine/terms
+# 术语库/抽取规则在仓库 data/terms；兼容旧布局 report-engine/terms。
+# 注意：必须判断「目录非空」，空目录残留会让打包静默漏掉术语库（health 里 terminology_entries=0）。
+def _nonempty_dir(path):
+    try:
+        return os.path.isdir(path) and any(os.scandir(path))
+    except OSError:
+        return False
+
+
 TERMS_SRC = os.path.join(ROOT, "terms")
-if not os.path.isdir(TERMS_SRC):
+if not _nonempty_dir(TERMS_SRC):
     TERMS_SRC = os.path.abspath(os.path.join(ROOT, os.pardir, "data", "terms"))
+if not _nonempty_dir(TERMS_SRC):
+    raise SystemExit(f"找不到术语库目录（需要 extraction_rules.json / seed_terms.json）：{TERMS_SRC}")
 
 hiddenimports = (
     collect_submodules("uvicorn")
