@@ -12,11 +12,13 @@
 
 ### 1) 直接用打包好的 exe（交付形态）
 
+> 以下命令均在**仓库根目录**执行；exe 位于 `report-engine\dist\`。
+
 ```bat
-dist\medscribe-report-engine.exe                 :: 启动服务，默认 http://127.0.0.1:8790
-dist\medscribe-report-engine.exe --open          :: 启动并自动打开界面
-dist\medscribe-report-engine.exe --port 9000     :: 指定端口
-dist\medscribe-report-engine.exe --port 0 --port-file port.txt   :: 自动挑空闲端口并写文件，供宿主程序读取
+report-engine\dist\medscribe-report-engine.exe                 :: 启动服务，默认 http://127.0.0.1:8790
+report-engine\dist\medscribe-report-engine.exe --open          :: 启动并自动打开界面
+report-engine\dist\medscribe-report-engine.exe --port 9000     :: 指定端口
+report-engine\dist\medscribe-report-engine.exe --port 0 --port-file port.txt   :: 自动挑空闲端口并写文件，供宿主程序读取
 ```
 
 浏览器打开 `http://127.0.0.1:8790/` 即为自带界面：左侧输入转写、右侧字段级校审，可一键导出 PDF/JSON/TXT。
@@ -24,6 +26,7 @@ dist\medscribe-report-engine.exe --port 0 --port-file port.txt   :: 自动挑空
 ### 2) 从源码运行（开发）
 
 ```bat
+cd report-engine
 python -m venv .venv
 .venv\Scripts\python.exe -m pip install -r requirements-dev.txt
 .venv\Scripts\python.exe run.py --open
@@ -32,6 +35,7 @@ python -m venv .venv
 ### 3) 重新打包 exe
 
 ```bat
+cd report-engine
 .venv\Scripts\pyinstaller.exe --clean --noconfirm build\report_engine.spec
 :: 产物：dist\medscribe-report-engine.exe
 ```
@@ -39,7 +43,7 @@ python -m venv .venv
 ## 目录结构
 
 ```
-report-engine/
+report-engine/            引擎工程（Python 源码与打包配置）
 ├─ app/
 │  ├─ main.py           HTTP 接口（FastAPI）
 │  ├─ service.py        业务门面：校审/签署/导出门禁
@@ -58,10 +62,13 @@ report-engine/
 │  ├─ general_soap.json        通用 SOAP（兜底模板，BR-06）
 │  ├─ outpatient_record.json   门诊病历记录
 │  └─ pathology_colorectal.json 外科病理報告（結直腸）
-├─ terms/*.json         术语库与抽取规则（可热改）
-├─ tools/               冒烟脚本（命令行 / HTTP 全链路）
 ├─ tests/               22 项自动化测试
 └─ build/report_engine.spec
+
+data/terms/*.json       术语库与抽取规则（可热改，引擎自动加载）
+scripts/                冒烟脚本（命令行 / HTTP 全链路）
+docs/                   设计说明、接入交付说明、本文件
+outputs/                交付示例报告（病理 / SOAP）
 ```
 
 ## 接口一览
@@ -92,7 +99,7 @@ report-engine/
 | --- | --- | --- |
 | `MSHK_HOST` / `MSHK_PORT` | `127.0.0.1` / `8790` | 监听地址；仅监听本机，不对外暴露（NFR-04） |
 | `MSHK_DATA_DIR` | `exe 同目录/data` | SQLite 与导出的存放位置 |
-| `MSHK_TEMPLATES_DIR` / `MSHK_TERMS_DIR` | `exe 同目录/templates`、`/terms` | 外部资源目录，优先级高于内置资源 |
+| `MSHK_TEMPLATES_DIR` / `MSHK_TERMS_DIR` | `exe 同目录/templates`、`data/terms` | 外部资源目录，优先级高于内置资源 |
 | `MSHK_CORS_ORIGINS` | `*` | 允许跨源调用的前端来源，逗号分隔 |
 | `MSHK_LLM_ENABLED` | `false` | 是否启用 LLM 增强 |
 | `MSHK_LLM_ALLOW_EXTERNAL` | `false` | 明确允许把内容送出本机 |
@@ -141,16 +148,20 @@ report-engine/
 ## 测试与冒烟
 
 ```bat
-.venv\Scripts\python.exe -m pytest -q                    :: 22 项：抽取/生成/门禁/接口/病理模板
-.venv\Scripts\python.exe tools\smoke_demo.py                                 :: SOAP 全链路，产物在 docs\demo-output
-.venv\Scripts\python.exe tools\smoke_demo.py out --template pathology_colorectal  :: 病理报告全链路
-.venv\Scripts\python.exe tools\http_smoke.py             :: 真实拉起服务跑 HTTP 全链路（含病理报告 + 诊断句拼装）
-.venv\Scripts\python.exe tools\http_smoke.py --exe dist\medscribe-report-engine.exe   :: 验证打包产物
+:: 单元测试在引擎目录内执行
+cd report-engine && .venv\Scripts\python.exe -m pytest -q
+cd ..
+
+:: 冒烟脚本在仓库根目录执行
+report-engine\.venv\Scripts\python.exe scripts\smoke_demo.py                                  :: SOAP 全链路，产物在 report-engine\docs\demo-output
+report-engine\.venv\Scripts\python.exe scripts\smoke_demo.py out --template pathology_colorectal  :: 病理报告全链路
+report-engine\.venv\Scripts\python.exe scripts\http_smoke.py                  :: 真实拉起服务跑 HTTP 全链路（含病理报告 + 诊断句拼装）
+report-engine\.venv\Scripts\python.exe scripts\http_smoke.py --exe report-engine\dist\medscribe-report-engine.exe   :: 验证打包产物
 ```
 
 ## 已知限制
 
-- 抽取规则与术语库基于少量粤英混合模拟语料调参，真实语料需再校准（阈值见 `terms/extraction_rules.json`）。
+- 抽取规则与术语库基于少量粤英混合模拟语料调参，真实语料需再校准（阈值见 `data/terms/extraction_rules.json`）。
 - 服务仅监听本机、无鉴权，定位是桌面端/内网单机工具；如需多用户需在接入层补认证。
 - LLM 增强为可选路径，关闭时全部结果由规则内核产生，可完整复现。
 - 导出的报告「提示/Notes」告警文案暂只有中文；英文模式下表头、占位符、字段标签与标记已本地化。

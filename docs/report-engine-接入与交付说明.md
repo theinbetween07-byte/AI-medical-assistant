@@ -184,7 +184,7 @@ medscribe-report-engine.exe --port 0 --port-file "%TEMP%\mshk_port.txt"
 
 ## 五、模板与术语热扩展（不改代码、不重打包）
 
-把 JSON 放到 **exe 同目录**的 `templates\`、`terms\` 下即可（同目录同名目录非空时优先于 exe 内置资源），随后 `POST /api/reload` 即时生效。
+把 JSON 放到 **exe 同目录**的 `templates\`、`data\terms\` 下即可（同目录同名目录非空时优先于 exe 内置资源），随后 `POST /api/reload` 即时生效。
 
 ```json
 {
@@ -259,10 +259,10 @@ medscribe-report-engine.exe --port 0 --port-file "%TEMP%\mshk_port.txt"
 | 项目 | 命令 | 结果 |
 | --- | --- | --- |
 | 自动化测试 | `.venv\Scripts\python.exe -m pytest -q` | **22 passed** |
-| 命令行全链路（SOAP） | `.venv\Scripts\python.exe tools\smoke_demo.py` | `signed=True exports=4`，字段归位正确 |
-| 命令行全链路（病理） | `tools\smoke_demo.py out --template pathology_colorectal` | 27 句 → 20/20 字段归位，诊断句自动拼装，`missing_required=0`，`signed=True exports=4` |
-| HTTP 全链路（源码） | `.venv\Scripts\python.exe tools\http_smoke.py` | SOAP + 病理两套流程全部通过（含 409 门禁、英文导出、诊断句标记） |
-| HTTP 全链路（exe，重建后） | `tools\http_smoke.py --exe dist\medscribe-report-engine.exe` | 与源码行为完全一致；`/health` 返回 3 个模板含 `pathology_colorectal` |
+| 命令行全链路（SOAP） | `report-engine\.venv\Scripts\python.exe scripts\smoke_demo.py` | `signed=True exports=4`，字段归位正确 |
+| 命令行全链路（病理） | `scripts\smoke_demo.py out --template pathology_colorectal` | 27 句 → 20/20 字段归位，诊断句自动拼装，`missing_required=0`，`signed=True exports=4` |
+| HTTP 全链路（源码） | `report-engine\.venv\Scripts\python.exe scripts\http_smoke.py` | SOAP + 病理两套流程全部通过（含 409 门禁、英文导出、诊断句标记） |
+| HTTP 全链路（exe，重建后） | `scripts\http_smoke.py --exe report-engine\dist\medscribe-report-engine.exe` | 与源码行为完全一致；`/health` 返回 3 个模板含 `pathology_colorectal` |
 | 端口协商 | `exe --port 0 --port-file` | 写出端口 56808，`/health` 返回 200 |
 | 导出字体 | 检查 `RPT-*.pdf` | 内嵌 `STSong-Light`，中文正常渲染 |
 | 病理导出格式核对 | `outputs\示例报告\pathology-colorectal\RPT-*.txt` / `.html` | 17 行 synoptic「`标签: 值`」+ 宏观段 + 镜下段 + 自动生成诊断段，与样本结构一致；HTML/PDF 带 `auto-generated` 标记 |
@@ -275,7 +275,7 @@ exe 重建记录：`medscribe-report-engine.exe` 23,599,845 字节（2026-10-20 
 
 1. **目标报告格式已落地（原阻塞项已解除）**：`SampleReport.zip` 的 10 份外科病理报告已转为声明式模板 `templates\pathology_colorectal.json`（20 字段 / 17 必填），并已用合成口述复现字段归位（见 `outputs\病理报告模板设计说明.md`）。
    **已确认口径**：① 保留三个模板（病理为主类型）；② 病理科输入为**医生口述转写**（粘贴成稿文本同样可用）；③ `DIAGNOSIS` 段**由引擎自动生成草稿**并标记「自动生成，请核对」，医生确认后才可签署。
-2. 抽取规则阈值目前在粤英混合模拟语料上调参，建议用真实口述样音再校准一轮（阈值见 `terms\extraction_rules.json`，可热改）；病理科口述建议一并提供 2–3 段真实样音以校准英文标签识别。
+2. 抽取规则阈值目前在粤英混合模拟语料上调参，建议用真实口述样音再校准一轮（阈值见 `data\terms\extraction_rules.json`，可热改）；病理科口述建议一并提供 2–3 段真实样音以校准英文标签识别。
 3. 服务无鉴权、仅监听本机，定位为桌面端/内网单机工具；若需多人共享，请在接入层补认证与权限。
 4. 仅提供 Windows 单文件 exe；如需 macOS/Linux，需在对应平台重新执行打包命令（源码已跨平台）。
 5. 导出的「提示/Notes」告警文案暂只有中文（英文模式下表头、占位符、字段标签与标记均已本地化）。

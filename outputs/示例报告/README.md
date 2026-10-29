@@ -42,9 +42,9 @@ outputs/示例报告/
 ## 复现方法
 
 ```bat
-cd report-engine
-.venv\Scripts\python.exe tools\smoke_demo.py "..\outputs\示例报告\pathology-colorectal" --template pathology_colorectal
-.venv\Scripts\python.exe tools\smoke_demo.py "..\outputs\示例报告\general-soap"        --template general_soap
+:: 在仓库根目录执行
+report-engine\.venv\Scripts\python.exe scripts\smoke_demo.py "outputs\示例报告\pathology-colorectal" --template pathology_colorectal
+report-engine\.venv\Scripts\python.exe scripts\smoke_demo.py "outputs\示例报告\general-soap"        --template general_soap
 ```
 
 > 全部内容为**合成模拟数据**（`[SYNTHETIC]`），不含任何真实病人信息；

@@ -1,7 +1,9 @@
 """HTTP 冒烟测试：真实拉起 run.py（uvicorn）或打包好的 exe，走完整接口链路后关闭。
 
-    .venv\\Scripts\\python.exe tools\\http_smoke.py
-    .venv\\Scripts\\python.exe tools\\http_smoke.py --exe dist\\medscribe-report-engine.exe
+    report-engine\\.venv\\Scripts\\python.exe scripts\\http_smoke.py
+    report-engine\\.venv\\Scripts\\python.exe scripts\\http_smoke.py --exe report-engine\\dist\\medscribe-report-engine.exe
+
+（在仓库根目录执行；也可以直接传 exe 的绝对路径）
 
 覆盖：健康检查、静态界面页、生成、校审、签署、导出、审计，
 以及外科病理报告（結直腸）模板的整池匹配 + 诊断句自动拼装。
@@ -17,7 +19,8 @@ import urllib.error
 import urllib.request
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[1]      # 仓库根
+ENGINE = ROOT / "report-engine"                  # 引擎工程目录（源码/venv/dist 所在）
 PORT = 8899
 BASE = f"http://127.0.0.1:{PORT}"
 
@@ -129,17 +132,18 @@ def main() -> int:
     if argv and argv[0] == "--exe":
         target = Path(argv[1])
         if not target.is_absolute():
-            target = ROOT / target
+            candidate = ENGINE / target
+            target = candidate if candidate.exists() else ROOT / target
         command = [str(target), "--port", str(PORT)]
         label = f"exe:{target.name}"
     else:
-        command = [str(ROOT / ".venv" / "Scripts" / "python.exe"), str(ROOT / "run.py"), "--port", str(PORT)]
+        command = [str(ENGINE / ".venv" / "Scripts" / "python.exe"), str(ENGINE / "run.py"), "--port", str(PORT)]
         label = "source:run.py"
 
     preexisting = _engine_pids(Path(command[0]).name) if command[0].endswith(".exe") else set()
     proc = subprocess.Popen(
         command,
-        cwd=str(ROOT),
+        cwd=str(ENGINE),
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
     )
@@ -213,8 +217,8 @@ def main() -> int:
                 check=False,
             )
 
-    (ROOT / "docs" / "demo-output").mkdir(parents=True, exist_ok=True)
-    (ROOT / "docs" / "demo-output" / "http_smoke.txt").write_text("\n".join(log), encoding="utf-8")
+    (ENGINE / "docs" / "demo-output").mkdir(parents=True, exist_ok=True)
+    (ENGINE / "docs" / "demo-output" / "http_smoke.txt").write_text("\n".join(log), encoding="utf-8")
     print("\n".join(log))
     return 0
 

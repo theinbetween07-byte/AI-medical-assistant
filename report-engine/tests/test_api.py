@@ -11,6 +11,8 @@ from app.config import Settings
 from app.main import create_app
 
 PROJECT = Path(__file__).resolve().parents[1]
+# 术语库在仓库 data/terms；兼容旧的 report-engine/terms 布局
+TERMS_DIR = PROJECT / "terms" if (PROJECT / "terms").is_dir() else PROJECT.parent / "data" / "terms"
 
 SEGMENTS = [
     {"id": "S-001", "start_ms": 0, "end_ms": 6000, "lang": "mixed", "confidence": 0.93,
@@ -27,7 +29,7 @@ def client(tmp_path: Path) -> TestClient:
     cfg = Settings()
     cfg.data_dir = tmp_path / "data"
     cfg.templates_dir = PROJECT / "templates"
-    cfg.terms_dir = PROJECT / "terms"
+    cfg.terms_dir = TERMS_DIR
     cfg.ensure_dirs()
     app = create_app(cfg)
     with TestClient(app) as test_client:

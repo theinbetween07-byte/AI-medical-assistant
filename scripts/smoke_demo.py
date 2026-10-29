@@ -1,6 +1,8 @@
 """命令行冒烟演示：不启动服务，直接跑完整业务链路并写出报告文件。
 
-    .venv\\Scripts\\python.exe tools\\smoke_demo.py [输出目录] [--template <模板 id>]
+    report-engine\\.venv\\Scripts\\python.exe scripts\\smoke_demo.py [输出目录] [--template <模板 id>]
+
+（在仓库根目录执行）
 
 用于快速人工检查字段映射质量、校审门禁与导出结果。示例口述来自 app.main.SAMPLES
 （合成数据），因此门診 / 病理等模板都有现成语料可直接跑。
@@ -11,8 +13,9 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT))
+ROOT = Path(__file__).resolve().parents[1]      # 仓库根
+ENGINE = ROOT / "report-engine"                  # 引擎工程目录
+sys.path.insert(0, str(ENGINE))
 
 from app.config import Settings  # noqa: E402
 from app.main import SAMPLES  # noqa: E402
@@ -41,7 +44,7 @@ SEGMENTS = [
 
 
 def _parse_args(argv: list[str]) -> tuple[Path, str]:
-    out_dir = ROOT / "docs" / "demo-output"
+    out_dir = ENGINE / "docs" / "demo-output"
     template_id = "general_soap"
     rest = list(argv)
     while rest:

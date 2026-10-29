@@ -40,13 +40,32 @@ def external_root() -> Path:
     return PROJECT_DIR
 
 
-def _resolve_dir(name: str) -> Path:
+def _root_candidates() -> tuple[Path, ...]:
+    """资源查找的根目录顺序：exe/工程目录优先，其次仓库根（data/terms 所在）。"""
+    roots = [external_root()]
+    if not _frozen():
+        roots.append(external_root().parent)
+    return tuple(dict.fromkeys(roots))
+
+
+def _resolve_dir(name: str, *fallbacks: str) -> Path:
+    """解析资源目录。
+
+    依次尝试 name 与 fallbacks（相对候选根目录），
+    例如术语库默认在仓库 data/terms，同时兼容旧布局 report-engine/terms。
+    """
     override = os.getenv(f"MSHK_{name.upper()}_DIR")
     if override:
         return Path(override).expanduser().resolve()
-    ext = external_root() / name
-    if ext.is_dir() and any(ext.iterdir()):
-        return ext
+    for root in _root_candidates():
+        for rel in (name,) + fallbacks:
+            ext = root / rel
+            if ext.is_dir() and any(ext.iterdir()):
+                return ext
+    for rel in (name,) + fallbacks:
+        bundled = bundled_root() / rel
+        if bundled.is_dir():
+            return bundled
     return bundled_root() / name
 
 
@@ -61,7 +80,8 @@ class Settings:
             os.getenv("MSHK_DATA_DIR", str(external_root() / "data"))
         )
         self.templates_dir: Path = _resolve_dir("templates")
-        self.terms_dir: Path = _resolve_dir("terms")
+        # 术语库/抽取规则：仓库里位于 data/terms，兼容旧布局 report-engine/terms
+        self.terms_dir: Path = _resolve_dir("terms", os.path.join("data", "terms"))
         # 允许浏览器前端跨源调用；默认放开本机来源，避免网页版集成时被 CORS 拦住
         self.cors_origins: list[str] = [
             o.strip()

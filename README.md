@@ -28,28 +28,30 @@ AI-medical-assistant/
 ├─ report-engine/           报告生成引擎（源码）
 │  ├─ app/                  抽取 → 生成 → 校验 → 导出 → 服务
 │  ├─ templates/            声明式报告模板（JSON，可直接改）
-│  ├─ terms/                抽取规则与术语库（可热改）
 │  ├─ tests/                22 项自动化测试
-│  ├─ tools/                命令行冒烟 / HTTP 冒烟
 │  ├─ build/                PyInstaller 打包配置（二进制不入库）
 │  └─ run.py                启动入口
 ├─ scripts/                 启动与工具脚本
 │  ├─ start.bat             一键启动（Windows）
 │  ├─ stop.bat              停止服务
 │  ├─ launch.py             后台启动器（DETACHED_PROCESS，见文件头注释）
-│  └─ download-model.ps1    Whisper 模型下载
+│  ├─ download-model.ps1    Whisper 模型下载
+│  ├─ smoke_demo.py         报告引擎：命令行全链路冒烟
+│  └─ http_smoke.py         报告引擎：HTTP 全链路冒烟
 ├─ docs/                    项目文档
 │  ├─ prd-mvp.md            MVP 产品需求文档
 │  ├─ project-proposal.md   项目提案
 │  ├─ technical-design.md   技术设计
 │  ├─ SOAP-rules-v1.md      SOAP 报告书写规则
 │  ├─ app-readme.md         桌面应用说明（架构 / API / 开发命令）
-│  └─ app-quick-start.txt   便携版使用说明（面向最终使用者）
-├─ data/                    静态数据
-│  └─ medical-terms-v2.xls  医学词典
-├─ outputs/                 交付文档与示例报告
+│  ├─ app-quick-start.txt   便携版使用说明（面向最终使用者）
+│  ├─ report-engine.md      报告生成引擎说明
 │  ├─ report-engine-接入与交付说明.md
-│  ├─ 病理报告模板设计说明.md
+│  └─ 病理报告模板设计说明.md
+├─ data/                    静态数据
+│  ├─ medical-terms-v2.xls  医学词典
+│  └─ terms/                抽取规则与术语库（可热改，引擎自动加载）
+├─ outputs/                 交付示例报告
 │  └─ 示例报告/            TXT / HTML / PDF / JSON 成品
 └─ README.md                本文件
 ```
@@ -104,12 +106,16 @@ dist\medscribe-report-engine.exe --port 0 --port-file port.txt
 ## 验证
 
 ```bash
+# 单元测试（在引擎目录内执行）
 cd report-engine
 .venv\Scripts\python.exe -m pytest -q                                            # 22 passed
-.venv\Scripts\python.exe tools\smoke_demo.py                                     # SOAP 全链路
-.venv\Scripts\python.exe tools\smoke_demo.py out --template pathology_colorectal  # 病理全链路
-.venv\Scripts\python.exe tools\http_smoke.py                                     # HTTP 全链路
-.venv\Scripts\python.exe tools\http_smoke.py --exe dist\medscribe-report-engine.exe
+cd ..
+
+# 冒烟（在仓库根目录执行）
+report-engine\.venv\Scripts\python.exe scripts\smoke_demo.py                                     # SOAP 全链路
+report-engine\.venv\Scripts\python.exe scripts\smoke_demo.py out --template pathology_colorectal  # 病理全链路
+report-engine\.venv\Scripts\python.exe scripts\http_smoke.py                                     # HTTP 全链路
+report-engine\.venv\Scripts\python.exe scripts\http_smoke.py --exe report-engine\dist\medscribe-report-engine.exe
 ```
 
 ## 设计要点
@@ -133,7 +139,7 @@ cd report-engine
 - 技术设计：[docs/technical-design.md](docs/technical-design.md)
 - SOAP 规则：[docs/SOAP-rules-v1.md](docs/SOAP-rules-v1.md)
 - 桌面应用说明：[docs/app-readme.md](docs/app-readme.md)
-- 接入与交付：[outputs/report-engine-接入与交付说明.md](outputs/report-engine-接入与交付说明.md)
-- 病理模板设计：[outputs/病理报告模板设计说明.md](outputs/病理报告模板设计说明.md)
+- 引擎说明：[docs/report-engine.md](docs/report-engine.md)
+- 接入与交付：[docs/report-engine-接入与交付说明.md](docs/report-engine-接入与交付说明.md)
+- 病理模板设计：[docs/病理报告模板设计说明.md](docs/病理报告模板设计说明.md)
 - 示例报告：[outputs/示例报告/README.md](outputs/示例报告/README.md)
-- 引擎说明：[report-engine/README.md](report-engine/README.md)

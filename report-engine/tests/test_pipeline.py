@@ -25,6 +25,8 @@ from app.templates import TemplateRegistry
 from app.terminology import Terminology
 
 PROJECT = Path(__file__).resolve().parents[1]
+# 术语库在仓库 data/terms；兼容旧的 report-engine/terms 布局
+TERMS_DIR = PROJECT / "terms" if (PROJECT / "terms").is_dir() else PROJECT.parent / "data" / "terms"
 
 SEGMENTS = [
     TranscriptSegment(id="S-001", start_ms=0, end_ms=9000, lang="mixed", confidence=0.93,
@@ -45,7 +47,7 @@ def settings(tmp_path: Path) -> Settings:
     cfg = Settings()
     cfg.data_dir = tmp_path / "data"
     cfg.templates_dir = PROJECT / "templates"
-    cfg.terms_dir = PROJECT / "terms"
+    cfg.terms_dir = TERMS_DIR
     cfg.ensure_dirs()
     return cfg
 

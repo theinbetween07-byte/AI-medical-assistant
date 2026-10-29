@@ -15,6 +15,11 @@ from PyInstaller.utils.hooks import collect_submodules
 # spec 中的相对路径以 build/ 为基准，这里统一解析回工程根目录
 ROOT = os.path.abspath(os.path.join(SPECPATH, os.pardir))
 
+# 术语库/抽取规则在仓库 data/terms；兼容旧布局 report-engine/terms
+TERMS_SRC = os.path.join(ROOT, "terms")
+if not os.path.isdir(TERMS_SRC):
+    TERMS_SRC = os.path.abspath(os.path.join(ROOT, os.pardir, "data", "terms"))
+
 hiddenimports = (
     collect_submodules("uvicorn")
     + ["app.main", "app.service", "app.pipeline", "app.exporter", "reportlab.pdfbase._cidfontdata"]
@@ -27,7 +32,7 @@ a = Analysis(
     # 内置资源随 exe 打包；exe 同目录同名目录存在时优先使用外部版本（免重打包换模板）
     datas=[
         (os.path.join(ROOT, "templates"), "templates"),
-        (os.path.join(ROOT, "terms"), "terms"),
+        (TERMS_SRC, "data/terms"),
         (os.path.join(ROOT, "app", "static"), "app/static"),
     ],
     hiddenimports=hiddenimports,

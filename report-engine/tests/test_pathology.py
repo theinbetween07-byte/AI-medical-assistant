@@ -28,6 +28,8 @@ from app.terminology import Terminology
 from app.validation import PLACEHOLDER_MISSING
 
 PROJECT = Path(__file__).resolve().parents[1]
+# 术语库在仓库 data/terms；兼容旧的 report-engine/terms 布局
+TERMS_DIR = PROJECT / "terms" if (PROJECT / "terms").is_dir() else PROJECT.parent / "data" / "terms"
 TEMPLATE_ID = "pathology_colorectal"
 
 # synoptic 段（口述为「標籤：值」形式）在样本中的行序，用于切分子集
@@ -79,7 +81,7 @@ def settings(tmp_path: Path) -> Settings:
     cfg = Settings()
     cfg.data_dir = tmp_path / "data"
     cfg.templates_dir = PROJECT / "templates"
-    cfg.terms_dir = PROJECT / "terms"
+    cfg.terms_dir = TERMS_DIR
     cfg.ensure_dirs()
     return cfg
 
