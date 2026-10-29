@@ -6,7 +6,7 @@ AI 醫生助手 — 可攜版使用說明
   1. 把整個文件夾解壓到任意位置（例如 D:\ 或桌面）
      注意：路徑最好不要包含中文或空格
 
-  2. 雙擊  start.bat
+  2. 雙擊  scripts\start.bat
 
   3. 等待 20~40 秒，瀏覽器會自動打開 http://localhost:5173
 
@@ -15,10 +15,10 @@ AI 醫生助手 — 可攜版使用說明
 
 【停止服務】
 
-  雙擊  stop.bat
+  雙擊  scripts\stop.bat
 
   注意：服務啟動後在後台運行（沒有彈出窗口），
-        關閉任何窗口都不會停止服務，必須用 stop.bat。
+        關閉任何窗口都不會停止服務，必須用 scripts\stop.bat。
 
 
 【系統要求】
@@ -31,15 +31,15 @@ AI 醫生助手 — 可攜版使用說明
 
 【常見問題】
 
-  1. 雙擊 start.bat 窗口一閃就沒了
+  1. 雙擊 scripts\start.bat 窗口一閃就沒了
      → 通常是沒有完整解壓。請先把 ZIP 完整解壓到文件夾，
-       再從解壓後的文件夾裡雙擊 start.bat，不要在 ZIP 裡面直接雙擊。
+       再從解壓後的文件夾裡雙擊 scripts\start.bat，不要在 ZIP 裡面直接雙擊。
 
   2. 頁面顯示 Failed to fetch
      → 後端還在加載模型，等 20~40 秒後按 F5 刷新頁面即可。
 
   3. 提示端口 8000 / 5173 被佔用
-     → 先雙擊 stop.bat，再雙擊 start.bat。
+     → 先雙擊 scripts\stop.bat，再雙擊 scripts\start.bat。
 
   4. 轉寫速度慢
      → 在頁面右上角的「模型」下拉裡選擇更小的模型（tiny / base）可提速。
@@ -54,9 +54,13 @@ AI 醫生助手 — 可攜版使用說明
   frontend\    前端網頁
   node\        內置 Node.js
   models\      Whisper 語音識別模型（medium）
-  scripts\     啟動器（請勿刪除）
-  start.bat    一鍵啟動
-  stop.bat     停止服務
+  scripts\     啟動器與工具腳本（請勿刪除）
+    start.bat    一鍵啟動
+    stop.bat     停止服務
+    launch.py    後台啟動器
+    download-model.ps1  模型下載腳本
+  docs\        項目文檔
+  data\        靜態數據（醫學術語庫）
   .tmp\        運行日誌（可忽略）
 
 

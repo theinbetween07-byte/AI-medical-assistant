@@ -14,24 +14,74 @@
 
 ```
 AI-medical-assistant/
-├─ report-engine/          报告生成引擎（源码）
-│  ├─ app/                 抽取 → 生成 → 校验 → 导出 → 服务
-│  ├─ templates/           声明式报告模板（JSON，可直接改）
-│  ├─ terms/               抽取规则与术语库（可热改）
-│  ├─ tests/               22 项自动化测试
-│  ├─ tools/               命令行冒烟 / HTTP 冒烟
-│  ├─ build/               PyInstaller 打包配置（二进制不入库）
-│  └─ run.py               启动入口
-├─ outputs/                交付文档与示例报告
+├─ backend/                 桌面应用后端（Python / FastAPI + faster-whisper）
+│  ├─ app/                  main / config / auth / db / models
+│  │  ├─ api/               auth_router / asr_router
+│  │  └─ services/          asr.py（Whisper 服务，支持动态切换模型）
+│  ├─ scripts/              download_model.py
+│  └─ requirements.txt
+├─ frontend/                桌面应用前端（Vue 3 + Vite + Element Plus）
+│  ├─ src/                  views / components / composables / stores / router
+│  ├─ index.html
+│  ├─ package.json
+│  └─ vite.config.js
+├─ report-engine/           报告生成引擎（源码）
+│  ├─ app/                  抽取 → 生成 → 校验 → 导出 → 服务
+│  ├─ templates/            声明式报告模板（JSON，可直接改）
+│  ├─ terms/                抽取规则与术语库（可热改）
+│  ├─ tests/                22 项自动化测试
+│  ├─ tools/                命令行冒烟 / HTTP 冒烟
+│  ├─ build/                PyInstaller 打包配置（二进制不入库）
+│  └─ run.py                启动入口
+├─ scripts/                 启动与工具脚本
+│  ├─ start.bat             一键启动（Windows）
+│  ├─ stop.bat              停止服务
+│  ├─ launch.py             后台启动器（DETACHED_PROCESS，见文件头注释）
+│  └─ download-model.ps1    Whisper 模型下载
+├─ docs/                    项目文档
+│  ├─ prd-mvp.md            MVP 产品需求文档
+│  ├─ project-proposal.md   项目提案
+│  ├─ technical-design.md   技术设计
+│  ├─ SOAP-rules-v1.md      SOAP 报告书写规则
+│  ├─ app-readme.md         桌面应用说明（架构 / API / 开发命令）
+│  └─ app-quick-start.txt   便携版使用说明（面向最终使用者）
+├─ data/                    静态数据
+│  └─ medical-terms-v2.xls  医学词典
+├─ outputs/                 交付文档与示例报告
 │  ├─ report-engine-接入与交付说明.md
 │  ├─ 病理报告模板设计说明.md
 │  └─ 示例报告/            TXT / HTML / PDF / JSON 成品
-├─ SOAP规则_v1.md          报告书写规则
-├─ mvp-prd.md / mvp ai medical assistant-prd.md / project-proposal.md / technical-design.md
-└─ 医学术语库_v2.xls
+└─ README.md                本文件
 ```
 
-## 快速开始
+> 不入库（`.gitignore` 已屏蔽）：`models/`（Whisper 模型）、`node/`、`backend/python/`、
+> `backend/ffmpeg.exe`、`frontend/node_modules/`、`backend/data/`（用户库与密钥）、`.tmp/`、`backend/logs/`。
+
+## 快速开始（桌面应用）
+
+桌面应用由 `backend`（FastAPI + faster-whisper）与 `frontend`（Vue 3 + Vite）组成：
+前端 `http://localhost:5173`，后端 `http://localhost:8000`（API 文档 `/docs`）。
+
+```powershell
+# 1) 安装依赖
+python -m venv backend\.venv
+backend\.venv\Scripts\activate
+pip install -r backend\requirements.txt
+
+cd frontend
+npm install
+cd ..
+
+# 2) 一键启动 / 停止（后端 + 前端）
+scripts\start.bat
+scripts\stop.bat
+```
+
+> `scripts\start.bat` 与 `scripts\launch.py` 依赖便携版打包的运行时目录（`backend\python\`、`node\`、
+> `models\`、`backend\ffmpeg.exe`），这些目录**不入库**，需自行准备。
+> 详见 [docs/app-readme.md](docs/app-readme.md) 与 [docs/app-quick-start.txt](docs/app-quick-start.txt)。
+
+## 快速开始（report-engine）
 
 ```bash
 cd report-engine
@@ -78,6 +128,11 @@ cd report-engine
 
 ## 文档
 
+- MVP 需求：[docs/prd-mvp.md](docs/prd-mvp.md)
+- 项目提案：[docs/project-proposal.md](docs/project-proposal.md)
+- 技术设计：[docs/technical-design.md](docs/technical-design.md)
+- SOAP 规则：[docs/SOAP-rules-v1.md](docs/SOAP-rules-v1.md)
+- 桌面应用说明：[docs/app-readme.md](docs/app-readme.md)
 - 接入与交付：[outputs/report-engine-接入与交付说明.md](outputs/report-engine-接入与交付说明.md)
 - 病理模板设计：[outputs/病理报告模板设计说明.md](outputs/病理报告模板设计说明.md)
 - 示例报告：[outputs/示例报告/README.md](outputs/示例报告/README.md)
