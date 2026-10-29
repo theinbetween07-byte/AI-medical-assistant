@@ -44,3 +44,17 @@ __pycache__/
 Thumbs.db
 Desktop.ini
 .DS_Store
+
+# ============================================================
+# App runtime bundles / binaries (desktop app source)
+# ============================================================
+models/
+node/
+backend/python/
+backend/ffmpeg.exe
+frontend/node_modules/
+backend/data/
+.tmp/
+backend/logs/
+*.log
+.vite/

@@ -1,0 +1,25 @@
+# AI 醫生助手 - 後端依賴
+#
+# 基礎 Web 框架
+fastapi>=0.115.0          # 異步 Web 框架
+uvicorn[standard]>=0.30.0 # ASGI 服務器（含 websockets / httptools）
+python-multipart>=0.0.9   # 處理 multipart/form-data 上傳
+pydantic>=2.7.0           # 數據驗證
+
+# ASR 引擎
+faster-whisper>=1.0.3     # CTranslate2 推理的 Whisper，CPU 友好
+# ctranslate2>=4.0.0      # faster-whisper 依賴，會自動裝
+# tokenizers>=0.20.0      # faster-whisper 依賴
+# huggingface-hub>=0.25.0 # faster-whisper 依賴
+
+# 音頻處理
+ffmpeg-python>=0.2.0      # ffmpeg 的 Python 綁定
+# ffmpeg 本體不在 pip 內，需單獨安裝（winget install Gyan.FFmpeg）
+
+# 認證
+bcrypt>=4.2.0             # 密碼哈希
+PyJWT>=2.9.0              # JWT token
+
+# 工具
+python-dotenv>=1.0.1      # .env 加載
+loguru>=0.7.2             # 結構化日誌

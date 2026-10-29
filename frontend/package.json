@@ -1,0 +1,22 @@
+{
+  "name": "medical-voice-assistant-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "AI 醫生助手 · 前端 MVP - 語音採集模組",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview --host 0.0.0.0"
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "^2.3.1",
+    "element-plus": "^2.7.6",
+    "vue": "^3.4.38",
+    "vue-router": "^4.6.4"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.1.2",
+    "vite": "^5.4.2"
+  }
+}
