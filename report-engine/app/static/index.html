@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="zh-HK">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MedScribe HK · 报告生成引擎</title>
+<style>
+  :root{
+    --bg:#f4f6fb; --card:#fff; --line:#e3e8f0; --text:#1b2431; --muted:#667085;
+    --primary:#1f6feb; --primary-dark:#175dc4; --danger:#b42318; --danger-bg:#fff2f0;
+    --warn:#b54708; --warn-bg:#fffaeb; --ok:#067647; --ok-bg:#ecfdf3; --radius:10px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font-family:"Segoe UI","Microsoft JhengHei","PingFang SC",system-ui,sans-serif;font-size:14px}
+  header{background:#101828;color:#fff;padding:14px 22px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  header h1{font-size:16px;margin:0;font-weight:600;letter-spacing:.2px}
+  header .pill{font-size:12px;background:#1d2939;border:1px solid #344054;color:#d0d5dd;
+    padding:3px 9px;border-radius:20px}
+  header .pill.ok{border-color:#067647;color:#75e0a7}
+  header .pill.off{border-color:#475467;color:#98a2b3}
+  main{display:grid;grid-template-columns:minmax(360px,0.9fr) minmax(520px,1.1fr);gap:16px;
+    padding:16px;max-width:1680px;margin:0 auto;align-items:start}
+  @media (max-width:1100px){main{grid-template-columns:1fr}}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:16px;box-shadow:0 1px 2px rgba(16,24,40,.04)}
+  .panel h2{font-size:14px;margin:0 0 12px;font-weight:600}
+  label.row{display:flex;gap:8px;align-items:center;margin-bottom:8px;color:var(--muted);font-size:13px}
+  select,input[type=text],textarea{width:100%;border:1px solid var(--line);border-radius:8px;
+    padding:8px 10px;font:inherit;color:var(--text);background:#fff}
+  textarea{min-height:230px;resize:vertical;line-height:1.6;font-family:ui-monospace,Consolas,monospace;font-size:12.5px}
+  .opts{display:flex;flex-wrap:wrap;gap:14px;margin:10px 0}
+  .opts label{display:flex;gap:6px;align-items:center;font-size:13px;color:var(--text);cursor:pointer}
+  button{border:1px solid var(--line);background:#fff;color:var(--text);border-radius:8px;
+    padding:7px 13px;font:inherit;cursor:pointer;transition:.14s}
+  button:hover{border-color:#c7d2e2;background:#f8fafc}
+  button.primary{background:var(--primary);border-color:var(--primary);color:#fff;font-weight:600}
+  button.primary:hover{background:var(--primary-dark)}
+  button.primary:disabled{background:#c3d4f2;border-color:#c3d4f2;cursor:not-allowed}
+  button.ghost{background:transparent}
+  button.small{padding:4px 10px;font-size:12.5px}
+  .toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;align-items:center}
+  .report-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;
+    border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:12px}
+  .report-head .title{font-weight:600}
+  .report-head .meta{color:var(--muted);font-size:12px;margin-top:3px}
+  .badge{display:inline-block;font-size:11.5px;padding:2px 8px;border-radius:20px;border:1px solid transparent;
+    margin-left:6px;vertical-align:middle}
+  .badge.missing{background:#f2f4f7;color:#475467;border-color:#e4e7ec}
+  .badge.unsupported,.badge.dose_mismatch{background:var(--danger-bg);color:var(--danger);border-color:#f3b7b1}
+  .badge.low_confidence{background:var(--warn-bg);color:var(--warn);border-color:#f7d9a5}
+  .badge.derived{background:#eef4ff;color:#1d4ed8;border-color:#c7d7fe}
+  .badge.ok{background:var(--ok-bg);color:var(--ok);border-color:#b7ebc9}
+  .field{border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin-bottom:10px}
+  .field.confirmed{border-color:#b7ebc9;background:#fbfefc}
+  .field.rejected{border-color:#f3b7b1;background:#fffbfa}
+  .field-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+  .field-head .name{font-weight:600;font-size:13.5px}
+  .field-head .req{color:var(--danger);margin-left:3px}
+  .field .value{margin:7px 0 6px;line-height:1.65;white-space:pre-wrap;word-break:break-word}
+  .field .value.empty{color:var(--muted);font-style:italic}
+  .field .sources{color:var(--muted);font-size:12px}
+  .field .note{color:var(--danger);font-size:12px;margin-top:4px}
+  .field .actions{display:flex;gap:6px;margin-top:8px}
+  .field textarea{min-height:70px;font-family:inherit;font-size:13px}
+  .warnbox{background:var(--warn-bg);border:1px solid #f7d9a5;color:#93370d;border-radius:8px;
+    padding:10px 12px;margin-bottom:12px;font-size:12.5px;line-height:1.7}
+  .warnbox.danger{background:var(--danger-bg);border-color:#f3b7b1;color:#912018}
+  .warnbox.ok{background:var(--ok-bg);border-color:#b7ebc9;color:#05603a}
+  .empty-state{color:var(--muted);text-align:center;padding:46px 10px;line-height:1.9}
+  .toast{position:fixed;right:18px;bottom:18px;background:#101828;color:#fff;padding:10px 14px;
+    border-radius:8px;font-size:13px;max-width:420px;box-shadow:0 8px 24px rgba(16,24,40,.25);z-index:50}
+  .toast.error{background:var(--danger)}
+  .kv{display:flex;gap:8px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-top:6px}
+  .spinner{display:inline-block;width:12px;height:12px;border:2px solid #c3d4f2;border-top-color:#fff;
+    border-radius:50%;animation:spin .7s linear infinite;margin-right:6px;vertical-align:-1px}
+  @keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<header>
+  <h1>MedScribe HK · 报告生成引擎</h1>
+  <span class="pill" id="pill-mode">离线规则内核</span>
+  <span class="pill" id="pill-templates">模板：—</span>
+  <span class="pill" id="pill-terms">术语库：—</span>
+  <span class="pill off" id="pill-llm">LLM：关闭</span>
+  <span class="pill" id="pill-version">v—</span>
+</header>
+
+<main>
+  <section class="panel">
+    <h2>① 输入转写文本</h2>
+    <label class="row">报告模板
+      <select id="template"></select>
+    </label>
+    <label class="row" style="display:block">
+      <span style="display:block;margin-bottom:6px">转写分段（每行一段，或粘贴上游 ASR 的 JSON）</span>
+      <textarea id="segments" placeholder="陈先生今日返嚟覆诊，佢话呢三日有喉咙痛同咳，无发烧。&#10;On examination, blood pressure 128 over 76, pulse 82.&#10;No known drug allergy.&#10;Impression is upper respiratory tract infection.&#10;Prescribe Panadol 500 mg PO TDS for 3 days."></textarea>
+    </label>
+    <div class="opts">
+      <label><input type="checkbox" id="opt-deid"> 去标识化（NFR-04）</label>
+      <label><input type="checkbox" id="opt-term" checked> 术语纠正（FR-03）</label>
+      <label><input type="checkbox" id="opt-llm"> 启用 LLM 增强</label>
+      <label style="margin-left:auto">语言模式
+        <select id="lang-mode" style="width:auto;margin-left:6px">
+          <option value="bilingual" selected>中英对照</option>
+          <option value="en">英文优先</option>
+          <option value="zh">中文优先</option>
+        </select>
+      </label>
+    </div>
+    <div class="toolbar">
+      <button class="primary" id="btn-generate">生成报告初稿</button>
+      <button class="ghost small" id="btn-sample">载入合成示例</button>
+      <button class="ghost small" id="btn-clear">清空</button>
+    </div>
+    <div class="kv" id="pipeline"></div>
+  </section>
+
+  <section class="panel">
+    <h2>② 报告初稿与校审</h2>
+    <div id="report-area">
+      <div class="empty-state">尚未生成报告。<br>在左侧输入转写文本后点击「生成报告初稿」，或点击「载入合成示例」快速试用。</div>
+    </div>
+    <div class="toolbar" id="report-actions" style="display:none">
+      <button class="primary" id="btn-sign">签署报告</button>
+      <button id="btn-preview">预览文本</button>
+      <button id="btn-export">导出 PDF / JSON / TXT</button>
+      <span class="kv" id="export-info"></span>
+    </div>
+  </section>
+</main>
+
+<script>
+const $ = (s) => document.querySelector(s);
+const state = { report: null, sessionId: 'SES-' + Date.now().toString(36) };
+
+function toast(msg, isError) {
+  const el = document.createElement('div');
+  el.className = 'toast' + (isError ? ' error' : '');
+  el.textContent = msg;
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), isError ? 6000 : 3200);
+}
+
+async function api(path, options) {
+  const res = await fetch(path, Object.assign({ headers: { 'Content-Type': 'application/json' } }, options || {}));
+  const raw = await res.text();
+  let data = null;
+  try { data = raw ? JSON.parse(raw) : null; } catch (e) { data = raw; }
+  if (!res.ok) throw new Error((data && data.detail) || (typeof data === 'string' ? data : res.statusText));
+  return data;
+}
+
+function pad(n) { return String(n).padStart(2, '0'); }
+function fmtTime(ms) {
+  const total = Math.max(0, Math.round(ms / 1000));
+  return pad(Math.floor(total / 60)) + ':' + pad(total % 60);
+}
+function effective(field) { return (field.final_value && field.final_value.trim()) ? field.final_value : field.ai_value; }
+
+/* ---------------- 元信息 ---------------- */
+async function loadHealth() {
+  try {
+    const h = await api('/health');
+    $('#pill-version').textContent = 'v' + h.version;
+    $('#pill-templates').textContent = '模板：' + (h.templates || []).length + ' 个';
+    $('#pill-terms').textContent = '术语库：' + h.terminology_entries + ' 条';
+    const llm = h.llm || {};
+    const pill = $('#pill-llm');
+    if (llm.available) { pill.textContent = 'LLM：可用（' + (llm.model || '') + '）'; pill.className = 'pill ok'; }
+    else if (llm.enabled) { pill.textContent = 'LLM：已启用但未就绪'; pill.className = 'pill off'; }
+    else { pill.textContent = 'LLM：关闭（离线）'; pill.className = 'pill off'; }
+    $('#pill-mode').textContent = '数据目录：' + (h.paths && h.paths.data || '');
+  } catch (e) { toast('服务未就绪：' + e.message, true); }
+}
+
+async function loadTemplates() {
+  try {
+    const list = await api('/api/templates');
+    $('#template').innerHTML = list.map(t =>
+      `<option value="${t.id}">${t.name}（v${t.version} · ${t.fields.length} 字段）</option>`).join('');
+  } catch (e) { toast('模板加载失败：' + e.message, true); }
+}
+
+/* ---------------- 转写解析 ---------------- */
+function normalizeSegment(item, index) {
+  const pick = (...keys) => { for (const k of keys) { const v = item[k]; if (v !== undefined && v !== null && v !== '') return v; } return undefined; };
+  const text = String(pick('text', 'transcript', 'content', 'sentence', 'asr_text') || '');
+  const hasMs = pick('start_ms', 'startMs') !== undefined;
+  let start = Number(pick('start_ms', 'startMs', 'start', 'from', 'offset') ?? 0);
+  let end = Number(pick('end_ms', 'endMs', 'end', 'to') ?? NaN);
+  if (!hasMs) { start = start * 1000; if (!isNaN(end)) end = end * 1000; }
+  if (isNaN(end)) end = start + Math.max(1500, text.length * 220);
+  const conf = Number(pick('confidence', 'score', 'prob', 'probability') ?? 0.9);
+  return {
+    id: String(pick('id', 'segment_id', 'seg_id') ?? ('S-' + pad(index + 1))),
+    start_ms: Math.round(start),
+    end_ms: Math.round(end),
+    text: text,
+    lang: String(pick('lang', 'language', 'lang_tag') ?? 'unknown'),
+    confidence: isNaN(conf) ? 0.9 : conf,
+    low_confidence: conf < 0.6
+  };
+}
+
+function buildSegments(raw) {
+  const trimmed = (raw || '').trim();
+  if (!trimmed) return [];
+  if (trimmed.startsWith('[') || trimmed.startsWith('{')) {
+    let data = JSON.parse(trimmed);
+    if (!Array.isArray(data)) data = data.segments || data.results || data.items || [];
+    return data.map(normalizeSegment);
+  }
+  let cursor = 0;
+  return trimmed.split(/\r?\n/).map(l => l.trim()).filter(Boolean).map((text, i) => {
+    const dur = Math.max(1500, text.length * 220);
+    const seg = { id: 'S-' + pad(i + 1), start_ms: Math.round(cursor), end_ms: Math.round(cursor + dur), text: text, lang: 'unknown', confidence: 0.9 };
+    cursor += dur;
+    return seg;
+  });
+}
+
+/* ---------------- 生成 ---------------- */
+async function generate() {
+  const btn = $('#btn-generate');
+  let segments;
+  try { segments = buildSegments($('#segments').value); }
+  catch (e) { toast('转写解析失败：' + e.message, true); return; }
+  if (!segments.length) { toast('请先输入转写文本或粘贴 JSON', true); return; }
+
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>生成中…';
+  try {
+    const data = await api('/api/generate', {
+      method: 'POST',
+      body: JSON.stringify({
+        session_id: state.sessionId,
+        template_id: $('#template').value,
+        segments: segments,
+        options: {
+          deidentify: $('#opt-deid').checked,
+          term_correction: $('#opt-term').checked,
+          use_llm: $('#opt-llm').checked,
+          language_mode: $('#lang-mode').value
+        }
+      })
+    });
+    state.report = data.report;
+    $('#pipeline').textContent = '流水线：' + (data.pipeline || []).join('  →  ');
+    renderReport(data.report, data);
+    toast('报告初稿已生成，共 ' + data.report.fields.length + ' 个字段，'
+      + (data.report.missing_required.length ? data.report.missing_required.length + ' 个必填字段待确认' : '必填字段齐备'));
+  } catch (e) {
+    toast('生成失败：' + e.message, true);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '生成报告初稿';
+  }
+}
+
+/* ---------------- 渲染 ---------------- */
+const FLAG_TEXT = { missing: '未提及', unsupported: '待核实', dose_mismatch: '剂量待核实', low_confidence: '低置信度', derived: '自动生成，请核对' };
+
+function renderReport(report, extras) {
+  state.report = report;
+  const area = $('#report-area');
+  const reviewOf = (key) => (report.reviews || []).find(r => r.field_key === key);
+
+  let html = '<div class="report-head"><div>'
+    + '<div class="title">' + escapeHtml(report.template_name) + '</div>'
+    + '<div class="meta">模板 ' + escapeHtml(report.template_id) + ' · v' + escapeHtml(report.template_version)
+    + ' · 模式 ' + escapeHtml(report.mode) + ' · ' + escapeHtml(report.created_at) + '</div></div>'
+    + '<div>' + (report.status === 'signed'
+      ? '<span class="badge ok">已签署并锁定</span>'
+      : '<span class="badge missing">草稿 · 待医生校审</span>') + '</div></div>';
+
+  if (report.missing_required && report.missing_required.length) {
+    html += '<div class="warnbox danger">存在未确认的必填字段：' + report.missing_required.map(escapeHtml).join('、')
+      + '。确认前无法签署与导出（BR-10）。</div>';
+  }
+  (report.warnings || []).forEach(w => { html += '<div class="warnbox">' + escapeHtml(w) + '</div>'; });
+
+  (report.fields || []).slice().sort((a, b) => a.order - b.order).forEach(f => {
+    const rev = reviewOf(f.key);
+    const action = rev ? rev.action : 'pending';
+    const cls = action === 'accept' ? 'confirmed' : (action === 'edit' ? 'confirmed' : (action === 'reject' ? 'rejected' : ''));
+    const val = effective(f);
+    const isEmpty = !val || val === '未提及';
+    html += '<div class="field ' + cls + '" data-key="' + escapeHtml(f.key) + '">'
+      + '<div class="field-head"><div class="name">' + escapeHtml(f.label)
+      + (f.required ? '<span class="req">*</span>' : '') + '</div><div>'
+      + (f.flags || []).map(fl => '<span class="badge ' + fl + '">' + (FLAG_TEXT[fl] || fl) + '</span>').join('')
+      + (action === 'accept' ? '<span class="badge ok">已采纳</span>' : '')
+      + (action === 'edit' ? '<span class="badge ok">已编辑</span>' : '')
+      + (action === 'reject' ? '<span class="badge unsupported">已拒绝</span>' : '')
+      + '</div></div>'
+      + '<div class="value' + (isEmpty ? ' empty' : '') + '">' + escapeHtml(val) + '</div>'
+      + (f.sources && f.sources.length
+        ? '<div class="sources">音频来源：' + f.sources.map(s => escapeHtml(s.segment_id) + ' ' + fmtTime(s.start_ms) + '–' + fmtTime(s.end_ms)).join('；') + '</div>'
+        : '<div class="sources">无音频来源</div>')
+      + (f.note ? '<div class="note">' + escapeHtml(f.note) + '</div>' : '')
+      + '<div class="actions">'
+      + '<button class="small" data-act="accept" data-key="' + escapeHtml(f.key) + '">采纳</button>'
+      + '<button class="small" data-act="edit" data-key="' + escapeHtml(f.key) + '">编辑</button>'
+      + '<button class="small" data-act="reject" data-key="' + escapeHtml(f.key) + '">拒绝</button>'
+      + '</div></div>';
+  });
+
+  area.innerHTML = html;
+  $('#report-actions').style.display = 'flex';
+  $('#export-info').textContent = '';
+}
+
+function escapeHtml(s) {
+  return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+
+/* ---------------- 校审 / 签署 / 导出 ---------------- */
+document.addEventListener('click', async (ev) => {
+  const btn = ev.target.closest('button[data-act]');
+  if (!btn || !state.report) return;
+  const key = btn.dataset.key, act = btn.dataset.act;
+  const field = state.report.fields.find(f => f.key === key);
+  let value = null;
+
+  if (act === 'edit') {
+    const card = btn.closest('.field');
+    const current = field ? effective(field) : '';
+    if (!card.querySelector('textarea.edit-box')) {
+      const box = document.createElement('div');
+      box.innerHTML = '<textarea class="edit-box"></textarea>'
+        + '<div class="actions"><button class="primary small" data-act="save" data-key="' + escapeHtml(key) + '">保存编辑</button>'
+        + '<button class="small" data-act="cancel">取消</button></div>';
+      card.appendChild(box);
+      const ta = box.querySelector('textarea');
+      ta.value = current === '未提及' ? '' : current;
+      ta.focus();
+    }
+    return;
+  }
+  if (act === 'cancel') { const card = btn.closest('.field'); const box = card.querySelector('.edit-box'); if (box) box.parentElement.remove(); return; }
+  if (act === 'save') {
+    const card = btn.closest('.field');
+    value = card.querySelector('textarea.edit-box').value.trim();
+    if (!value) { toast('编辑内容不能为空', true); return; }
+    await review(key, 'edit', value);
+    return;
+  }
+  await review(key, act, value);
+});
+
+async function review(key, action, value) {
+  if (!state.report) return;
+  try {
+    const updated = await api('/api/reports/' + state.report.id + '/review/' + encodeURIComponent(key), {
+      method: 'POST',
+      body: JSON.stringify({ action: action, value: value, reviewer: 'demo-doctor' })
+    });
+    renderReport(updated);
+    toast('字段「' + key + '」已' + ({ accept: '采纳', edit: '编辑', reject: '拒绝' }[action] || action));
+  } catch (e) { toast('校审失败：' + e.message, true); }
+}
+
+$('#btn-sign').addEventListener('click', async () => {
+  if (!state.report) return;
+  try {
+    const res = await api('/api/reports/' + state.report.id + '/sign', {
+      method: 'POST', body: JSON.stringify({ signed_by: 'demo-doctor' })
+    });
+    if (res.report) renderReport(res.report);
+    toast(res.message, !res.ok);
+  } catch (e) { toast('签署失败：' + e.message, true); }
+});
+
+$('#btn-preview').addEventListener('click', async () => {
+  if (!state.report) return;
+  try {
+    const text = await api('/api/reports/' + state.report.id + '/preview?format=text&language_mode=' + $('#lang-mode').value);
+    const w = window.open('', '_blank');
+    if (w) { w.document.write('<pre style="font-family:Consolas,monospace;padding:20px;white-space:pre-wrap">' + escapeHtml(text) + '</pre>'); w.document.close(); }
+    else toast('浏览器拦截了新窗口', true);
+  } catch (e) { toast('预览失败：' + e.message, true); }
+});
+
+$('#btn-export').addEventListener('click', async () => {
+  if (!state.report) return;
+  try {
+    const records = await api('/api/reports/' + state.report.id + '/export', {
+      method: 'POST',
+      body: JSON.stringify({ formats: ['pdf', 'json', 'text'], language_mode: $('#lang-mode').value })
+    });
+    $('#export-info').textContent = '已导出：' + records.map(r => r.format.toUpperCase()).join('、');
+    toast('导出成功，共 ' + records.length + ' 个文件；路径见服务端 data/exports 目录');
+  } catch (e) { toast('导出被拒绝：' + e.message, true); }
+});
+
+/* ---------------- 其他 ---------------- */
+$('#btn-generate').addEventListener('click', generate);
+$('#btn-clear').addEventListener('click', () => { $('#segments').value = ''; $('#pipeline').textContent = ''; });
+$('#btn-sample').addEventListener('click', async () => {
+  try {
+    const data = await api('/api/sample?template_id=' + encodeURIComponent($('#template').value));
+    $('#segments').value = data.segments.map(s => s.text).join('\n');
+    toast('已载入合成示例（' + data.note + '），点击「生成报告初稿」');
+  } catch (e) { toast('示例载入失败：' + e.message, true); }
+});
+
+(async function init() {
+  await loadHealth();
+  await loadTemplates();
+})();
+</script>
+</body>
+</html>

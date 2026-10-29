@@ -1,0 +1,5 @@
+# 开发与打包依赖
+-r requirements.txt
+pytest>=8.0.0
+httpx>=0.27.0
+pyinstaller>=6.6.0

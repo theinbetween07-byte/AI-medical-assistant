@@ -1,0 +1,5 @@
+# 报告生成引擎 —— 运行时依赖
+fastapi>=0.115.0
+uvicorn>=0.30.0
+pydantic>=2.7.0
+reportlab>=4.0.0

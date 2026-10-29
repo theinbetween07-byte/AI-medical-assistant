@@ -1,0 +1,267 @@
+{
+  "id": "RPT-4004c1a5a3f7",
+  "session_id": "SES-DEMO",
+  "template_id": "general_soap",
+  "template_name": "通用 SOAP 记录 / General SOAP Note",
+  "template_version": "1.0.0",
+  "status": "signed",
+  "created_at": "2026-10-20T04:13:41+00:00",
+  "signed_at": "2026-10-20T04:13:41+00:00",
+  "signed_by": "dr-demo",
+  "fields": [
+    {
+      "key": "chief_complaint",
+      "label": "主诉 / Chief Complaint",
+      "section": "S",
+      "required": true,
+      "order": 1,
+      "type": "text",
+      "ai_value": "喉嚨痛，痛咗三日",
+      "final_value": "喉嚨痛，痛咗三日",
+      "sources": [
+        {
+          "segment_id": "S-001",
+          "start_ms": 6157,
+          "end_ms": 9000,
+          "text": "病人講喉嚨痛，痛咗三日。"
+        }
+      ],
+      "flags": [],
+      "evidence_ok": true,
+      "note": "",
+      "display_label": "主诉 / Chief Complaint"
+    },
+    {
+      "key": "history_of_present_illness",
+      "label": "现病史 / History of Present Illness",
+      "section": "S",
+      "required": false,
+      "order": 2,
+      "type": "text",
+      "ai_value": "陳先生今日返嚟覆診，佢話呢三日有喉嚨痛同咳，無發燒。",
+      "final_value": "",
+      "sources": [
+        {
+          "segment_id": "S-001",
+          "start_ms": 0,
+          "end_ms": 6157,
+          "text": "陳先生今日返嚟覆診，佢話呢三日有喉嚨痛同咳，無發燒。"
+        }
+      ],
+      "flags": [],
+      "evidence_ok": true,
+      "note": "",
+      "display_label": "现病史 / History of Present Illness"
+    },
+    {
+      "key": "past_medical_history",
+      "label": "既往史 / Past Medical History",
+      "section": "S",
+      "required": false,
+      "order": 3,
+      "type": "text",
+      "ai_value": "hypertension",
+      "final_value": "",
+      "sources": [
+        {
+          "segment_id": "S-003",
+          "start_ms": 20906,
+          "end_ms": 23000,
+          "text": "Past history of hypertension."
+        }
+      ],
+      "flags": [],
+      "evidence_ok": true,
+      "note": "",
+      "display_label": "既往史 / Past Medical History"
+    },
+    {
+      "key": "allergy_history",
+      "label": "过敏史 / Allergy History",
+      "section": "S",
+      "required": true,
+      "order": 4,
+      "type": "text",
+      "ai_value": "No known drug allergy.；He is not allergic to penicillin.",
+      "final_value": "No known drug allergy.；He is not allergic to penicillin.",
+      "sources": [
+        {
+          "segment_id": "S-003",
+          "start_ms": 17000,
+          "end_ms": 18534,
+          "text": "No known drug allergy."
+        },
+        {
+          "segment_id": "S-003",
+          "start_ms": 18534,
+          "end_ms": 20837,
+          "text": "He is not allergic to penicillin."
+        }
+      ],
+      "flags": [],
+      "evidence_ok": true,
+      "note": "",
+      "display_label": "过敏史 / Allergy History"
+    },
+    {
+      "key": "physical_examination",
+      "label": "体格检查 / Physical Examination",
+      "section": "O",
+      "required": true,
+      "order": 5,
+      "type": "text",
+      "ai_value": "On examination, blood pressure 128 over 76, pulse 82, temperature 36.8 degree Celsius.",
+      "final_value": "On examination, blood pressure 128 over 76, pulse 82, temperature 36.8 degree Celsius.",
+      "sources": [
+        {
+          "segment_id": "S-002",
+          "start_ms": 9000,
+          "end_ms": 14460,
+          "text": "On examination, blood pressure 128 over 76, pulse 82, temperature 36.8 degree Celsius."
+        }
+      ],
+      "flags": [],
+      "evidence_ok": true,
+      "note": "",
+      "display_label": "体格检查 / Physical Examination"
+    },
+    {
+      "key": "investigations",
+      "label": "检查结果 / Investigations",
+      "section": "O",
+      "required": false,
+      "order": 6,
+      "type": "text",
+      "ai_value": "Throat is mildly injected, chest clear.",
+      "final_value": "",
+      "sources": [
+        {
+          "segment_id": "S-002",
+          "start_ms": 14460,
+          "end_ms": 17000,
+          "text": "Throat is mildly injected, chest clear."
+        }
+      ],
+      "flags": [],
+      "evidence_ok": true,
+      "note": "",
+      "display_label": "检查结果 / Investigations"
+    },
+    {
+      "key": "assessment",
+      "label": "诊断/评估 / Assessment",
+      "section": "A",
+      "required": true,
+      "order": 7,
+      "type": "text",
+      "ai_value": "upper respiratory tract infection",
+      "final_value": "upper respiratory tract infection",
+      "sources": [
+        {
+          "segment_id": "S-004",
+          "start_ms": 23000,
+          "end_ms": 25380,
+          "text": "Impression is upper respiratory tract infection."
+        }
+      ],
+      "flags": [],
+      "evidence_ok": true,
+      "note": "",
+      "display_label": "诊断/评估 / Assessment"
+    },
+    {
+      "key": "plan",
+      "label": "处理计划 / Plan",
+      "section": "P",
+      "required": true,
+      "order": 8,
+      "type": "text",
+      "ai_value": "多休息多飲水，一星期後返嚟覆診，如果發燒再返嚟",
+      "final_value": "多休息多飲水，一星期後返嚟覆診，如果發燒再返嚟",
+      "sources": [
+        {
+          "segment_id": "S-005",
+          "start_ms": 29000,
+          "end_ms": 34000,
+          "text": "建議多休息多飲水，一星期後返嚟覆診，如果發燒再返嚟。"
+        }
+      ],
+      "flags": [],
+      "evidence_ok": true,
+      "note": "",
+      "display_label": "处理计划 / Plan"
+    },
+    {
+      "key": "medications",
+      "label": "用药 / Medications",
+      "section": "P",
+      "required": false,
+      "order": 9,
+      "type": "medication",
+      "ai_value": "I will prescribe panadol 500 mg PO TDS for 3 days and panadol as needed.",
+      "final_value": "",
+      "sources": [
+        {
+          "segment_id": "S-004",
+          "start_ms": 25380,
+          "end_ms": 29000,
+          "text": "I will prescribe panadol 500 mg PO TDS for 3 days and panadol as needed."
+        }
+      ],
+      "flags": [],
+      "evidence_ok": true,
+      "note": "",
+      "display_label": "用药 / Medications"
+    }
+  ],
+  "missing_required": [],
+  "warnings": [],
+  "mode": "rules",
+  "reviews": [
+    {
+      "report_id": "RPT-4004c1a5a3f7",
+      "field_key": "chief_complaint",
+      "ai_value": "喉嚨痛，痛咗三日",
+      "final_value": "喉嚨痛，痛咗三日",
+      "action": "accept",
+      "reviewed_at": "2026-10-20T04:13:41+00:00",
+      "reviewer": "dr-demo"
+    },
+    {
+      "report_id": "RPT-4004c1a5a3f7",
+      "field_key": "allergy_history",
+      "ai_value": "No known drug allergy.；He is not allergic to penicillin.",
+      "final_value": "No known drug allergy.；He is not allergic to penicillin.",
+      "action": "accept",
+      "reviewed_at": "2026-10-20T04:13:41+00:00",
+      "reviewer": "dr-demo"
+    },
+    {
+      "report_id": "RPT-4004c1a5a3f7",
+      "field_key": "physical_examination",
+      "ai_value": "On examination, blood pressure 128 over 76, pulse 82, temperature 36.8 degree Celsius.",
+      "final_value": "On examination, blood pressure 128 over 76, pulse 82, temperature 36.8 degree Celsius.",
+      "action": "accept",
+      "reviewed_at": "2026-10-20T04:13:41+00:00",
+      "reviewer": "dr-demo"
+    },
+    {
+      "report_id": "RPT-4004c1a5a3f7",
+      "field_key": "assessment",
+      "ai_value": "upper respiratory tract infection",
+      "final_value": "upper respiratory tract infection",
+      "action": "accept",
+      "reviewed_at": "2026-10-20T04:13:41+00:00",
+      "reviewer": "dr-demo"
+    },
+    {
+      "report_id": "RPT-4004c1a5a3f7",
+      "field_key": "plan",
+      "ai_value": "多休息多飲水，一星期後返嚟覆診，如果發燒再返嚟",
+      "final_value": "多休息多飲水，一星期後返嚟覆診，如果發燒再返嚟",
+      "action": "accept",
+      "reviewed_at": "2026-10-20T04:13:41+00:00",
+      "reviewer": "dr-demo"
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+== 模板 general_soap v1.0.0 / 口述 10 个要素 ==
+
+== 流水线 ==
+deidentify(skipped) -> term_correction(0) -> extract(10, unclassified=0) -> validate(missing_required=0)
+
+== 抽取要素 ==
+[S] E-001 score=4.5 src=['S-001'] :: 陳先生今日返嚟覆診，佢話呢三日有喉嚨痛同咳，無發燒。
+[S] E-002 score=4.1 src=['S-001'] :: 病人講喉嚨痛，痛咗三日。
+[O] E-003 score=5.8 src=['S-002'] :: On examination, blood pressure 128 over 76, pulse 82, temperature 36.8 degree Celsius.
+[O] E-004 score=3.8 src=['S-002'] :: Throat is mildly injected, chest clear.
+[S] E-005 score=1.2 src=['S-003'] :: No known drug allergy.
+[S] E-006 score=1.2 src=['S-003'] :: He is not allergic to penicillin.
+[S] E-007 score=2.8 src=['S-003'] :: Past history of hypertension.
+[A] E-008 score=4.3 src=['S-004'] :: Impression is upper respiratory tract infection.
+[P] E-009 score=7.0 src=['S-004'] :: I will prescribe panadol 500 mg PO TDS for 3 days and panadol as needed.
+[P] E-010 score=4.6 src=['S-005'] :: 建議多休息多飲水，一星期後返嚟覆診，如果發燒再返嚟。
+
+== 报告初稿 RPT-4004c1a5a3f7（模板 general_soap v1.0.0）==
+- chief_complaint              喉嚨痛，痛咗三日   <来源 S-001 6157-9000ms>
+- history_of_present_illness   陳先生今日返嚟覆診，佢話呢三日有喉嚨痛同咳，無發燒。   <来源 S-001 0-6157ms>
+- past_medical_history         hypertension   <来源 S-003 20906-23000ms>
+- allergy_history              No known drug allergy.；He is not allergic to penicillin.   <来源 S-003 17000-18534ms>
+- physical_examination         On examination, blood pressure 128 over 76, pulse 82, temperature 36.8 degree Celsius.   <来源 S-002 9000-14460ms>
+- investigations               Throat is mildly injected, chest clear.   <来源 S-002 14460-17000ms>
+- assessment                   upper respiratory tract infection   <来源 S-004 23000-25380ms>
+- plan                         多休息多飲水，一星期後返嚟覆診，如果發燒再返嚟   <来源 S-005 29000-34000ms>
+- medications                  I will prescribe panadol 500 mg PO TDS for 3 days and panadol as needed.   <来源 S-004 25380-29000ms>
+
+缺失必填：无
+警告：
+
+签署结果：ok=True 签署完成，报告已锁定（BR-11）
+导出文件（language_mode=bilingual）：
+  - text  C:\Users\xu261\Desktop\report produce\report-engine\data\exports\RPT-4004c1a5a3f7.txt
+  - json  C:\Users\xu261\Desktop\report produce\report-engine\data\exports\RPT-4004c1a5a3f7.json
+  - pdf   C:\Users\xu261\Desktop\report produce\report-engine\data\exports\RPT-4004c1a5a3f7.pdf
+  - html  C:\Users\xu261\Desktop\report produce\report-engine\data\exports\RPT-4004c1a5a3f7.html
+
+== 导出文本 ==
+C:\Users\xu261\Desktop\report produce\report-engine\data\exports\RPT-4004c1a5a3f7.txt

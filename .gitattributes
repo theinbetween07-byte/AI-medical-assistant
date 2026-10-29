@@ -1,0 +1,21 @@
+# 统一换行处理
+* text=auto
+
+# 二进制文件：禁止换行转换 / 文本合并，避免损坏
+*.pdf binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.docx binary
+*.xlsx binary
+*.xls binary
+*.zip binary
+
+# 文本文件在仓库内统一 LF
+*.py text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+*.html text eol=lf
+*.txt text eol=lf
+.gitignore text eol=lf
+.gitattributes text eol=lf

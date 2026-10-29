@@ -1,0 +1,23 @@
+{
+  "version": "2026-10-20",
+  "description": "术语种子库。term_norm 为规范写法，aliases 为 ASR 常见误识别写法。新增条目直接编辑本文件。",
+  "entries": [
+    {"id": "drug-panadol", "term_norm": "Panadol", "aliases": ["pana dol", "panado", "panadole", "paracetamol"], "category": "drug"},
+    {"id": "drug-amoxicillin", "term_norm": "Amoxicillin", "aliases": ["amoxcillin", "amoxycillin", "amoxillin"], "category": "drug"},
+    {"id": "drug-augmentin", "term_norm": "Augmentin", "aliases": ["augmentine", "augmentin 625"], "category": "drug"},
+    {"id": "drug-metformin", "term_norm": "Metformin", "aliases": ["metformine", "metfromin"], "category": "drug"},
+    {"id": "drug-losartan", "term_norm": "Losartan", "aliases": ["losartan potassium", "losartin"], "category": "drug"},
+    {"id": "drug-amlodipine", "term_norm": "Amlodipine", "aliases": ["amlodipin", "amlodepine"], "category": "drug"},
+    {"id": "drug-atorvastatin", "term_norm": "Atorvastatin", "aliases": ["atorvastin", "atorvastatine"], "category": "drug"},
+    {"id": "drug-salbutamol", "term_norm": "Salbutamol", "aliases": ["salbutamal", "ventolin"], "category": "drug"},
+    {"id": "drug-omeprazole", "term_norm": "Omeprazole", "aliases": ["omeprazol", "losec"], "category": "drug"},
+    {"id": "drug-cetirizine", "term_norm": "Cetirizine", "aliases": ["cetrizine", "cetirizin", "zyrtec"], "category": "drug"},
+    {"id": "disease-urti", "term_norm": "upper respiratory tract infection", "aliases": ["upper resp tract infection", "upper respiratory infection"], "category": "disease"},
+    {"id": "disease-hypertension", "term_norm": "hypertension", "aliases": ["hypertention", "high blood pressure"], "category": "disease"},
+    {"id": "disease-diabetes", "term_norm": "diabetes mellitus", "aliases": ["diabetis mellitus", "diabetes melitus", "DM"], "category": "disease"},
+    {"id": "disease-pneumonia", "term_norm": "pneumonia", "aliases": ["pnuemonia", "newmonia"], "category": "disease"},
+    {"id": "exam-cbc", "term_norm": "complete blood count", "aliases": ["complete blood count CBC", "full blood count"], "category": "exam"},
+    {"id": "exam-cxr", "term_norm": "chest X-ray", "aliases": ["chest xray", "CXR", "chest radiograph"], "category": "exam"},
+    {"id": "drug-amoxicillin-clavulanate", "term_norm": "Amoxicillin/Clavulanate", "aliases": ["amoxicillin clavulanate", "co-amoxiclav"], "category": "drug"}
+  ]
+}

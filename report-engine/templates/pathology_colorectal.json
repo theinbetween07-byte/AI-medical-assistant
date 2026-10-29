@@ -1,0 +1,202 @@
+{
+  "id": "pathology_colorectal",
+  "name": "外科病理報告（結直腸） / Surgical Pathology Report (Colorectal)",
+  "specialty": "pathology",
+  "version": "1.0.0",
+  "language": "en",
+  "description": "結直腸癌切除標本病理報告：synoptic 診斷要素 + 宏觀檢查 + 鏡下檢查 + 診斷。字段口徑對齊使用者提供的 10 份樣本（2026-10 版）。",
+  "pool_all_sections": true,
+  "field_separator": " ",
+  "fields": [
+    {
+      "key": "case_number",
+      "label": "病例編號 / Case No.",
+      "section": "O",
+      "required": false,
+      "order": 1,
+      "keywords": ["case no", "case number", "病例編號", "病例编号", "標本編號", "病理編號"],
+      "accepts_fallback": false,
+      "hint": "由宿主系統或病理系統帶入，通常不靠口述"
+    },
+    {
+      "key": "tumour_site",
+      "label": "腫瘤部位 / Tumour site",
+      "section": "O",
+      "required": true,
+      "order": 2,
+      "keywords": ["tumour site", "tumor site", "site of tumour", "site of tumor", "腫瘤部位", "肿瘤部位", "腫瘤位置", "肿瘤位置"],
+      "accepts_fallback": false
+    },
+    {
+      "key": "operative_procedure",
+      "label": "手術方式 / Operative procedure",
+      "section": "O",
+      "required": true,
+      "order": 3,
+      "keywords": ["operative procedure", "operation performed", "operation", "手術方式", "手术方式", "手術"],
+      "accepts_fallback": false
+    },
+    {
+      "key": "tumour_type",
+      "label": "組織學類型 / Histological tumour type",
+      "section": "O",
+      "required": true,
+      "order": 4,
+      "keywords": ["histological tumour type", "histological tumor type", "tumour type", "tumor type", "histology", "組織學類型", "组织学类型"],
+      "accepts_fallback": false
+    },
+    {
+      "key": "tumour_grade",
+      "label": "組織學分級 / Histological tumour grade",
+      "section": "O",
+      "required": true,
+      "order": 5,
+      "keywords": ["histological tumour grade", "histological tumor grade", "tumour grade", "tumor grade", "differentiation", "分化", "分級", "分级"],
+      "accepts_fallback": false
+    },
+    {
+      "key": "tumour_dimension",
+      "label": "腫瘤大小 / Tumour dimension",
+      "section": "O",
+      "required": true,
+      "order": 6,
+      "keywords": ["tumour dimension", "tumor dimension", "tumour size", "tumor size", "dimension", "最大徑", "最大径", "腫瘤大小", "肿瘤大小"],
+      "accepts_fallback": false
+    },
+    {
+      "key": "perforation",
+      "label": "穿孔 / Perforation",
+      "section": "O",
+      "required": true,
+      "order": 7,
+      "keywords": ["perforation", "perforated", "穿孔"],
+      "accepts_fallback": false
+    },
+    {
+      "key": "peritoneal_reflection",
+      "label": "與腹膜反折關係 / Relation of tumour to anterior peritoneal reflection",
+      "section": "O",
+      "required": true,
+      "order": 8,
+      "keywords": ["relation of tumour to anterior peritoneal reflection", "relation of tumor to anterior peritoneal reflection", "relation to anterior peritoneal reflection", "anterior peritoneal reflection", "腹膜反折"],
+      "accepts_fallback": false,
+      "hint": "直腸標本適用；結腸標本通常記錄 not applicable"
+    },
+    {
+      "key": "mesorectal_excision_plane",
+      "label": "直腸繫膜切除平面 / Plane of mesorectal excision",
+      "section": "O",
+      "required": true,
+      "order": 9,
+      "keywords": ["plane of mesorectal excision", "mesorectal excision", "mesorectal plane", "mesorectum", "直腸繫膜", "直肠系膜"],
+      "accepts_fallback": false,
+      "hint": "直腸標本適用；結腸標本通常記錄 not applicable"
+    },
+    {
+      "key": "extent_of_invasion",
+      "label": "浸潤深度 / Extent of invasion",
+      "section": "O",
+      "required": true,
+      "order": 10,
+      "keywords": ["extent of invasion", "invasion to", "invades into", "invades through", "subserosa", "perirectal fat", "浸潤", "浸润", "侵犯"],
+      "accepts_fallback": false
+    },
+    {
+      "key": "lymphovascular_invasion",
+      "label": "淋巴血管侵犯 / Lymphatic and venous invasion",
+      "section": "O",
+      "required": true,
+      "order": 11,
+      "keywords": ["lymphatic and venous invasion", "lymphovascular invasion", "venous invasion", "lymphatic invasion", "vascular permeation", "淋巴血管", "脈管侵犯"],
+      "accepts_fallback": false
+    },
+    {
+      "key": "perineural_invasion",
+      "label": "神經周圍侵犯 / Perineural invasion",
+      "section": "O",
+      "required": true,
+      "order": 12,
+      "keywords": ["perineural invasion", "perineural", "神經周圍", "神经周围"],
+      "accepts_fallback": false
+    },
+    {
+      "key": "lymph_node_status",
+      "label": "淋巴結狀態 / Lymph node status",
+      "section": "O",
+      "required": true,
+      "order": 13,
+      "keywords": ["lymph node status", "lymph nodes", "lymph node", "淋巴結狀態", "淋巴結", "淋巴结"],
+      "accepts_fallback": false
+    },
+    {
+      "key": "tumour_deposits",
+      "label": "腫瘤沉積 / Tumour deposits",
+      "section": "O",
+      "required": true,
+      "order": 14,
+      "keywords": ["tumour deposits", "tumor deposits", "tumour deposit", "tumor deposit", "腫瘤沉積", "肿瘤沉积"],
+      "accepts_fallback": false
+    },
+    {
+      "key": "proximal_margin",
+      "label": "近端切緣 / Proximal margin",
+      "section": "O",
+      "required": true,
+      "order": 15,
+      "keywords": ["proximal margin", "proximal resection margin", "近端切緣", "近端切缘"],
+      "accepts_fallback": false
+    },
+    {
+      "key": "distal_margin",
+      "label": "遠端切緣 / Distal margin",
+      "section": "O",
+      "required": true,
+      "order": 16,
+      "keywords": ["distal margin", "distal resection margin", "遠端切緣", "远端切缘"],
+      "accepts_fallback": false
+    },
+    {
+      "key": "circumferential_margin",
+      "label": "環周切緣 / Circumferential margin",
+      "section": "O",
+      "required": true,
+      "order": 17,
+      "keywords": ["circumferential margin", "radial resection margin", "radial margin", "mesenteric margin", "環周切緣", "环周切缘"],
+      "accepts_fallback": false
+    },
+    {
+      "key": "macroscopic_examination",
+      "label": "宏觀檢查 / MACROSCOPIC EXAMINATION",
+      "section": "O",
+      "required": false,
+      "order": 18,
+      "keywords": ["macroscopic examination", "macroscopic", "gross examination", "gross description", "肉眼檢查", "宏觀檢查"],
+      "scope_headings": ["macroscopic examination", "macroscopy", "macroscopic", "gross description", "gross examination", "宏觀檢查", "肉眼檢查", "大体检查"],
+      "accepts_fallback": true
+    },
+    {
+      "key": "microscopic_examination",
+      "label": "鏡下檢查 / MICROSCOPIC EXAMINATION",
+      "section": "O",
+      "required": false,
+      "order": 19,
+      "keywords": ["microscopic examination", "microscopic", "microscopy", "histological examination", "鏡下檢查", "鏡檢"],
+      "scope_headings": ["microscopic examination", "microscopy", "microscopic", "histology", "鏡下檢查", "鏡檢", "镜下检查"],
+      "accepts_fallback": true
+    },
+    {
+      "key": "diagnosis",
+      "label": "診斷 / DIAGNOSIS",
+      "section": "A",
+      "required": true,
+      "order": 20,
+      "keywords": ["pathological diagnosis", "diagnosis", "conclusion", "diagnosis summary", "病理診斷", "診斷", "诊断"],
+      "scope_headings": ["diagnosis", "diagnosis summary", "pathological diagnosis", "conclusion", "診斷", "诊断", "病理診斷"],
+      "accepts_fallback": true,
+      "compose": {
+        "pattern": "{tumour_site}, {operative_procedure}: {tumour_grade} {tumour_type}, {extent_of_invasion}.",
+        "required_keys": ["tumour_site", "tumour_type", "extent_of_invasion"]
+      }
+    }
+  ]
+}

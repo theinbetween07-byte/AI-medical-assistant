@@ -1,0 +1,28 @@
+{
+  "id": "general_soap",
+  "name": "通用 SOAP 记录 / General SOAP Note",
+  "specialty": "general",
+  "version": "1.0.0",
+  "language": "bilingual",
+  "description": "通用兜底模板，任何科室可用。",
+  "fields": [
+    {"key": "chief_complaint", "label": "主诉 / Chief Complaint", "section": "S", "required": true, "order": 1,
+     "keywords": ["chief complaint", "主訴", "主诉", "complain", "病人講", "病人说"]},
+    {"key": "history_of_present_illness", "label": "现病史 / History of Present Illness", "section": "S", "order": 2,
+     "keywords": ["history", "現病史", "现病史", "since", "duration", "天", "day"]},
+    {"key": "past_medical_history", "label": "既往史 / Past Medical History", "section": "S", "order": 3,
+     "keywords": ["past history", "既往", "病史", "history of"]},
+    {"key": "allergy_history", "label": "过敏史 / Allergy History", "section": "S", "required": true, "order": 4,
+     "keywords": ["allergy", "allergic", "過敏", "过敏"]},
+    {"key": "physical_examination", "label": "体格检查 / Physical Examination", "section": "O", "required": true, "order": 5,
+     "keywords": ["examination", "檢查", "检查", "O/E", "vitals", "blood pressure", "血壓", "血压"]},
+    {"key": "investigations", "label": "检查结果 / Investigations", "section": "O", "order": 6,
+     "keywords": ["blood test", "x-ray", "CT", "investigation", "檢驗", "检验", "報告", "报告"]},
+    {"key": "assessment", "label": "诊断/评估 / Assessment", "section": "A", "required": true, "order": 7,
+     "keywords": ["diagnosis", "impression", "assessment", "診斷", "诊断", "評估", "评估"]},
+    {"key": "plan", "label": "处理计划 / Plan", "section": "P", "required": true, "order": 8,
+     "keywords": ["plan", "advise", "refer", "follow up", "計劃", "计划", "建議", "建议", "覆診", "复诊"]},
+    {"key": "medications", "label": "用药 / Medications", "section": "P", "type": "medication", "order": 9,
+     "keywords": ["mg", "tablet", "tab", "PO", "處方", "处方", "prescribe"]}
+  ]
+}

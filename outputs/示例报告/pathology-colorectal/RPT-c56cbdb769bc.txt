@@ -1,0 +1,27 @@
+Surgical Pathology Report (Colorectal)
+Template v1.0.0 · Generated 2026-10-20T04:13:38+00:00 · Status signed
+Signed: dr-demo @ 2026-10-20T04:13:38+00:00
+------------------------------------------------------------
+Case No.: SP-2026-004521
+Tumour site: sigmoid colon
+Operative procedure: laparoscopic anterior resection
+Histological tumour type: adenocarcinoma, not otherwise specified
+Histological tumour grade: moderately differentiated
+Tumour dimension: 3.5 x 2.8 x 1.2 cm
+Perforation: not identified
+Relation of tumour to anterior peritoneal reflection: not applicable
+Plane of mesorectal excision: not applicable
+Extent of invasion: tumour invades through muscularis propria into subserosa
+Lymphatic and venous invasion: not identified
+Perineural invasion: present
+Lymph node status: 2 out of 16 lymph nodes show metastatic carcinoma
+Tumour deposits: absent
+Proximal margin: free of tumour, 6.0 cm from tumour
+Distal margin: free of tumour, 4.5 cm from tumour
+Circumferential margin: free of tumour, 1.2 cm
+MACROSCOPIC EXAMINATION: The specimen consists of a segment of sigmoid colon measuring 18.0 cm in length and 4.0 cm in diameter. An ulcerated tumour measuring 3.5 x 2.8 x 1.2 cm is identified 6.0 cm from the proximal resection margin. The serosal surface is not involved by tumour and multiple lymph nodes are found in the mesocolic fat.
+MICROSCOPIC EXAMINATION: Sections show a moderately differentiated adenocarcinoma with glandular formation, invading through the muscularis propria into the subserosal adipose tissue. The tumour cells show moderate nuclear pleomorphism and no lymphatic or venous permeation is identified. Metastatic carcinoma is present in 2 of 16 lymph nodes and the remaining lymph nodes show reactive changes. Sections of the proximal, distal and circumferential resection margins are free of tumour.
+DIAGNOSIS: Sigmoid colon, laparoscopic anterior resection: moderately differentiated adenocarcinoma, not otherwise specified, tumour invades through muscularis propria into subserosa.  [auto-generated]
+------------------------------------------------------------
+Notes:
+  - 字段 diagnosis 由模板按已抽取值拼装生成，已标记「自动生成，请核对」 / diagnosis auto-generated from extracted fields - please verify

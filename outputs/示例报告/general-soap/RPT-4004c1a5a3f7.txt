@@ -1,0 +1,13 @@
+通用 SOAP 记录 / General SOAP Note
+模板版本 1.0.0 · 生成时间 2026-10-20T04:13:41+00:00 · 状态 signed
+签署: dr-demo @ 2026-10-20T04:13:41+00:00
+------------------------------------------------------------
+主诉 / Chief Complaint：喉嚨痛，痛咗三日
+现病史 / History of Present Illness：陳先生今日返嚟覆診，佢話呢三日有喉嚨痛同咳，無發燒。
+既往史 / Past Medical History：hypertension
+过敏史 / Allergy History：No known drug allergy.；He is not allergic to penicillin.
+体格检查 / Physical Examination：On examination, blood pressure 128 over 76, pulse 82, temperature 36.8 degree Celsius.
+检查结果 / Investigations：Throat is mildly injected, chest clear.
+诊断/评估 / Assessment：upper respiratory tract infection
+处理计划 / Plan：多休息多飲水，一星期後返嚟覆診，如果發燒再返嚟
+用药 / Medications：I will prescribe panadol 500 mg PO TDS for 3 days and panadol as needed.

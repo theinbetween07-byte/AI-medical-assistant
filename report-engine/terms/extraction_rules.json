@@ -1,0 +1,57 @@
+{
+  "version": "2026-10-20",
+  "description": "SOAP 规则抽取配置。修改本文件即可调整抽取行为，无需重新打包（对齐《技术设计》2.3 声明式与 NFR-10 版本化）。",
+  "markers": {
+    "S": ["主诉", "現病史", "现病史", "病史", "病人講", "病人说", "病人表示", "患者訴", "患者诉", "complain", "complains", "complaining", "history", "history of", "presenting", "presented with", "symptoms", "C/O", "Hx"],
+    "O": ["檢查", "检查", "查體", "查体", "體格檢查", "体格检查", "化驗", "化验", "檢驗", "检验", "報告", "报告", "血壓", "血压", "體溫", "体温", "脈搏", "脉搏", "examination", "on examination", "O/E", "vitals", "vital signs", "investigation", "investigations", "lab", "labs", "blood test", "x-ray", "X光", "CT", "ultrasound"],
+    "A": ["診斷", "诊断", "評估", "评估", "印象", "diagnosis", "impression", "assessment", "Dx", "suspected", "consistent with", "likely"],
+    "P": ["計劃", "计划", "處理", "处理", "處置", "处置", "處方", "处方", "跟進", "跟进", "覆診", "复诊", "隨訪", "随访", "plan", "Rx", "prescribe", "prescribed", "refer", "referral", "follow up", "follow-up", "advise", "advised", "discharge", "review in"]
+  },
+  "keywords": {
+    "S": {
+      "pain": 1.0, "痛": 1.0, "痛楚": 1.0, "fever": 1.0, "發燒": 1.0, "发烧": 1.0,
+      "cough": 1.0, "咳": 1.0, "咳痰": 1.0, "sore throat": 1.0, "喉嚨痛": 1.0, "喉咙痛": 1.0,
+      "nausea": 1.0, "vomit": 1.0, "嘔吐": 1.0, "呕吐": 1.0, "diarrhoea": 1.0, "腹瀉": 1.0, "腹泻": 1.0,
+      "dizziness": 1.0, "頭暈": 1.0, "头晕": 1.0, "fatigue": 1.0, "疲倦": 1.0, "乏力": 1.0,
+      "runny nose": 1.0, "鼻塞": 1.0, "shortness of breath": 1.0, "氣促": 1.0, "气促": 1.0,
+      "chest pain": 1.0, "胸痛": 1.0, "appetite": 0.8, "睡眠": 0.8, "sleep": 0.8,
+      "duration": 0.8, "since": 0.8, "天": 0.5, "日": 0.5, "day": 0.5, "days": 0.5,
+      "week": 0.5, "weeks": 0.5, "month": 0.5, "allergy": 1.2, "allergic": 1.2, "過敏": 1.2, "过敏": 1.2,
+      "smoking": 0.8, "吸煙": 0.8, "吸烟": 0.8, "alcohol": 0.8, "喝酒": 0.8, "飲酒": 0.8,
+      "past history": 1.2, "既往": 1.2, "病史": 1.2, "主訴": 1.5, "主诉": 1.5
+    },
+    "O": {
+      "blood pressure": 1.2, "血壓": 1.2, "血压": 1.2, "BP": 1.0, "pulse": 1.0,
+      "脈搏": 1.0, "脉搏": 1.0, "temperature": 1.0, "體溫": 1.0, "体温": 1.0, "temp": 1.0,
+      "°C": 1.2, "saturation": 1.0, "SpO2": 1.2, "spo2": 1.2, "chest clear": 1.2, "肺部清": 1.2,
+      "heart sound": 1.0, "murmur": 1.0, "tender": 1.0, "壓痛": 1.0, "压痛": 1.0,
+      "swelling": 1.0, "腫": 1.0, "肿": 1.0, "rash": 1.0, "紅疹": 1.0, "红疹": 1.0,
+      "x-ray": 1.2, "X光": 1.2, "CT": 1.0, "MRI": 1.0, "ultrasound": 1.0, "超聲波": 1.0, "超声波": 1.0,
+      "blood test": 1.2, "驗血": 1.2, "验血": 1.2, "haemoglobin": 1.0, "hemoglobin": 1.0,
+      "WBC": 1.0, "CRP": 1.0, "creatinine": 1.0, "ALT": 1.0, "normal": 0.6, "正常": 0.6,
+      "mmHg": 1.2, "bpm": 1.2, "/min": 0.8, "顯著": 0.6, "显著": 0.6
+    },
+    "A": {
+      "diagnosis": 1.5, "診斷": 1.5, "诊断": 1.5, "impression": 1.2, "assessment": 1.2,
+      "suspected": 1.2, "懷疑": 1.2, "怀疑": 1.2, "likely": 1.0, "consistent with": 1.2,
+      "印象": 1.0, "upper respiratory tract infection": 1.5, "URTI": 1.5,
+      "肺炎": 1.5, "pneumonia": 1.5, "gastritis": 1.5, "胃炎": 1.5,
+      "hypertension": 1.5, "高血壓": 1.5, "高血压": 1.5, "diabetes": 1.5, "糖尿病": 1.5,
+      "asthma": 1.5, "哮喘": 1.5, "influenza": 1.5, "流感": 1.5, "dermatitis": 1.2, "皮膚炎": 1.2, "皮炎": 1.2
+    },
+    "P": {
+      "prescribe": 1.5, "處方": 1.5, "处方": 1.5, "Rx": 1.2, "take": 1.0, "start": 1.0,
+      "continue": 1.0, "stop": 1.0, "refer": 1.5, "轉介": 1.5, "转介": 1.5,
+      "follow up": 1.2, "follow-up": 1.2, "覆診": 1.2, "复诊": 1.2, "隨訪": 1.2, "随访": 1.2,
+      "review in": 1.2, "admit": 1.2, "入院": 1.2, "discharge": 1.2, "出院": 1.2,
+      "advise": 1.0, "建議": 1.0, "建议": 1.0, "rest": 0.8, "休息": 0.8,
+      "mg": 1.5, "mcg": 1.5, "tablet": 1.5, "tab": 1.2, "capsule": 1.2,
+      "PO": 1.2, "QD": 1.2, "BD": 1.2, "TDS": 1.2, "QID": 1.2, "PRN": 1.2,
+      "daily": 1.0, "twice": 1.0, "three times": 1.0, "次": 0.8, "每日": 1.0
+    }
+  },
+  "thresholds": {
+    "assign_min_score": 1.0,
+    "marker_score": 0.0
+  }
+}

@@ -1,0 +1,669 @@
+{
+  "id": "RPT-c56cbdb769bc",
+  "session_id": "SES-DEMO",
+  "template_id": "pathology_colorectal",
+  "template_name": "外科病理報告（結直腸） / Surgical Pathology Report (Colorectal)",
+  "template_version": "1.0.0",
+  "status": "signed",
+  "created_at": "2026-10-20T04:13:38+00:00",
+  "signed_at": "2026-10-20T04:13:38+00:00",
+  "signed_by": "dr-demo",
+  "fields": [
+    {
+      "key": "case_number",
+      "label": "病例編號 / Case No.",
+      "section": "O",
+      "required": false,
+      "order": 1,
+      "type": "text",
+      "ai_value": "SP-2026-004521",
+      "final_value": "",
+      "sources": [
+        {
+          "segment_id": "P-001",
+          "start_ms": 0,
+          "end_ms": 3000,
+          "text": "Case No.: SP-2026-004521."
+        }
+      ],
+      "flags": [],
+      "evidence_ok": true,
+      "note": "",
+      "display_label": "Case No."
+    },
+    {
+      "key": "tumour_site",
+      "label": "腫瘤部位 / Tumour site",
+      "section": "O",
+      "required": true,
+      "order": 2,
+      "type": "text",
+      "ai_value": "sigmoid colon",
+      "final_value": "sigmoid colon",
+      "sources": [
+        {
+          "segment_id": "P-002",
+          "start_ms": 3000,
+          "end_ms": 7000,
+          "text": "Tumour site: sigmoid colon."
+        }
+      ],
+      "flags": [],
+      "evidence_ok": true,
+      "note": "",
+      "display_label": "Tumour site"
+    },
+    {
+      "key": "operative_procedure",
+      "label": "手術方式 / Operative procedure",
+      "section": "O",
+      "required": true,
+      "order": 3,
+      "type": "text",
+      "ai_value": "laparoscopic anterior resection",
+      "final_value": "laparoscopic anterior resection",
+      "sources": [
+        {
+          "segment_id": "P-003",
+          "start_ms": 7000,
+          "end_ms": 11000,
+          "text": "Operative procedure: laparoscopic anterior resection."
+        }
+      ],
+      "flags": [],
+      "evidence_ok": true,
+      "note": "",
+      "display_label": "Operative procedure"
+    },
+    {
+      "key": "tumour_type",
+      "label": "組織學類型 / Histological tumour type",
+      "section": "O",
+      "required": true,
+      "order": 4,
+      "type": "text",
+      "ai_value": "adenocarcinoma, not otherwise specified",
+      "final_value": "adenocarcinoma, not otherwise specified",
+      "sources": [
+        {
+          "segment_id": "P-004",
+          "start_ms": 11000,
+          "end_ms": 16000,
+          "text": "Histological tumour type: adenocarcinoma, not otherwise specified."
+        }
+      ],
+      "flags": [],
+      "evidence_ok": true,
+      "note": "",
+      "display_label": "Histological tumour type"
+    },
+    {
+      "key": "tumour_grade",
+      "label": "組織學分級 / Histological tumour grade",
+      "section": "O",
+      "required": true,
+      "order": 5,
+      "type": "text",
+      "ai_value": "moderately differentiated",
+      "final_value": "moderately differentiated",
+      "sources": [
+        {
+          "segment_id": "P-005",
+          "start_ms": 16000,
+          "end_ms": 21000,
+          "text": "Histological tumour grade: moderately differentiated."
+        }
+      ],
+      "flags": [],
+      "evidence_ok": true,
+      "note": "",
+      "display_label": "Histological tumour grade"
+    },
+    {
+      "key": "tumour_dimension",
+      "label": "腫瘤大小 / Tumour dimension",
+      "section": "O",
+      "required": true,
+      "order": 6,
+      "type": "text",
+      "ai_value": "3.5 x 2.8 x 1.2 cm",
+      "final_value": "3.5 x 2.8 x 1.2 cm",
+      "sources": [
+        {
+          "segment_id": "P-006",
+          "start_ms": 21000,
+          "end_ms": 26000,
+          "text": "Tumour dimension: 3.5 x 2.8 x 1.2 cm."
+        }
+      ],
+      "flags": [],
+      "evidence_ok": true,
+      "note": "",
+      "display_label": "Tumour dimension"
+    },
+    {
+      "key": "perforation",
+      "label": "穿孔 / Perforation",
+      "section": "O",
+      "required": true,
+      "order": 7,
+      "type": "text",
+      "ai_value": "not identified",
+      "final_value": "not identified",
+      "sources": [
+        {
+          "segment_id": "P-007",
+          "start_ms": 26000,
+          "end_ms": 30000,
+          "text": "Perforation: not identified."
+        }
+      ],
+      "flags": [],
+      "evidence_ok": true,
+      "note": "",
+      "display_label": "Perforation"
+    },
+    {
+      "key": "peritoneal_reflection",
+      "label": "與腹膜反折關係 / Relation of tumour to anterior peritoneal reflection",
+      "section": "O",
+      "required": true,
+      "order": 8,
+      "type": "text",
+      "ai_value": "not applicable",
+      "final_value": "not applicable",
+      "sources": [
+        {
+          "segment_id": "P-008",
+          "start_ms": 30000,
+          "end_ms": 36000,
+          "text": "Relation of tumour to anterior peritoneal reflection: not applicable."
+        }
+      ],
+      "flags": [],
+      "evidence_ok": true,
+      "note": "",
+      "display_label": "Relation of tumour to anterior peritoneal reflection"
+    },
+    {
+      "key": "mesorectal_excision_plane",
+      "label": "直腸繫膜切除平面 / Plane of mesorectal excision",
+      "section": "O",
+      "required": true,
+      "order": 9,
+      "type": "text",
+      "ai_value": "not applicable",
+      "final_value": "not applicable",
+      "sources": [
+        {
+          "segment_id": "P-009",
+          "start_ms": 36000,
+          "end_ms": 42000,
+          "text": "Plane of mesorectal excision: not applicable."
+        }
+      ],
+      "flags": [],
+      "evidence_ok": true,
+      "note": "",
+      "display_label": "Plane of mesorectal excision"
+    },
+    {
+      "key": "extent_of_invasion",
+      "label": "浸潤深度 / Extent of invasion",
+      "section": "O",
+      "required": true,
+      "order": 10,
+      "type": "text",
+      "ai_value": "tumour invades through muscularis propria into subserosa",
+      "final_value": "tumour invades through muscularis propria into subserosa",
+      "sources": [
+        {
+          "segment_id": "P-010",
+          "start_ms": 42000,
+          "end_ms": 48000,
+          "text": "Extent of invasion: tumour invades through muscularis propria into subserosa."
+        }
+      ],
+      "flags": [],
+      "evidence_ok": true,
+      "note": "",
+      "display_label": "Extent of invasion"
+    },
+    {
+      "key": "lymphovascular_invasion",
+      "label": "淋巴血管侵犯 / Lymphatic and venous invasion",
+      "section": "O",
+      "required": true,
+      "order": 11,
+      "type": "text",
+      "ai_value": "not identified",
+      "final_value": "not identified",
+      "sources": [
+        {
+          "segment_id": "P-011",
+          "start_ms": 48000,
+          "end_ms": 54000,
+          "text": "Lymphatic and venous invasion: not identified."
+        }
+      ],
+      "flags": [],
+      "evidence_ok": true,
+      "note": "",
+      "display_label": "Lymphatic and venous invasion"
+    },
+    {
+      "key": "perineural_invasion",
+      "label": "神經周圍侵犯 / Perineural invasion",
+      "section": "O",
+      "required": true,
+      "order": 12,
+      "type": "text",
+      "ai_value": "present",
+      "final_value": "present",
+      "sources": [
+        {
+          "segment_id": "P-012",
+          "start_ms": 54000,
+          "end_ms": 58000,
+          "text": "Perineural invasion: present."
+        }
+      ],
+      "flags": [],
+      "evidence_ok": true,
+      "note": "",
+      "display_label": "Perineural invasion"
+    },
+    {
+      "key": "lymph_node_status",
+      "label": "淋巴結狀態 / Lymph node status",
+      "section": "O",
+      "required": true,
+      "order": 13,
+      "type": "text",
+      "ai_value": "2 out of 16 lymph nodes show metastatic carcinoma",
+      "final_value": "2 out of 16 lymph nodes show metastatic carcinoma",
+      "sources": [
+        {
+          "segment_id": "P-013",
+          "start_ms": 58000,
+          "end_ms": 64000,
+          "text": "Lymph node status: 2 out of 16 lymph nodes show metastatic carcinoma."
+        }
+      ],
+      "flags": [],
+      "evidence_ok": true,
+      "note": "",
+      "display_label": "Lymph node status"
+    },
+    {
+      "key": "tumour_deposits",
+      "label": "腫瘤沉積 / Tumour deposits",
+      "section": "O",
+      "required": true,
+      "order": 14,
+      "type": "text",
+      "ai_value": "absent",
+      "final_value": "absent",
+      "sources": [
+        {
+          "segment_id": "P-014",
+          "start_ms": 64000,
+          "end_ms": 68000,
+          "text": "Tumour deposits: absent."
+        }
+      ],
+      "flags": [],
+      "evidence_ok": true,
+      "note": "",
+      "display_label": "Tumour deposits"
+    },
+    {
+      "key": "proximal_margin",
+      "label": "近端切緣 / Proximal margin",
+      "section": "O",
+      "required": true,
+      "order": 15,
+      "type": "text",
+      "ai_value": "free of tumour, 6.0 cm from tumour",
+      "final_value": "free of tumour, 6.0 cm from tumour",
+      "sources": [
+        {
+          "segment_id": "P-015",
+          "start_ms": 68000,
+          "end_ms": 74000,
+          "text": "Proximal margin: free of tumour, 6.0 cm from tumour."
+        }
+      ],
+      "flags": [],
+      "evidence_ok": true,
+      "note": "",
+      "display_label": "Proximal margin"
+    },
+    {
+      "key": "distal_margin",
+      "label": "遠端切緣 / Distal margin",
+      "section": "O",
+      "required": true,
+      "order": 16,
+      "type": "text",
+      "ai_value": "free of tumour, 4.5 cm from tumour",
+      "final_value": "free of tumour, 4.5 cm from tumour",
+      "sources": [
+        {
+          "segment_id": "P-016",
+          "start_ms": 74000,
+          "end_ms": 80000,
+          "text": "Distal margin: free of tumour, 4.5 cm from tumour."
+        }
+      ],
+      "flags": [],
+      "evidence_ok": true,
+      "note": "",
+      "display_label": "Distal margin"
+    },
+    {
+      "key": "circumferential_margin",
+      "label": "環周切緣 / Circumferential margin",
+      "section": "O",
+      "required": true,
+      "order": 17,
+      "type": "text",
+      "ai_value": "free of tumour, 1.2 cm",
+      "final_value": "free of tumour, 1.2 cm",
+      "sources": [
+        {
+          "segment_id": "P-017",
+          "start_ms": 80000,
+          "end_ms": 86000,
+          "text": "Circumferential margin: free of tumour, 1.2 cm."
+        }
+      ],
+      "flags": [],
+      "evidence_ok": true,
+      "note": "",
+      "display_label": "Circumferential margin"
+    },
+    {
+      "key": "macroscopic_examination",
+      "label": "宏觀檢查 / MACROSCOPIC EXAMINATION",
+      "section": "O",
+      "required": false,
+      "order": 18,
+      "type": "text",
+      "ai_value": "The specimen consists of a segment of sigmoid colon measuring 18.0 cm in length and 4.0 cm in diameter. An ulcerated tumour measuring 3.5 x 2.8 x 1.2 cm is identified 6.0 cm from the proximal resection margin. The serosal surface is not involved by tumour and multiple lymph nodes are found in the mesocolic fat.",
+      "final_value": "",
+      "sources": [
+        {
+          "segment_id": "P-019",
+          "start_ms": 89000,
+          "end_ms": 97000,
+          "text": "The specimen consists of a segment of sigmoid colon measuring 18.0 cm in length and 4.0 cm in diameter."
+        },
+        {
+          "segment_id": "P-020",
+          "start_ms": 97000,
+          "end_ms": 105000,
+          "text": "An ulcerated tumour measuring 3.5 x 2.8 x 1.2 cm is identified 6.0 cm from the proximal resection margin."
+        },
+        {
+          "segment_id": "P-021",
+          "start_ms": 105000,
+          "end_ms": 112000,
+          "text": "The serosal surface is not involved by tumour and multiple lymph nodes are found in the mesocolic fat."
+        }
+      ],
+      "flags": [],
+      "evidence_ok": true,
+      "note": "",
+      "display_label": "MACROSCOPIC EXAMINATION"
+    },
+    {
+      "key": "microscopic_examination",
+      "label": "鏡下檢查 / MICROSCOPIC EXAMINATION",
+      "section": "O",
+      "required": false,
+      "order": 19,
+      "type": "text",
+      "ai_value": "Sections show a moderately differentiated adenocarcinoma with glandular formation, invading through the muscularis propria into the subserosal adipose tissue. The tumour cells show moderate nuclear pleomorphism and no lymphatic or venous permeation is identified. Metastatic carcinoma is present in 2 of 16 lymph nodes and the remaining lymph nodes show reactive changes. Sections of the proximal, distal and circumferential resection margins are free of tumour.",
+      "final_value": "",
+      "sources": [
+        {
+          "segment_id": "P-023",
+          "start_ms": 115000,
+          "end_ms": 124000,
+          "text": "Sections show a moderately differentiated adenocarcinoma with glandular formation, invading through the muscularis propria into the subserosal adipose tissue."
+        },
+        {
+          "segment_id": "P-024",
+          "start_ms": 124000,
+          "end_ms": 132000,
+          "text": "The tumour cells show moderate nuclear pleomorphism and no lymphatic or venous permeation is identified."
+        },
+        {
+          "segment_id": "P-025",
+          "start_ms": 132000,
+          "end_ms": 140000,
+          "text": "Metastatic carcinoma is present in 2 of 16 lymph nodes and the remaining lymph nodes show reactive changes."
+        },
+        {
+          "segment_id": "P-026",
+          "start_ms": 140000,
+          "end_ms": 148000,
+          "text": "Sections of the proximal, distal and circumferential resection margins are free of tumour."
+        }
+      ],
+      "flags": [],
+      "evidence_ok": true,
+      "note": "",
+      "display_label": "MICROSCOPIC EXAMINATION"
+    },
+    {
+      "key": "diagnosis",
+      "label": "診斷 / DIAGNOSIS",
+      "section": "A",
+      "required": true,
+      "order": 20,
+      "type": "text",
+      "ai_value": "Sigmoid colon, laparoscopic anterior resection: moderately differentiated adenocarcinoma, not otherwise specified, tumour invades through muscularis propria into subserosa.",
+      "final_value": "Sigmoid colon, laparoscopic anterior resection: moderately differentiated adenocarcinoma, not otherwise specified, tumour invades through muscularis propria into subserosa.",
+      "sources": [
+        {
+          "segment_id": "P-002",
+          "start_ms": 3000,
+          "end_ms": 7000,
+          "text": "Tumour site: sigmoid colon."
+        },
+        {
+          "segment_id": "P-003",
+          "start_ms": 7000,
+          "end_ms": 11000,
+          "text": "Operative procedure: laparoscopic anterior resection."
+        },
+        {
+          "segment_id": "P-005",
+          "start_ms": 16000,
+          "end_ms": 21000,
+          "text": "Histological tumour grade: moderately differentiated."
+        },
+        {
+          "segment_id": "P-004",
+          "start_ms": 11000,
+          "end_ms": 16000,
+          "text": "Histological tumour type: adenocarcinoma, not otherwise specified."
+        },
+        {
+          "segment_id": "P-010",
+          "start_ms": 42000,
+          "end_ms": 48000,
+          "text": "Extent of invasion: tumour invades through muscularis propria into subserosa."
+        }
+      ],
+      "flags": [
+        "derived"
+      ],
+      "evidence_ok": true,
+      "note": "Auto-generated from: tumour_site, operative_procedure, tumour_grade, tumour_type, extent_of_invasion. Please verify.",
+      "display_label": "DIAGNOSIS"
+    }
+  ],
+  "missing_required": [],
+  "warnings": [
+    "字段 diagnosis 由模板按已抽取值拼装生成，已标记「自动生成，请核对」 / diagnosis auto-generated from extracted fields - please verify"
+  ],
+  "mode": "rules",
+  "reviews": [
+    {
+      "report_id": "RPT-c56cbdb769bc",
+      "field_key": "tumour_site",
+      "ai_value": "sigmoid colon",
+      "final_value": "sigmoid colon",
+      "action": "accept",
+      "reviewed_at": "2026-10-20T04:13:38+00:00",
+      "reviewer": "dr-demo"
+    },
+    {
+      "report_id": "RPT-c56cbdb769bc",
+      "field_key": "operative_procedure",
+      "ai_value": "laparoscopic anterior resection",
+      "final_value": "laparoscopic anterior resection",
+      "action": "accept",
+      "reviewed_at": "2026-10-20T04:13:38+00:00",
+      "reviewer": "dr-demo"
+    },
+    {
+      "report_id": "RPT-c56cbdb769bc",
+      "field_key": "tumour_type",
+      "ai_value": "adenocarcinoma, not otherwise specified",
+      "final_value": "adenocarcinoma, not otherwise specified",
+      "action": "accept",
+      "reviewed_at": "2026-10-20T04:13:38+00:00",
+      "reviewer": "dr-demo"
+    },
+    {
+      "report_id": "RPT-c56cbdb769bc",
+      "field_key": "tumour_grade",
+      "ai_value": "moderately differentiated",
+      "final_value": "moderately differentiated",
+      "action": "accept",
+      "reviewed_at": "2026-10-20T04:13:38+00:00",
+      "reviewer": "dr-demo"
+    },
+    {
+      "report_id": "RPT-c56cbdb769bc",
+      "field_key": "tumour_dimension",
+      "ai_value": "3.5 x 2.8 x 1.2 cm",
+      "final_value": "3.5 x 2.8 x 1.2 cm",
+      "action": "accept",
+      "reviewed_at": "2026-10-20T04:13:38+00:00",
+      "reviewer": "dr-demo"
+    },
+    {
+      "report_id": "RPT-c56cbdb769bc",
+      "field_key": "perforation",
+      "ai_value": "not identified",
+      "final_value": "not identified",
+      "action": "accept",
+      "reviewed_at": "2026-10-20T04:13:38+00:00",
+      "reviewer": "dr-demo"
+    },
+    {
+      "report_id": "RPT-c56cbdb769bc",
+      "field_key": "peritoneal_reflection",
+      "ai_value": "not applicable",
+      "final_value": "not applicable",
+      "action": "accept",
+      "reviewed_at": "2026-10-20T04:13:38+00:00",
+      "reviewer": "dr-demo"
+    },
+    {
+      "report_id": "RPT-c56cbdb769bc",
+      "field_key": "mesorectal_excision_plane",
+      "ai_value": "not applicable",
+      "final_value": "not applicable",
+      "action": "accept",
+      "reviewed_at": "2026-10-20T04:13:38+00:00",
+      "reviewer": "dr-demo"
+    },
+    {
+      "report_id": "RPT-c56cbdb769bc",
+      "field_key": "extent_of_invasion",
+      "ai_value": "tumour invades through muscularis propria into subserosa",
+      "final_value": "tumour invades through muscularis propria into subserosa",
+      "action": "accept",
+      "reviewed_at": "2026-10-20T04:13:38+00:00",
+      "reviewer": "dr-demo"
+    },
+    {
+      "report_id": "RPT-c56cbdb769bc",
+      "field_key": "lymphovascular_invasion",
+      "ai_value": "not identified",
+      "final_value": "not identified",
+      "action": "accept",
+      "reviewed_at": "2026-10-20T04:13:38+00:00",
+      "reviewer": "dr-demo"
+    },
+    {
+      "report_id": "RPT-c56cbdb769bc",
+      "field_key": "perineural_invasion",
+      "ai_value": "present",
+      "final_value": "present",
+      "action": "accept",
+      "reviewed_at": "2026-10-20T04:13:38+00:00",
+      "reviewer": "dr-demo"
+    },
+    {
+      "report_id": "RPT-c56cbdb769bc",
+      "field_key": "lymph_node_status",
+      "ai_value": "2 out of 16 lymph nodes show metastatic carcinoma",
+      "final_value": "2 out of 16 lymph nodes show metastatic carcinoma",
+      "action": "accept",
+      "reviewed_at": "2026-10-20T04:13:38+00:00",
+      "reviewer": "dr-demo"
+    },
+    {
+      "report_id": "RPT-c56cbdb769bc",
+      "field_key": "tumour_deposits",
+      "ai_value": "absent",
+      "final_value": "absent",
+      "action": "accept",
+      "reviewed_at": "2026-10-20T04:13:38+00:00",
+      "reviewer": "dr-demo"
+    },
+    {
+      "report_id": "RPT-c56cbdb769bc",
+      "field_key": "proximal_margin",
+      "ai_value": "free of tumour, 6.0 cm from tumour",
+      "final_value": "free of tumour, 6.0 cm from tumour",
+      "action": "accept",
+      "reviewed_at": "2026-10-20T04:13:38+00:00",
+      "reviewer": "dr-demo"
+    },
+    {
+      "report_id": "RPT-c56cbdb769bc",
+      "field_key": "distal_margin",
+      "ai_value": "free of tumour, 4.5 cm from tumour",
+      "final_value": "free of tumour, 4.5 cm from tumour",
+      "action": "accept",
+      "reviewed_at": "2026-10-20T04:13:38+00:00",
+      "reviewer": "dr-demo"
+    },
+    {
+      "report_id": "RPT-c56cbdb769bc",
+      "field_key": "circumferential_margin",
+      "ai_value": "free of tumour, 1.2 cm",
+      "final_value": "free of tumour, 1.2 cm",
+      "action": "accept",
+      "reviewed_at": "2026-10-20T04:13:38+00:00",
+      "reviewer": "dr-demo"
+    },
+    {
+      "report_id": "RPT-c56cbdb769bc",
+      "field_key": "diagnosis",
+      "ai_value": "Sigmoid colon, laparoscopic anterior resection: moderately differentiated adenocarcinoma, not otherwise specified, tumour invades through muscularis propria into subserosa.",
+      "final_value": "Sigmoid colon, laparoscopic anterior resection: moderately differentiated adenocarcinoma, not otherwise specified, tumour invades through muscularis propria into subserosa.",
+      "action": "accept",
+      "reviewed_at": "2026-10-20T04:13:38+00:00",
+      "reviewer": "dr-demo"
+    }
+  ]
+}

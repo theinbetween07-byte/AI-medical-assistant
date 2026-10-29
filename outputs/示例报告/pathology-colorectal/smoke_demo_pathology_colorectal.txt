@@ -1,0 +1,69 @@
+== 模板 pathology_colorectal v1.0.0 / 口述 27 个要素 ==
+
+== 流水线 ==
+deidentify(skipped) -> term_correction(0) -> extract(27, unclassified=16) -> validate(missing_required=0)
+
+== 抽取要素 ==
+[uncategorized] E-001 score=0.0 src=['P-001'] :: Case No.: SP-2026-004521.
+[uncategorized] E-002 score=0.0 src=['P-002'] :: Tumour site: sigmoid colon.
+[O] E-003 score=2.6 src=['P-003'] :: Operative procedure: laparoscopic anterior resection.
+[uncategorized] E-004 score=0.0 src=['P-004'] :: Histological tumour type: adenocarcinoma, not otherwise specified.
+[uncategorized] E-005 score=0.0 src=['P-005'] :: Histological tumour grade: moderately differentiated.
+[uncategorized] E-006 score=0.0 src=['P-006'] :: Tumour dimension: 3.5 x 2.8 x 1.2 cm.
+[uncategorized] E-007 score=0.0 src=['P-007'] :: Perforation: not identified.
+[O] E-008 score=2.6 src=['P-008'] :: Relation of tumour to anterior peritoneal reflection: not applicable.
+[O] E-009 score=2.6 src=['P-009'] :: Plane of mesorectal excision: not applicable.
+[uncategorized] E-010 score=0.0 src=['P-010'] :: Extent of invasion: tumour invades through muscularis propria into subserosa.
+[uncategorized] E-011 score=0.0 src=['P-011'] :: Lymphatic and venous invasion: not identified.
+[uncategorized] E-012 score=0.0 src=['P-012'] :: Perineural invasion: present.
+[uncategorized] E-013 score=0.0 src=['P-013'] :: Lymph node status: 2 out of 16 lymph nodes show metastatic carcinoma.
+[P] E-014 score=1.2 src=['P-014'] :: Tumour deposits: absent.
+[uncategorized] E-015 score=0.0 src=['P-015'] :: Proximal margin: free of tumour, 6.0 cm from tumour.
+[uncategorized] E-016 score=0.0 src=['P-016'] :: Distal margin: free of tumour, 4.5 cm from tumour.
+[uncategorized] E-017 score=0.0 src=['P-017'] :: Circumferential margin: free of tumour, 1.2 cm.
+[O] E-018 score=1.6 src=['P-018'] :: Macroscopic examination.
+[uncategorized] E-019 score=0.0 src=['P-019'] :: The specimen consists of a segment of sigmoid colon measuring 18.0 cm in length and 4.0 cm in diameter.
+[O] E-020 score=2.6 src=['P-020'] :: An ulcerated tumour measuring 3.5 x 2.8 x 1.2 cm is identified 6.0 cm from the proximal resection margin.
+[uncategorized] E-021 score=0.0 src=['P-021'] :: The serosal surface is not involved by tumour and multiple lymph nodes are found in the mesocolic fat.
+[O] E-022 score=1.6 src=['P-022'] :: Microscopic examination.
+[O] E-023 score=2.6 src=['P-023'] :: Sections show a moderately differentiated adenocarcinoma with glandular formation, invading through the muscularis propria into the subserosal adipose tissue.
+[uncategorized] E-024 score=0.0 src=['P-024'] :: The tumour cells show moderate nuclear pleomorphism and no lymphatic or venous permeation is identified.
+[O] E-025 score=2.6 src=['P-025'] :: Metastatic carcinoma is present in 2 of 16 lymph nodes and the remaining lymph nodes show reactive changes.
+[O] E-026 score=2.6 src=['P-026'] :: Sections of the proximal, distal and circumferential resection margins are free of tumour.
+[A] E-027 score=3.1 src=['P-027'] :: Diagnosis.
+
+== 报告初稿 RPT-c56cbdb769bc（模板 pathology_colorectal v1.0.0）==
+- case_number                  SP-2026-004521   <来源 P-001 0-3000ms>
+- tumour_site                  sigmoid colon   <来源 P-002 3000-7000ms>
+- operative_procedure          laparoscopic anterior resection   <来源 P-003 7000-11000ms>
+- tumour_type                  adenocarcinoma, not otherwise specified   <来源 P-004 11000-16000ms>
+- tumour_grade                 moderately differentiated   <来源 P-005 16000-21000ms>
+- tumour_dimension             3.5 x 2.8 x 1.2 cm   <来源 P-006 21000-26000ms>
+- perforation                  not identified   <来源 P-007 26000-30000ms>
+- peritoneal_reflection        not applicable   <来源 P-008 30000-36000ms>
+- mesorectal_excision_plane    not applicable   <来源 P-009 36000-42000ms>
+- extent_of_invasion           tumour invades through muscularis propria into subserosa   <来源 P-010 42000-48000ms>
+- lymphovascular_invasion      not identified   <来源 P-011 48000-54000ms>
+- perineural_invasion          present   <来源 P-012 54000-58000ms>
+- lymph_node_status            2 out of 16 lymph nodes show metastatic carcinoma   <来源 P-013 58000-64000ms>
+- tumour_deposits              absent   <来源 P-014 64000-68000ms>
+- proximal_margin              free of tumour, 6.0 cm from tumour   <来源 P-015 68000-74000ms>
+- distal_margin                free of tumour, 4.5 cm from tumour   <来源 P-016 74000-80000ms>
+- circumferential_margin       free of tumour, 1.2 cm   <来源 P-017 80000-86000ms>
+- macroscopic_examination      The specimen consists of a segment of sigmoid colon measuring 18.0 cm in length and 4.0 cm in diameter. An ulcerated tumour measuring 3.5 x 2.8 x 1.2 cm is identified 6.0 cm from the proximal resection margin. The serosal surface is not involved by tumour and multiple lymph nodes are found in the mesocolic fat.   <来源 P-019 89000-97000ms>
+- microscopic_examination      Sections show a moderately differentiated adenocarcinoma with glandular formation, invading through the muscularis propria into the subserosal adipose tissue. The tumour cells show moderate nuclear pleomorphism and no lymphatic or venous permeation is identified. Metastatic carcinoma is present in 2 of 16 lymph nodes and the remaining lymph nodes show reactive changes. Sections of the proximal, distal and circumferential resection margins are free of tumour.   <来源 P-023 115000-124000ms>
+- diagnosis                    Sigmoid colon, laparoscopic anterior resection: moderately differentiated adenocarcinoma, not otherwise specified, tumour invades through muscularis propria into subserosa.   <来源 P-002 3000-7000ms>   [derived]   Auto-generated from: tumour_site, operative_procedure, tumour_grade, tumour_type, extent_of_invasion. Please verify.
+
+缺失必填：无
+警告：
+  - 字段 diagnosis 由模板按已抽取值拼装生成，已标记「自动生成，请核对」 / diagnosis auto-generated from extracted fields - please verify
+
+签署结果：ok=True 签署完成，报告已锁定（BR-11）
+导出文件（language_mode=en）：
+  - text  C:\Users\xu261\Desktop\report produce\report-engine\data\exports\RPT-c56cbdb769bc.txt
+  - json  C:\Users\xu261\Desktop\report produce\report-engine\data\exports\RPT-c56cbdb769bc.json
+  - pdf   C:\Users\xu261\Desktop\report produce\report-engine\data\exports\RPT-c56cbdb769bc.pdf
+  - html  C:\Users\xu261\Desktop\report produce\report-engine\data\exports\RPT-c56cbdb769bc.html
+
+== 导出文本 ==
+C:\Users\xu261\Desktop\report produce\report-engine\data\exports\RPT-c56cbdb769bc.txt
