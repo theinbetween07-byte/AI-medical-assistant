@@ -6,7 +6,7 @@ REM   AI Medical Assistant - Stop Services
 REM   NOTE: keep this file pure ASCII (see start.bat for reason).
 REM ============================================================
 
-set "ROOT=%~dp0"
+set "ROOT=%~dp0..\"
 
 echo.
 echo Stopping AI Medical Assistant...

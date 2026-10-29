@@ -8,7 +8,8 @@ REM   NOTE: keep this file pure ASCII. Chinese characters together
 REM         with "chcp 65001" make cmd.exe mis-parse the script.
 REM ============================================================
 
-set "ROOT=%~dp0"
+REM NOTE: this file lives in scripts\, so ROOT is one level up.
+set "ROOT=%~dp0..\"
 cd /d "%ROOT%"
 set "TMP=%ROOT%.tmp"
 set "PY=%ROOT%backend\python\python.exe"
@@ -88,7 +89,7 @@ echo   Web UI:   http://localhost:5173
 echo   Backend:  http://localhost:8000
 echo   API docs: http://localhost:8000/docs
 echo.
-echo   To stop:  double-click stop.bat
+echo   To stop:  double-click scripts\stop.bat
 echo ============================================================
 echo.
 echo Services are running in background. You may close this window.

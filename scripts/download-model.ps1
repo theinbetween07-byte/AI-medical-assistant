@@ -31,7 +31,7 @@ $env:HF_HOME = Join-Path $ROOT "models\.hf_cache"
 $py = Join-Path $ROOT "backend\.venv\Scripts\python.exe"
 if (-not (Test-Path $py)) {
     Write-Host "[✗] 找不到 Python venv：$py" -ForegroundColor Red
-    Write-Host "    請先運行 start.bat 建立 venv" -ForegroundColor Red
+    Write-Host "    請先運行 scripts\start.bat 建立 venv" -ForegroundColor Red
     exit 1
 }
 

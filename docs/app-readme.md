@@ -38,7 +38,7 @@ winget install -e --id Gyan.FFmpeg
 
 ### 2. 啟動
 
-雙擊 `start.bat`，瀏覽器會自動打開 `http://localhost:5173`。
+雙擊 `scripts\start.bat`，瀏覽器會自動打開 `http://localhost:5173`。
 
 首次啟動會自動：
 - 建立 Python 虛擬環境 `.venv`
@@ -61,15 +61,12 @@ winget install -e --id Gyan.FFmpeg
 
 ### 5. 停止服務
 
-雙擊 `stop.bat`。
+雙擊 `scripts\stop.bat`。
 
 ## 目錄結構
 
 ```
 medical-ai-assistant/
-├── start.bat             # 一鍵啟動
-├── stop.bat              # 停止
-├── README.md
 ├── backend/              # FastAPI + faster-whisper
 │   ├── .venv/            # Python 虛擬環境（首次自動創建）
 │   ├── app/
@@ -100,9 +97,12 @@ medical-ai-assistant/
 │   └── package.json
 ├── models/               # Whisper 模型（首次需下載或手動放置）
 │   └── faster-whisper-medium/    # 1.5 GB
-├── scripts/
+├── scripts/              # 啟動與工具腳本
+│   ├── start.bat         # 一鍵啟動
+│   ├── stop.bat          # 停止服務
+│   ├── launch.py         # 後台啟動器
 │   └── download-model.ps1
-├── docs/
+├── docs/                 # 項目文檔
 └── .tmp/                 # 運行時日誌和 PID 文件
 ```
 
