@@ -1,4 +1,4 @@
-﻿# 简要技术设计：MedScribe HK
+# 简要技术设计：MedScribe HK
 
 > **阶段**：Brief Technical Design（阶段 3）
 > **日期**：2026-10-15 · **状态**：初始设计，将于第一个原型后细化
@@ -80,7 +80,7 @@
 
 语音识别与转录层对上游只暴露 `transcribe(audio_path) -> [TranscriptSegment]`，因此可以替换底层引擎而不改业务代码。当前提供两条本地实现路径：
 
-界面工具条的「模型」下拉对应上游 `GET /asr/models` 与 `POST /asr/load-model`。发布版**只随包内置 Whisper small**（`local_files_only=True`，缺失时直接报错，不触发 HuggingFace 下载）；另一项 Qwen3-ASR 以可选扩展包形式提供，未安装时下拉显示「未安装」，点击弹出下载地址与安装步骤，安装后由适配层按需拉起 CapsWriter 服务。默认 `small`。
+界面工具条的「模型」下拉对应上游 `GET /asr/models` 与 `POST /asr/load-model`。发布版**只随包内置 Whisper small**（`local_files_only=True`，缺失时直接报错，不触发 HuggingFace 下载）；Qwen3-ASR、Whisper medium、Whisper large-v3 以可选扩展包形式提供，未安装时下拉显示「未安装」，点击弹出下载地址与安装步骤。Qwen3 安装后由适配层按需拉起 CapsWriter 服务，medium / large-v3 则从 `app/models/ext/` 直接加载。默认 `small`。
 
 | 维度 | 默认路径：faster-whisper small（随包） | 可选路径：CapsWriter-Offline（扩展包） |
 | --- | --- | --- |

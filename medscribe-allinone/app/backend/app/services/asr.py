@@ -60,7 +60,19 @@ class ASRService:
         logger.info("ASRService 初始化完成（模型按需延遲加載）")
 
     def _resolve_model_path(self, model_size: str) -> tuple[str, str]:
-        """根據型號決定加載路徑；發行版禁止在線下載。"""
+        """根據型號決定加載路徑；發行版禁止在線下載。
+
+        內置只有 small；medium / large-v3 以擴展包形式安裝在 models/ext 下。
+        """
+        from app.services import extensions
+
+        entry = extensions.find_extension(model_size)
+        if entry is not None and entry.get("kind") == "whisper":
+            if not extensions.is_installed(entry):
+                raise FileNotFoundError(
+                    f"模型 {model_size} 的擴展包尚未安裝（{extensions.extension_path(entry)}）。"
+                )
+            return str(extensions.extension_path(entry)), "extension"
         if model_size in LOCAL_MODELS:
             return LOCAL_MODELS[model_size], "local"
         raise FileNotFoundError(
@@ -109,31 +121,32 @@ class ASRService:
         entry = extensions.find_extension(model_size)
         if entry is not None:
             extensions.require_installed(model_size)
-            with self._lock:
-                if self.current_model_size == model_size and self.engine == "caps":
-                    return {"model": model_size, "elapsed": 0.0, "changed": False}
-                old = self.current_model_size
-                self._release_whisper()
-                from app.services.caps import CapsEngine
+            if entry.get("kind") == "caps":
+                with self._lock:
+                    if self.current_model_size == model_size and self.engine == "caps":
+                        return {"model": model_size, "elapsed": 0.0, "changed": False}
+                    old = self.current_model_size
+                    self._release_whisper()
+                    from app.services.caps import CapsEngine
 
-                self.caps = CapsEngine(extensions.extension_path(entry))
-                self.engine = "caps"
-                self.current_model_size = model_size
-                # 只註冊，不預啟動：首次轉寫時再加載 1.4GB 模型，切換可秒回
-                return {
-                    "model": model_size,
-                    "previous": old,
-                    "elapsed": 0.0,
-                    "changed": True,
-                    "source": "extension",
-                }
-
-        if model_size not in SUPPORTED_MODELS:
+                    self.caps = CapsEngine(extensions.extension_path(entry))
+                    self.engine = "caps"
+                    self.current_model_size = model_size
+                    # 只註冊，不預啟動：首次轉寫時再加載 1.4GB 模型，切換可秒回
+                    return {
+                        "model": model_size,
+                        "previous": old,
+                        "elapsed": 0.0,
+                        "changed": True,
+                        "source": "extension",
+                    }
+            # whisper 擴展（medium / large-v3）：走下面的模型加載流程
+        elif model_size not in SUPPORTED_MODELS:
             raise ValueError(
                 f"不支援的型號：{model_size}。支援：{SUPPORTED_MODELS}，"
                 f"擴展：{[e['id'] for e in extensions._read_manifest()]}"
             )
-        if model_size not in LOCAL_MODELS:
+        elif model_size not in LOCAL_MODELS:
             raise FileNotFoundError(f"模型 {model_size} 未隨包安裝。")
 
         with self._lock:
@@ -155,7 +168,7 @@ class ASRService:
                 "previous": old,
                 "elapsed": round(elapsed, 2),
                 "changed": True,
-                "source": "local",
+                "source": "extension" if entry is not None else "local",
             }
 
     def _release_whisper(self) -> None:

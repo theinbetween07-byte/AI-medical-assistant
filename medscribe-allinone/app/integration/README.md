@@ -1,4 +1,4 @@
-﻿# MedScribe HK 集成层（medical-ai-assistant + report-produce + 医学术语库_v2.xls）
+# MedScribe HK 集成层（medical-ai-assistant + report-produce + 医学术语库_v2.xls）
 
 把三块已有资产串成 PRD 描述的 **录音 → 转写 → 术语纠正 → 要素抽取 → 初稿 → 校审 → 签署 → 导出（S1→E）**
 端到端流程，对外提供统一的 HTTP API 与单页操作界面。
@@ -78,7 +78,7 @@ python run.py --host 127.0.0.1 --port 8100
 - 它自带 C/S 架构与文件转录，接入本项目需要一层适配：把它的 `.json`（时间戳）输出映射成 `TranscriptSegment`，并保持 `language` / 置信度字段；
 - 切换前应在同一批语料上比较 WER/CER 与耗时，没有对照数据时不对外宣称"更准"。
 
-界面工具条的「模型」下拉读取 `GET /api/asr/models`，切换走 `POST /api/asr/model`（集成本层代理上游 `POST /asr/load-model`，自动带演示账号 JWT）。选项会标注「本地 / 需下载」；未下载档位首次切换会从 HuggingFace 拉取权重，期间下拉禁用。
+界面工具条的「模型」下拉读取 `GET /api/asr/models`，切换走 `POST /api/asr/model`（集成本层代理上游 `POST /asr/load-model`，自动带演示账号 JWT）。发布版只内置 small，其余档位由扩展包安装到 `app/models/ext/`；未安装项标注「未安装」并弹出下载地址，**不会联网下载**。Qwen3 切换只注册引擎（懒加载），medium / large-v3 切换时加载本地模型，期间下拉禁用。
 
 ### ASR 各档位实测（2026-11-03）
 
@@ -95,7 +95,7 @@ python run.py --host 127.0.0.1 --port 8100
 
 选型：有 8 GB 显卡综合选 medium、病理选 large-v3/Qwen3；无显卡 8 核选 small，4 核或低内存选 SenseVoice/Paraformer；噪声场景优先 Qwen3，large-v3 需前置降噪。
 
-> 上表是研究期基准（9 档模型），**发布包只内置 small**，另以扩展包提供 Qwen3；其余档位不再随包分发。
+> 上表是研究期基准（9 档模型），**发布包只内置 small**，另以扩展包提供 Qwen3-ASR、Whisper medium、Whisper large-v3；其余档位不再随包分发。
 
 ### 环境变量
 

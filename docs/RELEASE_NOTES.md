@@ -1,4 +1,4 @@
-# MedScribe HK v1.0.0
+# MedScribe HK v1.0.1
 
 香港临床口述病历助手首个可分发版本：把粤语 / 英语 / 中英混合口述整理为可校审的结构化病历初稿。
 全部推理在本机完成，不上传音频、不联网下载模型。
@@ -7,27 +7,30 @@
 
 | 资产 | 说明 | 分卷 | 下载 | 解压后 |
 | --- | --- | --- | --- | --- |
-| `MedScribe-base-v1.0.0.7z.001`–`.003` | 基础包：便携 Python 3.12 + 界面 + 报告引擎 + Whisper small + ffmpeg | 3 | 0.52 GB | 908 MB |
-| `MedScribe-ext-caps-qwen3-v1.0.0.7z.001`–`.013` | 可选扩展：Qwen3-ASR（CapsWriter-Offline） | 13 | 2.23 GB | 2.9 GB |
+| `MedScribe-base-v1.0.1.7z` | 基础包：便携 Python 3.12 + 界面 + 报告引擎 + Whisper small + ffmpeg | 1 | 0.52 GB | 908 MB |
+| `MedScribe-ext-caps-qwen3-v1.0.1.7z.001`–`.002` | 可选扩展：Qwen3-ASR（CapsWriter-Offline，病理最强） | 2 | 2.23 GB | 2.9 GB |
+| `MedScribe-ext-whisper-medium-v1.0.1.7z` | 可选扩展：Whisper medium（通用精度提升） | 1 | 1.30 GB | 1.43 GB |
+| `MedScribe-ext-whisper-large-v3-v1.0.1.7z.001`–`.002` | 可选扩展：Whisper large-v3（最高精度） | 2 | 2.62 GB | 2.88 GB |
 | `SHA256SUMS.txt` | 全部分卷的 SHA256 | — | — | — |
 
 ## 安装
 
-1. 把基础包的 3 个分卷放在同一文件夹，用 7-Zip 解压 `.001`（会自动合并其余分卷），得到 `MedScribe` 文件夹。
+1. 下载 `MedScribe-base-v1.0.1.7z`，用 7-Zip 解压，得到 `MedScribe` 文件夹。
 2. 双击 `MedScribe\MedScribe.bat`，等控制台显示三段服务就绪（首次 10–30 秒）。
-3. 浏览器自动打开 <http://127.0.0.1:8100>。关闭控制台或双击 `停止.bat` 停服。
+3. 浏览器自动打开 <http://127.0.0.1:8100>。关闭控制台或双击 `stop.bat` 停服。
 
-安装扩展（可选，用于病理长术语等高精度场景）：
+安装扩展（可选，按需选一个或多个）：
 
-1. 解压扩展包 `.001` 得到 `MedScribe-ext`，把其中的 `app` 复制到 `MedScribe\` 根目录并合并。
-2. 重启 `MedScribe.bat`，在工具条「模型」选择 **Qwen3-ASR**。首次转写加载模型约 20–60 秒。
+1. 下载对应扩展包（分卷要全部下载并放在同一文件夹），解压第一个文件，得到 `MedScribe-ext`。
+2. 把 `MedScribe-ext\app` 复制到 `MedScribe\` 根目录并合并（覆盖同名文件）。
+3. 重启 `MedScribe.bat`，在工具条「模型」选择新模型。Qwen3 首次转写加载约 20–60 秒。
 
-未安装扩展时，下拉中该项显示「Qwen3-ASR · 未安装」，点击弹出下载地址与步骤，不会联网下载。
+未安装的扩展在下拉中显示「未安装」，点击弹出下载地址与步骤，不会联网下载。
 
 ## 校验
 
 ```powershell
-certutil -hashfile MedScribe-base-v1.0.0.7z.001 SHA256
+certutil -hashfile MedScribe-base-v1.0.1.7z SHA256
 ```
 
 与 `SHA256SUMS.txt` 对应行比对。
@@ -40,14 +43,14 @@ certutil -hashfile MedScribe-base-v1.0.0.7z.001 SHA256
 | 90 s 英文病理 | 错误率 9.09% | 35.3 s，32 段，错误率 3.64% |
 | 中文门诊 | CER 13.76%–20.11% | — |
 
-基准为合成语料、每场景 1 条，方向性参考；77 次运行明细见仓库 `outputs/ui-integration/asr-benchmark/REPORT.md`。
+Whisper medium / large-v3 扩展沿用基准数据：平均错误率 13.0% / 9.2%（GPU），CPU int8 耗时约为 small 的 2–3 倍 / 5–6 倍。基准为合成语料、每场景 1 条，方向性参考；77 次运行明细见仓库 `outputs/ui-integration/asr-benchmark/REPORT.md`。
 
 ## 系统要求
 
 - Windows 10 / 11 64 位
-- 4 GB 内存（扩展建议 8 GB）
-- 磁盘：基础包 908 MB；扩展再加 2.9 GB
-- 显卡：不需要，默认 CPU int8；扩展可选 Vulkan 加速
+- 4 GB 内存（Whisper large-v3 扩展建议 16 GB）
+- 磁盘：基础包 908 MB；扩展按需再加 1.4 GB（medium）/ 2.9 GB（large-v3 或 Qwen3）
+- 显卡：不需要，默认 CPU int8；Qwen3 扩展可选 Vulkan 加速
 
 ## 已知限制
 

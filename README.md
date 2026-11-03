@@ -1,4 +1,4 @@
-﻿# MedScribe HK
+# MedScribe HK
 
 > 香港临床口述智能病历助手：把粤语、英语及中英混合口述整理为可校审的结构化病历初稿。
 >
@@ -18,28 +18,30 @@
 
 ## 下载与安装（Windows，免安装）
 
-发布地址：<https://github.com/theinbetween07-byte/AI-medical-assistant/releases/tag/v1.0.0>
+发布地址：<https://github.com/theinbetween07-byte/AI-medical-assistant/releases/tag/v1.0.1>
 
-| 包 | 内容 | 分卷 | 下载体积 | 解压后 |
+| 包 | 内容 | 文件 | 下载体积 | 解压后 |
 | --- | --- | --- | --- | --- |
-| 基础包 | 便携 Python 3.12、整合界面、报告引擎、Whisper small、ffmpeg | `MedScribe-base-v1.0.0.7z.001`–`.003` | 0.52 GB | 908 MB |
-| 扩展包（可选） | Qwen3-ASR（CapsWriter-Offline）高精度引擎 | `MedScribe-ext-caps-qwen3-v1.0.0.7z.001`–`.013` | 2.23 GB | 2.9 GB |
+| 基础包 | 便携 Python 3.12、整合界面、报告引擎、Whisper small、ffmpeg | `MedScribe-base-v1.0.1.7z` | 0.52 GB | 908 MB |
+| 扩展：Qwen3-ASR | CapsWriter-Offline 高精度引擎（病理术语更强） | `MedScribe-ext-caps-qwen3-v1.0.1.7z.001`–`.002` | 2.23 GB | 2.9 GB |
+| 扩展：Whisper medium | 通用精度提升，CPU 约 2–3 倍耗时 | `MedScribe-ext-whisper-medium-v1.0.1.7z` | 1.30 GB | 1.43 GB |
+| 扩展：Whisper large-v3 | 精度最高，CPU 约 5–6 倍耗时，建议 16 GB 内存 | `MedScribe-ext-whisper-large-v3-v1.0.1.7z.001`–`.002` | 2.62 GB | 2.88 GB |
 
 安装基础包：
 
-1. 把 3 个分卷放到同一文件夹，用 [7-Zip](https://www.7-zip.org/) 解压 `.001`（自动合并其余分卷），得到 `MedScribe` 文件夹。
+1. 下载 `MedScribe-base-v1.0.1.7z`，用 [7-Zip](https://www.7-zip.org/) 解压，得到 `MedScribe` 文件夹。
 2. 双击 `MedScribe\MedScribe.bat`，等待控制台显示三段服务就绪（首次 10–30 秒）。
-3. 浏览器自动打开 <http://127.0.0.1:8100>；关闭右上角提示或双击 `停止.bat` 停服。
+3. 浏览器自动打开 <http://127.0.0.1:8100>；关闭右上角提示或双击 `stop.bat` 停服。
 
-安装扩展包（仅当需要更高病理术语准确率）：
+安装扩展（可选，按需选一个或多个）：
 
-1. 下载全部 13 个分卷，解压 `.001`，得到 `MedScribe-ext` 文件夹。
+1. 下载对应扩展包（分卷要全部下载并放在同一文件夹），解压第一个文件，得到 `MedScribe-ext` 文件夹。
 2. 把 `MedScribe-ext\app` 整个复制到 `MedScribe\` 根目录并合并（覆盖同名文件）。
-3. 重启 `MedScribe.bat`，在工具条「模型」里选择 **Qwen3-ASR**。首次转写加载模型约 20–60 秒。
+3. 重启 `MedScribe.bat`，在工具条「模型」里选择新模型。Qwen3 首次转写加载约 20–60 秒。
 
-未安装扩展时，下拉中该项显示「Qwen3-ASR · 未安装」，点击会弹出下载地址与步骤，不会联网自动下载。
+未安装的扩展会在下拉中显示「未安装」，点击弹出下载地址与步骤，不会联网自动下载。
 
-校验：`SHA256SUMS.txt` 与各分卷同目录，可用 `certutil -hashfile <文件名> SHA256` 逐个比对。系统要求：Windows 10/11 64 位、4 GB 内存、约 1 GB 磁盘（装扩展再加 2.9 GB）；默认 CPU，无需显卡。
+校验：`SHA256SUMS.txt` 与各分卷同目录，可用 `certutil -hashfile <文件名> SHA256` 逐个比对。系统要求：Windows 10/11 64 位、4 GB 内存（large-v3 扩展建议 16 GB）、约 1 GB 磁盘（每个扩展再占 1.4–2.9 GB）；默认 CPU，无需显卡。
 
 ## 项目背景
 
@@ -51,7 +53,7 @@ MedScribe HK 的目标是把 3–5 分钟口述变成医生可在 1 分钟内审
 
 | 编号 | 功能 | 当前实现 |
 | --- | --- | --- |
-| F1 | 录音与多语言 ASR | faster-whisper small，本地 CPU int8，随包内置、离线可用；工具条「模型」可切到可选扩展 Qwen3-ASR（未安装时显示下载地址与安装步骤，绝不联网自动下载）；演示以粤语 / 普通话为主 |
+| F1 | 录音与多语言 ASR | faster-whisper small，本地 CPU int8，随包内置、离线可用；工具条「模型」可切到可选扩展 Qwen3-ASR / Whisper medium / Whisper large-v3（未安装时显示下载地址与安装步骤，绝不联网自动下载）；演示以粤语 / 普通话为主 |
 | F2 | 术语纠正 | 602 条术语，436 条可自动替换；支持撤销与审计 |
 | F3 | S/O/A/P 要素抽取 | 报告引擎按中文医学关键词归类，未归类内容保留 |
 | F4 | 模板化报告与校审 | 3 套模板；字段级采纳 / 编辑 / 缺失提示；签署门禁 |

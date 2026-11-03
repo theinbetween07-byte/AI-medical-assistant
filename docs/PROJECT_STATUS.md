@@ -1,6 +1,6 @@
-﻿# MedScribe HK 项目背景与当前进度
+# MedScribe HK 项目背景与当前进度
 
-> 最后更新：2026-11-02
+> 最后更新：2026-11-03
 >
 > 当前结论：**视觉预览 v9.0 已通过；新 UI 已接入实际应用；3 套模板的完整链路已走通并完成签署与导出；真人/粤语/中英混合语料、准确性证据与其余 41 条验收仍未完成。**
 >
@@ -29,7 +29,7 @@ MVP 必须跑通五个能力：
 
 | 编号 | 能力 | 说明 |
 | --- | --- | --- |
-| F1 | 录音与多语言 ASR | 本地 faster-whisper small（随包内置、完全离线）；界面「模型」下拉另含可选扩展 Qwen3-ASR，未安装时显示下载地址与步骤；演示以粤语 / 普通话为主（见《技术设计》2.1） |
+| F1 | 录音与多语言 ASR | 本地 faster-whisper small（随包内置、完全离线）；界面「模型」下拉另含可选扩展 Qwen3-ASR、Whisper medium、Whisper large-v3，未安装时显示下载地址与步骤；演示以粤语 / 普通话为主（见《技术设计》2.1） |
 | F2 | 术语纠正 | 602 条术语，436 条可自动替换；可撤销、可审计 |
 | F3 | 临床要素抽取 | 按中文医学关键词归入 S / O / A / P；未归类内容保留 |
 | F4 | 模板化报告与校审 | 3 套模板；字段级采纳 / 编辑 / 缺失提示；签署门禁 |
@@ -47,7 +47,7 @@ MVP 必须跑通五个能力：
   ▼
 集成层 FastAPI :8100
   ├── 会话、音频、状态机、SQLite、审计、导出
-  ├── ASR 适配 ──► ASR 后端 :18000（faster-whisper small，CPU int8；可选 Qwen3-ASR 扩展）
+  ├── ASR 适配 ──► ASR 后端 :18000（faster-whisper small，CPU int8；可选扩展 Qwen3-ASR / medium / large-v3）
   ├── 术语纠正（terms/*.json，本地算法）
   └── 报告引擎 :8790（抽取 / 生成 / 校审 / 签署 / 导出）
 ```
@@ -123,8 +123,8 @@ MVP 必须跑通五个能力：
 - **真实链路（2026-11-02）**：完整三段服务（ASR medium 本地、引擎、集成层）下，用 `ses_06b3b0faf532.wav`（28.6s）跑了 2 个会话：每轮都是上传 → 转写 14 段 → 术语纠正（0 处匹配）→ 抽取 14 条 → 生成 9 字段（5 项必填缺失）→ 界面补齐必填 → 签署 `demo-doctor` → 导出 PDF / JSON。第一轮 `ses_d4e90b563942`（PDF 3535B / JSON 5383B）；第二轮 `ses_f4879d7729a0`（PDF 3536B / JSON 5593B，导出记录各 1 条）。两轮均无 JS 错误与 4xx/5xx。证据 [outputs/ui-integration/e2e](../outputs/ui-integration/e2e)、[e2e-run2](../outputs/ui-integration/e2e-run2)。
 - **三模板真实链路（2026-11-02）**：SAPI 合成 3 条语料（英文 SOAP 43s、普通话门诊 72s、英文病理 90s），分别用 `general_soap` / `outpatient_record` / `pathology_colorectal` 走完 API 全链路并签署导出。转写 16 / 12 / 25 段，抽取 16 / 12 / 25 条要素（全部带来源），生成 9 / 12 / 20 字段，缺失必填 2 / 1 / 1，补齐后签署 `demo-doctor`，PDF 与 JSON 各 1 条记录。会话 `ses_564438f2aa73` / `ses_883bb000dbb4` / `ses_f18624d7feb4`。证据 [e2e-multilingual](../outputs/ui-integration/e2e-multilingual)（含中文报告 UI 截图 `outpatient-zh-ui.png`）。
 - **帮助说明（2026-11-03）**：帮助按钮由 toast 改为对话框，含快捷键与「语音识别与转录实现」两条路径（faster-whisper / CapsWriter-Offline）的硬件门槛对比；简/繁/英三语与 390×844 窄屏截图验证，页面无横向溢出。证据 [help-dialog](../outputs/ui-integration/help-dialog)。
-- **发布形态（2026-11-03）**：基础包（3 卷 / 0.52 GB / 解压 908 MB）内置便携 Python、small 模型与 ffmpeg，解压即用、完全离线；Qwen3-ASR 单独打成扩展包（13 卷 / 2.23 GB），未安装时下拉显示「未安装」并弹出下载地址。两包均在干净目录解压后实测：small 43.4 s 音频 8.1 s、13 段；扩展切换 0.3 s、90 s 病理音频 35.3 s、32 段。证据 [release-smoke](../outputs/ui-integration/release-smoke)、[asr-benchmark](../outputs/ui-integration/asr-benchmark)。
-- **ASR 模型切换（2026-11-03）**：工具条「模型」下拉读取 `GET /api/asr/models`，切换走 `POST /api/asr/model`（集成层代理上游 `/asr/load-model`）。发布版只有「Whisper small · 本地」与「Qwen3-ASR · 未安装/已安装」两项；未安装时弹窗给出 Release 下载地址、分卷与合并步骤，不触发任何联网下载。实测扩展切换 0.3 s（懒加载）、切回 small 1.0 s；三语与 390×844 均可用，页面无横向溢出。帮助对话框正文字号由 9.5–10.5 px 提升到 13–14 px，与主界面正文 13.5 px 同档。证据 [ext-dialog](../outputs/ui-integration/ext-dialog)、[help-dialog](../outputs/ui-integration/help-dialog)。
+- **发布形态（2026-11-03）**：基础包（单文件 / 0.52 GB / 解压 908 MB）内置便携 Python、small 模型与 ffmpeg，解压即用、完全离线；另有三个扩展包：Qwen3-ASR（2 卷 / 2.23 GB）、Whisper medium（单文件 / 1.30 GB）、Whisper large-v3（2 卷 / 2.62 GB），未安装时下拉显示「未安装」并弹出下载地址。基础包与 Qwen3 扩展在干净目录解压后实测：small 43.4 s 音频 8.1 s、13 段；扩展切换 0.3 s、90 s 病理音频 35.3 s、32 段。证据 [release-smoke](../outputs/ui-integration/release-smoke)、[asr-benchmark](../outputs/ui-integration/asr-benchmark)。
+- **ASR 模型切换（2026-11-03）**：工具条「模型」下拉读取 `GET /api/asr/models`，切换走 `POST /api/asr/model`（集成层代理上游 `/asr/load-model`）。发布版含「Whisper small · 本地」与三个扩展项（Qwen3-ASR / Whisper medium / Whisper large-v3，未安装时标注「未安装」）；未安装时弹窗给出 Release 下载地址、分卷与合并步骤，不触发任何联网下载。实测扩展切换 0.3 s（懒加载）、切回 small 1.0 s；三语与 390×844 均可用，页面无横向溢出。帮助对话框正文字号由 9.5–10.5 px 提升到 13–14 px，与主界面正文 13.5 px 同档。证据 [ext-dialog](../outputs/ui-integration/ext-dialog)、[help-dialog](../outputs/ui-integration/help-dialog)。
 - **ASR 多档位实测（2026-11-03）**：基础 Whisper 5 档（tiny/base/small/medium/large-v3）与 CapsWriter 4 档（Paraformer/SenseVoice-Small/Fun-ASR-Nano/Qwen3-ASR-1.7B）在 CPU 与 GPU 上跑完准确率、速度、内存/显存与鲁棒性（噪声、语速、音高、5 分钟长音频）对比，共 77 次有效运行。结论：综合最优 medium（GPU 平均 9.59%），病理最优 Qwen3-ASR（3.64%），中文最优 small（13.76%）；large-v3 噪声下退化明显（6.25%→15.62%）。证据 [asr-benchmark](../outputs/ui-integration/asr-benchmark)（`REPORT.md` / `results.csv` / `raw/`）。
 - **英文转写 WER（合成语料）**：剔除数字与 tumour/tumor 等拼写变体后，SOAP 4.7%、病理 20.0%。分段重组（把 ASR 在词/短语中间切断的续片接回前一片段）把上一次的 10.9% / 29.1% 降了下来；病理仍有两处标签内部切分（`histological tumor` / `grade, ...`、`differentiate` / `d ...`），导致 `tumour_grade` 为空、`tumour_type` 混入分级。该数值只说明合成语料上的相对水平，不是真人临床环境的准确率。
 - **启停安全**：`start_all` 对陌生端口中止并提示（18001 演练）；`stop_all` 对伪造 pid 与陌生 HTTP 服务拒绝误杀（演练中陌生服务存活）；上游全挂时靠 `/health/live` 仍能立即判断集成层身份。

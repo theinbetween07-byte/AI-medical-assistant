@@ -1,14 +1,17 @@
-﻿"""构建 GitHub Release 资产：基础包（Whisper small）与 CapsWriter Qwen3 扩展包。
+"""构建 GitHub Release 资产：基础包（Whisper small）与可扩展模块。
 
 产物（默认 outputs/release/）：
-    MedScribe-base-v1.0.0.7z.001 …  基础包分卷（含运行时、small 模型、界面）
-    MedScribe-ext-caps-qwen3-v1.0.0.7z.001 …  Qwen3-ASR 扩展分卷
+    MedScribe-base-v1.0.1.7z            基础包（运行时、small 模型、界面）
+    MedScribe-ext-caps-qwen3-v1.0.1.7z.001 …   Qwen3-ASR 扩展
+    MedScribe-ext-whisper-medium-v1.0.1.7z     Whisper medium 扩展
+    MedScribe-ext-whisper-large-v3-v1.0.1.7z.001 …  Whisper large-v3 扩展
     SHA256SUMS.txt
-    extensions.json（同步写入基础包 app/models/ext/）
 
 用法：
-    python scripts/build_release.py            # 全量构建
-    python scripts/build_release.py --keep     # 保留中间目录便于检查
+    python scripts/build_release.py                  # 全量构建
+    python scripts/build_release.py --only base      # 只建基础包
+    python scripts/build_release.py --only caps|medium|large
+    python scripts/build_release.py --keep           # 保留中间目录便于检查
 """
 
 from __future__ import annotations
@@ -32,9 +35,16 @@ CAPS_SRC = REPO / ".deepworks" / "tmp" / "caps" / "app" / "CapsWriter-Offline"
 FFMPEG = Path(r"C:\Users\LegacYinJadeware\.deepworks\tools\ffmpeg.exe")
 SEVEN_ZIP = Path(r"C:\SetupSoftware\B-AOMEI Backupper\AOMEI Backupper\6.20.0\7z.exe")
 
-VERSION = "1.0.0"
+VERSION = "1.0.1"
 REPO_SLUG = "theinbetween07-byte/AI-medical-assistant"
 EXT_DIR_NAME = "caps-qwen3"
+
+# 可選的 Whisper 擴展模型：目錄名 → 是否分卷（None 表示單文件）
+WHISPER_EXTS = {
+    "medium": ("faster-whisper-medium", None),
+    "large-v3": ("faster-whisper-large-v3", "1900m"),
+}
+WHISPER_SIZE_MB = {"medium": 1465, "large-v3": 2950}
 
 IGNORE_DIRS = {"__pycache__", ".pytest_cache", "logs", "data"}
 IGNORE_FILES = {".DS_Store", "Thumbs.db"}
@@ -93,7 +103,7 @@ ffmpeg。**完全离线**：不下载模型、不上传音频。
 3. 等待控制台显示三段服务就绪（首次 10–30 秒），浏览器会自动打开
    <http://127.0.0.1:8100>。
 
-> 运行时请保持黑色控制台窗口开着；关闭窗口或双击 **停止.bat** 即可停止全部服务。
+> 运行时请保持黑色控制台窗口开着；关闭窗口或双击 **stop.bat** 即可停止全部服务。
 
 ## 系统要求
 
@@ -119,7 +129,7 @@ ffmpeg。**完全离线**：不下载模型、不上传音频。
 ```
 MedScribe/
   MedScribe.bat      启动（三段服务 + 打开浏览器）
-  停止.bat           停止全部服务
+  stop.bat           停止全部服务
   runtime/           便携 Python 3.12
   app/backend        ASR 服务（18000）
   app/report-engine  报告引擎（8790）
@@ -198,8 +208,7 @@ def build_base(dest: Path) -> None:
     shutil.copy2(FFMPEG, dest / "bin" / "ffmpeg.exe")
 
     write_text(dest / "MedScribe.bat", BAT_START, "gbk")
-    write_text(dest / "停止.bat", BAT_STOP, "gbk")
-    write_text(dest / "使用教程.md", BASE_README.format(ver=VERSION))
+    write_text(dest / "stop.bat", BAT_STOP, "gbk")
     write_text(dest / "README.md", BASE_README.format(ver=VERSION))
 
 
@@ -271,20 +280,27 @@ def build_extension(dest: Path) -> None:
     client_cfg = re.sub(r"file_save_json\s*=\s*\w+", "file_save_json = False", client_cfg)
     write_text(caps / "config_client.py", client_cfg)
 
-    write_text(dest / "安装说明.md", EXT_README.format(ver=VERSION))
+    write_text(dest / "INSTALL.md", EXT_README.format(ver=VERSION))
 
 
-def seven_zip(archive: Path, source_dir: Path) -> list[Path]:
+# GitHub Release 单个资产上限 2 GB；1900 MB 留出余量，尽量少切卷
+VOLUME_LIMIT = "1900m"
+
+
+def seven_zip(archive: Path, source_dir: Path, volume: str | None = None) -> list[Path]:
     if not SEVEN_ZIP.exists():
         raise FileNotFoundError(f"未找到 7-Zip：{SEVEN_ZIP}")
     archive.parent.mkdir(parents=True, exist_ok=True)
     # 清掉同名前綴的舊分卷，否則 7z 會因卷已存在而退出
-    for old in archive.parent.glob(archive.name + ".*"):
+    for old in archive.parent.glob(archive.name + "*"):
         old.unlink()
-    cmd = [str(SEVEN_ZIP), "a", "-t7z", "-mx=1", "-v190m", "-y", str(archive), str(source_dir)]
-    log(f"压缩 {archive.name}（分卷 190 MB）…")
+    cmd = [str(SEVEN_ZIP), "a", "-t7z", "-mx=1", "-y", str(archive), str(source_dir)]
+    if volume:
+        cmd.insert(3, f"-v{volume}")
+    log(f"压缩 {archive.name}（{'分卷 ' + volume if volume else '单文件'}）…")
     subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL)
-    return sorted(archive.parent.glob(archive.name + ".*"))
+    volumes = sorted(archive.parent.glob(archive.name + ".*"))
+    return volumes or [archive]
 
 
 def sha256(path: Path) -> str:
@@ -295,10 +311,33 @@ def sha256(path: Path) -> str:
     return h.hexdigest()
 
 
+def build_whisper_ext(dest: Path, size: str) -> None:
+    """組裝 Whisper medium / large-v3 擴展包。"""
+    dirname, _ = WHISPER_EXTS[size]
+    src = APP / "models" / dirname
+    if not (src / "model.bin").exists():
+        raise FileNotFoundError(f"缺少模型：{src}")
+    log(f"组装 Whisper {size} 扩展包…")
+    dst = dest / "app" / "models" / "ext" / dirname
+    link_tree(src, dst, skip_pyc=True)
+    write_text(
+        dest / "INSTALL.md",
+        f"""# Whisper {size} 扩展包
+
+1. 用 7-Zip 解压本包，得到 `MedScribe-ext` 文件夹。
+2. 把 `MedScribe-ext\\app` 整个复制到基础包 `MedScribe` 根目录（选择“合并/替换”）。
+3. 重启 `MedScribe.bat`，在工具条「模型」中选择 **Whisper {size}**。
+
+安装位置：`MedScribe\\app\\models\\ext\\{dirname}`。卸载：删除该目录后重启。
+完全离线，不联网下载；模型目录 {dirname}（约 {WHISPER_SIZE_MB[size]} MB）。
+""",
+    )
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--keep", action="store_true", help="保留中间目录")
-    parser.add_argument("--only", choices=["base", "ext"], help="只重建其中一个包")
+    parser.add_argument("--only", choices=["base", "caps", "medium", "large-v3"], help="只重建其中一个包")
     args = parser.parse_args()
 
     if BUILD.exists():
@@ -307,26 +346,40 @@ def main() -> int:
     OUT.mkdir(parents=True, exist_ok=True)
 
     base_dir = BUILD / "MedScribe"
-    ext_dir = BUILD / "MedScribe-ext"
-    ext_volumes: list[Path] = []
     base_volumes: list[Path] = []
+    made: list[Path] = []
 
-    if args.only != "base":
-        build_extension(ext_dir)
-        ext_volumes = seven_zip(OUT / f"MedScribe-ext-caps-qwen3-v{VERSION}.7z", ext_dir)
-    if args.only != "ext":
+    if args.only in (None, "base"):
         build_base(base_dir)
         base_volumes = seven_zip(OUT / f"MedScribe-base-v{VERSION}.7z", base_dir)
 
-    assets = sorted(OUT.glob("MedScribe-*.7z.0*"))
+    if args.only in (None, "caps"):
+        ext_dir = BUILD / "MedScribe-ext"
+        build_extension(ext_dir)
+        made += seven_zip(OUT / f"MedScribe-ext-caps-qwen3-v{VERSION}.7z", ext_dir, VOLUME_LIMIT)
+        if not args.keep:
+            shutil.rmtree(ext_dir, ignore_errors=True)
+
+    for size in ("medium", "large-v3"):
+        if args.only not in (None, size):
+            continue
+        stage = BUILD / f"stage-{size}"
+        ext_dir = stage / "MedScribe-ext"
+        build_whisper_ext(ext_dir, size)
+        volume = WHISPER_EXTS[size][1]
+        made += seven_zip(OUT / f"MedScribe-ext-whisper-{size}-v{VERSION}.7z", ext_dir, volume)
+        if not args.keep:
+            shutil.rmtree(ext_dir, ignore_errors=True)
+
+    assets = sorted(p for p in OUT.glob("MedScribe-*") if p.is_file())
     sums = [f"{sha256(p)}  {p.name}" for p in assets]
     (OUT / "SHA256SUMS.txt").write_text("\n".join(sums) + "\n", encoding="utf-8")
 
     total = sum(p.stat().st_size for p in assets)
     if base_volumes:
-        log(f"基础包：{len(base_volumes)} 卷 / {sum(p.stat().st_size for p in base_volumes)/2**30:.2f} GB")
-    if ext_volumes:
-        log(f"扩展包：{len(ext_volumes)} 卷 / {sum(p.stat().st_size for p in ext_volumes)/2**30:.2f} GB")
+        log(f"基础包：{len(base_volumes)} 个文件 / {sum(p.stat().st_size for p in base_volumes)/2**30:.2f} GB")
+    if made:
+        log(f"扩展包：{len(made)} 个文件 / {sum(p.stat().st_size for p in made)/2**30:.2f} GB")
     log(f"合计：{total/2**30:.2f} GB → {OUT}")
 
     if not args.keep:

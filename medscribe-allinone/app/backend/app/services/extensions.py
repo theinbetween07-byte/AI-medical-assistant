@@ -1,9 +1,13 @@
-"""可選擴展模塊（目前是 CapsWriter 引擎）的發現、安裝狀態與清單。
+"""可選擴展模塊的發現、安裝狀態與清單。
+
+支持的擴展類型（``kind``）
+- ``caps``：CapsWriter-Offline（Qwen3-ASR），要求 ``start_server.exe`` 與 ``config_server.py``
+- ``whisper``：額外 faster-whisper 模型（medium / large-v3），要求 ``model.bin`` 與 ``config.json``
 
 約定
 ----
 - 清單：``app/models/ext/extensions.json``（隨基礎包分發，構建腳本會寫入真實下載地址與校驗值）
-- 安裝目錄：``app/models/ext/<dir>``，要求存在 ``start_server.exe`` 與 ``config_server.py``
+- 安裝目錄：``app/models/ext/<dir>``
 - 未安裝時：``/asr/models`` 返回 ``installed=false`` 與安裝指引，界面據此彈出下載說明
 """
 
@@ -43,8 +47,11 @@ def extension_path(entry: dict) -> Path:
 
 def is_installed(entry: dict) -> bool:
     root = extension_path(entry)
-    if entry.get("kind") == "caps":
+    kind = entry.get("kind")
+    if kind == "caps":
         return (root / "start_server.exe").exists() and (root / "config_server.py").exists()
+    if kind == "whisper":
+        return (root / "model.bin").exists() and (root / "config.json").exists()
     return root.exists()
 
 

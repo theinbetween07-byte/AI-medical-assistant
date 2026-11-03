@@ -1,4 +1,4 @@
-﻿/* MedScribe HK · integration UI (v9 shell, real API)
+/* MedScribe HK · integration UI (v9 shell, real API)
  * Replaces the static preview state with the integration layer's HTTP API.
  * No mock patient, segment, report or export data is rendered here.
  */
@@ -221,7 +221,7 @@
       'help.title': '帮助说明',
       'help.shortcuts': '快捷键：T 切换主题，/ 聚焦搜索，Esc 关闭弹层。',
       'help.asrTitle': '语音识别与转录实现',
-      'help.asrLead': '默认使用本地 faster-whisper medium（CPU int8，音频不出本机）。工具条「模型」下拉可切换 tiny / base / small / medium / large-v3 等档位；未下载的档位首次切换会下载权重，可能耗时数分钟。也可选用 CapsWriter-Offline：高精度档在病理术语上更准，但处理耗时更长，需要本地算力。',
+      'help.asrLead': '默认使用本机 faster-whisper small（CPU int8，音频不出本机）。工具条「模型」下拉内置 small，另有 Qwen3-ASR、Whisper medium、Whisper large-v3 扩展；未安装项会弹出下载地址与步骤，不会联网下载。CapsWriter 高精度档在病理术语上更准，但耗时更长。',
       'help.table.dim': '维度',
       'help.table.default': '默认：faster-whisper',
       'help.table.optional': '可选：CapsWriter-Offline',
@@ -438,7 +438,7 @@
       'help.title': '說明',
       'help.shortcuts': '快捷鍵：T 切換主題，/ 聚焦搜尋，Esc 關閉彈層。',
       'help.asrTitle': '語音辨識與轉錄實作',
-      'help.asrLead': '預設使用本機 faster-whisper medium（CPU int8，音訊不出本機）。工具列「模型」下拉可切換 tiny / base / small / medium / large-v3 等檔位；未下載的檔位首次切換會下載權重，可能耗時數分鐘。也可選用 CapsWriter-Offline：高精度檔在病理術語上更準，但處理耗時更長，需要本機算力。',
+      'help.asrLead': '預設使用本機 faster-whisper small（CPU int8，音訊不出本機）。工具列「模型」下拉內置 small，另有 Qwen3-ASR、Whisper medium、Whisper large-v3 擴展；未安裝項會彈出下載地址與步驟，不會聯網下載。CapsWriter 高精度檔在病理術語上更準，但耗時更長。',
       'help.table.dim': '面向',
       'help.table.default': '預設：faster-whisper',
       'help.table.optional': '可選：CapsWriter-Offline',
@@ -655,7 +655,7 @@
       'help.title': 'Help',
       'help.shortcuts': 'Shortcuts: T switches theme, / focuses search, Esc closes dialogs.',
       'help.asrTitle': 'Speech recognition & transcription',
-      'help.asrLead': 'The default is local faster-whisper medium (CPU int8; audio never leaves this machine). The Model dropdown in the toolbar switches between tiny / base / small / medium / large-v3; a model that is not downloaded yet will be fetched on first switch and may take minutes. CapsWriter-Offline is an alternative: its high-accuracy tier leads on pathology terms, but is slower and needs local compute.',
+      'help.asrLead': 'The default is local faster-whisper small (CPU int8; audio never leaves this machine). The Model dropdown ships with small, plus optional Qwen3-ASR, Whisper medium and Whisper large-v3 packs; uninstalled entries show a download link and steps, and nothing is fetched online. CapsWriter''s high-accuracy tier leads on pathology terms but is slower.',
       'help.table.dim': 'Aspect',
       'help.table.default': 'Default: faster-whisper',
       'help.table.optional': 'Optional: CapsWriter-Offline',
