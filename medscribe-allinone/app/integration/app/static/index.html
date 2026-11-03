@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-Hans" data-theme="light">
 <head>
 <meta charset="utf-8">
@@ -256,7 +256,7 @@
   </div>
   <div class="dialog-body help-body">
     <h4 data-i18n="help.asrTitle">语音识别与转录实现</h4>
-    <p data-i18n="help.asrLead">默认使用本地 faster-whisper medium（CPU int8，音频不出本机）。也可以选用 CapsWriter-Offline：识别准确性更高，但处理耗时可能更长，需要一定的本地硬件算力支持。</p>
+    <p data-i18n="help.asrLead">默认使用本机 faster-whisper small（CPU int8，音频不出本机）。工具条「模型」下拉内置 small，另有 Qwen3-ASR、Whisper medium、Whisper large-v3 扩展；未安装项会弹出下载地址与步骤，不会联网下载。CapsWriter 高精度档在病理术语上更准，但耗时更长。</p>
     <div class="help-table-wrap">
     <table class="help-table">
       <thead>
