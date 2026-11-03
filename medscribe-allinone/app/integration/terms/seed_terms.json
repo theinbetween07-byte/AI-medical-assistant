@@ -1,0 +1,3812 @@
+{
+  "version": "2026-10-29",
+  "description": "由 医学术语库_v2.xls 按保守策略生成：仅保留长度≥2、非泛词、非时间/程度/否定/文书类的别名参与自动替换；其余仅作词表查阅。格式与 MedScribe HK report-engine 的 terms/seed_terms.json 兼容。",
+  "source": "医学术语库_v2.xls",
+  "entries": [
+    {
+      "id": "ana-001",
+      "term_norm": "Heart",
+      "aliases": [
+        "心脏",
+        "心口"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "ana-003",
+      "term_norm": "Liver",
+      "aliases": [
+        "肝脏"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "ana-004",
+      "term_norm": "Kidney",
+      "aliases": [
+        "肾脏"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "ana-006",
+      "term_norm": "Small intestine",
+      "aliases": [
+        "小肠"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "ana-007",
+      "term_norm": "Large intestine",
+      "aliases": [
+        "大肠"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "ana-008",
+      "term_norm": "Colon",
+      "aliases": [
+        "结肠"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "ana-009",
+      "term_norm": "Rectum",
+      "aliases": [
+        "直肠"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "ana-010",
+      "term_norm": "Pancreas",
+      "aliases": [
+        "胰腺",
+        "胰脏"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "ana-011",
+      "term_norm": "Gallbladder",
+      "aliases": [
+        "胆囊"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "ana-013",
+      "term_norm": "Spinal cord",
+      "aliases": [
+        "脊髓"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "ana-014",
+      "term_norm": "Blood vessel",
+      "aliases": [
+        "血管"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "ana-015",
+      "term_norm": "Artery",
+      "aliases": [
+        "动脉"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "ana-016",
+      "term_norm": "Vein",
+      "aliases": [
+        "静脉"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "ana-017",
+      "term_norm": "Joint",
+      "aliases": [
+        "关节"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "ana-018",
+      "term_norm": "Muscle",
+      "aliases": [
+        "肌肉"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "ana-019",
+      "term_norm": "Bone",
+      "aliases": [
+        "骨骼",
+        "骨头"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "ana-020",
+      "term_norm": "Skin",
+      "aliases": [
+        "皮肤"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "ana-021",
+      "term_norm": "Throat",
+      "aliases": [
+        "咽喉",
+        "喉咙"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "ana-022",
+      "term_norm": "Trachea",
+      "aliases": [
+        "气管"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "ana-023",
+      "term_norm": "Bronchus",
+      "aliases": [
+        "支气管"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "ana-024",
+      "term_norm": "Esophagus",
+      "aliases": [
+        "食管",
+        "食道"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "ana-025",
+      "term_norm": "Duodenum",
+      "aliases": [
+        "十二指肠"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "ana-026",
+      "term_norm": "Urinary bladder",
+      "aliases": [
+        "膀胱"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "ana-027",
+      "term_norm": "Ureter",
+      "aliases": [
+        "输尿管"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "ana-028",
+      "term_norm": "Urethra",
+      "aliases": [
+        "尿道"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "ana-029",
+      "term_norm": "Uterus",
+      "aliases": [
+        "子宫"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "ana-030",
+      "term_norm": "Ovary",
+      "aliases": [
+        "卵巢"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "ana-031",
+      "term_norm": "Fallopian tube",
+      "aliases": [
+        "输卵管"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "ana-032",
+      "term_norm": "Prostate",
+      "aliases": [
+        "前列腺"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "ana-033",
+      "term_norm": "Testis",
+      "aliases": [
+        "睾丸"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "ana-034",
+      "term_norm": "Breast",
+      "aliases": [
+        "乳房"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "ana-035",
+      "term_norm": "Thyroid gland",
+      "aliases": [
+        "甲状腺"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "ana-036",
+      "term_norm": "Adrenal gland",
+      "aliases": [
+        "肾上腺"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "ana-037",
+      "term_norm": "Spleen",
+      "aliases": [
+        "脾脏"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "ana-038",
+      "term_norm": "Tonsil",
+      "aliases": [
+        "扁桃体",
+        "扁桃腺"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "ana-039",
+      "term_norm": "Paranasal sinus",
+      "aliases": [
+        "鼻窦"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "ana-040",
+      "term_norm": "Cornea",
+      "aliases": [
+        "角膜",
+        "眼角膜"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "ana-041",
+      "term_norm": "Retina",
+      "aliases": [
+        "视网膜"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "ana-042",
+      "term_norm": "Gum",
+      "aliases": [
+        "牙龈",
+        "牙肉"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "ana-043",
+      "term_norm": "Cervical spine",
+      "aliases": [
+        "颈椎"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "ana-044",
+      "term_norm": "Lumbar spine",
+      "aliases": [
+        "腰椎"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "ana-045",
+      "term_norm": "Knee joint",
+      "aliases": [
+        "膝关节",
+        "膝头"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "ana-046",
+      "term_norm": "Shoulder joint",
+      "aliases": [
+        "肩关节",
+        "膊头"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "ana-047",
+      "term_norm": "Ankle joint",
+      "aliases": [
+        "踝关节",
+        "脚眼"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "ana-048",
+      "term_norm": "Rib",
+      "aliases": [
+        "肋骨"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "ana-049",
+      "term_norm": "Spine",
+      "aliases": [
+        "脊柱",
+        "脊骨"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "ana-050",
+      "term_norm": "Pleura",
+      "aliases": [
+        "胸膜"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "ana-051",
+      "term_norm": "Peritoneum",
+      "aliases": [
+        "腹膜"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-001",
+      "term_norm": "Fever",
+      "aliases": [
+        "发热",
+        "发烧"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-002",
+      "term_norm": "Chills",
+      "aliases": [
+        "寒战",
+        "打冷震"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-003",
+      "term_norm": "Dizziness",
+      "aliases": [
+        "头晕"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-004",
+      "term_norm": "Vertigo",
+      "aliases": [
+        "眩晕",
+        "晕陀陀"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-005",
+      "term_norm": "Headache",
+      "aliases": [
+        "头痛"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-006",
+      "term_norm": "Nausea",
+      "aliases": [
+        "恶心",
+        "作呕"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-007",
+      "term_norm": "Vomiting",
+      "aliases": [
+        "呕吐",
+        "呕嘢"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-008",
+      "term_norm": "Diarrhea",
+      "aliases": [
+        "腹泻",
+        "肚泻",
+        "肚疴"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-009",
+      "term_norm": "Constipation",
+      "aliases": [
+        "便秘",
+        "屙唔出"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-010",
+      "term_norm": "Cough",
+      "aliases": [
+        "咳嗽"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-011",
+      "term_norm": "Sputum",
+      "aliases": [
+        "咳痰",
+        "有痰"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-012",
+      "term_norm": "Runny nose",
+      "aliases": [
+        "流鼻涕",
+        "流鼻水"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-013",
+      "term_norm": "Nasal congestion",
+      "aliases": [
+        "鼻塞",
+        "塞鼻"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-014",
+      "term_norm": "Sneezing",
+      "aliases": [
+        "打喷嚏",
+        "打乞嗤"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-015",
+      "term_norm": "Sore throat",
+      "aliases": [
+        "咽痛",
+        "喉咙痛"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-016",
+      "term_norm": "Dyspnea",
+      "aliases": [
+        "呼吸困难",
+        "唔够气"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-017",
+      "term_norm": "Shortness of breath",
+      "aliases": [
+        "气促",
+        "扯气"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-018",
+      "term_norm": "Chest pain",
+      "aliases": [
+        "胸痛",
+        "心口痛"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-019",
+      "term_norm": "Chest tightness",
+      "aliases": [
+        "胸闷",
+        "心口闷"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-020",
+      "term_norm": "Palpitations",
+      "aliases": [
+        "心悸",
+        "心跳",
+        "心慌慌"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-021",
+      "term_norm": "Edema",
+      "aliases": [
+        "水肿",
+        "浮肿"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-022",
+      "term_norm": "Numbness",
+      "aliases": [
+        "麻木",
+        "麻痹"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-023",
+      "term_norm": "Tingling",
+      "aliases": [
+        "刺痛",
+        "针刺感"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-024",
+      "term_norm": "Fatigue",
+      "aliases": [
+        "乏力",
+        "冇力"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-025",
+      "term_norm": "Insomnia",
+      "aliases": [
+        "失眠"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-026",
+      "term_norm": "Somnolence",
+      "aliases": [
+        "嗜睡",
+        "成日想瞓"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-027",
+      "term_norm": "Rash",
+      "aliases": [
+        "皮疹",
+        "起疹",
+        "出疹"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-028",
+      "term_norm": "Itching",
+      "aliases": [
+        "瘙痒",
+        "痕痒"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-029",
+      "term_norm": "Night sweats",
+      "aliases": [
+        "盗汗",
+        "瞓觉出汗"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-030",
+      "term_norm": "Weight loss",
+      "aliases": [
+        "体重下降",
+        "瘦咗"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-031",
+      "term_norm": "Poor appetite",
+      "aliases": [
+        "食欲不振",
+        "冇胃口"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-032",
+      "term_norm": "Thirst",
+      "aliases": [
+        "口渴",
+        "颈渴",
+        "口干"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-033",
+      "term_norm": "Polyuria and polydipsia",
+      "aliases": [
+        "多饮多尿",
+        "饮多屙多"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-034",
+      "term_norm": "Urinary frequency",
+      "aliases": [
+        "尿频"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-035",
+      "term_norm": "Urinary urgency",
+      "aliases": [
+        "尿急",
+        "急尿"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-036",
+      "term_norm": "Dysuria",
+      "aliases": [
+        "尿痛",
+        "屙尿痛"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-037",
+      "term_norm": "Hematuria",
+      "aliases": [
+        "血尿",
+        "尿有血"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-038",
+      "term_norm": "Urinary difficulty",
+      "aliases": [
+        "排尿困难",
+        "屙唔出尿"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-039",
+      "term_norm": "Abdominal pain",
+      "aliases": [
+        "腹痛",
+        "肚痛"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-040",
+      "term_norm": "Abdominal bloating",
+      "aliases": [
+        "腹胀"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-041",
+      "term_norm": "Acid reflux",
+      "aliases": [
+        "反酸"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-042",
+      "term_norm": "Heartburn",
+      "aliases": [
+        "烧心",
+        "火烧心"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-043",
+      "term_norm": "Belching",
+      "aliases": [
+        "嗳气",
+        "打思噎"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-044",
+      "term_norm": "Hematemesis",
+      "aliases": [
+        "呕血"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-045",
+      "term_norm": "Melena",
+      "aliases": [
+        "黑便",
+        "黑屎"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-046",
+      "term_norm": "Hematochezia",
+      "aliases": [
+        "便血",
+        "屙血"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-047",
+      "term_norm": "Jaundice",
+      "aliases": [
+        "黄疸"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-048",
+      "term_norm": "Hemoptysis",
+      "aliases": [
+        "咯血",
+        "咳血"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-049",
+      "term_norm": "Wheezing",
+      "aliases": [
+        "喘息",
+        "气喘"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-050",
+      "term_norm": "Dysphagia",
+      "aliases": [
+        "吞咽困难",
+        "吞唔落"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-051",
+      "term_norm": "Hoarseness",
+      "aliases": [
+        "声音嘶哑",
+        "声沙"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-052",
+      "term_norm": "Tinnitus",
+      "aliases": [
+        "耳鸣",
+        "耳仔响"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-053",
+      "term_norm": "Hearing loss",
+      "aliases": [
+        "听力下降",
+        "听唔清"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-054",
+      "term_norm": "Epistaxis",
+      "aliases": [
+        "鼻出血",
+        "流鼻血"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-055",
+      "term_norm": "Blurred vision",
+      "aliases": [
+        "视物模糊",
+        "睇嘢蒙"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-056",
+      "term_norm": "Syncope",
+      "aliases": [
+        "晕厥",
+        "晕低"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-057",
+      "term_norm": "Convulsion",
+      "aliases": [
+        "抽搐",
+        "抽筋"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-058",
+      "term_norm": "Loss of consciousness",
+      "aliases": [
+        "意识丧失",
+        "冇知觉"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-059",
+      "term_norm": "Hemiplegia",
+      "aliases": [
+        "偏瘫",
+        "半边身唔郁得"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-060",
+      "term_norm": "Slurred speech",
+      "aliases": [
+        "言语不清",
+        "讲嘢唔清"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-061",
+      "term_norm": "Unsteady gait",
+      "aliases": [
+        "步态不稳",
+        "行路唔稳"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-062",
+      "term_norm": "Back pain",
+      "aliases": [
+        "腰背痛",
+        "腰骨痛"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-063",
+      "term_norm": "Arthralgia",
+      "aliases": [
+        "关节痛",
+        "骨痛"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-064",
+      "term_norm": "Morning stiffness",
+      "aliases": [
+        "晨僵",
+        "朝早硬晒"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-065",
+      "term_norm": "Myalgia",
+      "aliases": [
+        "肌肉酸痛"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-066",
+      "term_norm": "Low mood",
+      "aliases": [
+        "情绪低落",
+        "唔开心",
+        "心情差"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-067",
+      "term_norm": "Anxiety",
+      "aliases": [
+        "焦虑",
+        "心慌",
+        "担心"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-068",
+      "term_norm": "Memory decline",
+      "aliases": [
+        "记忆力下降",
+        "冇记性"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-069",
+      "term_norm": "Hallucination",
+      "aliases": [
+        "幻觉",
+        "见到冇嘅嘢"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-070",
+      "term_norm": "Choking",
+      "aliases": [
+        "吞咽呛咳",
+        "濁亲"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-071",
+      "term_norm": "Heavy menstrual bleeding",
+      "aliases": [
+        "月经量多",
+        "经血多"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-072",
+      "term_norm": "Abnormal vaginal discharge",
+      "aliases": [
+        "阴道分泌物异常",
+        "分泌物多"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sym-073",
+      "term_norm": "Decreased libido",
+      "aliases": [
+        "性欲减退",
+        "冇性趣"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sgn-001",
+      "term_norm": "Elevated blood pressure",
+      "aliases": [
+        "血压升高"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sgn-002",
+      "term_norm": "Tachycardia",
+      "aliases": [
+        "心率增快",
+        "心跳快"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sgn-003",
+      "term_norm": "Irregular rhythm",
+      "aliases": [
+        "心律不齐"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sgn-004",
+      "term_norm": "Coarse breath sounds",
+      "aliases": [
+        "呼吸音粗",
+        "肺声粗"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sgn-005",
+      "term_norm": "Crackles",
+      "aliases": [
+        "湿啰音",
+        "肺有水声"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sgn-006",
+      "term_norm": "Wheeze",
+      "aliases": [
+        "哮鸣音",
+        "扯虾声"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sgn-007",
+      "term_norm": "Abdominal tenderness",
+      "aliases": [
+        "腹部压痛",
+        "按肚痛"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sgn-008",
+      "term_norm": "Rebound tenderness",
+      "aliases": [
+        "反跳痛",
+        "放手更痛"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sgn-009",
+      "term_norm": "Guarding",
+      "aliases": [
+        "腹肌紧张",
+        "肚实"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sgn-010",
+      "term_norm": "Hepatosplenomegaly",
+      "aliases": [
+        "肝脾肿大",
+        "肝脾大"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sgn-011",
+      "term_norm": "Hyperactive bowel sounds",
+      "aliases": [
+        "肠鸣音亢进",
+        "肚内有声"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sgn-012",
+      "term_norm": "Pitting edema",
+      "aliases": [
+        "凹陷性水肿",
+        "按落有窝"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sgn-013",
+      "term_norm": "Jugular venous distension",
+      "aliases": [
+        "颈静脉怒张",
+        "颈静脉胀"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sgn-014",
+      "term_norm": "Icterus",
+      "aliases": [
+        "黄染"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sgn-015",
+      "term_norm": "Pallor",
+      "aliases": [
+        "苍白",
+        "面青",
+        "面白"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sgn-016",
+      "term_norm": "Cyanosis",
+      "aliases": [
+        "发绀",
+        "嘴唇发紫"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sgn-017",
+      "term_norm": "Clubbing",
+      "aliases": [
+        "杵状指",
+        "手指头大"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sgn-018",
+      "term_norm": "Lymphadenopathy",
+      "aliases": [
+        "淋巴结肿大",
+        "淋巴核大"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sgn-019",
+      "term_norm": "Goiter",
+      "aliases": [
+        "甲状腺肿大",
+        "颈大"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sgn-020",
+      "term_norm": "Muscle weakness",
+      "aliases": [
+        "肌力下降",
+        "手脚冇力"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sgn-021",
+      "term_norm": "Confusion",
+      "aliases": [
+        "意识模糊",
+        "神志不清"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sgn-022",
+      "term_norm": "Tachypnea",
+      "aliases": [
+        "呼吸急促",
+        "呼吸快"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sgn-023",
+      "term_norm": "Hypoxemia",
+      "aliases": [
+        "血氧下降",
+        "血氧低"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sgn-024",
+      "term_norm": "Rash",
+      "aliases": [
+        "皮疹",
+        "红疹"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sgn-025",
+      "term_norm": "Abdominal distension",
+      "aliases": [
+        "腹部膨隆"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sgn-026",
+      "term_norm": "Murphy sign positive",
+      "aliases": [
+        "墨菲征阳性",
+        "墨菲氏征阳性"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sgn-027",
+      "term_norm": "McBurney point tenderness",
+      "aliases": [
+        "麦氏点压痛"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sgn-028",
+      "term_norm": "Positive Babinski sign",
+      "aliases": [
+        "病理反射阳性",
+        "巴宾斯基征阳性"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sgn-029",
+      "term_norm": "Sluggish light reflex",
+      "aliases": [
+        "瞳孔对光反射迟钝",
+        "瞳孔反应慢"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sgn-030",
+      "term_norm": "Elevated BMI",
+      "aliases": [
+        "体重指数升高",
+        "BMI高"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sgn-031",
+      "term_norm": "Tonsillar exudate",
+      "aliases": [
+        "扁桃体化脓",
+        "扁桃腺有脓"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "sgn-032",
+      "term_norm": "Neck stiffness",
+      "aliases": [
+        "颈部强直",
+        "颈硬"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "dis-001",
+      "term_norm": "Hypertension",
+      "aliases": [
+        "高血压"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-002",
+      "term_norm": "Diabetes mellitus",
+      "aliases": [
+        "糖尿病",
+        "糖尿"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-003",
+      "term_norm": "Hyperlipidemia",
+      "aliases": [
+        "高脂血症",
+        "胆固醇高"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-004",
+      "term_norm": "Coronary heart disease",
+      "aliases": [
+        "冠心病"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-005",
+      "term_norm": "Angina pectoris",
+      "aliases": [
+        "心绞痛",
+        "心口翳"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-006",
+      "term_norm": "Myocardial infarction",
+      "aliases": [
+        "心肌梗死",
+        "心肌梗塞"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-007",
+      "term_norm": "Heart failure",
+      "aliases": [
+        "心力衰竭",
+        "心脏衰竭"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-008",
+      "term_norm": "Atrial fibrillation",
+      "aliases": [
+        "心房颤动",
+        "房颤"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-009",
+      "term_norm": "Valvular heart disease",
+      "aliases": [
+        "心脏瓣膜病",
+        "心瓣膜病"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-010",
+      "term_norm": "Stroke",
+      "aliases": [
+        "脑卒中",
+        "中风"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-011",
+      "term_norm": "Cerebral infarction",
+      "aliases": [
+        "脑梗死",
+        "脑梗塞"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-012",
+      "term_norm": "Intracerebral hemorrhage",
+      "aliases": [
+        "脑出血",
+        "爆血管"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-013",
+      "term_norm": "Transient ischemic attack",
+      "aliases": [
+        "短暂性脑缺血发作",
+        "小中风"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-014",
+      "term_norm": "Asthma",
+      "aliases": [
+        "哮喘"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-015",
+      "term_norm": "COPD",
+      "aliases": [
+        "慢性阻塞性肺疾病",
+        "慢阻肺"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-016",
+      "term_norm": "Pneumonia",
+      "aliases": [
+        "肺炎"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-017",
+      "term_norm": "Acute bronchitis",
+      "aliases": [
+        "急性支气管炎",
+        "气管炎"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-018",
+      "term_norm": "Pulmonary tuberculosis",
+      "aliases": [
+        "肺结核",
+        "肺痨"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-019",
+      "term_norm": "Emphysema",
+      "aliases": [
+        "肺气肿"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-020",
+      "term_norm": "Bronchiectasis",
+      "aliases": [
+        "支气管扩张"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-021",
+      "term_norm": "Pleural effusion",
+      "aliases": [
+        "胸腔积液",
+        "肺积水"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-022",
+      "term_norm": "Allergic rhinitis",
+      "aliases": [
+        "过敏性鼻炎",
+        "鼻敏感"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-023",
+      "term_norm": "Sinusitis",
+      "aliases": [
+        "鼻窦炎"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-024",
+      "term_norm": "Tonsillitis",
+      "aliases": [
+        "扁桃体炎",
+        "扁桃腺炎"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-025",
+      "term_norm": "Influenza",
+      "aliases": [
+        "流行性感冒",
+        "感冒",
+        "流感"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-026",
+      "term_norm": "COVID-19",
+      "aliases": [
+        "新型冠状病毒感染",
+        "新冠"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-027",
+      "term_norm": "Gastritis",
+      "aliases": [
+        "胃炎"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-028",
+      "term_norm": "Peptic ulcer",
+      "aliases": [
+        "胃溃疡"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-029",
+      "term_norm": "GERD",
+      "aliases": [
+        "胃食管反流病"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-030",
+      "term_norm": "Helicobacter pylori infection",
+      "aliases": [
+        "幽门螺杆菌感染",
+        "幽门螺旋菌"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-031",
+      "term_norm": "Irritable bowel syndrome",
+      "aliases": [
+        "肠易激综合征",
+        "肠胃敏感"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-032",
+      "term_norm": "Inflammatory bowel disease",
+      "aliases": [
+        "炎症性肠病"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-033",
+      "term_norm": "Acute gastroenteritis",
+      "aliases": [
+        "急性胃肠炎",
+        "肠胃炎"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-034",
+      "term_norm": "Food poisoning",
+      "aliases": [
+        "食物中毒",
+        "食错嘢"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-035",
+      "term_norm": "Fatty liver",
+      "aliases": [
+        "脂肪肝"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-036",
+      "term_norm": "Cirrhosis",
+      "aliases": [
+        "肝硬化"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-037",
+      "term_norm": "Viral hepatitis",
+      "aliases": [
+        "病毒性肝炎",
+        "肝炎",
+        "乙肝"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-038",
+      "term_norm": "Cholelithiasis",
+      "aliases": [
+        "胆囊结石",
+        "胆石"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-039",
+      "term_norm": "Acute pancreatitis",
+      "aliases": [
+        "急性胰腺炎",
+        "胰脏炎"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-040",
+      "term_norm": "Chronic kidney disease",
+      "aliases": [
+        "慢性肾脏病",
+        "肾病"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-041",
+      "term_norm": "Urinary tract infection",
+      "aliases": [
+        "尿路感染",
+        "尿道炎",
+        "膀胱炎"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-042",
+      "term_norm": "Nephrolithiasis",
+      "aliases": [
+        "肾结石",
+        "肾石"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-043",
+      "term_norm": "Benign prostatic hyperplasia",
+      "aliases": [
+        "前列腺增生",
+        "前列腺肥大"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-044",
+      "term_norm": "Hyperthyroidism",
+      "aliases": [
+        "甲状腺功能亢进",
+        "甲亢"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-045",
+      "term_norm": "Hypothyroidism",
+      "aliases": [
+        "甲状腺功能减退",
+        "甲减"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-046",
+      "term_norm": "Gout",
+      "aliases": [
+        "痛风"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-047",
+      "term_norm": "Hyperuricemia",
+      "aliases": [
+        "高尿酸血症",
+        "尿酸高"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-048",
+      "term_norm": "Osteoporosis",
+      "aliases": [
+        "骨质疏松"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-049",
+      "term_norm": "Rheumatoid arthritis",
+      "aliases": [
+        "类风湿关节炎",
+        "类风湿"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-050",
+      "term_norm": "Systemic lupus erythematosus",
+      "aliases": [
+        "系统性红斑狼疮",
+        "红斑狼疮"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-051",
+      "term_norm": "Anemia",
+      "aliases": [
+        "贫血"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-052",
+      "term_norm": "Thrombocytopenia",
+      "aliases": [
+        "血小板减少",
+        "血小板低"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-053",
+      "term_norm": "Leukemia",
+      "aliases": [
+        "白血病",
+        "血癌"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-054",
+      "term_norm": "Lymphoma",
+      "aliases": [
+        "淋巴瘤",
+        "淋巴癌"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-055",
+      "term_norm": "Electrolyte imbalance",
+      "aliases": [
+        "电解质紊乱",
+        "电解质失衡"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-056",
+      "term_norm": "Dehydration",
+      "aliases": [
+        "脱水",
+        "缺水"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-057",
+      "term_norm": "Obesity",
+      "aliases": [
+        "肥胖症"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-058",
+      "term_norm": "Obstructive sleep apnea",
+      "aliases": [
+        "阻塞性睡眠呼吸暂停",
+        "睡眠窒息症"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-059",
+      "term_norm": "Herpes zoster",
+      "aliases": [
+        "带状疱疹",
+        "生蛇"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-060",
+      "term_norm": "Eczema",
+      "aliases": [
+        "湿疹"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-061",
+      "term_norm": "Psoriasis",
+      "aliases": [
+        "银屑病",
+        "牛皮癣"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-062",
+      "term_norm": "Urticaria",
+      "aliases": [
+        "荨麻疹",
+        "风癞"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-063",
+      "term_norm": "Acne vulgaris",
+      "aliases": [
+        "痤疮",
+        "暗疮"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-064",
+      "term_norm": "Fungal skin infection",
+      "aliases": [
+        "皮肤真菌感染"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "dis-065",
+      "term_norm": "Postherpetic neuralgia",
+      "aliases": [
+        "带状疱疹后神经痛",
+        "生蛇后遗痛"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "sur-001",
+      "term_norm": "Fracture",
+      "aliases": [
+        "骨折",
+        "断骨"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "sur-002",
+      "term_norm": "Dislocation",
+      "aliases": [
+        "关节脱位",
+        "脱臼"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "sur-003",
+      "term_norm": "Sprain",
+      "aliases": [
+        "扭伤",
+        "拗柴"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "sur-004",
+      "term_norm": "Strain",
+      "aliases": [
+        "拉伤"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "sur-005",
+      "term_norm": "Appendicitis",
+      "aliases": [
+        "阑尾炎",
+        "盲肠炎"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "sur-006",
+      "term_norm": "Cholecystitis",
+      "aliases": [
+        "胆囊炎"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "sur-008",
+      "term_norm": "Hemorrhoids",
+      "aliases": [
+        "痔疮"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "sur-009",
+      "term_norm": "Cancer",
+      "aliases": [
+        "癌症"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "sur-010",
+      "term_norm": "Benign tumor",
+      "aliases": [
+        "良性肿瘤",
+        "良性瘤"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "sur-011",
+      "term_norm": "Malignant tumor",
+      "aliases": [
+        "恶性肿瘤",
+        "恶性瘤"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "sur-012",
+      "term_norm": "Shock",
+      "aliases": [
+        "休克"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "sur-013",
+      "term_norm": "Trauma",
+      "aliases": [
+        "创伤",
+        "受伤"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "sur-014",
+      "term_norm": "Head injury",
+      "aliases": [
+        "颅脑外伤",
+        "撞亲头"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "sur-015",
+      "term_norm": "Concussion",
+      "aliases": [
+        "脑震荡"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "sur-016",
+      "term_norm": "Subdural hematoma",
+      "aliases": [
+        "硬膜下血肿"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "sur-017",
+      "term_norm": "Rib fracture",
+      "aliases": [
+        "肋骨骨折",
+        "肋骨断"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "sur-018",
+      "term_norm": "Pneumothorax",
+      "aliases": [
+        "气胸",
+        "爆肺"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "sur-019",
+      "term_norm": "Hemopneumothorax",
+      "aliases": [
+        "血气胸"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "sur-020",
+      "term_norm": "Intra-abdominal bleeding",
+      "aliases": [
+        "腹腔内出血",
+        "内出血"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "sur-021",
+      "term_norm": "Acute peritonitis",
+      "aliases": [
+        "急性腹膜炎",
+        "腹膜炎"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "sur-022",
+      "term_norm": "Intestinal obstruction",
+      "aliases": [
+        "肠梗阻",
+        "肠塞"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "sur-023",
+      "term_norm": "Bowel perforation",
+      "aliases": [
+        "肠穿孔",
+        "肠穿"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "sur-024",
+      "term_norm": "Inguinal hernia",
+      "aliases": [
+        "腹股沟疝"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "sur-025",
+      "term_norm": "Anal fissure",
+      "aliases": [
+        "肛裂"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "sur-026",
+      "term_norm": "Anal fistula",
+      "aliases": [
+        "肛瘘"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "sur-027",
+      "term_norm": "Breast lump",
+      "aliases": [
+        "乳腺结节",
+        "乳房硬块"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "sur-028",
+      "term_norm": "Thyroid nodule",
+      "aliases": [
+        "甲状腺结节"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "sur-029",
+      "term_norm": "Burn",
+      "aliases": [
+        "烧伤",
+        "灼伤"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "sur-030",
+      "term_norm": "Scald",
+      "aliases": [
+        "烫伤"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "sur-031",
+      "term_norm": "Drowning",
+      "aliases": [
+        "溺水",
+        "浸亲水"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "sur-032",
+      "term_norm": "Poisoning",
+      "aliases": [
+        "中毒"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "sur-033",
+      "term_norm": "Animal bite",
+      "aliases": [
+        "动物咬伤",
+        "被狗咬"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "sur-034",
+      "term_norm": "Tetanus",
+      "aliases": [
+        "破伤风"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "sur-035",
+      "term_norm": "Sepsis",
+      "aliases": [
+        "脓毒症",
+        "败血症"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "sur-036",
+      "term_norm": "Polytrauma",
+      "aliases": [
+        "多发性创伤",
+        "多处受伤"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "sur-037",
+      "term_norm": "Postoperative infection",
+      "aliases": [
+        "术后感染",
+        "伤口发炎"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "sur-038",
+      "term_norm": "Incisional hernia",
+      "aliases": [
+        "切口疝",
+        "伤口疝"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "sur-039",
+      "term_norm": "Varicose veins",
+      "aliases": [
+        "静脉曲张",
+        "青筋"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "sur-040",
+      "term_norm": "Arterial embolism",
+      "aliases": [
+        "动脉栓塞",
+        "血管塞"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "sur-041",
+      "term_norm": "Crush injury",
+      "aliases": [
+        "挤压伤",
+        "压伤"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "obg-001",
+      "term_norm": "Pregnancy",
+      "aliases": [
+        "妊娠",
+        "有咗",
+        "大肚"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "obg-002",
+      "term_norm": "Childbirth",
+      "aliases": [
+        "分娩",
+        "生仔"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "obg-003",
+      "term_norm": "Cesarean section",
+      "aliases": [
+        "剖宫产",
+        "开刀生"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "obg-004",
+      "term_norm": "Dysmenorrhea",
+      "aliases": [
+        "痛经",
+        "经痛",
+        "M痛"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "obg-005",
+      "term_norm": "Irregular menstruation",
+      "aliases": [
+        "月经不调",
+        "M到唔准"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "obg-006",
+      "term_norm": "Uterine fibroids",
+      "aliases": [
+        "子宫肌瘤"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "obg-007",
+      "term_norm": "Gestational hypertension",
+      "aliases": [
+        "妊娠期高血压",
+        "妊娠高血压"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "obg-008",
+      "term_norm": "Gestational diabetes",
+      "aliases": [
+        "妊娠期糖尿病",
+        "妊娠糖尿"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "obg-009",
+      "term_norm": "Threatened abortion",
+      "aliases": [
+        "先兆流产",
+        "作小产"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "obg-010",
+      "term_norm": "Ectopic pregnancy",
+      "aliases": [
+        "异位妊娠",
+        "宫外孕"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "obg-011",
+      "term_norm": "Placental abruption",
+      "aliases": [
+        "胎盘早剥"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "obg-012",
+      "term_norm": "Postpartum hemorrhage",
+      "aliases": [
+        "产后出血",
+        "产后大出血"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "obg-013",
+      "term_norm": "Puerperal infection",
+      "aliases": [
+        "产褥感染",
+        "产后感染"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "obg-014",
+      "term_norm": "Infertility",
+      "aliases": [
+        "不孕症",
+        "不育"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "obg-015",
+      "term_norm": "Polycystic ovary syndrome",
+      "aliases": [
+        "多囊卵巢综合征",
+        "多囊卵巢"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "obg-016",
+      "term_norm": "Menopausal syndrome",
+      "aliases": [
+        "更年期综合征",
+        "更年期",
+        "收经"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "obg-017",
+      "term_norm": "Mastitis",
+      "aliases": [
+        "乳腺炎"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "obg-018",
+      "term_norm": "Pelvic inflammatory disease",
+      "aliases": [
+        "盆腔炎"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "obg-019",
+      "term_norm": "Cervical cancer screening",
+      "aliases": [
+        "宫颈癌筛查",
+        "子宫颈抹片"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "obg-020",
+      "term_norm": "Hand-foot-and-mouth disease",
+      "aliases": [
+        "手足口病"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "obg-021",
+      "term_norm": "Chickenpox",
+      "aliases": [
+        "水痘",
+        "出水痘"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "obg-022",
+      "term_norm": "Neonatal jaundice",
+      "aliases": [
+        "新生儿黄疸",
+        "BB黄疸"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "obg-023",
+      "term_norm": "Infantile diarrhea",
+      "aliases": [
+        "婴幼儿腹泻",
+        "BB屙肚"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "obg-024",
+      "term_norm": "Pediatric pneumonia",
+      "aliases": [
+        "小儿肺炎",
+        "细路肺炎"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "obg-025",
+      "term_norm": "Febrile convulsion",
+      "aliases": [
+        "高热惊厥",
+        "发烧抽筋"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "obg-026",
+      "term_norm": "Measles",
+      "aliases": [
+        "麻疹"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "obg-027",
+      "term_norm": "Mumps",
+      "aliases": [
+        "流行性腮腺炎",
+        "痄腮"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "obg-028",
+      "term_norm": "Pertussis",
+      "aliases": [
+        "百日咳"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "obg-029",
+      "term_norm": "Kawasaki disease",
+      "aliases": [
+        "川崎病"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "obg-030",
+      "term_norm": "Growth retardation",
+      "aliases": [
+        "生长发育迟缓",
+        "生长慢"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "obg-031",
+      "term_norm": "Jaundice",
+      "aliases": [
+        "黄疸"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "psy-001",
+      "term_norm": "Depression",
+      "aliases": [
+        "抑郁症"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "psy-002",
+      "term_norm": "Anxiety disorder",
+      "aliases": [
+        "焦虑症"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "psy-003",
+      "term_norm": "Schizophrenia",
+      "aliases": [
+        "精神分裂症"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "psy-004",
+      "term_norm": "Alzheimer disease",
+      "aliases": [
+        "阿尔茨海默病",
+        "脑退化症"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "psy-005",
+      "term_norm": "Epilepsy",
+      "aliases": [
+        "癫痫",
+        "发羊吊"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "psy-006",
+      "term_norm": "Parkinson disease",
+      "aliases": [
+        "帕金森病"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "psy-007",
+      "term_norm": "Bipolar disorder",
+      "aliases": [
+        "双相情感障碍",
+        "躁郁症"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "psy-008",
+      "term_norm": "Obsessive-compulsive disorder",
+      "aliases": [
+        "强迫症"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "psy-009",
+      "term_norm": "Post-traumatic stress disorder",
+      "aliases": [
+        "创伤后应激障碍",
+        "创伤后压力症"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "psy-010",
+      "term_norm": "Panic disorder",
+      "aliases": [
+        "惊恐障碍",
+        "惊恐症"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "psy-011",
+      "term_norm": "Somatic symptom disorder",
+      "aliases": [
+        "躯体化障碍",
+        "躯体化"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "psy-012",
+      "term_norm": "Alcohol dependence",
+      "aliases": [
+        "酒精依赖",
+        "酗酒"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "psy-013",
+      "term_norm": "Substance dependence",
+      "aliases": [
+        "物质依赖",
+        "依赖药物"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "psy-014",
+      "term_norm": "Delirium",
+      "aliases": [
+        "谵妄",
+        "神志混乱"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "psy-015",
+      "term_norm": "Vascular dementia",
+      "aliases": [
+        "血管性痴呆"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "psy-016",
+      "term_norm": "Migraine",
+      "aliases": [
+        "偏头痛"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "psy-017",
+      "term_norm": "Tension headache",
+      "aliases": [
+        "紧张性头痛"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "psy-018",
+      "term_norm": "Trigeminal neuralgia",
+      "aliases": [
+        "三叉神经痛"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "psy-019",
+      "term_norm": "Facial nerve palsy",
+      "aliases": [
+        "面神经麻痹",
+        "面瘫",
+        "面歪"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "psy-020",
+      "term_norm": "Sciatica",
+      "aliases": [
+        "坐骨神经痛"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "psy-021",
+      "term_norm": "Myasthenia gravis",
+      "aliases": [
+        "重症肌无力"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "psy-022",
+      "term_norm": "Multiple sclerosis",
+      "aliases": [
+        "多发性硬化"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "psy-023",
+      "term_norm": "Meningitis",
+      "aliases": [
+        "脑膜炎"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "psy-024",
+      "term_norm": "Encephalitis",
+      "aliases": [
+        "脑炎"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "psy-025",
+      "term_norm": "Peripheral neuropathy",
+      "aliases": [
+        "周围神经病变",
+        "手脚痺"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "psy-026",
+      "term_norm": "Restless legs syndrome",
+      "aliases": [
+        "不宁腿综合征",
+        "不宁腿"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "psy-027",
+      "term_norm": "Sleep disorder",
+      "aliases": [
+        "睡眠障碍"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "psy-028",
+      "term_norm": "Dementia",
+      "aliases": [
+        "痴呆",
+        "脑退化"
+      ],
+      "category": "disease"
+    },
+    {
+      "id": "tes-001",
+      "term_norm": "Blood test",
+      "aliases": [
+        "抽血",
+        "验血"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "tes-002",
+      "term_norm": "Urinalysis",
+      "aliases": [
+        "尿液分析",
+        "验尿"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "tes-003",
+      "term_norm": "Stool test",
+      "aliases": [
+        "粪便检查",
+        "验屎"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "tes-004",
+      "term_norm": "Blood pressure measurement",
+      "aliases": [
+        "血压测量",
+        "量血压"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "tes-005",
+      "term_norm": "Electrocardiogram",
+      "aliases": [
+        "心电图"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "tes-006",
+      "term_norm": "Ultrasound",
+      "aliases": [
+        "超声波检查",
+        "超声波"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "tes-007",
+      "term_norm": "X-ray",
+      "aliases": [
+        "X线检查",
+        "照X光"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "tes-008",
+      "term_norm": "CT scan",
+      "aliases": [
+        "计算机断层扫描",
+        "电脑扫描"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "tes-009",
+      "term_norm": "MRI scan",
+      "aliases": [
+        "磁共振成像",
+        "磁力共振"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "tes-010",
+      "term_norm": "Gastroscopy",
+      "aliases": [
+        "胃镜",
+        "照胃镜"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "tes-011",
+      "term_norm": "Colonoscopy",
+      "aliases": [
+        "结肠镜",
+        "照肠镜"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "tes-012",
+      "term_norm": "Biopsy",
+      "aliases": [
+        "活检",
+        "抽组织"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "tes-013",
+      "term_norm": "Liver function test",
+      "aliases": [
+        "肝功能检查",
+        "验肝功能"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "tes-014",
+      "term_norm": "Renal function test",
+      "aliases": [
+        "肾功能检查",
+        "验肾功能"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "tes-015",
+      "term_norm": "Lipid panel",
+      "aliases": [
+        "血脂检查",
+        "验血脂"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "tes-016",
+      "term_norm": "Blood glucose test",
+      "aliases": [
+        "血糖检测",
+        "验血糖"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "tes-017",
+      "term_norm": "HbA1c test",
+      "aliases": [
+        "糖化血红蛋白检测",
+        "验糖化血红蛋白"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "tes-018",
+      "term_norm": "Coagulation profile",
+      "aliases": [
+        "凝血功能检查",
+        "验凝血"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "tes-019",
+      "term_norm": "D-dimer test",
+      "aliases": [
+        "D-二聚体检测",
+        "验D二聚体"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "tes-020",
+      "term_norm": "CRP test",
+      "aliases": [
+        "C反应蛋白检测"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "tes-021",
+      "term_norm": "Erythrocyte sedimentation rate",
+      "aliases": [
+        "红细胞沉降率",
+        "血沉"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "tes-022",
+      "term_norm": "Electrolyte panel",
+      "aliases": [
+        "电解质检查",
+        "验电解质"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "tes-023",
+      "term_norm": "Thyroid function test",
+      "aliases": [
+        "甲状腺功能检查",
+        "验甲功"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "tes-024",
+      "term_norm": "Tumor marker test",
+      "aliases": [
+        "肿瘤标志物检测",
+        "验癌指数"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "tes-025",
+      "term_norm": "Hepatitis B panel",
+      "aliases": [
+        "乙型肝炎病毒检测",
+        "验乙肝"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "tes-026",
+      "term_norm": "Sputum culture",
+      "aliases": [
+        "痰培养",
+        "验痰"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "tes-027",
+      "term_norm": "Blood culture",
+      "aliases": [
+        "血培养",
+        "种血"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "tes-028",
+      "term_norm": "Urine culture",
+      "aliases": [
+        "尿培养",
+        "种尿"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "tes-029",
+      "term_norm": "Drug susceptibility test",
+      "aliases": [
+        "药物敏感试验",
+        "药敏测试"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "tes-030",
+      "term_norm": "Fecal occult blood test",
+      "aliases": [
+        "粪便隐血试验",
+        "验大便隐血"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "tes-031",
+      "term_norm": "Urea breath test",
+      "aliases": [
+        "尿素呼气试验",
+        "吹气测试"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "tes-032",
+      "term_norm": "Pulmonary function test",
+      "aliases": [
+        "肺功能检查",
+        "肺功能测试"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "tes-033",
+      "term_norm": "Exercise stress test",
+      "aliases": [
+        "运动负荷试验",
+        "跑步机测试"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "tes-034",
+      "term_norm": "Holter monitor",
+      "aliases": [
+        "动态心电图",
+        "24小时心电图"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "tes-035",
+      "term_norm": "Ambulatory blood pressure monitoring",
+      "aliases": [
+        "动态血压监测",
+        "24小时血压"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "tes-036",
+      "term_norm": "Carotid ultrasound",
+      "aliases": [
+        "颈动脉超声",
+        "颈血管超声"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "tes-037",
+      "term_norm": "Echocardiography",
+      "aliases": [
+        "超声心动图",
+        "照心"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "tes-038",
+      "term_norm": "Brain MRI",
+      "aliases": [
+        "头颅磁共振",
+        "照脑"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "tes-039",
+      "term_norm": "Bone density scan",
+      "aliases": [
+        "骨密度检查",
+        "验骨密度"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "tes-040",
+      "term_norm": "Mammography",
+      "aliases": [
+        "乳腺X线摄影",
+        "乳房X光"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "tes-041",
+      "term_norm": "HPV test",
+      "aliases": [
+        "HPV检测",
+        "HPV测试"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "tes-042",
+      "term_norm": "Immunohistochemistry",
+      "aliases": [
+        "免疫组织化学",
+        "免疫组化"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "tes-043",
+      "term_norm": "Genetic testing",
+      "aliases": [
+        "基因检测",
+        "基因测试"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "tes-044",
+      "term_norm": "Allergy testing",
+      "aliases": [
+        "过敏原检测",
+        "验敏感"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "tes-045",
+      "term_norm": "Lumbar puncture",
+      "aliases": [
+        "腰椎穿刺",
+        "抽脊髓液"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "tes-046",
+      "term_norm": "Bone marrow aspiration",
+      "aliases": [
+        "骨髓穿刺",
+        "抽骨髓"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "tes-047",
+      "term_norm": "Joint aspiration",
+      "aliases": [
+        "关节穿刺",
+        "抽关节液"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "lab-001",
+      "term_norm": "Body temperature",
+      "aliases": [
+        "体温"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "lab-002",
+      "term_norm": "Pulse",
+      "aliases": [
+        "脉搏"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "lab-003",
+      "term_norm": "Respiratory rate",
+      "aliases": [
+        "呼吸频率",
+        "呼吸頻率"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "lab-004",
+      "term_norm": "Blood pressure",
+      "aliases": [
+        "血压"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "lab-005",
+      "term_norm": "Oxygen saturation",
+      "aliases": [
+        "血氧饱和度",
+        "血氧"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "lab-006",
+      "term_norm": "Fasting plasma glucose",
+      "aliases": [
+        "空腹血糖",
+        "空肚血糖"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "lab-007",
+      "term_norm": "Postprandial glucose",
+      "aliases": [
+        "餐后血糖"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "lab-008",
+      "term_norm": "Glycated hemoglobin",
+      "aliases": [
+        "糖化血红蛋白"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "lab-009",
+      "term_norm": "Total cholesterol",
+      "aliases": [
+        "总胆固醇"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "lab-010",
+      "term_norm": "LDL cholesterol",
+      "aliases": [
+        "低密度脂蛋白胆固醇",
+        "坏胆固醇"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "lab-011",
+      "term_norm": "HDL cholesterol",
+      "aliases": [
+        "高密度脂蛋白胆固醇",
+        "好胆固醇"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "lab-012",
+      "term_norm": "Triglycerides",
+      "aliases": [
+        "甘油三酯",
+        "三酸甘油脂"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "lab-013",
+      "term_norm": "Creatinine",
+      "aliases": [
+        "肌酐"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "lab-014",
+      "term_norm": "Blood urea",
+      "aliases": [
+        "尿素"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "lab-015",
+      "term_norm": "eGFR",
+      "aliases": [
+        "估算肾小球滤过率",
+        "肾小球滤过率"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "lab-016",
+      "term_norm": "Uric acid",
+      "aliases": [
+        "尿酸"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "lab-017",
+      "term_norm": "ALT",
+      "aliases": [
+        "丙氨酸氨基转移酶"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "lab-018",
+      "term_norm": "AST",
+      "aliases": [
+        "天冬氨酸氨基转移酶"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "lab-019",
+      "term_norm": "Total bilirubin",
+      "aliases": [
+        "总胆红素",
+        "胆红素"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "lab-020",
+      "term_norm": "Albumin",
+      "aliases": [
+        "白蛋白"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "lab-021",
+      "term_norm": "Hemoglobin",
+      "aliases": [
+        "血红蛋白",
+        "血色素"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "lab-022",
+      "term_norm": "White blood cell count",
+      "aliases": [
+        "白细胞计数",
+        "白血球"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "lab-023",
+      "term_norm": "Neutrophils",
+      "aliases": [
+        "中性粒细胞",
+        "中性粒球"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "lab-024",
+      "term_norm": "Platelet count",
+      "aliases": [
+        "血小板计数",
+        "血小板"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "lab-025",
+      "term_norm": "C-reactive protein",
+      "aliases": [
+        "C反应蛋白"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "lab-026",
+      "term_norm": "Erythrocyte sedimentation rate",
+      "aliases": [
+        "红细胞沉降率",
+        "血沉"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "lab-027",
+      "term_norm": "INR",
+      "aliases": [
+        "国际标准化比值",
+        "凝血指数"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "lab-028",
+      "term_norm": "D-dimer",
+      "aliases": [
+        "D-二聚体",
+        "D二聚体"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "lab-029",
+      "term_norm": "Serum potassium",
+      "aliases": [
+        "血钾"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "lab-030",
+      "term_norm": "Serum sodium",
+      "aliases": [
+        "血钠"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "lab-031",
+      "term_norm": "TSH",
+      "aliases": [
+        "促甲状腺激素",
+        "促甲状腺素"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "lab-032",
+      "term_norm": "PSA",
+      "aliases": [
+        "前列腺特异抗原",
+        "前列腺癌指数"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "lab-033",
+      "term_norm": "Carcinoembryonic antigen",
+      "aliases": [
+        "癌胚抗原"
+      ],
+      "category": "exam"
+    },
+    {
+      "id": "pro-001",
+      "term_norm": "Prescription drug",
+      "aliases": [
+        "处方药",
+        "医生药"
+      ],
+      "category": "drug"
+    },
+    {
+      "id": "pro-002",
+      "term_norm": "Over-the-counter drug",
+      "aliases": [
+        "非处方药",
+        "成药"
+      ],
+      "category": "drug"
+    },
+    {
+      "id": "pro-003",
+      "term_norm": "Antibiotics",
+      "aliases": [
+        "抗生素",
+        "消炎药"
+      ],
+      "category": "drug"
+    },
+    {
+      "id": "pro-004",
+      "term_norm": "Analgesics",
+      "aliases": [
+        "止痛药"
+      ],
+      "category": "drug"
+    },
+    {
+      "id": "pro-005",
+      "term_norm": "Antipyretics",
+      "aliases": [
+        "退烧药"
+      ],
+      "category": "drug"
+    },
+    {
+      "id": "pro-006",
+      "term_norm": "Injection",
+      "aliases": [
+        "注射",
+        "打针"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "pro-007",
+      "term_norm": "Intravenous drip",
+      "aliases": [
+        "静脉输液",
+        "吊针",
+        "吊盐水"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "pro-008",
+      "term_norm": "Surgery",
+      "aliases": [
+        "手术",
+        "做手术",
+        "开刀"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "pro-009",
+      "term_norm": "Anesthesia",
+      "aliases": [
+        "麻醉",
+        "打麻醉针"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "pro-010",
+      "term_norm": "Suturing",
+      "aliases": [
+        "缝合",
+        "缝针"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "pro-011",
+      "term_norm": "Stitch removal",
+      "aliases": [
+        "拆线",
+        "剪线"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "pro-012",
+      "term_norm": "Dressing change",
+      "aliases": [
+        "换药"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "pro-013",
+      "term_norm": "Bandaging",
+      "aliases": [
+        "包扎"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "pro-014",
+      "term_norm": "Blood transfusion",
+      "aliases": [
+        "输血"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "pro-015",
+      "term_norm": "Hemodialysis",
+      "aliases": [
+        "血液透析",
+        "洗肾"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "pro-016",
+      "term_norm": "Chemotherapy",
+      "aliases": [
+        "化疗"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "pro-017",
+      "term_norm": "Radiotherapy",
+      "aliases": [
+        "放疗",
+        "电疗"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "pro-018",
+      "term_norm": "Nebulization",
+      "aliases": [
+        "雾化吸入",
+        "闻雾化"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "pro-019",
+      "term_norm": "Oxygen therapy",
+      "aliases": [
+        "氧疗",
+        "吸氧"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "pro-020",
+      "term_norm": "Tracheal intubation",
+      "aliases": [
+        "气管插管",
+        "插喉"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "pro-021",
+      "term_norm": "Mechanical ventilation",
+      "aliases": [
+        "机械通气",
+        "呼吸机"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "pro-022",
+      "term_norm": "Cardiopulmonary resuscitation",
+      "aliases": [
+        "心肺复苏"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "pro-023",
+      "term_norm": "Defibrillation",
+      "aliases": [
+        "电除颤",
+        "电击"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "pro-024",
+      "term_norm": "Urinary catheterization",
+      "aliases": [
+        "导尿",
+        "插尿喉"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "pro-025",
+      "term_norm": "Nasogastric tube insertion",
+      "aliases": [
+        "留置胃管",
+        "插胃喉"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "pro-026",
+      "term_norm": "Drainage",
+      "aliases": [
+        "引流"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "pro-027",
+      "term_norm": "Debridement",
+      "aliases": [
+        "清创",
+        "洗伤口"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "pro-028",
+      "term_norm": "Cast immobilization",
+      "aliases": [
+        "石膏固定",
+        "打石膏"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "pro-029",
+      "term_norm": "Traction",
+      "aliases": [
+        "牵引",
+        "拉骨"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "pro-030",
+      "term_norm": "Intra-articular injection",
+      "aliases": [
+        "关节腔注射",
+        "打针入关节"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "pro-031",
+      "term_norm": "Physiotherapy",
+      "aliases": [
+        "物理治疗"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "pro-032",
+      "term_norm": "Rehabilitation",
+      "aliases": [
+        "康复训练",
+        "做康复"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "pro-033",
+      "term_norm": "Psychological counseling",
+      "aliases": [
+        "心理咨询",
+        "见辅导"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "pro-034",
+      "term_norm": "Vaccination",
+      "aliases": [
+        "疫苗接种",
+        "打预防针"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "pro-035",
+      "term_norm": "Targeted therapy",
+      "aliases": [
+        "靶向治疗",
+        "标靶治疗"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "pro-036",
+      "term_norm": "Immunotherapy",
+      "aliases": [
+        "免疫治疗"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "pro-037",
+      "term_norm": "Acupuncture",
+      "aliases": [
+        "针灸"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "pro-038",
+      "term_norm": "Smoking cessation",
+      "aliases": [
+        "戒烟"
+      ],
+      "category": "abbr"
+    },
+    {
+      "id": "local-drug-001",
+      "term_norm": "Aspirin",
+      "aliases": [
+        "阿司匹林",
+        "阿斯匹林",
+        "亚士匹灵",
+        "拜阿司匹灵",
+        "阿士匹灵"
+      ],
+      "category": "drug"
+    }
+  ],
+  "source_sha256": "5272d7d768d168cf2d3609ef9e07f7ee11c73030910a187f5647ca2453fd9b5e"
+}

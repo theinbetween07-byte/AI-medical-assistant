@@ -1,0 +1,31 @@
+{
+  "version": "2026-10-29-local.1",
+  "note": "本地术语补丁。源 xls 不做改动，每次重建词表时合并；所有改动记录在 import_report.json 的 overrides 段，便于追溯与回滚。",
+  "add_terms": [
+    {
+      "term_id": "LOCAL-DRUG-001",
+      "category": "药物",
+      "zh": "阿司匹林",
+      "en": "Aspirin",
+      "yue": "阿斯匹林",
+      "jyutping": "aa3 si1 pat1 lam4",
+      "type_code": "DRU",
+      "synonyms": "阿斯匹林、亚士匹灵、拜阿司匹灵、阿士匹灵",
+      "note": "本地补充：源 xls 无该药条目，实测口述「阿斯匹林」无法纠正"
+    }
+  ],
+  "add_aliases": [
+    {
+      "term_id": "LAB-003",
+      "alias": "呼吸頻率",
+      "reason": "移除泛化别名「呼吸」后，补上繁体写法，保住「呼吸頻率20次」的纠正"
+    }
+  ],
+  "drop_aliases": [
+    {
+      "term_id": "LAB-003",
+      "alias": "呼吸",
+      "reason": "「呼吸」会误伤「雙肺呼吸音粗」，只保留「呼吸頻率/呼吸频率」"
+    }
+  ]
+}

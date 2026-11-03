@@ -1,0 +1,37 @@
+{
+  "version": "2026-10-29",
+  "source": "医学术语库_v2.xls",
+  "source_rows": 602,
+  "rules_copied": true,
+  "entries_total": 603,
+  "entries_auto_replace": 436,
+  "alias_total": 752,
+  "skip_reason_counts": {
+    "type_not_auto:TME": 38,
+    "type_not_auto:DEP": 35,
+    "type_not_auto:SEV": 26,
+    "too_short": 24,
+    "ambiguous": 20,
+    "type_not_auto:DOS": 20,
+    "type_not_auto:DOC": 18,
+    "type_not_auto:HIS": 15,
+    "type_not_auto:NEG": 6,
+    "type_not_auto:UNC": 3,
+    "type_not_auto:ROL": 2
+  },
+  "overrides": {
+    "file": "overrides.json",
+    "version": "2026-10-29-local.1",
+    "added_terms": [
+      "LOCAL-DRUG-001"
+    ],
+    "added_aliases": [
+      "LAB-003:呼吸頻率"
+    ],
+    "dropped_aliases": [
+      "LAB-003:呼吸"
+    ],
+    "warnings": []
+  },
+  "note": "entries_auto_replace 为参与自动替换的词条数；其余仅作词表查阅（保守策略）"
+}

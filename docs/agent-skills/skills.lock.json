@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-11-01",
+  "installRoot": ".opencode/skills",
+  "policy": {
+    "projectScopeOnly": true,
+    "lockCommitNotBranch": true,
+    "directoryNameMustEqualFrontmatterName": true,
+    "overwriteRequiresForce": true,
+    "backupBeforeOverwrite": true
+  },
+  "skills": [
+    {
+      "name": "conventional-git",
+      "repo": "https://github.com/samber/cc-skills",
+      "commit": "123cb155f5ab5751fc13c8027fbfa5eb0d3773c6",
+      "sourcePath": "skills/conventional-git",
+      "license": "MIT",
+      "fileCount": 2,
+      "layer": "delivery",
+      "purpose": "分支命名、worktree 命名、Conventional Commits 与 changelog 约束"
+    },
+    {
+      "name": "code-review",
+      "repo": "https://github.com/mattpocock/skills",
+      "commit": "59db609eb1e18aaf59b63284d0e52255aff0c63c",
+      "sourcePath": "skills/engineering/code-review",
+      "license": "MIT",
+      "fileCount": 2,
+      "layer": "delivery",
+      "purpose": "Standards 与 Spec 双轴评审，避免规范问题与需求问题互相掩盖"
+    },
+    {
+      "name": "handoff",
+      "repo": "https://github.com/mattpocock/skills",
+      "commit": "59db609eb1e18aaf59b63284d0e52255aff0c63c",
+      "sourcePath": "skills/productivity/handoff",
+      "license": "MIT",
+      "fileCount": 2,
+      "layer": "delivery",
+      "purpose": "会话交接文档，只引用既有产物，不复制内容"
+    },
+    {
+      "name": "make-repo-contribution",
+      "repo": "https://github.com/github/awesome-copilot",
+      "commit": "b6483db44fb602654bca6a097185fcaddb305f97",
+      "sourcePath": "skills/make-repo-contribution",
+      "license": "MIT",
+      "fileCount": 3,
+      "layer": "delivery",
+      "purpose": "作为外部仓库客人时的提交边界；仅用于上游或他人 fork"
+    },
+    {
+      "name": "hmi-design-full",
+      "repo": "https://github.com/timhok/hmi-design",
+      "commit": "28829666d5ce09c6bc73ea2b4da1406569cd7ed8",
+      "sourcePath": "hmi-design-full",
+      "license": "MIT",
+      "fileCount": 15,
+      "layer": "design-spec",
+      "purpose": "ISA-101 派生的人因、层级、报警语义、色彩与导航约束"
+    },
+    {
+      "name": "design-taste-frontend",
+      "repo": "https://github.com/Leonxlnx/taste-skill",
+      "commit": "12af471f627f866411b4bd785b19646d3672784c",
+      "sourcePath": "skills/taste-skill",
+      "license": "MIT",
+      "fileCount": 39,
+      "layer": "design-apply",
+      "purpose": "浏览器实测、版式与反模板化落地；仅用于展示页与重新设计一屏"
+    },
+    {
+      "name": "industrial-brutalist-ui",
+      "repo": "https://github.com/Leonxlnx/taste-skill-classics",
+      "commit": "5e08c9383dc4ad7fc0df70e1ac8cfa09ec356305",
+      "sourcePath": "skills/brutalist-skill",
+      "license": "MIT",
+      "fileCount": 2,
+      "layer": "design-style",
+      "purpose": "工业粗野主义观感；仅限宣传页/演示大屏，禁止用于临床记录操作界面"
+    },
+    {
+      "name": "app-ui-ux-best-practices",
+      "repo": "https://github.com/touchine-ojo/OJO-Design-Skills",
+      "commit": "fbd2c2d158e5ebda8930f4bc63ed635a8500d31f",
+      "sourcePath": "skills/app-ui-ux-best-practices",
+      "license": "MIT",
+      "fileCount": 10,
+      "layer": "design-system",
+      "purpose": "设计 token、组件规范、动效规格与设计审计；项目副本优先于全局同名技能"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+# 集成层直接依赖（版本与 medical-ai-assistant 便携 Python 内的实际安装一致）
+# 生产环境直接复用该便携解释器；在别的机器上用官方 Python 时按此安装即可。
+fastapi==0.150.0
+uvicorn==0.54.0
+pydantic==2.14.1
+python-multipart==0.0.32
+reportlab==5.1.0
+pillow==13.0.0
+xlrd==2.0.2
+
+# 上游服务（不随本仓库分发，需自行准备）：
+#   - medical-ai-assistant（ASR，:18000，含 faster-whisper medium 模型）
+#   - report-produce/书面报告生成插件（含术语纠正）（报告引擎，:8790）

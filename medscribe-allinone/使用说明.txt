@@ -1,0 +1,65 @@
+MedScribe HK —— 医用语音报告生成系统（一体化版）
+=====================================================
+
+双击 start.bat 即可使用，无需安装 Python、Node.js、ffmpeg，也无需下载模型。
+
+【第一次使用】
+
+1. 把整个 medscribe-allinone 文件夹解压到硬盘（不要直接在压缩包里运行）
+2. 双击 start.bat
+3. 首次会弹出 Windows 防火墙提示，选择「允许访问」
+4. 等待 30-60 秒（正在加载 1.5 GB 语音模型），就绪后浏览器自动打开
+   地址：http://127.0.0.1:8100
+5. 停止服务：关闭 start.bat 窗口，或双击 stop.bat
+
+【能做什么】
+
+  录音 / 上传音频
+      -> 语音转文字（粤语 · 普通话，24 字分段，带时间戳）
+      -> 医学术语纠正
+      -> 抽取结构化报告（S / O / A / P）
+      -> 医师校审、签署
+      -> 导出 TXT / JSON / PDF
+
+  · 三套模板：通用 SOAP 记录、门诊记录、外科病理报告（结直肠，20 字段 17 必填）
+  · 术语库：602 条中文医学术语，436 条自动替换
+  · 全程本地运行，录音与病历不出本机
+
+【目录说明】
+
+  start.bat            启动（推荐）
+  stop.bat             停止
+  runtime\python\      内置 Python 3.12 与全部依赖
+  bin\ffmpeg.exe       音频转码（启动脚本自动注入，无需另装）
+  app\backend\         语音识别服务（端口 18000）
+  app\report-engine\   报告引擎（端口 8790）
+  app\integration\     集成层与网页界面（端口 8100）
+  app\models\          faster-whisper medium 模型（约 1.53 GB）
+
+【常见问题】
+
+Q: 双击后黑窗口闪退
+A: 在命令行里运行 start.bat 可以看到具体报错；
+   最常见原因是路径含特殊字符，或解压不完整（模型文件应约 1.53 GB）。
+
+Q: 浏览器打开显示「无法访问」
+A: 首次启动要等模型加载完，约 30-60 秒；
+   若仍失败，查看 app\integration\logs\ 下的 asr.log / engine.log。
+
+Q: 端口被占用
+A: 18000 / 8790 / 8100 任一被占用时，启动脚本会跳过该服务视为已运行；
+   先运行 stop.bat，或用 netstat -ano | findstr :8100 定位进程。
+
+Q: 想提高识别精度
+A: 本版已用 medium 模型。若要换 large-v3，把模型放到
+   app\models\faster-whisper-large-v3\，并把 start.bat 里的
+   WHISPER_MODEL=medium 改成 large-v3（需约 3 GB 可用内存）。
+
+Q: 识别不准 / 想加术语
+A: 在 app\integration\terms\overrides.json 里添加自定义替换规则。
+
+【重要声明】
+
+本软件用于技术验证与研究，不作为医疗器械。
+生成的报告必须由有资质的医师逐项核对并签署后方可使用。
+本软件不联网，不收集任何数据。

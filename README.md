@@ -1,145 +1,146 @@
-# AI Medical Assistant
+﻿# MedScribe HK
 
-把医生的**口语化口述转写**，生成**可直接核签的书面报告**（本地运行，不外联）。
+> 香港临床口述智能病历助手：把粤语、英语及中英混合口述整理为可校审的结构化病历初稿。
+>
+> 课程项目 TJU 44511105 · 2026-10-12 – 2026-11-29 · 5 人团队
 
-当前实现：`report-engine` —— 报告生成引擎（Python / FastAPI），已支持三类报告模板：
+## 当前状态
 
-| 模板 | 场景 | 字段 |
+- **UI 预览 v9.0 已通过（2026-11-02）**：E 字号、简体中文 / 繁體中文 / English、浅色 / 深色 / 系统主题、导出 PDF / JSON 预览、桌面与手机布局。
+- **新 UI 已接入实际应用（2026-11-02）**：`medscribe-allinone/app/integration/app/static/` 下线旧界面，改用 v9.0 外壳 + 真实 API。
+- **真实链路已走通（2026-11-02）**：同一 28.6 秒合成音频在两个会话各跑一轮：14 段转写 → 术语纠正 → 14 条要素 → 9 字段初稿 → 补齐 5 个必填 → 签署 → 导出 PDF / JSON；两轮均无 JS 错误与 4xx/5xx。另用 3 条 SAPI 合成语料跑通 3 套模板（英文 SOAP 43s / 普通话门诊 72s / 英文病理 90s），均完成签署与 PDF/JSON 导出。证据：[e2e](outputs/ui-integration/e2e)、[e2e-run2](outputs/ui-integration/e2e-run2)、[e2e-multilingual](outputs/ui-integration/e2e-multilingual)。
+- **仍缺验收数据**：54 条验收矩阵中 13 条已填证据（5 已验证、8 部分通过），其余 41 条待执行；中文 CER、结构化准确率、UAT 尚无实测数据，英文 WER 仅合成语料初测（4.7% / 20.0%）。
+- **一体化原型可运行**：`medscribe-allinone/` 内置 Python 3.12、ffmpeg 与 faster-whisper small 模型，三段本地服务可一键启动，完全离线。
+- **可选 ASR 路径**：除默认的 faster-whisper 外，也可选用 [CapsWriter-Offline](https://github.com/HaujetZhao/CapsWriter-Offline)（离线高精度档，病理术语实测更准，但处理耗时更长、需要本地硬件算力）；两条路径的硬件门槛与接入方式见 [technical-design.md](technical-design.md)，5 档 Whisper + 4 档 CapsWriter 的实测对比见 [REPORT.md](outputs/ui-integration/asr-benchmark/REPORT.md)。
+- **尚未完成验收**：54 条验收矩阵中 41 条仍为“待执行”；中文 CER、结构化准确率、UAT 尚无实测数据。
+
+完整事实、证据与风险见 [项目背景与当前进度](docs/PROJECT_STATUS.md)。
+
+## 下载与安装（Windows，免安装）
+
+发布地址：<https://github.com/theinbetween07-byte/AI-medical-assistant/releases/tag/v1.0.0>
+
+| 包 | 内容 | 分卷 | 下载体积 | 解压后 |
+| --- | --- | --- | --- | --- |
+| 基础包 | 便携 Python 3.12、整合界面、报告引擎、Whisper small、ffmpeg | `MedScribe-base-v1.0.0.7z.001`–`.003` | 0.52 GB | 908 MB |
+| 扩展包（可选） | Qwen3-ASR（CapsWriter-Offline）高精度引擎 | `MedScribe-ext-caps-qwen3-v1.0.0.7z.001`–`.013` | 2.23 GB | 2.9 GB |
+
+安装基础包：
+
+1. 把 3 个分卷放到同一文件夹，用 [7-Zip](https://www.7-zip.org/) 解压 `.001`（自动合并其余分卷），得到 `MedScribe` 文件夹。
+2. 双击 `MedScribe\MedScribe.bat`，等待控制台显示三段服务就绪（首次 10–30 秒）。
+3. 浏览器自动打开 <http://127.0.0.1:8100>；关闭右上角提示或双击 `停止.bat` 停服。
+
+安装扩展包（仅当需要更高病理术语准确率）：
+
+1. 下载全部 13 个分卷，解压 `.001`，得到 `MedScribe-ext` 文件夹。
+2. 把 `MedScribe-ext\app` 整个复制到 `MedScribe\` 根目录并合并（覆盖同名文件）。
+3. 重启 `MedScribe.bat`，在工具条「模型」里选择 **Qwen3-ASR**。首次转写加载模型约 20–60 秒。
+
+未安装扩展时，下拉中该项显示「Qwen3-ASR · 未安装」，点击会弹出下载地址与步骤，不会联网自动下载。
+
+校验：`SHA256SUMS.txt` 与各分卷同目录，可用 `certutil -hashfile <文件名> SHA256` 逐个比对。系统要求：Windows 10/11 64 位、4 GB 内存、约 1 GB 磁盘（装扩展再加 2.9 GB）；默认 CPU，无需显卡。
+
+## 项目背景
+
+香港门诊与住院医生需要在有限时间内完成病历和报告书写，口述中常混用粤语、英语和医学英文术语。现有工具通常只做语音输入，缺少“多语言转写 → 术语纠正 → S/O/A/P 抽取 → 模板化报告 → 医生校审签署 → 导出”的完整闭环。
+
+MedScribe HK 的目标是把 3–5 分钟口述变成医生可在 1 分钟内审阅的报告初稿。上述时长为待验证目标，不是已实测结果。MVP 明确不接入真实患者数据、不连接 EHR、不做自动诊断或治疗建议；报告必须由有资质医师逐项核对并签署。
+
+## 核心功能
+
+| 编号 | 功能 | 当前实现 |
 | --- | --- | --- |
-| `pathology_colorectal` | 外科病理报告（結直腸） | 20 个（17 必填） |
-| `general_soap` | 通用 SOAP 记录 | SOAP 四段 |
-| `outpatient_record` | 门诊病历 | 结构化字段 |
+| F1 | 录音与多语言 ASR | faster-whisper small，本地 CPU int8，随包内置、离线可用；工具条「模型」可切到可选扩展 Qwen3-ASR（未安装时显示下载地址与安装步骤，绝不联网自动下载）；演示以粤语 / 普通话为主 |
+| F2 | 术语纠正 | 602 条术语，436 条可自动替换；支持撤销与审计 |
+| F3 | S/O/A/P 要素抽取 | 报告引擎按中文医学关键词归类，未归类内容保留 |
+| F4 | 模板化报告与校审 | 3 套模板；字段级采纳 / 编辑 / 缺失提示；签署门禁 |
+| F5 | 本地存档与导出 | SQLite + 本地文件；TXT / JSON / PDF；全程不出本机 |
 
-## 仓库结构
+三套模板：通用 SOAP 记录、门诊记录、外科病理报告（结直肠，20 字段 / 17 必填）。
 
-```
-AI-medical-assistant/
-├─ backend/                 桌面应用后端（Python / FastAPI + faster-whisper）
-│  ├─ app/                  main / config / auth / db / models
-│  │  ├─ api/               auth_router / asr_router
-│  │  └─ services/          asr.py（Whisper 服务，支持动态切换模型）
-│  ├─ scripts/              download_model.py
-│  └─ requirements.txt
-├─ frontend/                桌面应用前端（Vue 3 + Vite + Element Plus）
-│  ├─ src/                  views / components / composables / stores / router
-│  ├─ index.html
-│  ├─ package.json
-│  └─ vite.config.js
-├─ report-engine/           报告生成引擎（源码）
-│  ├─ app/                  抽取 → 生成 → 校验 → 导出 → 服务
-│  ├─ templates/            声明式报告模板（JSON，可直接改）
-│  ├─ tests/                22 项自动化测试
-│  ├─ build/                PyInstaller 打包配置（二进制不入库）
-│  └─ run.py                启动入口
-├─ scripts/                 启动与工具脚本
-│  ├─ start.bat             一键启动（Windows）
-│  ├─ stop.bat              停止服务
-│  ├─ launch.py             后台启动器（DETACHED_PROCESS，见文件头注释）
-│  ├─ download-model.ps1    Whisper 模型下载
-│  ├─ smoke_demo.py         报告引擎：命令行全链路冒烟
-│  └─ http_smoke.py         报告引擎：HTTP 全链路冒烟
-├─ docs/                    项目文档
-│  ├─ prd-mvp.md            MVP 产品需求文档
-│  ├─ project-proposal.md   项目提案
-│  ├─ technical-design.md   技术设计
-│  ├─ SOAP-rules-v1.md      SOAP 报告书写规则
-│  ├─ app-readme.md         桌面应用说明（架构 / API / 开发命令）
-│  ├─ app-quick-start.txt   便携版使用说明（面向最终使用者）
-│  ├─ report-engine.md      报告生成引擎说明
-│  ├─ report-engine-接入与交付说明.md
-│  └─ 病理报告模板设计说明.md
-├─ data/                    静态数据
-│  ├─ medical-terms-v2.xls  医学词典
-│  └─ terms/                抽取规则与术语库（可热改，引擎自动加载）
-├─ outputs/                 交付示例报告
-│  └─ 示例报告/            TXT / HTML / PDF / JSON 成品
-└─ README.md                本文件
+## 系统架构
+
+```text
+浏览器
+  │
+  ▼
+集成层 FastAPI :8100  ──► ASR 后端 :18000（faster-whisper）
+  │                         │
+  ├── 术语纠正（本地词表）   │
+  └── 报告引擎 :8790（抽取 / 生成 / 校审 / 导出）
 ```
 
-> 不入库（`.gitignore` 已屏蔽）：`models/`（Whisper 模型）、`node/`、`backend/python/`、
-> `backend/ffmpeg.exe`、`frontend/node_modules/`、`backend/data/`（用户库与密钥）、`.tmp/`、`backend/logs/`。
+数据默认全部保存在本机：SQLite、`data/audio/`、`data/exports/`。外部 ASR / LLM 不在默认链路中。
 
-## 快速开始（桌面应用）
+## 快速开始
 
-桌面应用由 `backend`（FastAPI + faster-whisper）与 `frontend`（Vue 3 + Vite）组成：
-前端 `http://localhost:5173`，后端 `http://localhost:8000`（API 文档 `/docs`）。
+### 完整原型
 
-```powershell
-# 1) 安装依赖
-python -m venv backend\.venv
-backend\.venv\Scripts\activate
-pip install -r backend\requirements.txt
+1. 确认 `medscribe-allinone/` 已完整解压，模型目录约 1.53 GB。
+2. 双击 `medscribe-allinone/start.bat`。
+3. 首次启动等待 30–60 秒加载模型，浏览器打开 <http://127.0.0.1:8100>。
+4. 停止服务：双击 `medscribe-allinone/stop.bat`，或关闭启动窗口。
 
-cd frontend
-npm install
-cd ..
+更细的端口、环境变量、接口与限制见 [集成层 README](medscribe-allinone/app/integration/README.md)。
 
-# 2) 一键启动 / 停止（后端 + 前端）
-scripts\start.bat
-scripts\stop.bat
+### 静态 UI 预览
+
+直接打开 [medscribe-ui-preview.html](outputs/ui-preview/medscribe-ui-preview.html)。
+
+- 这是静态预览，不连接后端，不会创建真实会话或文件。
+- 左下角“介面語言 / 界面语言”可切换简体中文、繁體中文、English。
+- 主题可切换浅色、深色、系统。
+- 导出按钮打开 PDF / JSON 版式预览；下载为演示行为。
+
+## 测试与验收
+
+- 集成测试：`medscribe-allinone/app/integration/tests/test_integration.py`，共 40 项；统一入口 `python scripts/run_tests.py`（2026-11-02 连续 3 轮 40/40）。
+- 启动/停止安全：`scripts/start_all.py` 与 `scripts/stop_all.py` 已加 `/health` 身份与命令行双重校验，陌生端口会中止启动、停止时不会按端口误杀。
+- 2026-11-02 复跑：40/40 通过（`scripts/run_tests.py`，见 `docs/PROJECT_STATUS.md` §5.1）。
+- 实际应用 UI：`app/integration/app/static/index.html` + `app.css` / `app-extra.css` / `app.js`，真实 API 驱动；旧界面已归档到 `app/integration/app/static/archive/`。
+- 端到端证据：[outputs/ui-integration/e2e](outputs/ui-integration/e2e)（截图、PDF、JSON、evidence.json）。
+- 验收方案：[MedScribe HK 质量保障与体验优化方案](outputs/medscribe-测试验收与质量优化方案.md)。
+- 验收矩阵：[medscribe-acceptance-matrix.csv](outputs/medscribe-acceptance-matrix.csv)，54 条，当前 13 条已填证据（5 已验证、8 部分通过）。
+- 当前不要用“集成测试通过”替代“AC 验收通过”；两者不是同一层证据。
+
+## 目录
+
+```text
+project-proposal.md             项目提案
+mvp ai medical assistant-prd.md MVP PRD
+technical-design.md             技术设计（初始设计，部分命令未验证）
+medscribe-allinone/             一体化可运行原型
+outputs/                        质量方案、验收矩阵、UI 预览、接入后截图
+docs/                           项目状态与 Agent 技能基线
 ```
 
-> `scripts\start.bat` 与 `scripts\launch.py` 依赖便携版打包的运行时目录（`backend\python\`、`node\`、
-> `models\`、`backend\ffmpeg.exe`），这些目录**不入库**，需自行准备。
-> 详见 [docs/app-readme.md](docs/app-readme.md) 与 [docs/app-quick-start.txt](docs/app-quick-start.txt)。
+## 文档索引
 
-## 快速开始（report-engine）
+| 文档 | 用途 |
+| --- | --- |
+| [项目提案](project-proposal.md) | 背景、用户、范围、风险、里程碑 |
+| [MVP PRD](<mvp ai medical assistant-prd.md>) | FR / BR / NFR / AC 与成功指标 |
+| [技术设计](technical-design.md) | 组件、数据模型、接口与失败处理 |
+| [课程项目文档合集](project-documents.html) | 7 周执行计划、调研方案、决策记录与 AGENTS 草案（2026-10-15 合集） |
+| [项目背景与当前进度](docs/PROJECT_STATUS.md) | 当前状态、证据、缺口与交接 |
+| [质量保障方案](outputs/medscribe-测试验收与质量优化方案.md) | 测试、视觉、交互、准确性与稳定性方案 |
+| [UI 预览](outputs/ui-preview/medscribe-ui-preview.html) | 已确认的 v9.0 视觉与交互预览 |
+| [Agent 技能基线](docs/agent-skills/README.md) | 8 个技能、冲突规则与恢复方式 |
 
-```bash
-cd report-engine
-python -m venv .venv
-.venv\Scripts\activate            # Windows
-pip install -r requirements.txt
-python run.py                     # 默认 http://127.0.0.1:8790
-```
+## 约束与声明
 
-启动后浏览器会打开操作界面：点「载入示例」→ 松开手看字段抽取 → 逐字段「采纳/编辑」→ 签署 → 导出。
+- 只使用合成语料；不接入真实患者数据。
+- 音频、转写和导出默认仅存本机；不部署公网。
+- 生成内容不是诊断或治疗建议；必须由有资质医师逐项核对并签署。
+- 本项目用于课程技术验证与研究，不作为医疗器械。
+- 仓库未提供 LICENSE；对外复用前需项目负责人确认。
 
-打包成单文件 exe：
+## 已知限制
 
-```bash
-pip install -r requirements-dev.txt
-python -m PyInstaller --noconfirm --distpath dist --workpath build/pyi build/report_engine.spec
-dist\medscribe-report-engine.exe --port 0 --port-file port.txt
-```
-
-## 验证
-
-```bash
-# 单元测试（在引擎目录内执行）
-cd report-engine
-.venv\Scripts\python.exe -m pytest -q                                            # 22 passed
-cd ..
-
-# 冒烟（在仓库根目录执行）
-report-engine\.venv\Scripts\python.exe scripts\smoke_demo.py                                     # SOAP 全链路
-report-engine\.venv\Scripts\python.exe scripts\smoke_demo.py out --template pathology_colorectal  # 病理全链路
-report-engine\.venv\Scripts\python.exe scripts\http_smoke.py                                     # HTTP 全链路
-report-engine\.venv\Scripts\python.exe scripts\http_smoke.py --exe report-engine\dist\medscribe-report-engine.exe
-```
-
-## 设计要点
-
-- **不编造**：未被口述覆盖的字段一律写占位符并进入缺失清单，阻断签署（BR-03 / BR-10）；
-- **可追溯**：每个字段带 `sources[].start_ms / end_ms`，能回到口述的具体时间点；
-- **自动生成要标记**：诊断句等派生内容按模板 `compose` 拼装，带「自动生成，请核对」标记与来源引用，医生确认后才可签署；
-- **模板声明式**：改报告格式只改 `templates/*.json`，不动代码；
-- **默认离线**：LLM 默认关闭（`MSHK_LLM_*` 才启用），服务仅监听本机。
-
-## 隐私与合规声明
-
-- 本仓库**不包含任何真实病患数据**：示例报告全部由合成口述生成，`.gitignore` 已屏蔽上传的原始样本、标本照片、本地数据库；
-- 项目用于技术验证与研究，**不作为医疗器械**，生成的报告必须由有资质的医师逐项核对并签署；
-- 若用于真实临床环境，需另行完成数据合规、权限与审计要求。
-
-## 文档
-
-- MVP 需求：[docs/prd-mvp.md](docs/prd-mvp.md)
-- 项目提案：[docs/project-proposal.md](docs/project-proposal.md)
-- 技术设计：[docs/technical-design.md](docs/technical-design.md)
-- SOAP 规则：[docs/SOAP-rules-v1.md](docs/SOAP-rules-v1.md)
-- 桌面应用说明：[docs/app-readme.md](docs/app-readme.md)
-- 引擎说明：[docs/report-engine.md](docs/report-engine.md)
-- 接入与交付：[docs/report-engine-接入与交付说明.md](docs/report-engine-接入与交付说明.md)
-- 病理模板设计：[docs/病理报告模板设计说明.md](docs/病理报告模板设计说明.md)
-- 示例报告：[outputs/示例报告/README.md](outputs/示例报告/README.md)
+- 真实链路只在一条 28.6 秒合成音频上走通；该音频偏病理/手术叙述，通用 SOAP 模板只产出 1 个有内容的字段，尚未覆盖门诊 SOAP 语料。
+- 54 条验收用例状态均为“待执行”；ASR CER、结构化准确率、UAT 没有实测报告。
+- ASR 逐段置信度仍是整段语言概率代理值，不能支撑严格的低置信度验收。
+- 8100 / 8790 端口仍为硬编码；启动脚本缺少服务身份校验，停止脚本可能误杀占用端口的进程。
+- 当前目录不是 Git 仓库，变更无法通过提交历史追溯。
+- 根目录缺少独立的 `AGENTS.md` / `CLAUDE.md`；7 周执行计划、调研方案、决策记录与 AGENTS 草案已合并收录在 [project-documents.html](project-documents.html)，但未拆成独立 Markdown 文件。

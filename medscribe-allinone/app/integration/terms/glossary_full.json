@@ -1,0 +1,10047 @@
+{
+ "version": "2026-10-29",
+ "entries": [
+  {
+   "term_id": "ana-001",
+   "term_norm": "Heart",
+   "zh": "心脏",
+   "yue": "心口／心",
+   "jyutping": "sam1 zong6／sam1 hau2",
+   "category_zh": "基础解剖",
+   "type_code": "ANA",
+   "category": "abbr",
+   "aliases": [
+    "心脏",
+    "心口"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [
+    "too_short"
+   ],
+   "note": "「心口」口语多指胸口或上腹"
+  },
+  {
+   "term_id": "ana-002",
+   "term_norm": "Lung",
+   "zh": "肺",
+   "yue": "肺",
+   "jyutping": "fai3",
+   "category_zh": "基础解剖",
+   "type_code": "ANA",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "too_short"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "ana-003",
+   "term_norm": "Liver",
+   "zh": "肝脏",
+   "yue": "肝",
+   "jyutping": "gon1",
+   "category_zh": "基础解剖",
+   "type_code": "ANA",
+   "category": "abbr",
+   "aliases": [
+    "肝脏"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [
+    "too_short"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "ana-004",
+   "term_norm": "Kidney",
+   "zh": "肾脏",
+   "yue": "肾",
+   "jyutping": "san5",
+   "category_zh": "基础解剖",
+   "type_code": "ANA",
+   "category": "abbr",
+   "aliases": [
+    "肾脏"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [
+    "too_short"
+   ],
+   "note": "原表「腰子」为北方口语，粤语不通用"
+  },
+  {
+   "term_id": "ana-005",
+   "term_norm": "Stomach",
+   "zh": "胃",
+   "yue": "胃／肚",
+   "jyutping": "wai6／tou5",
+   "category_zh": "基础解剖",
+   "type_code": "ANA",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "too_short"
+   ],
+   "note": "「肚」口语可泛指腹部"
+  },
+  {
+   "term_id": "ana-006",
+   "term_norm": "Small intestine",
+   "zh": "小肠",
+   "yue": "小肠",
+   "jyutping": "siu2 coeng4",
+   "category_zh": "基础解剖",
+   "type_code": "ANA",
+   "category": "abbr",
+   "aliases": [
+    "小肠"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "ana-007",
+   "term_norm": "Large intestine",
+   "zh": "大肠",
+   "yue": "大肠",
+   "jyutping": "daai6 coeng4",
+   "category_zh": "基础解剖",
+   "type_code": "ANA",
+   "category": "abbr",
+   "aliases": [
+    "大肠"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "ana-008",
+   "term_norm": "Colon",
+   "zh": "结肠",
+   "yue": "结肠",
+   "jyutping": "git3 coeng4",
+   "category_zh": "基础解剖",
+   "type_code": "ANA",
+   "category": "abbr",
+   "aliases": [
+    "结肠"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "ana-009",
+   "term_norm": "Rectum",
+   "zh": "直肠",
+   "yue": "直肠",
+   "jyutping": "zik6 coeng4",
+   "category_zh": "基础解剖",
+   "type_code": "ANA",
+   "category": "abbr",
+   "aliases": [
+    "直肠"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "ana-010",
+   "term_norm": "Pancreas",
+   "zh": "胰腺",
+   "yue": "胰脏",
+   "jyutping": "ji4 zong6",
+   "category_zh": "基础解剖",
+   "type_code": "ANA",
+   "category": "abbr",
+   "aliases": [
+    "胰腺",
+    "胰脏"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": "原表粤拼 ji1 已更正为 ji4"
+  },
+  {
+   "term_id": "ana-011",
+   "term_norm": "Gallbladder",
+   "zh": "胆囊",
+   "yue": "胆",
+   "jyutping": "daam2",
+   "category_zh": "基础解剖",
+   "type_code": "ANA",
+   "category": "abbr",
+   "aliases": [
+    "胆囊"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [
+    "too_short"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "ana-012",
+   "term_norm": "Brain",
+   "zh": "脑",
+   "yue": "脑",
+   "jyutping": "nou5",
+   "category_zh": "基础解剖",
+   "type_code": "ANA",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "too_short"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "ana-013",
+   "term_norm": "Spinal cord",
+   "zh": "脊髓",
+   "yue": "脊髓",
+   "jyutping": "zik3 seoi5",
+   "category_zh": "基础解剖",
+   "type_code": "ANA",
+   "category": "abbr",
+   "aliases": [
+    "脊髓"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "ana-014",
+   "term_norm": "Blood vessel",
+   "zh": "血管",
+   "yue": "血管",
+   "jyutping": "hyut3 gun2",
+   "category_zh": "基础解剖",
+   "type_code": "ANA",
+   "category": "abbr",
+   "aliases": [
+    "血管"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": "原表括注「血管/静脉」重复已修正"
+  },
+  {
+   "term_id": "ana-015",
+   "term_norm": "Artery",
+   "zh": "动脉",
+   "yue": "动脉",
+   "jyutping": "dung6 mak6",
+   "category_zh": "基础解剖",
+   "type_code": "ANA",
+   "category": "abbr",
+   "aliases": [
+    "动脉"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "ana-016",
+   "term_norm": "Vein",
+   "zh": "静脉",
+   "yue": "静脉",
+   "jyutping": "zing6 mak6",
+   "category_zh": "基础解剖",
+   "type_code": "ANA",
+   "category": "abbr",
+   "aliases": [
+    "静脉"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "ana-017",
+   "term_norm": "Joint",
+   "zh": "关节",
+   "yue": "关节",
+   "jyutping": "gwaan1 zit3",
+   "category_zh": "基础解剖",
+   "type_code": "ANA",
+   "category": "abbr",
+   "aliases": [
+    "关节"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "ana-018",
+   "term_norm": "Muscle",
+   "zh": "肌肉",
+   "yue": "肌肉／肉",
+   "jyutping": "gei1 juk6",
+   "category_zh": "基础解剖",
+   "type_code": "ANA",
+   "category": "abbr",
+   "aliases": [
+    "肌肉"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [
+    "too_short"
+   ],
+   "note": "原表重复括注已修正"
+  },
+  {
+   "term_id": "ana-019",
+   "term_norm": "Bone",
+   "zh": "骨骼",
+   "yue": "骨／骨头",
+   "jyutping": "gwat1／gwat1 tau4",
+   "category_zh": "基础解剖",
+   "type_code": "ANA",
+   "category": "abbr",
+   "aliases": [
+    "骨骼",
+    "骨头"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [
+    "too_short"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "ana-020",
+   "term_norm": "Skin",
+   "zh": "皮肤",
+   "yue": "皮肤",
+   "jyutping": "pei4 fu1",
+   "category_zh": "基础解剖",
+   "type_code": "ANA",
+   "category": "abbr",
+   "aliases": [
+    "皮肤"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "ana-021",
+   "term_norm": "Throat",
+   "zh": "咽喉",
+   "yue": "喉咙／喉",
+   "jyutping": "hau4 lung4",
+   "category_zh": "基础解剖",
+   "type_code": "ANA",
+   "category": "abbr",
+   "aliases": [
+    "咽喉",
+    "喉咙"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [
+    "too_short"
+   ],
+   "note": "口语「喉咙」涵盖咽与喉"
+  },
+  {
+   "term_id": "ana-022",
+   "term_norm": "Trachea",
+   "zh": "气管",
+   "yue": "气管",
+   "jyutping": "hei3 gun2",
+   "category_zh": "基础解剖",
+   "type_code": "ANA",
+   "category": "abbr",
+   "aliases": [
+    "气管"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "ana-023",
+   "term_norm": "Bronchus",
+   "zh": "支气管",
+   "yue": "支气管",
+   "jyutping": "zi1 hei3 gun2",
+   "category_zh": "基础解剖",
+   "type_code": "ANA",
+   "category": "abbr",
+   "aliases": [
+    "支气管"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "ana-024",
+   "term_norm": "Esophagus",
+   "zh": "食管",
+   "yue": "食道",
+   "jyutping": "sik6 dou6",
+   "category_zh": "基础解剖",
+   "type_code": "ANA",
+   "category": "abbr",
+   "aliases": [
+    "食管",
+    "食道"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "ana-025",
+   "term_norm": "Duodenum",
+   "zh": "十二指肠",
+   "yue": "十二指肠",
+   "jyutping": "sap6 ji6 zi2 coeng4",
+   "category_zh": "基础解剖",
+   "type_code": "ANA",
+   "category": "abbr",
+   "aliases": [
+    "十二指肠"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "ana-026",
+   "term_norm": "Urinary bladder",
+   "zh": "膀胱",
+   "yue": "膀胱",
+   "jyutping": "pong4 gwong1",
+   "category_zh": "基础解剖",
+   "type_code": "ANA",
+   "category": "abbr",
+   "aliases": [
+    "膀胱"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "ana-027",
+   "term_norm": "Ureter",
+   "zh": "输尿管",
+   "yue": "输尿管",
+   "jyutping": "syu1 niu6 gun2",
+   "category_zh": "基础解剖",
+   "type_code": "ANA",
+   "category": "abbr",
+   "aliases": [
+    "输尿管"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "ana-028",
+   "term_norm": "Urethra",
+   "zh": "尿道",
+   "yue": "尿道",
+   "jyutping": "niu6 dou6",
+   "category_zh": "基础解剖",
+   "type_code": "ANA",
+   "category": "abbr",
+   "aliases": [
+    "尿道"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "ana-029",
+   "term_norm": "Uterus",
+   "zh": "子宫",
+   "yue": "子宫",
+   "jyutping": "zi2 gung1",
+   "category_zh": "基础解剖",
+   "type_code": "ANA",
+   "category": "abbr",
+   "aliases": [
+    "子宫"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "ana-030",
+   "term_norm": "Ovary",
+   "zh": "卵巢",
+   "yue": "卵巢",
+   "jyutping": "leon2 caau4",
+   "category_zh": "基础解剖",
+   "type_code": "ANA",
+   "category": "abbr",
+   "aliases": [
+    "卵巢"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "ana-031",
+   "term_norm": "Fallopian tube",
+   "zh": "输卵管",
+   "yue": "输卵管",
+   "jyutping": "syu1 leon2 gun2",
+   "category_zh": "基础解剖",
+   "type_code": "ANA",
+   "category": "abbr",
+   "aliases": [
+    "输卵管"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "ana-032",
+   "term_norm": "Prostate",
+   "zh": "前列腺",
+   "yue": "前列腺",
+   "jyutping": "cin4 lit6 sin3",
+   "category_zh": "基础解剖",
+   "type_code": "ANA",
+   "category": "abbr",
+   "aliases": [
+    "前列腺"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "ana-033",
+   "term_norm": "Testis",
+   "zh": "睾丸",
+   "yue": "睾丸",
+   "jyutping": "gou1 jyun2",
+   "category_zh": "基础解剖",
+   "type_code": "ANA",
+   "category": "abbr",
+   "aliases": [
+    "睾丸"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "ana-034",
+   "term_norm": "Breast",
+   "zh": "乳房",
+   "yue": "胸／乳房",
+   "jyutping": "jyu5 fong4",
+   "category_zh": "基础解剖",
+   "type_code": "ANA",
+   "category": "abbr",
+   "aliases": [
+    "乳房"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [
+    "too_short"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "ana-035",
+   "term_norm": "Thyroid gland",
+   "zh": "甲状腺",
+   "yue": "甲状腺",
+   "jyutping": "gaap3 zong6 sin3",
+   "category_zh": "基础解剖",
+   "type_code": "ANA",
+   "category": "abbr",
+   "aliases": [
+    "甲状腺"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "ana-036",
+   "term_norm": "Adrenal gland",
+   "zh": "肾上腺",
+   "yue": "肾上腺",
+   "jyutping": "san5 soeng6 sin3",
+   "category_zh": "基础解剖",
+   "type_code": "ANA",
+   "category": "abbr",
+   "aliases": [
+    "肾上腺"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "ana-037",
+   "term_norm": "Spleen",
+   "zh": "脾脏",
+   "yue": "脾",
+   "jyutping": "pei4",
+   "category_zh": "基础解剖",
+   "type_code": "ANA",
+   "category": "abbr",
+   "aliases": [
+    "脾脏"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [
+    "too_short"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "ana-038",
+   "term_norm": "Tonsil",
+   "zh": "扁桃体",
+   "yue": "扁桃腺",
+   "jyutping": "bin2 tou4 sin3",
+   "category_zh": "基础解剖",
+   "type_code": "ANA",
+   "category": "abbr",
+   "aliases": [
+    "扁桃体",
+    "扁桃腺"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "ana-039",
+   "term_norm": "Paranasal sinus",
+   "zh": "鼻窦",
+   "yue": "鼻窦",
+   "jyutping": "bei6 dau6",
+   "category_zh": "基础解剖",
+   "type_code": "ANA",
+   "category": "abbr",
+   "aliases": [
+    "鼻窦"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "ana-040",
+   "term_norm": "Cornea",
+   "zh": "角膜",
+   "yue": "眼角膜",
+   "jyutping": "ngaan5 gok3 mok6",
+   "category_zh": "基础解剖",
+   "type_code": "ANA",
+   "category": "abbr",
+   "aliases": [
+    "角膜",
+    "眼角膜"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "ana-041",
+   "term_norm": "Retina",
+   "zh": "视网膜",
+   "yue": "视网膜",
+   "jyutping": "si6 mong4 mok6",
+   "category_zh": "基础解剖",
+   "type_code": "ANA",
+   "category": "abbr",
+   "aliases": [
+    "视网膜"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "ana-042",
+   "term_norm": "Gum",
+   "zh": "牙龈",
+   "yue": "牙肉",
+   "jyutping": "ngaa4 juk6",
+   "category_zh": "基础解剖",
+   "type_code": "ANA",
+   "category": "abbr",
+   "aliases": [
+    "牙龈",
+    "牙肉"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "ana-043",
+   "term_norm": "Cervical spine",
+   "zh": "颈椎",
+   "yue": "颈椎",
+   "jyutping": "geng2 zeoi1",
+   "category_zh": "基础解剖",
+   "type_code": "ANA",
+   "category": "abbr",
+   "aliases": [
+    "颈椎"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "ana-044",
+   "term_norm": "Lumbar spine",
+   "zh": "腰椎",
+   "yue": "腰椎",
+   "jyutping": "jiu1 zeoi1",
+   "category_zh": "基础解剖",
+   "type_code": "ANA",
+   "category": "abbr",
+   "aliases": [
+    "腰椎"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "ana-045",
+   "term_norm": "Knee joint",
+   "zh": "膝关节",
+   "yue": "膝头",
+   "jyutping": "seot1 tau4",
+   "category_zh": "基础解剖",
+   "type_code": "ANA",
+   "category": "abbr",
+   "aliases": [
+    "膝关节",
+    "膝头"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "ana-046",
+   "term_norm": "Shoulder joint",
+   "zh": "肩关节",
+   "yue": "膊头",
+   "jyutping": "bok3 tau4",
+   "category_zh": "基础解剖",
+   "type_code": "ANA",
+   "category": "abbr",
+   "aliases": [
+    "肩关节",
+    "膊头"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "ana-047",
+   "term_norm": "Ankle joint",
+   "zh": "踝关节",
+   "yue": "脚眼",
+   "jyutping": "goek3 ngaan5",
+   "category_zh": "基础解剖",
+   "type_code": "ANA",
+   "category": "abbr",
+   "aliases": [
+    "踝关节",
+    "脚眼"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "ana-048",
+   "term_norm": "Rib",
+   "zh": "肋骨",
+   "yue": "肋骨",
+   "jyutping": "lak6 gwat1",
+   "category_zh": "基础解剖",
+   "type_code": "ANA",
+   "category": "abbr",
+   "aliases": [
+    "肋骨"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "ana-049",
+   "term_norm": "Spine",
+   "zh": "脊柱",
+   "yue": "脊骨",
+   "jyutping": "zik3 gwat1",
+   "category_zh": "基础解剖",
+   "type_code": "ANA",
+   "category": "abbr",
+   "aliases": [
+    "脊柱",
+    "脊骨"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "ana-050",
+   "term_norm": "Pleura",
+   "zh": "胸膜",
+   "yue": "胸膜",
+   "jyutping": "hung1 mok6",
+   "category_zh": "基础解剖",
+   "type_code": "ANA",
+   "category": "abbr",
+   "aliases": [
+    "胸膜"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "ana-051",
+   "term_norm": "Peritoneum",
+   "zh": "腹膜",
+   "yue": "腹膜",
+   "jyutping": "fuk1 mok6",
+   "category_zh": "基础解剖",
+   "type_code": "ANA",
+   "category": "abbr",
+   "aliases": [
+    "腹膜"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sym-001",
+   "term_norm": "Fever",
+   "zh": "发热",
+   "yue": "发烧",
+   "jyutping": "faat3 siu1",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "发热",
+    "发烧"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": "原表粤拼 faat1 已更正为 faat3"
+  },
+  {
+   "term_id": "sym-002",
+   "term_norm": "Chills",
+   "zh": "寒战",
+   "yue": "打冷震",
+   "jyutping": "daa2 laang5 zan3",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "寒战",
+    "打冷震"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sym-003",
+   "term_norm": "Dizziness",
+   "zh": "头晕",
+   "yue": "头晕",
+   "jyutping": "tau4 wan4",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "头晕"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sym-004",
+   "term_norm": "Vertigo",
+   "zh": "眩晕",
+   "yue": "晕陀陀",
+   "jyutping": "wan4 to4 to4",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "眩晕",
+    "晕陀陀"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sym-005",
+   "term_norm": "Headache",
+   "zh": "头痛",
+   "yue": "头痛",
+   "jyutping": "tau4 tung3",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "头痛"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sym-006",
+   "term_norm": "Nausea",
+   "zh": "恶心",
+   "yue": "作呕",
+   "jyutping": "zok3 au2",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "恶心",
+    "作呕"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sym-007",
+   "term_norm": "Vomiting",
+   "zh": "呕吐",
+   "yue": "呕／呕嘢",
+   "jyutping": "au2",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "呕吐",
+    "呕嘢"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [
+    "too_short"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "sym-008",
+   "term_norm": "Diarrhea",
+   "zh": "腹泻",
+   "yue": "肚泻／肚疴",
+   "jyutping": "tou5 se3／tou5 o1",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "腹泻",
+    "肚泻",
+    "肚疴"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": "原表「肚急」义为里急后重"
+  },
+  {
+   "term_id": "sym-009",
+   "term_norm": "Constipation",
+   "zh": "便秘",
+   "yue": "便秘／屙唔出",
+   "jyutping": "bin6 bei3",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "便秘",
+    "屙唔出"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sym-010",
+   "term_norm": "Cough",
+   "zh": "咳嗽",
+   "yue": "咳",
+   "jyutping": "kat1",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "咳嗽"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [
+    "too_short"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "sym-011",
+   "term_norm": "Sputum",
+   "zh": "咳痰",
+   "yue": "有痰／咳痰",
+   "jyutping": "taam4",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "咳痰",
+    "有痰"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sym-012",
+   "term_norm": "Runny nose",
+   "zh": "流鼻涕",
+   "yue": "流鼻水",
+   "jyutping": "lau4 bei6 seoi2",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "流鼻涕",
+    "流鼻水"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sym-013",
+   "term_norm": "Nasal congestion",
+   "zh": "鼻塞",
+   "yue": "塞鼻",
+   "jyutping": "sak1 bei6",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "鼻塞",
+    "塞鼻"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sym-014",
+   "term_norm": "Sneezing",
+   "zh": "打喷嚏",
+   "yue": "打乞嗤",
+   "jyutping": "daa2 hat1 ci1",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "打喷嚏",
+    "打乞嗤"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sym-015",
+   "term_norm": "Sore throat",
+   "zh": "咽痛",
+   "yue": "喉咙痛",
+   "jyutping": "hau4 lung4 tung3",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "咽痛",
+    "喉咙痛"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sym-016",
+   "term_norm": "Dyspnea",
+   "zh": "呼吸困难",
+   "yue": "唔够气",
+   "jyutping": "m4 gau3 hei3",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "呼吸困难",
+    "唔够气"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sym-017",
+   "term_norm": "Shortness of breath",
+   "zh": "气促",
+   "yue": "气促／扯气",
+   "jyutping": "hei3 cuk1",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "气促",
+    "扯气"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sym-018",
+   "term_norm": "Chest pain",
+   "zh": "胸痛",
+   "yue": "心口痛",
+   "jyutping": "sam1 hau2 tung3",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "胸痛",
+    "心口痛"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sym-019",
+   "term_norm": "Chest tightness",
+   "zh": "胸闷",
+   "yue": "心口闷",
+   "jyutping": "sam1 hau2 mun6",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "胸闷",
+    "心口闷"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sym-020",
+   "term_norm": "Palpitations",
+   "zh": "心悸",
+   "yue": "心跳／心慌慌",
+   "jyutping": "sam1 tiu3／sam1 fong1 fong1",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "心悸",
+    "心跳",
+    "心慌慌"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sym-021",
+   "term_norm": "Edema",
+   "zh": "水肿",
+   "yue": "肿／浮肿",
+   "jyutping": "zung2／fau4 zung2",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "水肿",
+    "浮肿"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [
+    "too_short"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "sym-022",
+   "term_norm": "Numbness",
+   "zh": "麻木",
+   "yue": "痺／麻痹",
+   "jyutping": "bei3",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "麻木",
+    "麻痹"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [
+    "too_short"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "sym-023",
+   "term_norm": "Tingling",
+   "zh": "刺痛",
+   "yue": "针刺感",
+   "jyutping": "zam1 ci3 gam2",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "刺痛",
+    "针刺感"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sym-024",
+   "term_norm": "Fatigue",
+   "zh": "乏力",
+   "yue": "攰／冇力",
+   "jyutping": "gui6／mou5 lik6",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "乏力",
+    "冇力"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [
+    "too_short"
+   ],
+   "note": "原表「够疲」为笔误已删"
+  },
+  {
+   "term_id": "sym-025",
+   "term_norm": "Insomnia",
+   "zh": "失眠",
+   "yue": "睡唔着",
+   "jyutping": "seoi6 m4 zoek6",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "失眠"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [
+    "ambiguous"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "sym-026",
+   "term_norm": "Somnolence",
+   "zh": "嗜睡",
+   "yue": "成日想瞓",
+   "jyutping": "seng4 jat6 soeng2 fan3",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "嗜睡",
+    "成日想瞓"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sym-027",
+   "term_norm": "Rash",
+   "zh": "皮疹",
+   "yue": "起疹／出疹",
+   "jyutping": "hei2 zan2",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "皮疹",
+    "起疹",
+    "出疹"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sym-028",
+   "term_norm": "Itching",
+   "zh": "瘙痒",
+   "yue": "痕／痕痒",
+   "jyutping": "han4／han4 joeng5",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "瘙痒",
+    "痕痒"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [
+    "too_short"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "sym-029",
+   "term_norm": "Night sweats",
+   "zh": "盗汗",
+   "yue": "瞓觉出汗",
+   "jyutping": "fan3 gaau3 ceot1 hon6",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "盗汗",
+    "瞓觉出汗"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sym-030",
+   "term_norm": "Weight loss",
+   "zh": "体重下降",
+   "yue": "瘦咗",
+   "jyutping": "sau3 zo2",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "体重下降",
+    "瘦咗"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sym-031",
+   "term_norm": "Poor appetite",
+   "zh": "食欲不振",
+   "yue": "冇胃口",
+   "jyutping": "mou5 wai6 hau2",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "食欲不振",
+    "冇胃口"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sym-032",
+   "term_norm": "Thirst",
+   "zh": "口渴",
+   "yue": "颈渴／口干",
+   "jyutping": "geng2 hot3",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "口渴",
+    "颈渴",
+    "口干"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sym-033",
+   "term_norm": "Polyuria and polydipsia",
+   "zh": "多饮多尿",
+   "yue": "饮多屙多",
+   "jyutping": "jam2 do1 o1 do1",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "多饮多尿",
+    "饮多屙多"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sym-034",
+   "term_norm": "Urinary frequency",
+   "zh": "尿频",
+   "yue": "尿频",
+   "jyutping": "niu6 pan4",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "尿频"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sym-035",
+   "term_norm": "Urinary urgency",
+   "zh": "尿急",
+   "yue": "急尿",
+   "jyutping": "gap1 niu6",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "尿急",
+    "急尿"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sym-036",
+   "term_norm": "Dysuria",
+   "zh": "尿痛",
+   "yue": "屙尿痛",
+   "jyutping": "o1 niu6 tung3",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "尿痛",
+    "屙尿痛"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sym-037",
+   "term_norm": "Hematuria",
+   "zh": "血尿",
+   "yue": "尿有血",
+   "jyutping": "niu6 jau5 hyut3",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "血尿",
+    "尿有血"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sym-038",
+   "term_norm": "Urinary difficulty",
+   "zh": "排尿困难",
+   "yue": "屙唔出尿",
+   "jyutping": "o1 m4 ceot1 niu6",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "排尿困难",
+    "屙唔出尿"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sym-039",
+   "term_norm": "Abdominal pain",
+   "zh": "腹痛",
+   "yue": "肚痛",
+   "jyutping": "tou5 tung3",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "腹痛",
+    "肚痛"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sym-040",
+   "term_norm": "Abdominal bloating",
+   "zh": "腹胀",
+   "yue": "肚胀",
+   "jyutping": "tou5 zoeng3",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "腹胀"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [
+    "ambiguous"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "sym-041",
+   "term_norm": "Acid reflux",
+   "zh": "反酸",
+   "yue": "胃酸倒流",
+   "jyutping": "wai6 syun1 dou3 lau4",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "反酸"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [
+    "ambiguous"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "sym-042",
+   "term_norm": "Heartburn",
+   "zh": "烧心",
+   "yue": "火烧心",
+   "jyutping": "fo2 siu1 sam1",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "烧心",
+    "火烧心"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sym-043",
+   "term_norm": "Belching",
+   "zh": "嗳气",
+   "yue": "打思噎",
+   "jyutping": "daa2 si1 jit3",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "嗳气",
+    "打思噎"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sym-044",
+   "term_norm": "Hematemesis",
+   "zh": "呕血",
+   "yue": "呕血",
+   "jyutping": "au2 hyut3",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "呕血"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sym-045",
+   "term_norm": "Melena",
+   "zh": "黑便",
+   "yue": "黑屎",
+   "jyutping": "hak1 si2",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "黑便",
+    "黑屎"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sym-046",
+   "term_norm": "Hematochezia",
+   "zh": "便血",
+   "yue": "屙血",
+   "jyutping": "o1 hyut3",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "便血",
+    "屙血"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sym-047",
+   "term_norm": "Jaundice",
+   "zh": "黄疸",
+   "yue": "黄／眼白黄",
+   "jyutping": "wong4",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "黄疸"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [
+    "ambiguous",
+    "too_short"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "sym-048",
+   "term_norm": "Hemoptysis",
+   "zh": "咯血",
+   "yue": "咳血",
+   "jyutping": "kat1 hyut3",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "咯血",
+    "咳血"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sym-049",
+   "term_norm": "Wheezing",
+   "zh": "喘息",
+   "yue": "气喘／扯虾",
+   "jyutping": "hei3 cyun2",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "喘息",
+    "气喘"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [
+    "ambiguous"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "sym-050",
+   "term_norm": "Dysphagia",
+   "zh": "吞咽困难",
+   "yue": "吞唔落",
+   "jyutping": "tan1 m4 lok6",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "吞咽困难",
+    "吞唔落"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sym-051",
+   "term_norm": "Hoarseness",
+   "zh": "声音嘶哑",
+   "yue": "声沙",
+   "jyutping": "seng1 saa1",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "声音嘶哑",
+    "声沙"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sym-052",
+   "term_norm": "Tinnitus",
+   "zh": "耳鸣",
+   "yue": "耳仔响",
+   "jyutping": "ji5 zai2 hoeng2",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "耳鸣",
+    "耳仔响"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sym-053",
+   "term_norm": "Hearing loss",
+   "zh": "听力下降",
+   "yue": "听唔清",
+   "jyutping": "teng1 m4 cing1",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "听力下降",
+    "听唔清"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sym-054",
+   "term_norm": "Epistaxis",
+   "zh": "鼻出血",
+   "yue": "流鼻血",
+   "jyutping": "lau4 bei6 hyut3",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "鼻出血",
+    "流鼻血"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sym-055",
+   "term_norm": "Blurred vision",
+   "zh": "视物模糊",
+   "yue": "睇嘢蒙",
+   "jyutping": "tai2 je5 mung4",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "视物模糊",
+    "睇嘢蒙"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sym-056",
+   "term_norm": "Syncope",
+   "zh": "晕厥",
+   "yue": "晕低",
+   "jyutping": "wan4 dai1",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "晕厥",
+    "晕低"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sym-057",
+   "term_norm": "Convulsion",
+   "zh": "抽搐",
+   "yue": "抽筋",
+   "jyutping": "cau1 gan1",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "抽搐",
+    "抽筋"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sym-058",
+   "term_norm": "Loss of consciousness",
+   "zh": "意识丧失",
+   "yue": "冇知觉",
+   "jyutping": "mou5 zi1 gok3",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "意识丧失",
+    "冇知觉"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sym-059",
+   "term_norm": "Hemiplegia",
+   "zh": "偏瘫",
+   "yue": "半边身唔郁得",
+   "jyutping": "bun3 bin1 san1 m4 juk1 dak1",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "偏瘫",
+    "半边身唔郁得"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sym-060",
+   "term_norm": "Slurred speech",
+   "zh": "言语不清",
+   "yue": "讲嘢唔清",
+   "jyutping": "gong2 je5 m4 cing1",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "言语不清",
+    "讲嘢唔清"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sym-061",
+   "term_norm": "Unsteady gait",
+   "zh": "步态不稳",
+   "yue": "行路唔稳",
+   "jyutping": "haang4 lou6 m4 wan2",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "步态不稳",
+    "行路唔稳"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sym-062",
+   "term_norm": "Back pain",
+   "zh": "腰背痛",
+   "yue": "腰骨痛",
+   "jyutping": "jiu1 gwat1 tung3",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "腰背痛",
+    "腰骨痛"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sym-063",
+   "term_norm": "Arthralgia",
+   "zh": "关节痛",
+   "yue": "骨痛／关节痛",
+   "jyutping": "gwat1 tung3",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "关节痛",
+    "骨痛"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sym-064",
+   "term_norm": "Morning stiffness",
+   "zh": "晨僵",
+   "yue": "朝早硬晒",
+   "jyutping": "ziu1 zou2 ngaang6 saai3",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "晨僵",
+    "朝早硬晒"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sym-065",
+   "term_norm": "Myalgia",
+   "zh": "肌肉酸痛",
+   "yue": "肌肉酸痛",
+   "jyutping": "gei1 juk6 syun1 tung3",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "肌肉酸痛"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sym-066",
+   "term_norm": "Low mood",
+   "zh": "情绪低落",
+   "yue": "唔开心／心情差",
+   "jyutping": "m4 hoi1 sam1",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "情绪低落",
+    "唔开心",
+    "心情差"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sym-067",
+   "term_norm": "Anxiety",
+   "zh": "焦虑",
+   "yue": "心慌／担心",
+   "jyutping": "sam1 fong1",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "焦虑",
+    "心慌",
+    "担心"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sym-068",
+   "term_norm": "Memory decline",
+   "zh": "记忆力下降",
+   "yue": "冇记性",
+   "jyutping": "mou5 gei3 sing3",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "记忆力下降",
+    "冇记性"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sym-069",
+   "term_norm": "Hallucination",
+   "zh": "幻觉",
+   "yue": "见到冇嘅嘢",
+   "jyutping": "gin3 dou2 mou5 ge3 je5",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "幻觉",
+    "见到冇嘅嘢"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sym-070",
+   "term_norm": "Choking",
+   "zh": "吞咽呛咳",
+   "yue": "濁亲",
+   "jyutping": "zuk6 can1",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "吞咽呛咳",
+    "濁亲"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sym-071",
+   "term_norm": "Heavy menstrual bleeding",
+   "zh": "月经量多",
+   "yue": "经血多",
+   "jyutping": "ging1 hyut3 do1",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "月经量多",
+    "经血多"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sym-072",
+   "term_norm": "Abnormal vaginal discharge",
+   "zh": "阴道分泌物异常",
+   "yue": "分泌物多",
+   "jyutping": "fan1 bit6 mat6 do1",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "阴道分泌物异常",
+    "分泌物多"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sym-073",
+   "term_norm": "Decreased libido",
+   "zh": "性欲减退",
+   "yue": "冇性趣",
+   "jyutping": "mou5 sing3 ceoi3",
+   "category_zh": "常见症状",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "性欲减退",
+    "冇性趣"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sgn-001",
+   "term_norm": "Elevated blood pressure",
+   "zh": "血压升高",
+   "yue": "血压高",
+   "jyutping": "hyut3 aat3 gou1",
+   "category_zh": "体征与查体",
+   "type_code": "SGN",
+   "category": "abbr",
+   "aliases": [
+    "血压升高"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [
+    "ambiguous"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "sgn-002",
+   "term_norm": "Tachycardia",
+   "zh": "心率增快",
+   "yue": "心跳快",
+   "jyutping": "sam1 tiu3 faai3",
+   "category_zh": "体征与查体",
+   "type_code": "SGN",
+   "category": "abbr",
+   "aliases": [
+    "心率增快",
+    "心跳快"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sgn-003",
+   "term_norm": "Irregular rhythm",
+   "zh": "心律不齐",
+   "yue": "心跳唔齐",
+   "jyutping": "sam1 tiu3 m4 cai4",
+   "category_zh": "体征与查体",
+   "type_code": "SGN",
+   "category": "abbr",
+   "aliases": [
+    "心律不齐"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [
+    "ambiguous"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "sgn-004",
+   "term_norm": "Coarse breath sounds",
+   "zh": "呼吸音粗",
+   "yue": "肺声粗",
+   "jyutping": "fai3 seng1 cou1",
+   "category_zh": "体征与查体",
+   "type_code": "SGN",
+   "category": "abbr",
+   "aliases": [
+    "呼吸音粗",
+    "肺声粗"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sgn-005",
+   "term_norm": "Crackles",
+   "zh": "湿啰音",
+   "yue": "肺有水声",
+   "jyutping": "fai3 jau5 seoi2 seng1",
+   "category_zh": "体征与查体",
+   "type_code": "SGN",
+   "category": "abbr",
+   "aliases": [
+    "湿啰音",
+    "肺有水声"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sgn-006",
+   "term_norm": "Wheeze",
+   "zh": "哮鸣音",
+   "yue": "扯虾声",
+   "jyutping": "ce2 haa1 seng1",
+   "category_zh": "体征与查体",
+   "type_code": "SGN",
+   "category": "abbr",
+   "aliases": [
+    "哮鸣音",
+    "扯虾声"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sgn-007",
+   "term_norm": "Abdominal tenderness",
+   "zh": "腹部压痛",
+   "yue": "按肚痛",
+   "jyutping": "on3 tou5 tung3",
+   "category_zh": "体征与查体",
+   "type_code": "SGN",
+   "category": "abbr",
+   "aliases": [
+    "腹部压痛",
+    "按肚痛"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sgn-008",
+   "term_norm": "Rebound tenderness",
+   "zh": "反跳痛",
+   "yue": "放手更痛",
+   "jyutping": "fong3 sau2 gang3 tung3",
+   "category_zh": "体征与查体",
+   "type_code": "SGN",
+   "category": "abbr",
+   "aliases": [
+    "反跳痛",
+    "放手更痛"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sgn-009",
+   "term_norm": "Guarding",
+   "zh": "腹肌紧张",
+   "yue": "肚实",
+   "jyutping": "tou5 sat6",
+   "category_zh": "体征与查体",
+   "type_code": "SGN",
+   "category": "abbr",
+   "aliases": [
+    "腹肌紧张",
+    "肚实"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sgn-010",
+   "term_norm": "Hepatosplenomegaly",
+   "zh": "肝脾肿大",
+   "yue": "肝脾大",
+   "jyutping": "gon1 pei4 daai6",
+   "category_zh": "体征与查体",
+   "type_code": "SGN",
+   "category": "abbr",
+   "aliases": [
+    "肝脾肿大",
+    "肝脾大"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sgn-011",
+   "term_norm": "Hyperactive bowel sounds",
+   "zh": "肠鸣音亢进",
+   "yue": "肚内有声",
+   "jyutping": "tou5 noi6 jau5 seng1",
+   "category_zh": "体征与查体",
+   "type_code": "SGN",
+   "category": "abbr",
+   "aliases": [
+    "肠鸣音亢进",
+    "肚内有声"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sgn-012",
+   "term_norm": "Pitting edema",
+   "zh": "凹陷性水肿",
+   "yue": "按落有窝",
+   "jyutping": "on3 lok6 jau5 wo1",
+   "category_zh": "体征与查体",
+   "type_code": "SGN",
+   "category": "abbr",
+   "aliases": [
+    "凹陷性水肿",
+    "按落有窝"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sgn-013",
+   "term_norm": "Jugular venous distension",
+   "zh": "颈静脉怒张",
+   "yue": "颈静脉胀",
+   "jyutping": "geng2 zing6 mak6 zoeng3",
+   "category_zh": "体征与查体",
+   "type_code": "SGN",
+   "category": "abbr",
+   "aliases": [
+    "颈静脉怒张",
+    "颈静脉胀"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sgn-014",
+   "term_norm": "Icterus",
+   "zh": "黄染",
+   "yue": "眼白黄",
+   "jyutping": "ngaan5 baak6 wong4",
+   "category_zh": "体征与查体",
+   "type_code": "SGN",
+   "category": "abbr",
+   "aliases": [
+    "黄染"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [
+    "ambiguous"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "sgn-015",
+   "term_norm": "Pallor",
+   "zh": "苍白",
+   "yue": "面青／面白",
+   "jyutping": "min6 ceng1",
+   "category_zh": "体征与查体",
+   "type_code": "SGN",
+   "category": "abbr",
+   "aliases": [
+    "苍白",
+    "面青",
+    "面白"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sgn-016",
+   "term_norm": "Cyanosis",
+   "zh": "发绀",
+   "yue": "嘴唇发紫",
+   "jyutping": "zeoi2 seon4 faat3 zi2",
+   "category_zh": "体征与查体",
+   "type_code": "SGN",
+   "category": "abbr",
+   "aliases": [
+    "发绀",
+    "嘴唇发紫"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sgn-017",
+   "term_norm": "Clubbing",
+   "zh": "杵状指",
+   "yue": "手指头大",
+   "jyutping": "sau2 zi2 tau4 daai6",
+   "category_zh": "体征与查体",
+   "type_code": "SGN",
+   "category": "abbr",
+   "aliases": [
+    "杵状指",
+    "手指头大"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sgn-018",
+   "term_norm": "Lymphadenopathy",
+   "zh": "淋巴结肿大",
+   "yue": "淋巴核大",
+   "jyutping": "lam4 baa1 hat6 daai6",
+   "category_zh": "体征与查体",
+   "type_code": "SGN",
+   "category": "abbr",
+   "aliases": [
+    "淋巴结肿大",
+    "淋巴核大"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sgn-019",
+   "term_norm": "Goiter",
+   "zh": "甲状腺肿大",
+   "yue": "颈大",
+   "jyutping": "geng2 daai6",
+   "category_zh": "体征与查体",
+   "type_code": "SGN",
+   "category": "abbr",
+   "aliases": [
+    "甲状腺肿大",
+    "颈大"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sgn-020",
+   "term_norm": "Muscle weakness",
+   "zh": "肌力下降",
+   "yue": "手脚冇力",
+   "jyutping": "sau2 goek3 mou5 lik6",
+   "category_zh": "体征与查体",
+   "type_code": "SGN",
+   "category": "abbr",
+   "aliases": [
+    "肌力下降",
+    "手脚冇力"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sgn-021",
+   "term_norm": "Confusion",
+   "zh": "意识模糊",
+   "yue": "神志不清",
+   "jyutping": "san4 zi3 bat1 cing1",
+   "category_zh": "体征与查体",
+   "type_code": "SGN",
+   "category": "abbr",
+   "aliases": [
+    "意识模糊",
+    "神志不清"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sgn-022",
+   "term_norm": "Tachypnea",
+   "zh": "呼吸急促",
+   "yue": "呼吸快",
+   "jyutping": "fu1 kap1 faai3",
+   "category_zh": "体征与查体",
+   "type_code": "SGN",
+   "category": "abbr",
+   "aliases": [
+    "呼吸急促",
+    "呼吸快"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sgn-023",
+   "term_norm": "Hypoxemia",
+   "zh": "血氧下降",
+   "yue": "血氧低",
+   "jyutping": "hyut3 joeng5 dai1",
+   "category_zh": "体征与查体",
+   "type_code": "SGN",
+   "category": "abbr",
+   "aliases": [
+    "血氧下降",
+    "血氧低"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sgn-024",
+   "term_norm": "Rash",
+   "zh": "皮疹",
+   "yue": "红疹",
+   "jyutping": "hung4 zan2",
+   "category_zh": "体征与查体",
+   "type_code": "SGN",
+   "category": "abbr",
+   "aliases": [
+    "皮疹",
+    "红疹"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sgn-025",
+   "term_norm": "Abdominal distension",
+   "zh": "腹部膨隆",
+   "yue": "肚胀",
+   "jyutping": "tou5 zoeng3",
+   "category_zh": "体征与查体",
+   "type_code": "SGN",
+   "category": "abbr",
+   "aliases": [
+    "腹部膨隆"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [
+    "ambiguous"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "sgn-026",
+   "term_norm": "Murphy sign positive",
+   "zh": "墨菲征阳性",
+   "yue": "墨菲氏征阳性",
+   "jyutping": "mak6 fei1 si6 zing1 joeng4 sing3",
+   "category_zh": "体征与查体",
+   "type_code": "SGN",
+   "category": "abbr",
+   "aliases": [
+    "墨菲征阳性",
+    "墨菲氏征阳性"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sgn-027",
+   "term_norm": "McBurney point tenderness",
+   "zh": "麦氏点压痛",
+   "yue": "麦氏点压痛",
+   "jyutping": "mak6 si6 dim2 on3 tung3",
+   "category_zh": "体征与查体",
+   "type_code": "SGN",
+   "category": "abbr",
+   "aliases": [
+    "麦氏点压痛"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sgn-028",
+   "term_norm": "Positive Babinski sign",
+   "zh": "病理反射阳性",
+   "yue": "巴宾斯基征阳性",
+   "jyutping": "baa1 ban1 si1 gei1 zing1 joeng4 sing3",
+   "category_zh": "体征与查体",
+   "type_code": "SGN",
+   "category": "abbr",
+   "aliases": [
+    "病理反射阳性",
+    "巴宾斯基征阳性"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sgn-029",
+   "term_norm": "Sluggish light reflex",
+   "zh": "瞳孔对光反射迟钝",
+   "yue": "瞳孔反应慢",
+   "jyutping": "tung4 hung2 faan2 jing3 maan6",
+   "category_zh": "体征与查体",
+   "type_code": "SGN",
+   "category": "abbr",
+   "aliases": [
+    "瞳孔对光反射迟钝",
+    "瞳孔反应慢"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sgn-030",
+   "term_norm": "Elevated BMI",
+   "zh": "体重指数升高",
+   "yue": "肥／BMI高",
+   "jyutping": "fei4",
+   "category_zh": "体征与查体",
+   "type_code": "SGN",
+   "category": "abbr",
+   "aliases": [
+    "体重指数升高",
+    "BMI高"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [
+    "too_short"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "sgn-031",
+   "term_norm": "Tonsillar exudate",
+   "zh": "扁桃体化脓",
+   "yue": "扁桃腺有脓",
+   "jyutping": "bin2 tou4 sin3 jau5 nung4",
+   "category_zh": "体征与查体",
+   "type_code": "SGN",
+   "category": "abbr",
+   "aliases": [
+    "扁桃体化脓",
+    "扁桃腺有脓"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sgn-032",
+   "term_norm": "Neck stiffness",
+   "zh": "颈部强直",
+   "yue": "颈硬",
+   "jyutping": "geng2 ngaang6",
+   "category_zh": "体征与查体",
+   "type_code": "SGN",
+   "category": "abbr",
+   "aliases": [
+    "颈部强直",
+    "颈硬"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "dis-001",
+   "term_norm": "Hypertension",
+   "zh": "高血压",
+   "yue": "血压高",
+   "jyutping": "hyut3 aat3 gou1",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "高血压"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [
+    "ambiguous"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dis-002",
+   "term_norm": "Diabetes mellitus",
+   "zh": "糖尿病",
+   "yue": "糖尿",
+   "jyutping": "tong4 niu6",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "糖尿病",
+    "糖尿"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "dis-003",
+   "term_norm": "Hyperlipidemia",
+   "zh": "高脂血症",
+   "yue": "胆固醇高",
+   "jyutping": "daam2 gu3 seon4 gou1",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "高脂血症",
+    "胆固醇高"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": "原表粤拼 seon4 前缺 gu3 已补"
+  },
+  {
+   "term_id": "dis-004",
+   "term_norm": "Coronary heart disease",
+   "zh": "冠心病",
+   "yue": "冠心病",
+   "jyutping": "gun1 sam1 beng6",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "冠心病"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "dis-005",
+   "term_norm": "Angina pectoris",
+   "zh": "心绞痛",
+   "yue": "心绞痛／心口翳",
+   "jyutping": "sam1 gaau2 tung3",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "心绞痛",
+    "心口翳"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "dis-006",
+   "term_norm": "Myocardial infarction",
+   "zh": "心肌梗死",
+   "yue": "心肌梗塞",
+   "jyutping": "sam1 gei1 gang2 sak1",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "心肌梗死",
+    "心肌梗塞"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "dis-007",
+   "term_norm": "Heart failure",
+   "zh": "心力衰竭",
+   "yue": "心脏衰竭",
+   "jyutping": "sam1 zong6 seoi1 kit3",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "心力衰竭",
+    "心脏衰竭"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "dis-008",
+   "term_norm": "Atrial fibrillation",
+   "zh": "心房颤动",
+   "yue": "房颤／心跳唔齐",
+   "jyutping": "fong4 zin3",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "心房颤动",
+    "房颤"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [
+    "ambiguous"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dis-009",
+   "term_norm": "Valvular heart disease",
+   "zh": "心脏瓣膜病",
+   "yue": "心瓣膜病",
+   "jyutping": "sam1 baan2 mok6 beng6",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "心脏瓣膜病",
+    "心瓣膜病"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "dis-010",
+   "term_norm": "Stroke",
+   "zh": "脑卒中",
+   "yue": "中风",
+   "jyutping": "zung1 fung1",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "脑卒中",
+    "中风"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "dis-011",
+   "term_norm": "Cerebral infarction",
+   "zh": "脑梗死",
+   "yue": "脑梗塞",
+   "jyutping": "nou5 gang2 sak1",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "脑梗死",
+    "脑梗塞"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "dis-012",
+   "term_norm": "Intracerebral hemorrhage",
+   "zh": "脑出血",
+   "yue": "爆血管",
+   "jyutping": "baau3 hyut3 gun2",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "脑出血",
+    "爆血管"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "dis-013",
+   "term_norm": "Transient ischemic attack",
+   "zh": "短暂性脑缺血发作",
+   "yue": "小中风",
+   "jyutping": "siu2 zung1 fung1",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "短暂性脑缺血发作",
+    "小中风"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "dis-014",
+   "term_norm": "Asthma",
+   "zh": "哮喘",
+   "yue": "哮喘／扯虾",
+   "jyutping": "haau1 cyun2／ce2 haa1",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "哮喘"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [
+    "ambiguous"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dis-015",
+   "term_norm": "COPD",
+   "zh": "慢性阻塞性肺疾病",
+   "yue": "慢阻肺",
+   "jyutping": "maan6 zo2 fai3",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "慢性阻塞性肺疾病",
+    "慢阻肺"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "dis-016",
+   "term_norm": "Pneumonia",
+   "zh": "肺炎",
+   "yue": "肺炎",
+   "jyutping": "fai3 jim4",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "肺炎"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "dis-017",
+   "term_norm": "Acute bronchitis",
+   "zh": "急性支气管炎",
+   "yue": "气管炎",
+   "jyutping": "hei3 gun2 jim4",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "急性支气管炎",
+    "气管炎"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "dis-018",
+   "term_norm": "Pulmonary tuberculosis",
+   "zh": "肺结核",
+   "yue": "肺痨",
+   "jyutping": "fai3 lou4",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "肺结核",
+    "肺痨"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "dis-019",
+   "term_norm": "Emphysema",
+   "zh": "肺气肿",
+   "yue": "肺气肿",
+   "jyutping": "fai3 hei3 zung2",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "肺气肿"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "dis-020",
+   "term_norm": "Bronchiectasis",
+   "zh": "支气管扩张",
+   "yue": "支气管扩张",
+   "jyutping": "zi1 hei3 gun2 tok3 zoeng1",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "支气管扩张"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "dis-021",
+   "term_norm": "Pleural effusion",
+   "zh": "胸腔积液",
+   "yue": "肺积水",
+   "jyutping": "fai3 zik1 seoi2",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "胸腔积液",
+    "肺积水"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "dis-022",
+   "term_norm": "Allergic rhinitis",
+   "zh": "过敏性鼻炎",
+   "yue": "鼻敏感",
+   "jyutping": "bei6 man5 gam2",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "过敏性鼻炎",
+    "鼻敏感"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "dis-023",
+   "term_norm": "Sinusitis",
+   "zh": "鼻窦炎",
+   "yue": "鼻窦炎",
+   "jyutping": "bei6 dau6 jim4",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "鼻窦炎"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "dis-024",
+   "term_norm": "Tonsillitis",
+   "zh": "扁桃体炎",
+   "yue": "扁桃腺炎",
+   "jyutping": "bin2 tou4 sin3 jim4",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "扁桃体炎",
+    "扁桃腺炎"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "dis-025",
+   "term_norm": "Influenza",
+   "zh": "流行性感冒",
+   "yue": "感冒／流感",
+   "jyutping": "gam2 mou6",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "流行性感冒",
+    "感冒",
+    "流感"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "dis-026",
+   "term_norm": "COVID-19",
+   "zh": "新型冠状病毒感染",
+   "yue": "新冠",
+   "jyutping": "san1 gun1",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "新型冠状病毒感染",
+    "新冠"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "dis-027",
+   "term_norm": "Gastritis",
+   "zh": "胃炎",
+   "yue": "胃炎",
+   "jyutping": "wai6 jim4",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "胃炎"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "dis-028",
+   "term_norm": "Peptic ulcer",
+   "zh": "胃溃疡",
+   "yue": "胃溃疡",
+   "jyutping": "wai6 kui2 joeng4",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "胃溃疡"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "dis-029",
+   "term_norm": "GERD",
+   "zh": "胃食管反流病",
+   "yue": "胃酸倒流",
+   "jyutping": "wai6 syun1 dou3 lau4",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "胃食管反流病"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [
+    "ambiguous"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dis-030",
+   "term_norm": "Helicobacter pylori infection",
+   "zh": "幽门螺杆菌感染",
+   "yue": "幽门螺旋菌",
+   "jyutping": "jau1 mun4 lo4 syun4 kwan2",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "幽门螺杆菌感染",
+    "幽门螺旋菌"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "dis-031",
+   "term_norm": "Irritable bowel syndrome",
+   "zh": "肠易激综合征",
+   "yue": "肠胃敏感",
+   "jyutping": "coeng4 wai6 man5 gam2",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "肠易激综合征",
+    "肠胃敏感"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "dis-032",
+   "term_norm": "Inflammatory bowel disease",
+   "zh": "炎症性肠病",
+   "yue": "炎症性肠病",
+   "jyutping": "jim4 zing3 sing3 coeng4 beng6",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "炎症性肠病"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "dis-033",
+   "term_norm": "Acute gastroenteritis",
+   "zh": "急性胃肠炎",
+   "yue": "肠胃炎",
+   "jyutping": "coeng4 wai6 jim4",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "急性胃肠炎",
+    "肠胃炎"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "dis-034",
+   "term_norm": "Food poisoning",
+   "zh": "食物中毒",
+   "yue": "食错嘢",
+   "jyutping": "sik6 co3 je5",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "食物中毒",
+    "食错嘢"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "dis-035",
+   "term_norm": "Fatty liver",
+   "zh": "脂肪肝",
+   "yue": "脂肪肝",
+   "jyutping": "zi1 fong1 gon1",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "脂肪肝"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "dis-036",
+   "term_norm": "Cirrhosis",
+   "zh": "肝硬化",
+   "yue": "肝硬化",
+   "jyutping": "gon1 ngaang6 faa3",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "肝硬化"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "dis-037",
+   "term_norm": "Viral hepatitis",
+   "zh": "病毒性肝炎",
+   "yue": "肝炎／乙肝",
+   "jyutping": "gon1 jim4",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "病毒性肝炎",
+    "肝炎",
+    "乙肝"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "dis-038",
+   "term_norm": "Cholelithiasis",
+   "zh": "胆囊结石",
+   "yue": "胆石",
+   "jyutping": "daam2 sek6",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "胆囊结石",
+    "胆石"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "dis-039",
+   "term_norm": "Acute pancreatitis",
+   "zh": "急性胰腺炎",
+   "yue": "胰脏炎",
+   "jyutping": "ji4 zong6 jim4",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "急性胰腺炎",
+    "胰脏炎"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "dis-040",
+   "term_norm": "Chronic kidney disease",
+   "zh": "慢性肾脏病",
+   "yue": "肾病",
+   "jyutping": "san5 beng6",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "慢性肾脏病",
+    "肾病"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "dis-041",
+   "term_norm": "Urinary tract infection",
+   "zh": "尿路感染",
+   "yue": "尿道炎／膀胱炎",
+   "jyutping": "niu6 dou6 jim4",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "尿路感染",
+    "尿道炎",
+    "膀胱炎"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "dis-042",
+   "term_norm": "Nephrolithiasis",
+   "zh": "肾结石",
+   "yue": "肾石",
+   "jyutping": "san5 sek6",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "肾结石",
+    "肾石"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "dis-043",
+   "term_norm": "Benign prostatic hyperplasia",
+   "zh": "前列腺增生",
+   "yue": "前列腺肥大",
+   "jyutping": "cin4 lit6 sin3 fei4 daai6",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "前列腺增生",
+    "前列腺肥大"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "dis-044",
+   "term_norm": "Hyperthyroidism",
+   "zh": "甲状腺功能亢进",
+   "yue": "甲亢",
+   "jyutping": "gaap3 kong3",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "甲状腺功能亢进",
+    "甲亢"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "dis-045",
+   "term_norm": "Hypothyroidism",
+   "zh": "甲状腺功能减退",
+   "yue": "甲减",
+   "jyutping": "gaap3 gaam2",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "甲状腺功能减退",
+    "甲减"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "dis-046",
+   "term_norm": "Gout",
+   "zh": "痛风",
+   "yue": "痛风",
+   "jyutping": "tung3 fung1",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "痛风"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "dis-047",
+   "term_norm": "Hyperuricemia",
+   "zh": "高尿酸血症",
+   "yue": "尿酸高",
+   "jyutping": "niu6 syun1 gou1",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "高尿酸血症",
+    "尿酸高"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "dis-048",
+   "term_norm": "Osteoporosis",
+   "zh": "骨质疏松",
+   "yue": "骨质疏松",
+   "jyutping": "gwat1 so1 sung1",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "骨质疏松"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "dis-049",
+   "term_norm": "Rheumatoid arthritis",
+   "zh": "类风湿关节炎",
+   "yue": "类风湿",
+   "jyutping": "leoi6 fung1 sap1",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "类风湿关节炎",
+    "类风湿"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "dis-050",
+   "term_norm": "Systemic lupus erythematosus",
+   "zh": "系统性红斑狼疮",
+   "yue": "红斑狼疮",
+   "jyutping": "hung4 baan1 long4 cong1",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "系统性红斑狼疮",
+    "红斑狼疮"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "dis-051",
+   "term_norm": "Anemia",
+   "zh": "贫血",
+   "yue": "贫血",
+   "jyutping": "pan4 hyut3",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "贫血"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "dis-052",
+   "term_norm": "Thrombocytopenia",
+   "zh": "血小板减少",
+   "yue": "血小板低",
+   "jyutping": "hyut3 siu2 baan2 dai1",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "血小板减少",
+    "血小板低"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "dis-053",
+   "term_norm": "Leukemia",
+   "zh": "白血病",
+   "yue": "血癌",
+   "jyutping": "hyut3 ngaam4",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "白血病",
+    "血癌"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "dis-054",
+   "term_norm": "Lymphoma",
+   "zh": "淋巴瘤",
+   "yue": "淋巴癌",
+   "jyutping": "lam4 baa1 ngaam4",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "淋巴瘤",
+    "淋巴癌"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "dis-055",
+   "term_norm": "Electrolyte imbalance",
+   "zh": "电解质紊乱",
+   "yue": "电解质失衡",
+   "jyutping": "din6 gaai2 zat1 sat1 hang4",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "电解质紊乱",
+    "电解质失衡"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "dis-056",
+   "term_norm": "Dehydration",
+   "zh": "脱水",
+   "yue": "缺水",
+   "jyutping": "kyut3 seoi2",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "脱水",
+    "缺水"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "dis-057",
+   "term_norm": "Obesity",
+   "zh": "肥胖症",
+   "yue": "肥",
+   "jyutping": "fei4",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "肥胖症"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [
+    "too_short"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dis-058",
+   "term_norm": "Obstructive sleep apnea",
+   "zh": "阻塞性睡眠呼吸暂停",
+   "yue": "睡眠窒息症",
+   "jyutping": "seoi6 min4 sat1 sik1 zing3",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "阻塞性睡眠呼吸暂停",
+    "睡眠窒息症"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "dis-059",
+   "term_norm": "Herpes zoster",
+   "zh": "带状疱疹",
+   "yue": "生蛇",
+   "jyutping": "saang1 se4",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "带状疱疹",
+    "生蛇"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "dis-060",
+   "term_norm": "Eczema",
+   "zh": "湿疹",
+   "yue": "湿疹",
+   "jyutping": "sap1 zan2",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "湿疹"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "dis-061",
+   "term_norm": "Psoriasis",
+   "zh": "银屑病",
+   "yue": "牛皮癣",
+   "jyutping": "ngau4 pei4 sin2",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "银屑病",
+    "牛皮癣"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "dis-062",
+   "term_norm": "Urticaria",
+   "zh": "荨麻疹",
+   "yue": "风癞",
+   "jyutping": "fung1 laai3",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "荨麻疹",
+    "风癞"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "dis-063",
+   "term_norm": "Acne vulgaris",
+   "zh": "痤疮",
+   "yue": "暗疮",
+   "jyutping": "am3 cong1",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "痤疮",
+    "暗疮"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "dis-064",
+   "term_norm": "Fungal skin infection",
+   "zh": "皮肤真菌感染",
+   "yue": "癣",
+   "jyutping": "sin2",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "皮肤真菌感染"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [
+    "too_short"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dis-065",
+   "term_norm": "Postherpetic neuralgia",
+   "zh": "带状疱疹后神经痛",
+   "yue": "生蛇后遗痛",
+   "jyutping": "saang1 se4 hau6 wai4 tung3",
+   "category_zh": "内科疾病",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "带状疱疹后神经痛",
+    "生蛇后遗痛"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sur-001",
+   "term_norm": "Fracture",
+   "zh": "骨折",
+   "yue": "骨折／断骨",
+   "jyutping": "gwat1 zit3",
+   "category_zh": "外科与急诊",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "骨折",
+    "断骨"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sur-002",
+   "term_norm": "Dislocation",
+   "zh": "关节脱位",
+   "yue": "脱臼",
+   "jyutping": "tyut3 kau5",
+   "category_zh": "外科与急诊",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "关节脱位",
+    "脱臼"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": "原表粤拼 gau3 已更正为 kau5"
+  },
+  {
+   "term_id": "sur-003",
+   "term_norm": "Sprain",
+   "zh": "扭伤",
+   "yue": "拗柴",
+   "jyutping": "aau2 caai4",
+   "category_zh": "外科与急诊",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "扭伤",
+    "拗柴"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sur-004",
+   "term_norm": "Strain",
+   "zh": "拉伤",
+   "yue": "拉伤",
+   "jyutping": "laai1 soeng1",
+   "category_zh": "外科与急诊",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "拉伤"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sur-005",
+   "term_norm": "Appendicitis",
+   "zh": "阑尾炎",
+   "yue": "盲肠炎",
+   "jyutping": "maang4 coeng4 jim4",
+   "category_zh": "外科与急诊",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "阑尾炎",
+    "盲肠炎"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sur-006",
+   "term_norm": "Cholecystitis",
+   "zh": "胆囊炎",
+   "yue": "胆囊炎",
+   "jyutping": "daam2 nong4 jim4",
+   "category_zh": "外科与急诊",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "胆囊炎"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sur-007",
+   "term_norm": "Hernia",
+   "zh": "疝",
+   "yue": "小肠气",
+   "jyutping": "siu2 coeng4 hei3",
+   "category_zh": "外科与急诊",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "ambiguous",
+    "too_short"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "sur-008",
+   "term_norm": "Hemorrhoids",
+   "zh": "痔疮",
+   "yue": "痔疮",
+   "jyutping": "zi6 coeng1",
+   "category_zh": "外科与急诊",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "痔疮"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sur-009",
+   "term_norm": "Cancer",
+   "zh": "癌症",
+   "yue": "癌",
+   "jyutping": "ngaam4",
+   "category_zh": "外科与急诊",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "癌症"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [
+    "too_short"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "sur-010",
+   "term_norm": "Benign tumor",
+   "zh": "良性肿瘤",
+   "yue": "良性瘤",
+   "jyutping": "loeng4 sing3 lau2",
+   "category_zh": "外科与急诊",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "良性肿瘤",
+    "良性瘤"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sur-011",
+   "term_norm": "Malignant tumor",
+   "zh": "恶性肿瘤",
+   "yue": "恶性瘤",
+   "jyutping": "ok3 sing3 lau2",
+   "category_zh": "外科与急诊",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "恶性肿瘤",
+    "恶性瘤"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sur-012",
+   "term_norm": "Shock",
+   "zh": "休克",
+   "yue": "休克",
+   "jyutping": "jau1 hak1",
+   "category_zh": "外科与急诊",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "休克"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sur-013",
+   "term_norm": "Trauma",
+   "zh": "创伤",
+   "yue": "受伤",
+   "jyutping": "sau6 soeng1",
+   "category_zh": "外科与急诊",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "创伤",
+    "受伤"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sur-014",
+   "term_norm": "Head injury",
+   "zh": "颅脑外伤",
+   "yue": "撞亲头",
+   "jyutping": "zong6 can1 tau4",
+   "category_zh": "外科与急诊",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "颅脑外伤",
+    "撞亲头"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sur-015",
+   "term_norm": "Concussion",
+   "zh": "脑震荡",
+   "yue": "脑震荡",
+   "jyutping": "nou5 zan3 dong6",
+   "category_zh": "外科与急诊",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "脑震荡"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sur-016",
+   "term_norm": "Subdural hematoma",
+   "zh": "硬膜下血肿",
+   "yue": "硬膜下血肿",
+   "jyutping": "ngaang6 mok6 haa6 hyut3 zung2",
+   "category_zh": "外科与急诊",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "硬膜下血肿"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sur-017",
+   "term_norm": "Rib fracture",
+   "zh": "肋骨骨折",
+   "yue": "肋骨断",
+   "jyutping": "lak6 gwat1 dyun6",
+   "category_zh": "外科与急诊",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "肋骨骨折",
+    "肋骨断"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sur-018",
+   "term_norm": "Pneumothorax",
+   "zh": "气胸",
+   "yue": "爆肺",
+   "jyutping": "baau3 fai3",
+   "category_zh": "外科与急诊",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "气胸",
+    "爆肺"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sur-019",
+   "term_norm": "Hemopneumothorax",
+   "zh": "血气胸",
+   "yue": "血气胸",
+   "jyutping": "hyut3 hei3 hung1",
+   "category_zh": "外科与急诊",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "血气胸"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sur-020",
+   "term_norm": "Intra-abdominal bleeding",
+   "zh": "腹腔内出血",
+   "yue": "内出血",
+   "jyutping": "noi6 ceot1 hyut3",
+   "category_zh": "外科与急诊",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "腹腔内出血",
+    "内出血"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sur-021",
+   "term_norm": "Acute peritonitis",
+   "zh": "急性腹膜炎",
+   "yue": "腹膜炎",
+   "jyutping": "fuk1 mok6 jim4",
+   "category_zh": "外科与急诊",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "急性腹膜炎",
+    "腹膜炎"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sur-022",
+   "term_norm": "Intestinal obstruction",
+   "zh": "肠梗阻",
+   "yue": "肠塞",
+   "jyutping": "coeng4 sak1",
+   "category_zh": "外科与急诊",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "肠梗阻",
+    "肠塞"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sur-023",
+   "term_norm": "Bowel perforation",
+   "zh": "肠穿孔",
+   "yue": "肠穿",
+   "jyutping": "coeng4 cyun1",
+   "category_zh": "外科与急诊",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "肠穿孔",
+    "肠穿"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sur-024",
+   "term_norm": "Inguinal hernia",
+   "zh": "腹股沟疝",
+   "yue": "小肠气",
+   "jyutping": "siu2 coeng4 hei3",
+   "category_zh": "外科与急诊",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "腹股沟疝"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [
+    "ambiguous"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "sur-025",
+   "term_norm": "Anal fissure",
+   "zh": "肛裂",
+   "yue": "肛裂",
+   "jyutping": "gong1 lit6",
+   "category_zh": "外科与急诊",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "肛裂"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sur-026",
+   "term_norm": "Anal fistula",
+   "zh": "肛瘘",
+   "yue": "肛瘘",
+   "jyutping": "gong1 lau6",
+   "category_zh": "外科与急诊",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "肛瘘"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sur-027",
+   "term_norm": "Breast lump",
+   "zh": "乳腺结节",
+   "yue": "乳房硬块",
+   "jyutping": "jyu5 fong4 ngaang6 faai3",
+   "category_zh": "外科与急诊",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "乳腺结节",
+    "乳房硬块"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sur-028",
+   "term_norm": "Thyroid nodule",
+   "zh": "甲状腺结节",
+   "yue": "甲状腺结节",
+   "jyutping": "gaap3 zong6 sin3 git3 zit1",
+   "category_zh": "外科与急诊",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "甲状腺结节"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sur-029",
+   "term_norm": "Burn",
+   "zh": "烧伤",
+   "yue": "烧伤／灼伤",
+   "jyutping": "siu1 soeng1",
+   "category_zh": "外科与急诊",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "烧伤",
+    "灼伤"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sur-030",
+   "term_norm": "Scald",
+   "zh": "烫伤",
+   "yue": "烫伤",
+   "jyutping": "tong3 soeng1",
+   "category_zh": "外科与急诊",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "烫伤"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sur-031",
+   "term_norm": "Drowning",
+   "zh": "溺水",
+   "yue": "浸亲水",
+   "jyutping": "zam3 can1 seoi2",
+   "category_zh": "外科与急诊",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "溺水",
+    "浸亲水"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sur-032",
+   "term_norm": "Poisoning",
+   "zh": "中毒",
+   "yue": "中毒",
+   "jyutping": "zung3 duk6",
+   "category_zh": "外科与急诊",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "中毒"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sur-033",
+   "term_norm": "Animal bite",
+   "zh": "动物咬伤",
+   "yue": "被狗咬",
+   "jyutping": "bei6 gau2 ngaau5",
+   "category_zh": "外科与急诊",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "动物咬伤",
+    "被狗咬"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sur-034",
+   "term_norm": "Tetanus",
+   "zh": "破伤风",
+   "yue": "破伤风",
+   "jyutping": "po3 soeng1 fung1",
+   "category_zh": "外科与急诊",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "破伤风"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sur-035",
+   "term_norm": "Sepsis",
+   "zh": "脓毒症",
+   "yue": "败血症",
+   "jyutping": "baai6 hyut3 zing3",
+   "category_zh": "外科与急诊",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "脓毒症",
+    "败血症"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sur-036",
+   "term_norm": "Polytrauma",
+   "zh": "多发性创伤",
+   "yue": "多处受伤",
+   "jyutping": "do1 cyu3 sau6 soeng1",
+   "category_zh": "外科与急诊",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "多发性创伤",
+    "多处受伤"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sur-037",
+   "term_norm": "Postoperative infection",
+   "zh": "术后感染",
+   "yue": "伤口发炎",
+   "jyutping": "soeng1 hau2 faat3 jim4",
+   "category_zh": "外科与急诊",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "术后感染",
+    "伤口发炎"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sur-038",
+   "term_norm": "Incisional hernia",
+   "zh": "切口疝",
+   "yue": "伤口疝",
+   "jyutping": "soeng1 hau2 saan3",
+   "category_zh": "外科与急诊",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "切口疝",
+    "伤口疝"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sur-039",
+   "term_norm": "Varicose veins",
+   "zh": "静脉曲张",
+   "yue": "青筋",
+   "jyutping": "ceng1 gan1",
+   "category_zh": "外科与急诊",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "静脉曲张",
+    "青筋"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sur-040",
+   "term_norm": "Arterial embolism",
+   "zh": "动脉栓塞",
+   "yue": "血管塞",
+   "jyutping": "hyut3 gun2 sak1",
+   "category_zh": "外科与急诊",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "动脉栓塞",
+    "血管塞"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "sur-041",
+   "term_norm": "Crush injury",
+   "zh": "挤压伤",
+   "yue": "压伤",
+   "jyutping": "aat3 soeng1",
+   "category_zh": "外科与急诊",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "挤压伤",
+    "压伤"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "obg-001",
+   "term_norm": "Pregnancy",
+   "zh": "妊娠",
+   "yue": "有咗／大肚",
+   "jyutping": "jau5 zo2／daai6 tou5",
+   "category_zh": "妇产与儿科",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "妊娠",
+    "有咗",
+    "大肚"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": "原表粤拼 waai4 jan6 已补「有咗」"
+  },
+  {
+   "term_id": "obg-002",
+   "term_norm": "Childbirth",
+   "zh": "分娩",
+   "yue": "生仔",
+   "jyutping": "saang1 zai2",
+   "category_zh": "妇产与儿科",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "分娩",
+    "生仔"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "obg-003",
+   "term_norm": "Cesarean section",
+   "zh": "剖宫产",
+   "yue": "开刀生",
+   "jyutping": "hoi1 dou1 saang1",
+   "category_zh": "妇产与儿科",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "剖宫产",
+    "开刀生"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "obg-004",
+   "term_norm": "Dysmenorrhea",
+   "zh": "痛经",
+   "yue": "经痛／M痛",
+   "jyutping": "ging1 tung3／em1 tung3",
+   "category_zh": "妇产与儿科",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "痛经",
+    "经痛",
+    "M痛"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "obg-005",
+   "term_norm": "Irregular menstruation",
+   "zh": "月经不调",
+   "yue": "M到唔准",
+   "jyutping": "em1 dou3 m4 zeon2",
+   "category_zh": "妇产与儿科",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "月经不调",
+    "M到唔准"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "obg-006",
+   "term_norm": "Uterine fibroids",
+   "zh": "子宫肌瘤",
+   "yue": "子宫肌瘤",
+   "jyutping": "zi2 gung1 gei1 lau4",
+   "category_zh": "妇产与儿科",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "子宫肌瘤"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "obg-007",
+   "term_norm": "Gestational hypertension",
+   "zh": "妊娠期高血压",
+   "yue": "妊娠高血压",
+   "jyutping": "jam6 san1 gou1 hyut3 aat3",
+   "category_zh": "妇产与儿科",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "妊娠期高血压",
+    "妊娠高血压"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "obg-008",
+   "term_norm": "Gestational diabetes",
+   "zh": "妊娠期糖尿病",
+   "yue": "妊娠糖尿",
+   "jyutping": "jam6 san1 tong4 niu6",
+   "category_zh": "妇产与儿科",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "妊娠期糖尿病",
+    "妊娠糖尿"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "obg-009",
+   "term_norm": "Threatened abortion",
+   "zh": "先兆流产",
+   "yue": "作小产",
+   "jyutping": "zok3 siu2 caan2",
+   "category_zh": "妇产与儿科",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "先兆流产",
+    "作小产"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "obg-010",
+   "term_norm": "Ectopic pregnancy",
+   "zh": "异位妊娠",
+   "yue": "宫外孕",
+   "jyutping": "gung1 ngoi6 jan6",
+   "category_zh": "妇产与儿科",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "异位妊娠",
+    "宫外孕"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "obg-011",
+   "term_norm": "Placental abruption",
+   "zh": "胎盘早剥",
+   "yue": "胎盘早剥",
+   "jyutping": "toi1 pun4 zou2 bok6",
+   "category_zh": "妇产与儿科",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "胎盘早剥"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "obg-012",
+   "term_norm": "Postpartum hemorrhage",
+   "zh": "产后出血",
+   "yue": "产后大出血",
+   "jyutping": "caan2 hau6 daai6 ceot1 hyut3",
+   "category_zh": "妇产与儿科",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "产后出血",
+    "产后大出血"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "obg-013",
+   "term_norm": "Puerperal infection",
+   "zh": "产褥感染",
+   "yue": "产后感染",
+   "jyutping": "caan2 hau6 gam2 jim4",
+   "category_zh": "妇产与儿科",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "产褥感染",
+    "产后感染"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "obg-014",
+   "term_norm": "Infertility",
+   "zh": "不孕症",
+   "yue": "不育",
+   "jyutping": "bat1 juk6",
+   "category_zh": "妇产与儿科",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "不孕症",
+    "不育"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "obg-015",
+   "term_norm": "Polycystic ovary syndrome",
+   "zh": "多囊卵巢综合征",
+   "yue": "多囊卵巢",
+   "jyutping": "do1 nong4 leon2 caau4",
+   "category_zh": "妇产与儿科",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "多囊卵巢综合征",
+    "多囊卵巢"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "obg-016",
+   "term_norm": "Menopausal syndrome",
+   "zh": "更年期综合征",
+   "yue": "更年期／收经",
+   "jyutping": "gang1 nin4 kei4",
+   "category_zh": "妇产与儿科",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "更年期综合征",
+    "更年期",
+    "收经"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "obg-017",
+   "term_norm": "Mastitis",
+   "zh": "乳腺炎",
+   "yue": "乳腺炎",
+   "jyutping": "jyu5 sin3 jim4",
+   "category_zh": "妇产与儿科",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "乳腺炎"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "obg-018",
+   "term_norm": "Pelvic inflammatory disease",
+   "zh": "盆腔炎",
+   "yue": "盆腔炎",
+   "jyutping": "pun4 hong1 jim4",
+   "category_zh": "妇产与儿科",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "盆腔炎"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "obg-019",
+   "term_norm": "Cervical cancer screening",
+   "zh": "宫颈癌筛查",
+   "yue": "子宫颈抹片",
+   "jyutping": "zi2 gung1 geng2 maat3 pin2",
+   "category_zh": "妇产与儿科",
+   "type_code": "TES",
+   "category": "exam",
+   "aliases": [
+    "宫颈癌筛查",
+    "子宫颈抹片"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "obg-020",
+   "term_norm": "Hand-foot-and-mouth disease",
+   "zh": "手足口病",
+   "yue": "手足口病",
+   "jyutping": "sau2 zuk1 hau2 beng6",
+   "category_zh": "妇产与儿科",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "手足口病"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "obg-021",
+   "term_norm": "Chickenpox",
+   "zh": "水痘",
+   "yue": "出水痘",
+   "jyutping": "ceot1 seoi2 dau2",
+   "category_zh": "妇产与儿科",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "水痘",
+    "出水痘"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "obg-022",
+   "term_norm": "Neonatal jaundice",
+   "zh": "新生儿黄疸",
+   "yue": "BB黄疸",
+   "jyutping": "bi4 bi4 wong4 daan2",
+   "category_zh": "妇产与儿科",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "新生儿黄疸",
+    "BB黄疸"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "obg-023",
+   "term_norm": "Infantile diarrhea",
+   "zh": "婴幼儿腹泻",
+   "yue": "BB屙肚",
+   "jyutping": "bi4 bi4 o1 tou5",
+   "category_zh": "妇产与儿科",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "婴幼儿腹泻",
+    "BB屙肚"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "obg-024",
+   "term_norm": "Pediatric pneumonia",
+   "zh": "小儿肺炎",
+   "yue": "细路肺炎",
+   "jyutping": "sai3 lou6 fai3 jim4",
+   "category_zh": "妇产与儿科",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "小儿肺炎",
+    "细路肺炎"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "obg-025",
+   "term_norm": "Febrile convulsion",
+   "zh": "高热惊厥",
+   "yue": "发烧抽筋",
+   "jyutping": "faat3 siu1 cau1 gan1",
+   "category_zh": "妇产与儿科",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "高热惊厥",
+    "发烧抽筋"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "obg-026",
+   "term_norm": "Measles",
+   "zh": "麻疹",
+   "yue": "麻疹",
+   "jyutping": "maa4 zan2",
+   "category_zh": "妇产与儿科",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "麻疹"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "obg-027",
+   "term_norm": "Mumps",
+   "zh": "流行性腮腺炎",
+   "yue": "痄腮",
+   "jyutping": "zaa3 saai1",
+   "category_zh": "妇产与儿科",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "流行性腮腺炎",
+    "痄腮"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "obg-028",
+   "term_norm": "Pertussis",
+   "zh": "百日咳",
+   "yue": "百日咳",
+   "jyutping": "baak3 jat6 kat1",
+   "category_zh": "妇产与儿科",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "百日咳"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "obg-029",
+   "term_norm": "Kawasaki disease",
+   "zh": "川崎病",
+   "yue": "川崎病",
+   "jyutping": "cyun1 kei4 beng6",
+   "category_zh": "妇产与儿科",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "川崎病"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "obg-030",
+   "term_norm": "Growth retardation",
+   "zh": "生长发育迟缓",
+   "yue": "生长慢",
+   "jyutping": "saang1 zoeng2 maan6",
+   "category_zh": "妇产与儿科",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "生长发育迟缓",
+    "生长慢"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "obg-031",
+   "term_norm": "Jaundice",
+   "zh": "黄疸",
+   "yue": "黄疸",
+   "jyutping": "wong4 daan2",
+   "category_zh": "妇产与儿科",
+   "type_code": "SYM",
+   "category": "abbr",
+   "aliases": [
+    "黄疸"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "psy-001",
+   "term_norm": "Depression",
+   "zh": "抑郁症",
+   "yue": "抑郁症",
+   "jyutping": "jik1 wat1 zing3",
+   "category_zh": "精神与神经",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "抑郁症"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "psy-002",
+   "term_norm": "Anxiety disorder",
+   "zh": "焦虑症",
+   "yue": "焦虑症",
+   "jyutping": "ziu1 leoi6 zing3",
+   "category_zh": "精神与神经",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "焦虑症"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "psy-003",
+   "term_norm": "Schizophrenia",
+   "zh": "精神分裂症",
+   "yue": "精神分裂症",
+   "jyutping": "zing1 san4 fan1 lit6 zing3",
+   "category_zh": "精神与神经",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "精神分裂症"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "psy-004",
+   "term_norm": "Alzheimer disease",
+   "zh": "阿尔茨海默病",
+   "yue": "脑退化症",
+   "jyutping": "nou5 teoi3 faa3 zing3",
+   "category_zh": "精神与神经",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "阿尔茨海默病",
+    "脑退化症"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "psy-005",
+   "term_norm": "Epilepsy",
+   "zh": "癫痫",
+   "yue": "发羊吊",
+   "jyutping": "faat3 joeng4 diu3",
+   "category_zh": "精神与神经",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "癫痫",
+    "发羊吊"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "psy-006",
+   "term_norm": "Parkinson disease",
+   "zh": "帕金森病",
+   "yue": "帕金森病",
+   "jyutping": "paak3 gam1 sam1 beng6",
+   "category_zh": "精神与神经",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "帕金森病"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "psy-007",
+   "term_norm": "Bipolar disorder",
+   "zh": "双相情感障碍",
+   "yue": "躁郁症",
+   "jyutping": "cou3 wat1 zing3",
+   "category_zh": "精神与神经",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "双相情感障碍",
+    "躁郁症"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "psy-008",
+   "term_norm": "Obsessive-compulsive disorder",
+   "zh": "强迫症",
+   "yue": "强迫症",
+   "jyutping": "koeng5 bik1 zing3",
+   "category_zh": "精神与神经",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "强迫症"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "psy-009",
+   "term_norm": "Post-traumatic stress disorder",
+   "zh": "创伤后应激障碍",
+   "yue": "创伤后压力症",
+   "jyutping": "cong1 soeng1 hau6 aat3 lik6 zing3",
+   "category_zh": "精神与神经",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "创伤后应激障碍",
+    "创伤后压力症"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "psy-010",
+   "term_norm": "Panic disorder",
+   "zh": "惊恐障碍",
+   "yue": "惊恐症",
+   "jyutping": "ging1 hung2 zing3",
+   "category_zh": "精神与神经",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "惊恐障碍",
+    "惊恐症"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "psy-011",
+   "term_norm": "Somatic symptom disorder",
+   "zh": "躯体化障碍",
+   "yue": "躯体化",
+   "jyutping": "san2 tai2 faa3",
+   "category_zh": "精神与神经",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "躯体化障碍",
+    "躯体化"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "psy-012",
+   "term_norm": "Alcohol dependence",
+   "zh": "酒精依赖",
+   "yue": "酗酒",
+   "jyutping": "hyu3 zau2",
+   "category_zh": "精神与神经",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "酒精依赖",
+    "酗酒"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "psy-013",
+   "term_norm": "Substance dependence",
+   "zh": "物质依赖",
+   "yue": "依赖药物",
+   "jyutping": "ji1 laai6 joek6 mat6",
+   "category_zh": "精神与神经",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "物质依赖",
+    "依赖药物"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "psy-014",
+   "term_norm": "Delirium",
+   "zh": "谵妄",
+   "yue": "神志混乱",
+   "jyutping": "san4 zi3 wan6 lyun6",
+   "category_zh": "精神与神经",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "谵妄",
+    "神志混乱"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "psy-015",
+   "term_norm": "Vascular dementia",
+   "zh": "血管性痴呆",
+   "yue": "血管性痴呆",
+   "jyutping": "hyut3 gun2 sing3 ci1 ngoi4",
+   "category_zh": "精神与神经",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "血管性痴呆"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "psy-016",
+   "term_norm": "Migraine",
+   "zh": "偏头痛",
+   "yue": "偏头痛",
+   "jyutping": "pin1 tau4 tung3",
+   "category_zh": "精神与神经",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "偏头痛"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "psy-017",
+   "term_norm": "Tension headache",
+   "zh": "紧张性头痛",
+   "yue": "紧张性头痛",
+   "jyutping": "gan2 zoeng1 sing3 tau4 tung3",
+   "category_zh": "精神与神经",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "紧张性头痛"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "psy-018",
+   "term_norm": "Trigeminal neuralgia",
+   "zh": "三叉神经痛",
+   "yue": "三叉神经痛",
+   "jyutping": "saam1 caa1 san4 ging1 tung3",
+   "category_zh": "精神与神经",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "三叉神经痛"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "psy-019",
+   "term_norm": "Facial nerve palsy",
+   "zh": "面神经麻痹",
+   "yue": "面瘫／面歪",
+   "jyutping": "min6 taan1",
+   "category_zh": "精神与神经",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "面神经麻痹",
+    "面瘫",
+    "面歪"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "psy-020",
+   "term_norm": "Sciatica",
+   "zh": "坐骨神经痛",
+   "yue": "坐骨神经痛",
+   "jyutping": "zo6 gwat1 san4 ging1 tung3",
+   "category_zh": "精神与神经",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "坐骨神经痛"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "psy-021",
+   "term_norm": "Myasthenia gravis",
+   "zh": "重症肌无力",
+   "yue": "重症肌无力",
+   "jyutping": "zung6 zing3 gei1 mou4 lik6",
+   "category_zh": "精神与神经",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "重症肌无力"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "psy-022",
+   "term_norm": "Multiple sclerosis",
+   "zh": "多发性硬化",
+   "yue": "多发性硬化",
+   "jyutping": "do1 faat3 sing3 ngaang6 faa3",
+   "category_zh": "精神与神经",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "多发性硬化"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "psy-023",
+   "term_norm": "Meningitis",
+   "zh": "脑膜炎",
+   "yue": "脑膜炎",
+   "jyutping": "nou5 mok6 jim4",
+   "category_zh": "精神与神经",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "脑膜炎"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "psy-024",
+   "term_norm": "Encephalitis",
+   "zh": "脑炎",
+   "yue": "脑炎",
+   "jyutping": "nou5 jim4",
+   "category_zh": "精神与神经",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "脑炎"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "psy-025",
+   "term_norm": "Peripheral neuropathy",
+   "zh": "周围神经病变",
+   "yue": "手脚痺",
+   "jyutping": "sau2 goek3 bei3",
+   "category_zh": "精神与神经",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "周围神经病变",
+    "手脚痺"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "psy-026",
+   "term_norm": "Restless legs syndrome",
+   "zh": "不宁腿综合征",
+   "yue": "不宁腿",
+   "jyutping": "bat1 ning4 teoi2",
+   "category_zh": "精神与神经",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "不宁腿综合征",
+    "不宁腿"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "psy-027",
+   "term_norm": "Sleep disorder",
+   "zh": "睡眠障碍",
+   "yue": "睡唔着",
+   "jyutping": "seoi6 m4 zoek6",
+   "category_zh": "精神与神经",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "睡眠障碍"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [
+    "ambiguous"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "psy-028",
+   "term_norm": "Dementia",
+   "zh": "痴呆",
+   "yue": "脑退化",
+   "jyutping": "nou5 teoi3 faa3",
+   "category_zh": "精神与神经",
+   "type_code": "DIS",
+   "category": "disease",
+   "aliases": [
+    "痴呆",
+    "脑退化"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "tes-001",
+   "term_norm": "Blood test",
+   "zh": "抽血",
+   "yue": "抽血／验血",
+   "jyutping": "cau1 hyut3／jim6 hyut3",
+   "category_zh": "检查与诊断",
+   "type_code": "TES",
+   "category": "exam",
+   "aliases": [
+    "抽血",
+    "验血"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "tes-002",
+   "term_norm": "Urinalysis",
+   "zh": "尿液分析",
+   "yue": "验尿",
+   "jyutping": "jim6 niu6",
+   "category_zh": "检查与诊断",
+   "type_code": "TES",
+   "category": "exam",
+   "aliases": [
+    "尿液分析",
+    "验尿"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "tes-003",
+   "term_norm": "Stool test",
+   "zh": "粪便检查",
+   "yue": "验屎",
+   "jyutping": "jim6 si2",
+   "category_zh": "检查与诊断",
+   "type_code": "TES",
+   "category": "exam",
+   "aliases": [
+    "粪便检查",
+    "验屎"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "tes-004",
+   "term_norm": "Blood pressure measurement",
+   "zh": "血压测量",
+   "yue": "量血压",
+   "jyutping": "loeng4 hyut3 aat3",
+   "category_zh": "检查与诊断",
+   "type_code": "TES",
+   "category": "exam",
+   "aliases": [
+    "血压测量",
+    "量血压"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "tes-005",
+   "term_norm": "Electrocardiogram",
+   "zh": "心电图",
+   "yue": "心电图",
+   "jyutping": "sam1 din6 tou4",
+   "category_zh": "检查与诊断",
+   "type_code": "TES",
+   "category": "exam",
+   "aliases": [
+    "心电图"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "tes-006",
+   "term_norm": "Ultrasound",
+   "zh": "超声波检查",
+   "yue": "超声波",
+   "jyutping": "ciu1 sing1 bo1",
+   "category_zh": "检查与诊断",
+   "type_code": "TES",
+   "category": "exam",
+   "aliases": [
+    "超声波检查",
+    "超声波"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "tes-007",
+   "term_norm": "X-ray",
+   "zh": "X线检查",
+   "yue": "照X光",
+   "jyutping": "ziu3 ik1 si1 gwong1",
+   "category_zh": "检查与诊断",
+   "type_code": "TES",
+   "category": "exam",
+   "aliases": [
+    "X线检查",
+    "照X光"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": "原表粤拼 gwong1 前缺 X 读音已补"
+  },
+  {
+   "term_id": "tes-008",
+   "term_norm": "CT scan",
+   "zh": "计算机断层扫描",
+   "yue": "电脑扫描",
+   "jyutping": "din6 nou5 siu3 miu4",
+   "category_zh": "检查与诊断",
+   "type_code": "TES",
+   "category": "exam",
+   "aliases": [
+    "计算机断层扫描",
+    "电脑扫描"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "tes-009",
+   "term_norm": "MRI scan",
+   "zh": "磁共振成像",
+   "yue": "磁力共振",
+   "jyutping": "ci4 lik6 gung6 zan3",
+   "category_zh": "检查与诊断",
+   "type_code": "TES",
+   "category": "exam",
+   "aliases": [
+    "磁共振成像",
+    "磁力共振"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "tes-010",
+   "term_norm": "Gastroscopy",
+   "zh": "胃镜",
+   "yue": "照胃镜",
+   "jyutping": "ziu3 wai6 ging3",
+   "category_zh": "检查与诊断",
+   "type_code": "TES",
+   "category": "exam",
+   "aliases": [
+    "胃镜",
+    "照胃镜"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "tes-011",
+   "term_norm": "Colonoscopy",
+   "zh": "结肠镜",
+   "yue": "照肠镜",
+   "jyutping": "ziu3 coeng4 ging3",
+   "category_zh": "检查与诊断",
+   "type_code": "TES",
+   "category": "exam",
+   "aliases": [
+    "结肠镜",
+    "照肠镜"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "tes-012",
+   "term_norm": "Biopsy",
+   "zh": "活检",
+   "yue": "抽组织",
+   "jyutping": "cau1 zou2 zik1",
+   "category_zh": "检查与诊断",
+   "type_code": "TES",
+   "category": "exam",
+   "aliases": [
+    "活检",
+    "抽组织"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "tes-013",
+   "term_norm": "Liver function test",
+   "zh": "肝功能检查",
+   "yue": "验肝功能",
+   "jyutping": "jim6 gon1 gung1 nang4",
+   "category_zh": "检查与诊断",
+   "type_code": "TES",
+   "category": "exam",
+   "aliases": [
+    "肝功能检查",
+    "验肝功能"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "tes-014",
+   "term_norm": "Renal function test",
+   "zh": "肾功能检查",
+   "yue": "验肾功能",
+   "jyutping": "jim6 san5 gung1 nang4",
+   "category_zh": "检查与诊断",
+   "type_code": "TES",
+   "category": "exam",
+   "aliases": [
+    "肾功能检查",
+    "验肾功能"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "tes-015",
+   "term_norm": "Lipid panel",
+   "zh": "血脂检查",
+   "yue": "验血脂",
+   "jyutping": "jim6 hyut3 zi1",
+   "category_zh": "检查与诊断",
+   "type_code": "TES",
+   "category": "exam",
+   "aliases": [
+    "血脂检查",
+    "验血脂"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "tes-016",
+   "term_norm": "Blood glucose test",
+   "zh": "血糖检测",
+   "yue": "验血糖",
+   "jyutping": "duk1 sau2 zi2",
+   "category_zh": "检查与诊断",
+   "type_code": "TES",
+   "category": "exam",
+   "aliases": [
+    "血糖检测",
+    "验血糖"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "tes-017",
+   "term_norm": "HbA1c test",
+   "zh": "糖化血红蛋白检测",
+   "yue": "验糖化血红蛋白",
+   "jyutping": "jim6 tong4 faa3 hyut3 hung4 daan6 baak6",
+   "category_zh": "检查与诊断",
+   "type_code": "TES",
+   "category": "exam",
+   "aliases": [
+    "糖化血红蛋白检测",
+    "验糖化血红蛋白"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "tes-018",
+   "term_norm": "Coagulation profile",
+   "zh": "凝血功能检查",
+   "yue": "验凝血",
+   "jyutping": "jim6 jing4 hyut3",
+   "category_zh": "检查与诊断",
+   "type_code": "TES",
+   "category": "exam",
+   "aliases": [
+    "凝血功能检查",
+    "验凝血"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "tes-019",
+   "term_norm": "D-dimer test",
+   "zh": "D-二聚体检测",
+   "yue": "验D二聚体",
+   "jyutping": "jim6 di1 ji6 zeoi6 tai2",
+   "category_zh": "检查与诊断",
+   "type_code": "TES",
+   "category": "exam",
+   "aliases": [
+    "D-二聚体检测",
+    "验D二聚体"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "tes-020",
+   "term_norm": "CRP test",
+   "zh": "C反应蛋白检测",
+   "yue": "发炎指数",
+   "jyutping": "faat3 jim4 zi2 sou3",
+   "category_zh": "检查与诊断",
+   "type_code": "TES",
+   "category": "exam",
+   "aliases": [
+    "C反应蛋白检测"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [
+    "ambiguous"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "tes-021",
+   "term_norm": "Erythrocyte sedimentation rate",
+   "zh": "红细胞沉降率",
+   "yue": "血沉",
+   "jyutping": "hyut3 cam4",
+   "category_zh": "检查与诊断",
+   "type_code": "TES",
+   "category": "exam",
+   "aliases": [
+    "红细胞沉降率",
+    "血沉"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "tes-022",
+   "term_norm": "Electrolyte panel",
+   "zh": "电解质检查",
+   "yue": "验电解质",
+   "jyutping": "jim6 din6 gaai2 zat1",
+   "category_zh": "检查与诊断",
+   "type_code": "TES",
+   "category": "exam",
+   "aliases": [
+    "电解质检查",
+    "验电解质"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "tes-023",
+   "term_norm": "Thyroid function test",
+   "zh": "甲状腺功能检查",
+   "yue": "验甲功",
+   "jyutping": "jim6 gaap3 gung1",
+   "category_zh": "检查与诊断",
+   "type_code": "TES",
+   "category": "exam",
+   "aliases": [
+    "甲状腺功能检查",
+    "验甲功"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "tes-024",
+   "term_norm": "Tumor marker test",
+   "zh": "肿瘤标志物检测",
+   "yue": "验癌指数",
+   "jyutping": "jim6 ngaam4 zi2 sou3",
+   "category_zh": "检查与诊断",
+   "type_code": "TES",
+   "category": "exam",
+   "aliases": [
+    "肿瘤标志物检测",
+    "验癌指数"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "tes-025",
+   "term_norm": "Hepatitis B panel",
+   "zh": "乙型肝炎病毒检测",
+   "yue": "验乙肝",
+   "jyutping": "jim6 jit6 gon1",
+   "category_zh": "检查与诊断",
+   "type_code": "TES",
+   "category": "exam",
+   "aliases": [
+    "乙型肝炎病毒检测",
+    "验乙肝"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "tes-026",
+   "term_norm": "Sputum culture",
+   "zh": "痰培养",
+   "yue": "验痰",
+   "jyutping": "jim6 taam4",
+   "category_zh": "检查与诊断",
+   "type_code": "TES",
+   "category": "exam",
+   "aliases": [
+    "痰培养",
+    "验痰"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "tes-027",
+   "term_norm": "Blood culture",
+   "zh": "血培养",
+   "yue": "种血",
+   "jyutping": "zung3 hyut3",
+   "category_zh": "检查与诊断",
+   "type_code": "TES",
+   "category": "exam",
+   "aliases": [
+    "血培养",
+    "种血"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "tes-028",
+   "term_norm": "Urine culture",
+   "zh": "尿培养",
+   "yue": "种尿",
+   "jyutping": "zung3 niu6",
+   "category_zh": "检查与诊断",
+   "type_code": "TES",
+   "category": "exam",
+   "aliases": [
+    "尿培养",
+    "种尿"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "tes-029",
+   "term_norm": "Drug susceptibility test",
+   "zh": "药物敏感试验",
+   "yue": "药敏测试",
+   "jyutping": "joek6 man5 cak1 si3",
+   "category_zh": "检查与诊断",
+   "type_code": "TES",
+   "category": "exam",
+   "aliases": [
+    "药物敏感试验",
+    "药敏测试"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "tes-030",
+   "term_norm": "Fecal occult blood test",
+   "zh": "粪便隐血试验",
+   "yue": "验大便隐血",
+   "jyutping": "jim6 daai6 bin6 jan2 hyut3",
+   "category_zh": "检查与诊断",
+   "type_code": "TES",
+   "category": "exam",
+   "aliases": [
+    "粪便隐血试验",
+    "验大便隐血"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "tes-031",
+   "term_norm": "Urea breath test",
+   "zh": "尿素呼气试验",
+   "yue": "吹气测试",
+   "jyutping": "ceoi1 hei3 cak1 si3",
+   "category_zh": "检查与诊断",
+   "type_code": "TES",
+   "category": "exam",
+   "aliases": [
+    "尿素呼气试验",
+    "吹气测试"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "tes-032",
+   "term_norm": "Pulmonary function test",
+   "zh": "肺功能检查",
+   "yue": "肺功能测试",
+   "jyutping": "fai3 gung1 nang4 cak1 si3",
+   "category_zh": "检查与诊断",
+   "type_code": "TES",
+   "category": "exam",
+   "aliases": [
+    "肺功能检查",
+    "肺功能测试"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "tes-033",
+   "term_norm": "Exercise stress test",
+   "zh": "运动负荷试验",
+   "yue": "跑步机测试",
+   "jyutping": "paau2 bou6 gei1 cak1 si3",
+   "category_zh": "检查与诊断",
+   "type_code": "TES",
+   "category": "exam",
+   "aliases": [
+    "运动负荷试验",
+    "跑步机测试"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "tes-034",
+   "term_norm": "Holter monitor",
+   "zh": "动态心电图",
+   "yue": "24小时心电图",
+   "jyutping": "ji6 sap6 sei3 siu2 sam1 din6 tou4",
+   "category_zh": "检查与诊断",
+   "type_code": "TES",
+   "category": "exam",
+   "aliases": [
+    "动态心电图",
+    "24小时心电图"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "tes-035",
+   "term_norm": "Ambulatory blood pressure monitoring",
+   "zh": "动态血压监测",
+   "yue": "24小时血压",
+   "jyutping": "ji6 sap6 sei3 siu2 hyut3 aat3",
+   "category_zh": "检查与诊断",
+   "type_code": "TES",
+   "category": "exam",
+   "aliases": [
+    "动态血压监测",
+    "24小时血压"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "tes-036",
+   "term_norm": "Carotid ultrasound",
+   "zh": "颈动脉超声",
+   "yue": "颈血管超声",
+   "jyutping": "geng2 hyut3 gun2 ciu1 sing1",
+   "category_zh": "检查与诊断",
+   "type_code": "TES",
+   "category": "exam",
+   "aliases": [
+    "颈动脉超声",
+    "颈血管超声"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "tes-037",
+   "term_norm": "Echocardiography",
+   "zh": "超声心动图",
+   "yue": "照心",
+   "jyutping": "ziu3 sam1",
+   "category_zh": "检查与诊断",
+   "type_code": "TES",
+   "category": "exam",
+   "aliases": [
+    "超声心动图",
+    "照心"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "tes-038",
+   "term_norm": "Brain MRI",
+   "zh": "头颅磁共振",
+   "yue": "照脑",
+   "jyutping": "ziu3 nou5",
+   "category_zh": "检查与诊断",
+   "type_code": "TES",
+   "category": "exam",
+   "aliases": [
+    "头颅磁共振",
+    "照脑"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "tes-039",
+   "term_norm": "Bone density scan",
+   "zh": "骨密度检查",
+   "yue": "验骨密度",
+   "jyutping": "jim6 gwat1 mat6 dou6",
+   "category_zh": "检查与诊断",
+   "type_code": "TES",
+   "category": "exam",
+   "aliases": [
+    "骨密度检查",
+    "验骨密度"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "tes-040",
+   "term_norm": "Mammography",
+   "zh": "乳腺X线摄影",
+   "yue": "乳房X光",
+   "jyutping": "jyu5 fong4 ik1 si1 gwong1",
+   "category_zh": "检查与诊断",
+   "type_code": "TES",
+   "category": "exam",
+   "aliases": [
+    "乳腺X线摄影",
+    "乳房X光"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "tes-041",
+   "term_norm": "HPV test",
+   "zh": "HPV检测",
+   "yue": "HPV测试",
+   "jyutping": "HPV cak1 si3",
+   "category_zh": "检查与诊断",
+   "type_code": "TES",
+   "category": "exam",
+   "aliases": [
+    "HPV检测",
+    "HPV测试"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "tes-042",
+   "term_norm": "Immunohistochemistry",
+   "zh": "免疫组织化学",
+   "yue": "免疫组化",
+   "jyutping": "min5 jik6 zou2 faa3",
+   "category_zh": "检查与诊断",
+   "type_code": "TES",
+   "category": "exam",
+   "aliases": [
+    "免疫组织化学",
+    "免疫组化"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "tes-043",
+   "term_norm": "Genetic testing",
+   "zh": "基因检测",
+   "yue": "基因测试",
+   "jyutping": "gei1 jan1 cak1 si3",
+   "category_zh": "检查与诊断",
+   "type_code": "TES",
+   "category": "exam",
+   "aliases": [
+    "基因检测",
+    "基因测试"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "tes-044",
+   "term_norm": "Allergy testing",
+   "zh": "过敏原检测",
+   "yue": "验敏感",
+   "jyutping": "jim6 man5 gam2",
+   "category_zh": "检查与诊断",
+   "type_code": "TES",
+   "category": "exam",
+   "aliases": [
+    "过敏原检测",
+    "验敏感"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "tes-045",
+   "term_norm": "Lumbar puncture",
+   "zh": "腰椎穿刺",
+   "yue": "抽脊髓液",
+   "jyutping": "cau1 zik3 seoi5 jik6",
+   "category_zh": "检查与诊断",
+   "type_code": "TES",
+   "category": "exam",
+   "aliases": [
+    "腰椎穿刺",
+    "抽脊髓液"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "tes-046",
+   "term_norm": "Bone marrow aspiration",
+   "zh": "骨髓穿刺",
+   "yue": "抽骨髓",
+   "jyutping": "cau1 gwat1 seoi5",
+   "category_zh": "检查与诊断",
+   "type_code": "TES",
+   "category": "exam",
+   "aliases": [
+    "骨髓穿刺",
+    "抽骨髓"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "tes-047",
+   "term_norm": "Joint aspiration",
+   "zh": "关节穿刺",
+   "yue": "抽关节液",
+   "jyutping": "cau1 gwaan1 zit3 jik6",
+   "category_zh": "检查与诊断",
+   "type_code": "TES",
+   "category": "exam",
+   "aliases": [
+    "关节穿刺",
+    "抽关节液"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "lab-001",
+   "term_norm": "Body temperature",
+   "zh": "体温",
+   "yue": "体温",
+   "jyutping": "tai2 wan1",
+   "category_zh": "检验指标",
+   "type_code": "LAB",
+   "category": "exam",
+   "aliases": [
+    "体温"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "lab-002",
+   "term_norm": "Pulse",
+   "zh": "脉搏",
+   "yue": "脉搏",
+   "jyutping": "mak6 bok3",
+   "category_zh": "检验指标",
+   "type_code": "LAB",
+   "category": "exam",
+   "aliases": [
+    "脉搏"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "lab-003",
+   "term_norm": "Respiratory rate",
+   "zh": "呼吸频率",
+   "yue": "",
+   "jyutping": "fu1 kap1",
+   "category_zh": "检验指标",
+   "type_code": "LAB",
+   "category": "exam",
+   "aliases": [
+    "呼吸频率",
+    "呼吸頻率"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "lab-004",
+   "term_norm": "Blood pressure",
+   "zh": "血压",
+   "yue": "血压",
+   "jyutping": "hyut3 aat3",
+   "category_zh": "检验指标",
+   "type_code": "LAB",
+   "category": "exam",
+   "aliases": [
+    "血压"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "lab-005",
+   "term_norm": "Oxygen saturation",
+   "zh": "血氧饱和度",
+   "yue": "血氧",
+   "jyutping": "hyut3 joeng5",
+   "category_zh": "检验指标",
+   "type_code": "LAB",
+   "category": "exam",
+   "aliases": [
+    "血氧饱和度",
+    "血氧"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "lab-006",
+   "term_norm": "Fasting plasma glucose",
+   "zh": "空腹血糖",
+   "yue": "空肚血糖",
+   "jyutping": "hung1 tou5 hyut3 tong4",
+   "category_zh": "检验指标",
+   "type_code": "LAB",
+   "category": "exam",
+   "aliases": [
+    "空腹血糖",
+    "空肚血糖"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "lab-007",
+   "term_norm": "Postprandial glucose",
+   "zh": "餐后血糖",
+   "yue": "餐后血糖",
+   "jyutping": "caan1 hau6 hyut3 tong4",
+   "category_zh": "检验指标",
+   "type_code": "LAB",
+   "category": "exam",
+   "aliases": [
+    "餐后血糖"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "lab-008",
+   "term_norm": "Glycated hemoglobin",
+   "zh": "糖化血红蛋白",
+   "yue": "糖化血红蛋白",
+   "jyutping": "tong4 faa3 hyut3 hung4 daan6 baak6",
+   "category_zh": "检验指标",
+   "type_code": "LAB",
+   "category": "exam",
+   "aliases": [
+    "糖化血红蛋白"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "lab-009",
+   "term_norm": "Total cholesterol",
+   "zh": "总胆固醇",
+   "yue": "总胆固醇",
+   "jyutping": "zung2 daam2 gu3 seon4",
+   "category_zh": "检验指标",
+   "type_code": "LAB",
+   "category": "exam",
+   "aliases": [
+    "总胆固醇"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "lab-010",
+   "term_norm": "LDL cholesterol",
+   "zh": "低密度脂蛋白胆固醇",
+   "yue": "坏胆固醇",
+   "jyutping": "waai6 daam2 gu3 seon4",
+   "category_zh": "检验指标",
+   "type_code": "LAB",
+   "category": "exam",
+   "aliases": [
+    "低密度脂蛋白胆固醇",
+    "坏胆固醇"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "lab-011",
+   "term_norm": "HDL cholesterol",
+   "zh": "高密度脂蛋白胆固醇",
+   "yue": "好胆固醇",
+   "jyutping": "hou2 daam2 gu3 seon4",
+   "category_zh": "检验指标",
+   "type_code": "LAB",
+   "category": "exam",
+   "aliases": [
+    "高密度脂蛋白胆固醇",
+    "好胆固醇"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "lab-012",
+   "term_norm": "Triglycerides",
+   "zh": "甘油三酯",
+   "yue": "三酸甘油脂",
+   "jyutping": "saam1 syun1 gam1 jau4 zi2",
+   "category_zh": "检验指标",
+   "type_code": "LAB",
+   "category": "exam",
+   "aliases": [
+    "甘油三酯",
+    "三酸甘油脂"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "lab-013",
+   "term_norm": "Creatinine",
+   "zh": "肌酐",
+   "yue": "肌酐",
+   "jyutping": "gei1 hon1",
+   "category_zh": "检验指标",
+   "type_code": "LAB",
+   "category": "exam",
+   "aliases": [
+    "肌酐"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "lab-014",
+   "term_norm": "Blood urea",
+   "zh": "尿素",
+   "yue": "尿素",
+   "jyutping": "niu6 sou3",
+   "category_zh": "检验指标",
+   "type_code": "LAB",
+   "category": "exam",
+   "aliases": [
+    "尿素"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "lab-015",
+   "term_norm": "eGFR",
+   "zh": "估算肾小球滤过率",
+   "yue": "肾小球滤过率",
+   "jyutping": "san5 siu2 kau4 leot6 gwo3 leot2",
+   "category_zh": "检验指标",
+   "type_code": "LAB",
+   "category": "exam",
+   "aliases": [
+    "估算肾小球滤过率",
+    "肾小球滤过率"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "lab-016",
+   "term_norm": "Uric acid",
+   "zh": "尿酸",
+   "yue": "尿酸",
+   "jyutping": "niu6 syun1",
+   "category_zh": "检验指标",
+   "type_code": "LAB",
+   "category": "exam",
+   "aliases": [
+    "尿酸"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "lab-017",
+   "term_norm": "ALT",
+   "zh": "丙氨酸氨基转移酶",
+   "yue": "肝酵素",
+   "jyutping": "gon1 haau1 sou3",
+   "category_zh": "检验指标",
+   "type_code": "LAB",
+   "category": "exam",
+   "aliases": [
+    "丙氨酸氨基转移酶"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [
+    "ambiguous"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "lab-018",
+   "term_norm": "AST",
+   "zh": "天冬氨酸氨基转移酶",
+   "yue": "肝酵素",
+   "jyutping": "gon1 haau1 sou3",
+   "category_zh": "检验指标",
+   "type_code": "LAB",
+   "category": "exam",
+   "aliases": [
+    "天冬氨酸氨基转移酶"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [
+    "ambiguous"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "lab-019",
+   "term_norm": "Total bilirubin",
+   "zh": "总胆红素",
+   "yue": "胆红素",
+   "jyutping": "daam2 hung4 sou3",
+   "category_zh": "检验指标",
+   "type_code": "LAB",
+   "category": "exam",
+   "aliases": [
+    "总胆红素",
+    "胆红素"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "lab-020",
+   "term_norm": "Albumin",
+   "zh": "白蛋白",
+   "yue": "白蛋白",
+   "jyutping": "baak6 daan6 baak6",
+   "category_zh": "检验指标",
+   "type_code": "LAB",
+   "category": "exam",
+   "aliases": [
+    "白蛋白"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "lab-021",
+   "term_norm": "Hemoglobin",
+   "zh": "血红蛋白",
+   "yue": "血色素",
+   "jyutping": "hyut3 sik1 sou3",
+   "category_zh": "检验指标",
+   "type_code": "LAB",
+   "category": "exam",
+   "aliases": [
+    "血红蛋白",
+    "血色素"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "lab-022",
+   "term_norm": "White blood cell count",
+   "zh": "白细胞计数",
+   "yue": "白血球",
+   "jyutping": "baak6 hyut3 kau4",
+   "category_zh": "检验指标",
+   "type_code": "LAB",
+   "category": "exam",
+   "aliases": [
+    "白细胞计数",
+    "白血球"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "lab-023",
+   "term_norm": "Neutrophils",
+   "zh": "中性粒细胞",
+   "yue": "中性粒球",
+   "jyutping": "zung1 sing3 nap1 kau4",
+   "category_zh": "检验指标",
+   "type_code": "LAB",
+   "category": "exam",
+   "aliases": [
+    "中性粒细胞",
+    "中性粒球"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "lab-024",
+   "term_norm": "Platelet count",
+   "zh": "血小板计数",
+   "yue": "血小板",
+   "jyutping": "hyut3 siu2 baan2",
+   "category_zh": "检验指标",
+   "type_code": "LAB",
+   "category": "exam",
+   "aliases": [
+    "血小板计数",
+    "血小板"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "lab-025",
+   "term_norm": "C-reactive protein",
+   "zh": "C反应蛋白",
+   "yue": "发炎指数",
+   "jyutping": "faat3 jim4 zi2 sou3",
+   "category_zh": "检验指标",
+   "type_code": "LAB",
+   "category": "exam",
+   "aliases": [
+    "C反应蛋白"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [
+    "ambiguous"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "lab-026",
+   "term_norm": "Erythrocyte sedimentation rate",
+   "zh": "红细胞沉降率",
+   "yue": "血沉",
+   "jyutping": "hyut3 cam4",
+   "category_zh": "检验指标",
+   "type_code": "LAB",
+   "category": "exam",
+   "aliases": [
+    "红细胞沉降率",
+    "血沉"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "lab-027",
+   "term_norm": "INR",
+   "zh": "国际标准化比值",
+   "yue": "凝血指数",
+   "jyutping": "jing4 hyut3 zi2 sou3",
+   "category_zh": "检验指标",
+   "type_code": "LAB",
+   "category": "exam",
+   "aliases": [
+    "国际标准化比值",
+    "凝血指数"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "lab-028",
+   "term_norm": "D-dimer",
+   "zh": "D-二聚体",
+   "yue": "D二聚体",
+   "jyutping": "di1 ji6 zeoi6 tai2",
+   "category_zh": "检验指标",
+   "type_code": "LAB",
+   "category": "exam",
+   "aliases": [
+    "D-二聚体",
+    "D二聚体"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "lab-029",
+   "term_norm": "Serum potassium",
+   "zh": "血钾",
+   "yue": "血钾",
+   "jyutping": "hyut3 gaap3",
+   "category_zh": "检验指标",
+   "type_code": "LAB",
+   "category": "exam",
+   "aliases": [
+    "血钾"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "lab-030",
+   "term_norm": "Serum sodium",
+   "zh": "血钠",
+   "yue": "血钠",
+   "jyutping": "hyut3 naap6",
+   "category_zh": "检验指标",
+   "type_code": "LAB",
+   "category": "exam",
+   "aliases": [
+    "血钠"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "lab-031",
+   "term_norm": "TSH",
+   "zh": "促甲状腺激素",
+   "yue": "促甲状腺素",
+   "jyutping": "cuk1 gaap3 zong6 sin3 sou3",
+   "category_zh": "检验指标",
+   "type_code": "LAB",
+   "category": "exam",
+   "aliases": [
+    "促甲状腺激素",
+    "促甲状腺素"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "lab-032",
+   "term_norm": "PSA",
+   "zh": "前列腺特异抗原",
+   "yue": "前列腺癌指数",
+   "jyutping": "cin4 lit6 sin3 ngaam4 zi2 sou3",
+   "category_zh": "检验指标",
+   "type_code": "LAB",
+   "category": "exam",
+   "aliases": [
+    "前列腺特异抗原",
+    "前列腺癌指数"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "lab-033",
+   "term_norm": "Carcinoembryonic antigen",
+   "zh": "癌胚抗原",
+   "yue": "癌胚抗原",
+   "jyutping": "ngaam4 pui1 kong3 jyun4",
+   "category_zh": "检验指标",
+   "type_code": "LAB",
+   "category": "exam",
+   "aliases": [
+    "癌胚抗原"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "pro-001",
+   "term_norm": "Prescription drug",
+   "zh": "处方药",
+   "yue": "医生药",
+   "jyutping": "ji1 sang1 joek6",
+   "category_zh": "治疗与用药",
+   "type_code": "DRU",
+   "category": "drug",
+   "aliases": [
+    "处方药",
+    "医生药"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "pro-002",
+   "term_norm": "Over-the-counter drug",
+   "zh": "非处方药",
+   "yue": "成药",
+   "jyutping": "sing4 joek6",
+   "category_zh": "治疗与用药",
+   "type_code": "DRU",
+   "category": "drug",
+   "aliases": [
+    "非处方药",
+    "成药"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": "原表「柜台药」为直译已改"
+  },
+  {
+   "term_id": "pro-003",
+   "term_norm": "Antibiotics",
+   "zh": "抗生素",
+   "yue": "抗生素／消炎药",
+   "jyutping": "kong3 sang1 sou3",
+   "category_zh": "治疗与用药",
+   "type_code": "DRU",
+   "category": "drug",
+   "aliases": [
+    "抗生素",
+    "消炎药"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": "粤语俗称「消炎药」指抗生素"
+  },
+  {
+   "term_id": "pro-004",
+   "term_norm": "Analgesics",
+   "zh": "止痛药",
+   "yue": "止痛药",
+   "jyutping": "zi2 tung3 joek6",
+   "category_zh": "治疗与用药",
+   "type_code": "DRU",
+   "category": "drug",
+   "aliases": [
+    "止痛药"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "pro-005",
+   "term_norm": "Antipyretics",
+   "zh": "退烧药",
+   "yue": "退烧药",
+   "jyutping": "teoi3 siu1 joek6",
+   "category_zh": "治疗与用药",
+   "type_code": "DRU",
+   "category": "drug",
+   "aliases": [
+    "退烧药"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "pro-006",
+   "term_norm": "Injection",
+   "zh": "注射",
+   "yue": "打针",
+   "jyutping": "daa2 zam1",
+   "category_zh": "治疗与用药",
+   "type_code": "PRO",
+   "category": "abbr",
+   "aliases": [
+    "注射",
+    "打针"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "pro-007",
+   "term_norm": "Intravenous drip",
+   "zh": "静脉输液",
+   "yue": "吊针／吊盐水",
+   "jyutping": "diu3 zam1／diu3 jim4 seoi2",
+   "category_zh": "治疗与用药",
+   "type_code": "PRO",
+   "category": "abbr",
+   "aliases": [
+    "静脉输液",
+    "吊针",
+    "吊盐水"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "pro-008",
+   "term_norm": "Surgery",
+   "zh": "手术",
+   "yue": "做手术／开刀",
+   "jyutping": "zou6 sau2 seot6／hoi1 dou1",
+   "category_zh": "治疗与用药",
+   "type_code": "PRO",
+   "category": "abbr",
+   "aliases": [
+    "手术",
+    "做手术",
+    "开刀"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "pro-009",
+   "term_norm": "Anesthesia",
+   "zh": "麻醉",
+   "yue": "打麻醉针",
+   "jyutping": "maa4 zeoi3",
+   "category_zh": "治疗与用药",
+   "type_code": "PRO",
+   "category": "abbr",
+   "aliases": [
+    "麻醉",
+    "打麻醉针"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "pro-010",
+   "term_norm": "Suturing",
+   "zh": "缝合",
+   "yue": "缝针",
+   "jyutping": "fung4 zam1",
+   "category_zh": "治疗与用药",
+   "type_code": "PRO",
+   "category": "abbr",
+   "aliases": [
+    "缝合",
+    "缝针"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "pro-011",
+   "term_norm": "Stitch removal",
+   "zh": "拆线",
+   "yue": "剪线",
+   "jyutping": "zin2 sin3",
+   "category_zh": "治疗与用药",
+   "type_code": "PRO",
+   "category": "abbr",
+   "aliases": [
+    "拆线",
+    "剪线"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "pro-012",
+   "term_norm": "Dressing change",
+   "zh": "换药",
+   "yue": "换药",
+   "jyutping": "wun6 joek6",
+   "category_zh": "治疗与用药",
+   "type_code": "PRO",
+   "category": "abbr",
+   "aliases": [
+    "换药"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "pro-013",
+   "term_norm": "Bandaging",
+   "zh": "包扎",
+   "yue": "包扎",
+   "jyutping": "baau1 zaat3",
+   "category_zh": "治疗与用药",
+   "type_code": "PRO",
+   "category": "abbr",
+   "aliases": [
+    "包扎"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "pro-014",
+   "term_norm": "Blood transfusion",
+   "zh": "输血",
+   "yue": "输血",
+   "jyutping": "syu1 hyut3",
+   "category_zh": "治疗与用药",
+   "type_code": "PRO",
+   "category": "abbr",
+   "aliases": [
+    "输血"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "pro-015",
+   "term_norm": "Hemodialysis",
+   "zh": "血液透析",
+   "yue": "洗肾",
+   "jyutping": "sai2 san5",
+   "category_zh": "治疗与用药",
+   "type_code": "PRO",
+   "category": "abbr",
+   "aliases": [
+    "血液透析",
+    "洗肾"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "pro-016",
+   "term_norm": "Chemotherapy",
+   "zh": "化疗",
+   "yue": "化疗",
+   "jyutping": "faa3 liu4",
+   "category_zh": "治疗与用药",
+   "type_code": "PRO",
+   "category": "abbr",
+   "aliases": [
+    "化疗"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "pro-017",
+   "term_norm": "Radiotherapy",
+   "zh": "放疗",
+   "yue": "电疗",
+   "jyutping": "din6 liu4",
+   "category_zh": "治疗与用药",
+   "type_code": "PRO",
+   "category": "abbr",
+   "aliases": [
+    "放疗",
+    "电疗"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "pro-018",
+   "term_norm": "Nebulization",
+   "zh": "雾化吸入",
+   "yue": "闻雾化",
+   "jyutping": "man4 mou6 faa3",
+   "category_zh": "治疗与用药",
+   "type_code": "PRO",
+   "category": "abbr",
+   "aliases": [
+    "雾化吸入",
+    "闻雾化"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "pro-019",
+   "term_norm": "Oxygen therapy",
+   "zh": "氧疗",
+   "yue": "吸氧",
+   "jyutping": "kap1 joeng5",
+   "category_zh": "治疗与用药",
+   "type_code": "PRO",
+   "category": "abbr",
+   "aliases": [
+    "氧疗",
+    "吸氧"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "pro-020",
+   "term_norm": "Tracheal intubation",
+   "zh": "气管插管",
+   "yue": "插喉",
+   "jyutping": "caap3 hau4",
+   "category_zh": "治疗与用药",
+   "type_code": "PRO",
+   "category": "abbr",
+   "aliases": [
+    "气管插管",
+    "插喉"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "pro-021",
+   "term_norm": "Mechanical ventilation",
+   "zh": "机械通气",
+   "yue": "呼吸机",
+   "jyutping": "fu1 kap1 gei1",
+   "category_zh": "治疗与用药",
+   "type_code": "PRO",
+   "category": "abbr",
+   "aliases": [
+    "机械通气",
+    "呼吸机"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "pro-022",
+   "term_norm": "Cardiopulmonary resuscitation",
+   "zh": "心肺复苏",
+   "yue": "心肺复苏",
+   "jyutping": "sam1 fai3 fuk6 sou1",
+   "category_zh": "治疗与用药",
+   "type_code": "PRO",
+   "category": "abbr",
+   "aliases": [
+    "心肺复苏"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "pro-023",
+   "term_norm": "Defibrillation",
+   "zh": "电除颤",
+   "yue": "电击",
+   "jyutping": "din6 gik1",
+   "category_zh": "治疗与用药",
+   "type_code": "PRO",
+   "category": "abbr",
+   "aliases": [
+    "电除颤",
+    "电击"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "pro-024",
+   "term_norm": "Urinary catheterization",
+   "zh": "导尿",
+   "yue": "插尿喉",
+   "jyutping": "caap3 niu6 hau4",
+   "category_zh": "治疗与用药",
+   "type_code": "PRO",
+   "category": "abbr",
+   "aliases": [
+    "导尿",
+    "插尿喉"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "pro-025",
+   "term_norm": "Nasogastric tube insertion",
+   "zh": "留置胃管",
+   "yue": "插胃喉",
+   "jyutping": "caap3 wai6 hau4",
+   "category_zh": "治疗与用药",
+   "type_code": "PRO",
+   "category": "abbr",
+   "aliases": [
+    "留置胃管",
+    "插胃喉"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "pro-026",
+   "term_norm": "Drainage",
+   "zh": "引流",
+   "yue": "引流",
+   "jyutping": "jan5 lau4",
+   "category_zh": "治疗与用药",
+   "type_code": "PRO",
+   "category": "abbr",
+   "aliases": [
+    "引流"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "pro-027",
+   "term_norm": "Debridement",
+   "zh": "清创",
+   "yue": "洗伤口",
+   "jyutping": "sai2 soeng1 hau2",
+   "category_zh": "治疗与用药",
+   "type_code": "PRO",
+   "category": "abbr",
+   "aliases": [
+    "清创",
+    "洗伤口"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "pro-028",
+   "term_norm": "Cast immobilization",
+   "zh": "石膏固定",
+   "yue": "打石膏",
+   "jyutping": "daa2 sek6 gou1",
+   "category_zh": "治疗与用药",
+   "type_code": "PRO",
+   "category": "abbr",
+   "aliases": [
+    "石膏固定",
+    "打石膏"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "pro-029",
+   "term_norm": "Traction",
+   "zh": "牵引",
+   "yue": "拉骨",
+   "jyutping": "laai1 gwat1",
+   "category_zh": "治疗与用药",
+   "type_code": "PRO",
+   "category": "abbr",
+   "aliases": [
+    "牵引",
+    "拉骨"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "pro-030",
+   "term_norm": "Intra-articular injection",
+   "zh": "关节腔注射",
+   "yue": "打针入关节",
+   "jyutping": "daa2 zam1 jap6 gwaan1 zit3",
+   "category_zh": "治疗与用药",
+   "type_code": "PRO",
+   "category": "abbr",
+   "aliases": [
+    "关节腔注射",
+    "打针入关节"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "pro-031",
+   "term_norm": "Physiotherapy",
+   "zh": "物理治疗",
+   "yue": "物理治疗",
+   "jyutping": "mat6 lei5 zi6 liu4",
+   "category_zh": "治疗与用药",
+   "type_code": "PRO",
+   "category": "abbr",
+   "aliases": [
+    "物理治疗"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "pro-032",
+   "term_norm": "Rehabilitation",
+   "zh": "康复训练",
+   "yue": "做康复",
+   "jyutping": "zou6 hong1 fuk6",
+   "category_zh": "治疗与用药",
+   "type_code": "PRO",
+   "category": "abbr",
+   "aliases": [
+    "康复训练",
+    "做康复"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "pro-033",
+   "term_norm": "Psychological counseling",
+   "zh": "心理咨询",
+   "yue": "见辅导",
+   "jyutping": "gin3 fu2 dou6",
+   "category_zh": "治疗与用药",
+   "type_code": "PRO",
+   "category": "abbr",
+   "aliases": [
+    "心理咨询",
+    "见辅导"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "pro-034",
+   "term_norm": "Vaccination",
+   "zh": "疫苗接种",
+   "yue": "打预防针",
+   "jyutping": "daa2 jyu6 fong4 zam1",
+   "category_zh": "治疗与用药",
+   "type_code": "PRO",
+   "category": "abbr",
+   "aliases": [
+    "疫苗接种",
+    "打预防针"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "pro-035",
+   "term_norm": "Targeted therapy",
+   "zh": "靶向治疗",
+   "yue": "标靶治疗",
+   "jyutping": "biu1 baak3 zi6 liu4",
+   "category_zh": "治疗与用药",
+   "type_code": "PRO",
+   "category": "abbr",
+   "aliases": [
+    "靶向治疗",
+    "标靶治疗"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "pro-036",
+   "term_norm": "Immunotherapy",
+   "zh": "免疫治疗",
+   "yue": "免疫治疗",
+   "jyutping": "min5 jik6 zi6 liu4",
+   "category_zh": "治疗与用药",
+   "type_code": "PRO",
+   "category": "abbr",
+   "aliases": [
+    "免疫治疗"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "pro-037",
+   "term_norm": "Acupuncture",
+   "zh": "针灸",
+   "yue": "针灸",
+   "jyutping": "zam1 gau3",
+   "category_zh": "治疗与用药",
+   "type_code": "PRO",
+   "category": "abbr",
+   "aliases": [
+    "针灸"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "pro-038",
+   "term_norm": "Smoking cessation",
+   "zh": "戒烟",
+   "yue": "戒烟",
+   "jyutping": "gaai3 jin1",
+   "category_zh": "治疗与用药",
+   "type_code": "PRO",
+   "category": "abbr",
+   "aliases": [
+    "戒烟"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": ""
+  },
+  {
+   "term_id": "dep-001",
+   "term_norm": "Emergency department",
+   "zh": "急诊科",
+   "yue": "急症室",
+   "jyutping": "gap1 zing3 sat1",
+   "category_zh": "科室与设施",
+   "type_code": "DEP",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DEP"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dep-002",
+   "term_norm": "Outpatient clinic",
+   "zh": "门诊",
+   "yue": "门诊",
+   "jyutping": "mun4 zan2",
+   "category_zh": "科室与设施",
+   "type_code": "DEP",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DEP"
+   ],
+   "note": "原表粤拼 czan2 已更正"
+  },
+  {
+   "term_id": "dep-003",
+   "term_norm": "Inpatient ward",
+   "zh": "住院部",
+   "yue": "病房",
+   "jyutping": "beng6 fong4",
+   "category_zh": "科室与设施",
+   "type_code": "DEP",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DEP"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dep-004",
+   "term_norm": "Intensive care unit",
+   "zh": "重症监护室",
+   "yue": "深切治疗部",
+   "jyutping": "sam1 cit3 zi6 liu4 bou6",
+   "category_zh": "科室与设施",
+   "type_code": "DEP",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DEP"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dep-005",
+   "term_norm": "Operating room",
+   "zh": "手术室",
+   "yue": "手术室",
+   "jyutping": "sau2 seot6 sat1",
+   "category_zh": "科室与设施",
+   "type_code": "DEP",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DEP"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dep-006",
+   "term_norm": "Internal medicine",
+   "zh": "内科",
+   "yue": "内科",
+   "jyutping": "noi6 fo1",
+   "category_zh": "科室与设施",
+   "type_code": "DEP",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DEP"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dep-007",
+   "term_norm": "Surgery department",
+   "zh": "外科",
+   "yue": "外科",
+   "jyutping": "ngoi6 fo1",
+   "category_zh": "科室与设施",
+   "type_code": "DEP",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DEP"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dep-008",
+   "term_norm": "Obstetrics and gynecology",
+   "zh": "妇产科",
+   "yue": "妇产科",
+   "jyutping": "fu5 caan2 fo1",
+   "category_zh": "科室与设施",
+   "type_code": "DEP",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DEP"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dep-009",
+   "term_norm": "Pediatrics",
+   "zh": "儿科",
+   "yue": "儿科",
+   "jyutping": "ji4 fo1",
+   "category_zh": "科室与设施",
+   "type_code": "DEP",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DEP"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dep-010",
+   "term_norm": "Dermatology",
+   "zh": "皮肤科",
+   "yue": "皮肤科",
+   "jyutping": "pei4 fu1 fo1",
+   "category_zh": "科室与设施",
+   "type_code": "DEP",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DEP"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dep-011",
+   "term_norm": "Ophthalmology",
+   "zh": "眼科",
+   "yue": "眼科",
+   "jyutping": "ngaan5 fo1",
+   "category_zh": "科室与设施",
+   "type_code": "DEP",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DEP"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dep-012",
+   "term_norm": "Otolaryngology",
+   "zh": "耳鼻喉科",
+   "yue": "耳鼻喉科",
+   "jyutping": "ji5 bei6 hau4 fo1",
+   "category_zh": "科室与设施",
+   "type_code": "DEP",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DEP"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dep-013",
+   "term_norm": "Dentistry",
+   "zh": "口腔科",
+   "yue": "牙科",
+   "jyutping": "ngaa4 fo1",
+   "category_zh": "科室与设施",
+   "type_code": "DEP",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DEP"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dep-014",
+   "term_norm": "Orthopedics",
+   "zh": "骨科",
+   "yue": "骨科",
+   "jyutping": "gwat1 fo1",
+   "category_zh": "科室与设施",
+   "type_code": "DEP",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DEP"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dep-015",
+   "term_norm": "Neurology",
+   "zh": "神经内科",
+   "yue": "脑科",
+   "jyutping": "nou5 fo1",
+   "category_zh": "科室与设施",
+   "type_code": "DEP",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DEP"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dep-016",
+   "term_norm": "Neurosurgery",
+   "zh": "神经外科",
+   "yue": "脑外科",
+   "jyutping": "nou5 ngoi6 fo1",
+   "category_zh": "科室与设施",
+   "type_code": "DEP",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DEP"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dep-017",
+   "term_norm": "Urology",
+   "zh": "泌尿外科",
+   "yue": "泌尿科",
+   "jyutping": "bei3 niu6 fo1",
+   "category_zh": "科室与设施",
+   "type_code": "DEP",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DEP"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dep-018",
+   "term_norm": "Oncology",
+   "zh": "肿瘤科",
+   "yue": "肿瘤科",
+   "jyutping": "zung2 lau4 fo1",
+   "category_zh": "科室与设施",
+   "type_code": "DEP",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DEP"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dep-019",
+   "term_norm": "Rehabilitation medicine",
+   "zh": "康复科",
+   "yue": "康复科",
+   "jyutping": "hong1 fuk6 fo1",
+   "category_zh": "科室与设施",
+   "type_code": "DEP",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DEP"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dep-020",
+   "term_norm": "Psychiatry",
+   "zh": "精神科",
+   "yue": "精神科",
+   "jyutping": "zing1 san4 fo1",
+   "category_zh": "科室与设施",
+   "type_code": "DEP",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DEP"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dep-021",
+   "term_norm": "Infectious diseases",
+   "zh": "感染科",
+   "yue": "传染科",
+   "jyutping": "cyun4 jim5 fo1",
+   "category_zh": "科室与设施",
+   "type_code": "DEP",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DEP"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dep-022",
+   "term_norm": "Endocrinology",
+   "zh": "内分泌科",
+   "yue": "内分泌科",
+   "jyutping": "noi6 fan1 bit6 fo1",
+   "category_zh": "科室与设施",
+   "type_code": "DEP",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DEP"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dep-023",
+   "term_norm": "Nephrology",
+   "zh": "肾内科",
+   "yue": "肾科",
+   "jyutping": "san5 fo1",
+   "category_zh": "科室与设施",
+   "type_code": "DEP",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DEP"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dep-024",
+   "term_norm": "Gastroenterology",
+   "zh": "消化内科",
+   "yue": "肠胃科",
+   "jyutping": "coeng4 wai6 fo1",
+   "category_zh": "科室与设施",
+   "type_code": "DEP",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DEP"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dep-025",
+   "term_norm": "Respiratory medicine",
+   "zh": "呼吸内科",
+   "yue": "呼吸科",
+   "jyutping": "fu1 kap1 fo1",
+   "category_zh": "科室与设施",
+   "type_code": "DEP",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DEP"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dep-026",
+   "term_norm": "Cardiology",
+   "zh": "心血管内科",
+   "yue": "心脏科",
+   "jyutping": "sam1 zong6 fo1",
+   "category_zh": "科室与设施",
+   "type_code": "DEP",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DEP"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dep-027",
+   "term_norm": "Hematology",
+   "zh": "血液科",
+   "yue": "血液科",
+   "jyutping": "hyut3 jik6 fo1",
+   "category_zh": "科室与设施",
+   "type_code": "DEP",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DEP"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dep-028",
+   "term_norm": "Anesthesiology",
+   "zh": "麻醉科",
+   "yue": "麻醉科",
+   "jyutping": "maa4 zeoi3 fo1",
+   "category_zh": "科室与设施",
+   "type_code": "DEP",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DEP"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dep-029",
+   "term_norm": "Radiology",
+   "zh": "放射科",
+   "yue": "放射科",
+   "jyutping": "fong3 se6 fo1",
+   "category_zh": "科室与设施",
+   "type_code": "DEP",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DEP"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dep-030",
+   "term_norm": "Clinical laboratory",
+   "zh": "检验科",
+   "yue": "化验所",
+   "jyutping": "faa3 jim6 so2",
+   "category_zh": "科室与设施",
+   "type_code": "DEP",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DEP"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dep-031",
+   "term_norm": "Pathology",
+   "zh": "病理科",
+   "yue": "病理科",
+   "jyutping": "beng6 lei5 fo1",
+   "category_zh": "科室与设施",
+   "type_code": "DEP",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DEP"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dep-032",
+   "term_norm": "Nutrition",
+   "zh": "营养科",
+   "yue": "营养科",
+   "jyutping": "jing4 joeng5 fo1",
+   "category_zh": "科室与设施",
+   "type_code": "DEP",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DEP"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dep-033",
+   "term_norm": "Community clinic",
+   "zh": "社区诊所",
+   "yue": "诊所",
+   "jyutping": "zan2 so2",
+   "category_zh": "科室与设施",
+   "type_code": "DEP",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DEP"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dep-034",
+   "term_norm": "Attending physician",
+   "zh": "主治医师",
+   "yue": "主诊医生",
+   "jyutping": "zyu2 can2 ji1 sang1",
+   "category_zh": "科室与设施",
+   "type_code": "ROL",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:ROL"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dep-035",
+   "term_norm": "Nurse",
+   "zh": "护士",
+   "yue": "护士／姑娘",
+   "jyutping": "wu6 si6／gu1 noeng4",
+   "category_zh": "科室与设施",
+   "type_code": "ROL",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:ROL"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dep-036",
+   "term_norm": "Pharmacy",
+   "zh": "药房",
+   "yue": "药房",
+   "jyutping": "joek6 fong4",
+   "category_zh": "科室与设施",
+   "type_code": "DEP",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DEP"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dep-037",
+   "term_norm": "Registration",
+   "zh": "挂号处",
+   "yue": "挂号处",
+   "jyutping": "gwaa3 hou6 cyu3",
+   "category_zh": "科室与设施",
+   "type_code": "DEP",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DEP"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "tme-001",
+   "term_norm": "Today",
+   "zh": "今天",
+   "yue": "今日",
+   "jyutping": "gam1 jat6",
+   "category_zh": "时间与频次",
+   "type_code": "TME",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:TME"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "tme-002",
+   "term_norm": "Yesterday",
+   "zh": "昨天",
+   "yue": "昨日／琴日",
+   "jyutping": "cam4 jat6",
+   "category_zh": "时间与频次",
+   "type_code": "TME",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:TME"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "tme-003",
+   "term_norm": "Day before yesterday",
+   "zh": "前天",
+   "yue": "前日",
+   "jyutping": "cin4 jat6",
+   "category_zh": "时间与频次",
+   "type_code": "TME",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:TME"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "tme-004",
+   "term_norm": "Three days ago",
+   "zh": "三天前",
+   "yue": "三日前",
+   "jyutping": "saam1 jat6 cin4",
+   "category_zh": "时间与频次",
+   "type_code": "TME",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:TME"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "tme-005",
+   "term_norm": "One week ago",
+   "zh": "一周前",
+   "yue": "一个星期前",
+   "jyutping": "jat1 go3 sing1 kei4 cin4",
+   "category_zh": "时间与频次",
+   "type_code": "TME",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:TME"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "tme-006",
+   "term_norm": "One month ago",
+   "zh": "一个月前",
+   "yue": "一个月前",
+   "jyutping": "jat1 go3 jyut6 cin4",
+   "category_zh": "时间与频次",
+   "type_code": "TME",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:TME"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "tme-007",
+   "term_norm": "Six months ago",
+   "zh": "半年前",
+   "yue": "半年前",
+   "jyutping": "bun3 nin4 cin4",
+   "category_zh": "时间与频次",
+   "type_code": "TME",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:TME"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "tme-008",
+   "term_norm": "Recently",
+   "zh": "最近",
+   "yue": "呢排",
+   "jyutping": "ni1 paai4",
+   "category_zh": "时间与频次",
+   "type_code": "TME",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:TME"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "tme-009",
+   "term_norm": "Continuous",
+   "zh": "持续",
+   "yue": "一直",
+   "jyutping": "jat1 zik6",
+   "category_zh": "时间与频次",
+   "type_code": "TME",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:TME"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "tme-010",
+   "term_norm": "Recurrent",
+   "zh": "反复",
+   "yue": "反复",
+   "jyutping": "faan2 fuk1",
+   "category_zh": "时间与频次",
+   "type_code": "TME",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:TME"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "tme-011",
+   "term_norm": "Intermittent",
+   "zh": "间断",
+   "yue": "间中",
+   "jyutping": "gaan3 zung1",
+   "category_zh": "时间与频次",
+   "type_code": "TME",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:TME"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "tme-012",
+   "term_norm": "Paroxysmal",
+   "zh": "阵发性",
+   "yue": "一阵阵",
+   "jyutping": "jat1 zan6 zan6",
+   "category_zh": "时间与频次",
+   "type_code": "TME",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:TME"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "tme-013",
+   "term_norm": "Sudden onset",
+   "zh": "突发",
+   "yue": "突然",
+   "jyutping": "dat6 jin4",
+   "category_zh": "时间与频次",
+   "type_code": "TME",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:TME"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "tme-014",
+   "term_norm": "Progressively worsening",
+   "zh": "逐渐加重",
+   "yue": "越嚟越痛",
+   "jyutping": "jyut6 lai4 jyut6 tung3",
+   "category_zh": "时间与频次",
+   "type_code": "TME",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:TME"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "tme-015",
+   "term_norm": "Relieved",
+   "zh": "缓解",
+   "yue": "好返",
+   "jyutping": "hou2 faan1",
+   "category_zh": "时间与频次",
+   "type_code": "TME",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:TME"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "tme-016",
+   "term_norm": "Relapse",
+   "zh": "复发",
+   "yue": "再发",
+   "jyutping": "zoi3 faat3",
+   "category_zh": "时间与频次",
+   "type_code": "TME",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:TME"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "tme-017",
+   "term_norm": "Acute",
+   "zh": "急性",
+   "yue": "急性",
+   "jyutping": "gap1 sing3",
+   "category_zh": "时间与频次",
+   "type_code": "TME",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:TME"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "tme-018",
+   "term_norm": "Chronic",
+   "zh": "慢性",
+   "yue": "慢性",
+   "jyutping": "maan6 sing3",
+   "category_zh": "时间与频次",
+   "type_code": "TME",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:TME"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "tme-019",
+   "term_norm": "Subacute",
+   "zh": "亚急性",
+   "yue": "亚急性",
+   "jyutping": "aa3 gap1 sing3",
+   "category_zh": "时间与频次",
+   "type_code": "TME",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:TME"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "tme-020",
+   "term_norm": "Postoperative",
+   "zh": "术后",
+   "yue": "手术后",
+   "jyutping": "sau2 seot6 hau6",
+   "category_zh": "时间与频次",
+   "type_code": "TME",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:TME"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "tme-021",
+   "term_norm": "On admission",
+   "zh": "入院时",
+   "yue": "入院时",
+   "jyutping": "jap6 jyun2 si4",
+   "category_zh": "时间与频次",
+   "type_code": "TME",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:TME"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "tme-022",
+   "term_norm": "On discharge",
+   "zh": "出院时",
+   "yue": "出院时",
+   "jyutping": "ceot1 jyun2 si4",
+   "category_zh": "时间与频次",
+   "type_code": "TME",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:TME"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "tme-023",
+   "term_norm": "Follow-up",
+   "zh": "随访",
+   "yue": "覆诊",
+   "jyutping": "fuk1 can2",
+   "category_zh": "时间与频次",
+   "type_code": "TME",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:TME"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "tme-024",
+   "term_norm": "Daily",
+   "zh": "每天",
+   "yue": "日日",
+   "jyutping": "jat6 jat6",
+   "category_zh": "时间与频次",
+   "type_code": "TME",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:TME"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "tme-025",
+   "term_norm": "Once daily",
+   "zh": "每日一次",
+   "yue": "一日一次",
+   "jyutping": "jat1 jat6 jat1 ci3",
+   "category_zh": "时间与频次",
+   "type_code": "TME",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:TME"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "tme-026",
+   "term_norm": "Twice daily",
+   "zh": "每日两次",
+   "yue": "一日两次",
+   "jyutping": "jat1 jat6 loeng5 ci3",
+   "category_zh": "时间与频次",
+   "type_code": "TME",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:TME"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "tme-027",
+   "term_norm": "Three times daily",
+   "zh": "每日三次",
+   "yue": "一日三次",
+   "jyutping": "jat1 jat6 saam1 ci3",
+   "category_zh": "时间与频次",
+   "type_code": "TME",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:TME"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "tme-028",
+   "term_norm": "Every 4 hours",
+   "zh": "每四小时",
+   "yue": "每四个钟",
+   "jyutping": "mui5 sei3 go3 zung1",
+   "category_zh": "时间与频次",
+   "type_code": "TME",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:TME"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "tme-029",
+   "term_norm": "Every other day",
+   "zh": "隔日",
+   "yue": "隔一日",
+   "jyutping": "gaak3 jat1 jat6",
+   "category_zh": "时间与频次",
+   "type_code": "TME",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:TME"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "tme-030",
+   "term_norm": "Once weekly",
+   "zh": "每周一次",
+   "yue": "一星期一次",
+   "jyutping": "jat1 sing1 kei4 jat1 ci3",
+   "category_zh": "时间与频次",
+   "type_code": "TME",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:TME"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "tme-031",
+   "term_norm": "At bedtime",
+   "zh": "睡前",
+   "yue": "瞓觉前",
+   "jyutping": "fan3 gaau3 cin4",
+   "category_zh": "时间与频次",
+   "type_code": "TME",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:TME"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "tme-032",
+   "term_norm": "Before meals",
+   "zh": "饭前",
+   "yue": "食饭前",
+   "jyutping": "sik6 faan6 cin4",
+   "category_zh": "时间与频次",
+   "type_code": "TME",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:TME"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "tme-033",
+   "term_norm": "After meals",
+   "zh": "饭后",
+   "yue": "食完饭",
+   "jyutping": "sik6 jyun4 faan6",
+   "category_zh": "时间与频次",
+   "type_code": "TME",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:TME"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "tme-034",
+   "term_norm": "Immediately",
+   "zh": "即刻",
+   "yue": "即刻",
+   "jyutping": "zik1 hak1",
+   "category_zh": "时间与频次",
+   "type_code": "TME",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:TME"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "tme-035",
+   "term_norm": "As needed",
+   "zh": "必要时",
+   "yue": "有需要时",
+   "jyutping": "jau5 seoi1 jiu3 si4",
+   "category_zh": "时间与频次",
+   "type_code": "TME",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:TME"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "tme-036",
+   "term_norm": "Long-term",
+   "zh": "长期",
+   "yue": "长期",
+   "jyutping": "coeng4 kei4",
+   "category_zh": "时间与频次",
+   "type_code": "TME",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:TME"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "sev-001",
+   "term_norm": "Mild",
+   "zh": "轻度",
+   "yue": "轻微",
+   "jyutping": "heng1 mei4",
+   "category_zh": "程度与性质",
+   "type_code": "SEV",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:SEV"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "sev-002",
+   "term_norm": "Moderate",
+   "zh": "中度",
+   "yue": "中等",
+   "jyutping": "zung1 dang2",
+   "category_zh": "程度与性质",
+   "type_code": "SEV",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:SEV"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "sev-003",
+   "term_norm": "Severe",
+   "zh": "重度",
+   "yue": "严重",
+   "jyutping": "jim4 zung6",
+   "category_zh": "程度与性质",
+   "type_code": "SEV",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:SEV"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "sev-004",
+   "term_norm": "Intense",
+   "zh": "剧烈",
+   "yue": "好犀利",
+   "jyutping": "hou2 sai1 lei6",
+   "category_zh": "程度与性质",
+   "type_code": "SEV",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:SEV"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "sev-005",
+   "term_norm": "Obvious",
+   "zh": "明显",
+   "yue": "明显",
+   "jyutping": "ming4 hin2",
+   "category_zh": "程度与性质",
+   "type_code": "SEV",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:SEV"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "sev-006",
+   "term_norm": "Progressive",
+   "zh": "进行性",
+   "yue": "越嚟越差",
+   "jyutping": "jyut6 lai4 jyut6 caa1",
+   "category_zh": "程度与性质",
+   "type_code": "SEV",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:SEV"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "sev-007",
+   "term_norm": "Dull pain",
+   "zh": "隐痛",
+   "yue": "隐隐作痛",
+   "jyutping": "jan2 jan2 zok3 tung3",
+   "category_zh": "程度与性质",
+   "type_code": "SEV",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:SEV"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "sev-008",
+   "term_norm": "Distending pain",
+   "zh": "胀痛",
+   "yue": "胀住痛",
+   "jyutping": "zoeng3 zyu6 tung3",
+   "category_zh": "程度与性质",
+   "type_code": "SEV",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:SEV"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "sev-009",
+   "term_norm": "Sharp pain",
+   "zh": "刺痛",
+   "yue": "拮住痛",
+   "jyutping": "gik1 zyu6 tung3",
+   "category_zh": "程度与性质",
+   "type_code": "SEV",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:SEV"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "sev-010",
+   "term_norm": "Colicky pain",
+   "zh": "绞痛",
+   "yue": "绞住痛",
+   "jyutping": "gaau2 zyu6 tung3",
+   "category_zh": "程度与性质",
+   "type_code": "SEV",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:SEV"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "sev-011",
+   "term_norm": "Burning pain",
+   "zh": "烧灼痛",
+   "yue": "火烧咁痛",
+   "jyutping": "fo2 siu1 gam3 tung3",
+   "category_zh": "程度与性质",
+   "type_code": "SEV",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:SEV"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "sev-012",
+   "term_norm": "Tearing pain",
+   "zh": "刀割样痛",
+   "yue": "刀割咁",
+   "jyutping": "dou1 got3 gam3",
+   "category_zh": "程度与性质",
+   "type_code": "SEV",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:SEV"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "sev-013",
+   "term_norm": "Throbbing pain",
+   "zh": "搏动性痛",
+   "yue": "跳跳下",
+   "jyutping": "tiu3 tiu3 haa5",
+   "category_zh": "程度与性质",
+   "type_code": "SEV",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:SEV"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "sev-014",
+   "term_norm": "Dull ache",
+   "zh": "钝痛",
+   "yue": "钝痛",
+   "jyutping": "deon6 tung3",
+   "category_zh": "程度与性质",
+   "type_code": "SEV",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:SEV"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "sev-015",
+   "term_norm": "Soreness",
+   "zh": "酸胀",
+   "yue": "酸软",
+   "jyutping": "syun1 jyun5",
+   "category_zh": "程度与性质",
+   "type_code": "SEV",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:SEV"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "sev-016",
+   "term_norm": "Pressure sensation",
+   "zh": "压迫感",
+   "yue": "压住压住",
+   "jyutping": "aat3 zyu6 aat3 zyu6",
+   "category_zh": "程度与性质",
+   "type_code": "SEV",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:SEV"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "sev-017",
+   "term_norm": "Tightness",
+   "zh": "紧绷感",
+   "yue": "紧住",
+   "jyutping": "gan2 zyu6",
+   "category_zh": "程度与性质",
+   "type_code": "SEV",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:SEV"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "sev-018",
+   "term_norm": "Radiating",
+   "zh": "放射性",
+   "yue": "扯到去",
+   "jyutping": "ce2 dou3 heoi3",
+   "category_zh": "程度与性质",
+   "type_code": "SEV",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:SEV"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "sev-019",
+   "term_norm": "Migratory",
+   "zh": "游走性",
+   "yue": "周围走",
+   "jyutping": "zau1 wai4 zau2",
+   "category_zh": "程度与性质",
+   "type_code": "SEV",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:SEV"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "sev-020",
+   "term_norm": "Continuous",
+   "zh": "持续性",
+   "yue": "一直痛",
+   "jyutping": "jat1 zik6 tung3",
+   "category_zh": "程度与性质",
+   "type_code": "SEV",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:SEV"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "sev-021",
+   "term_norm": "Intermittent",
+   "zh": "间歇性",
+   "yue": "一阵阵痛",
+   "jyutping": "jat1 zan6 zan6 tung3",
+   "category_zh": "程度与性质",
+   "type_code": "SEV",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:SEV"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "sev-022",
+   "term_norm": "Unbearable",
+   "zh": "难忍",
+   "yue": "顶唔顺",
+   "jyutping": "ding2 m4 seon6",
+   "category_zh": "程度与性质",
+   "type_code": "SEV",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:SEV"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "sev-023",
+   "term_norm": "Tolerable",
+   "zh": "可忍受",
+   "yue": "顶得住",
+   "jyutping": "ding2 dak1 zyu6",
+   "category_zh": "程度与性质",
+   "type_code": "SEV",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:SEV"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "sev-024",
+   "term_norm": "Aggravating",
+   "zh": "加重",
+   "yue": "更痛",
+   "jyutping": "gang3 tung3",
+   "category_zh": "程度与性质",
+   "type_code": "SEV",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:SEV"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "sev-025",
+   "term_norm": "Relieving",
+   "zh": "减轻",
+   "yue": "冇咁痛",
+   "jyutping": "mou5 gam3 tung3",
+   "category_zh": "程度与性质",
+   "type_code": "SEV",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:SEV"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "sev-026",
+   "term_norm": "Numbness",
+   "zh": "麻木感",
+   "yue": "冇感觉",
+   "jyutping": "mou5 gam2 gok3",
+   "category_zh": "程度与性质",
+   "type_code": "SEV",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:SEV"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "his-001",
+   "term_norm": "Absent",
+   "zh": "无",
+   "yue": "冇",
+   "jyutping": "mou5",
+   "category_zh": "病史与否定",
+   "type_code": "NEG",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:NEG"
+   ],
+   "note": "否定标记"
+  },
+  {
+   "term_id": "his-002",
+   "term_norm": "Denies",
+   "zh": "否认",
+   "yue": "否认",
+   "jyutping": "fau2 jing6",
+   "category_zh": "病史与否定",
+   "type_code": "NEG",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:NEG"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "his-003",
+   "term_norm": "Not observed",
+   "zh": "未见",
+   "yue": "未见",
+   "jyutping": "mei6 gin3",
+   "category_zh": "病史与否定",
+   "type_code": "NEG",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:NEG"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "his-004",
+   "term_norm": "Negative",
+   "zh": "阴性",
+   "yue": "阴性",
+   "jyutping": "jam1 sing3",
+   "category_zh": "病史与否定",
+   "type_code": "NEG",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:NEG"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "his-005",
+   "term_norm": "Without",
+   "zh": "不伴",
+   "yue": "冇伴随",
+   "jyutping": "mou5 bun6 ceoi4",
+   "category_zh": "病史与否定",
+   "type_code": "NEG",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:NEG"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "his-006",
+   "term_norm": "Never",
+   "zh": "从未",
+   "yue": "未试过",
+   "jyutping": "mei6 si3 gwo3",
+   "category_zh": "病史与否定",
+   "type_code": "NEG",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:NEG"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "his-007",
+   "term_norm": "Occasionally",
+   "zh": "偶尔",
+   "yue": "间中",
+   "jyutping": "gaan3 zung1",
+   "category_zh": "病史与否定",
+   "type_code": "TME",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:TME"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "his-008",
+   "term_norm": "Frequently",
+   "zh": "经常",
+   "yue": "成日",
+   "jyutping": "seng4 jat6",
+   "category_zh": "病史与否定",
+   "type_code": "TME",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:TME"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "his-009",
+   "term_norm": "Family history",
+   "zh": "家族史",
+   "yue": "家族史",
+   "jyutping": "gaa1 zuk6 si2",
+   "category_zh": "病史与否定",
+   "type_code": "HIS",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:HIS"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "his-010",
+   "term_norm": "Father",
+   "zh": "父亲",
+   "yue": "爸爸",
+   "jyutping": "baa4 baa1",
+   "category_zh": "病史与否定",
+   "type_code": "HIS",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:HIS"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "his-011",
+   "term_norm": "Mother",
+   "zh": "母亲",
+   "yue": "妈妈",
+   "jyutping": "maa4 maa1",
+   "category_zh": "病史与否定",
+   "type_code": "HIS",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:HIS"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "his-012",
+   "term_norm": "Siblings",
+   "zh": "兄弟姐妹",
+   "yue": "兄弟姊妹",
+   "jyutping": "hing1 dai6 zi2 mui6",
+   "category_zh": "病史与否定",
+   "type_code": "HIS",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:HIS"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "his-013",
+   "term_norm": "Children",
+   "zh": "子女",
+   "yue": "仔女",
+   "jyutping": "zai2 neoi5",
+   "category_zh": "病史与否定",
+   "type_code": "HIS",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:HIS"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "his-014",
+   "term_norm": "Past medical history",
+   "zh": "既往史",
+   "yue": "旧病史",
+   "jyutping": "gau6 beng6 si2",
+   "category_zh": "病史与否定",
+   "type_code": "HIS",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:HIS"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "his-015",
+   "term_norm": "Allergy history",
+   "zh": "过敏史",
+   "yue": "敏感史",
+   "jyutping": "man5 gam2 si2",
+   "category_zh": "病史与否定",
+   "type_code": "HIS",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:HIS"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "his-016",
+   "term_norm": "Surgical history",
+   "zh": "手术史",
+   "yue": "做过手术",
+   "jyutping": "zou6 gwo3 sau2 seot6",
+   "category_zh": "病史与否定",
+   "type_code": "HIS",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:HIS"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "his-017",
+   "term_norm": "Smoking history",
+   "zh": "吸烟史",
+   "yue": "食烟",
+   "jyutping": "sik6 jin1",
+   "category_zh": "病史与否定",
+   "type_code": "HIS",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:HIS"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "his-018",
+   "term_norm": "Alcohol history",
+   "zh": "饮酒史",
+   "yue": "饮酒",
+   "jyutping": "jam2 zau2",
+   "category_zh": "病史与否定",
+   "type_code": "HIS",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:HIS"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "his-019",
+   "term_norm": "Drug allergy",
+   "zh": "药物过敏",
+   "yue": "药物敏感",
+   "jyutping": "joek6 mat6 man5 gam2",
+   "category_zh": "病史与否定",
+   "type_code": "HIS",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:HIS"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "his-020",
+   "term_norm": "Penicillin allergy",
+   "zh": "青霉素过敏",
+   "yue": "青霉素敏感",
+   "jyutping": "cing1 mui4 sou3 man5 gam2",
+   "category_zh": "病史与否定",
+   "type_code": "HIS",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:HIS"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "his-021",
+   "term_norm": "Contact history",
+   "zh": "接触史",
+   "yue": "接触史",
+   "jyutping": "zit3 zuk1 si2",
+   "category_zh": "病史与否定",
+   "type_code": "HIS",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:HIS"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "his-022",
+   "term_norm": "Travel history",
+   "zh": "旅居史",
+   "yue": "旅行史",
+   "jyutping": "leoi5 hang4 si2",
+   "category_zh": "病史与否定",
+   "type_code": "HIS",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:HIS"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "his-023",
+   "term_norm": "Suspected",
+   "zh": "疑似",
+   "yue": "怀疑",
+   "jyutping": "waai4 ji4",
+   "category_zh": "病史与否定",
+   "type_code": "UNC",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:UNC"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "his-024",
+   "term_norm": "Rule out",
+   "zh": "排除",
+   "yue": "排除",
+   "jyutping": "paai4 ceot1",
+   "category_zh": "病史与否定",
+   "type_code": "UNC",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:UNC"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "his-025",
+   "term_norm": "Possible",
+   "zh": "可能",
+   "yue": "可能",
+   "jyutping": "ho2 nang4",
+   "category_zh": "病史与否定",
+   "type_code": "UNC",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:UNC"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "his-026",
+   "term_norm": "Confirmed",
+   "zh": "已确诊",
+   "yue": "确诊",
+   "jyutping": "kok3 zan2",
+   "category_zh": "病史与否定",
+   "type_code": "HIS",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:HIS"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dos-001",
+   "term_norm": "Oral",
+   "zh": "口服",
+   "yue": "食药",
+   "jyutping": "sik6 joek6",
+   "category_zh": "给药途径与剂型",
+   "type_code": "DOS",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DOS"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dos-002",
+   "term_norm": "Intravenous injection",
+   "zh": "静脉注射",
+   "yue": "打针入血管",
+   "jyutping": "daa2 zam1 jap6 hyut3 gun2",
+   "category_zh": "给药途径与剂型",
+   "type_code": "DOS",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DOS"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dos-003",
+   "term_norm": "Intravenous infusion",
+   "zh": "静脉滴注",
+   "yue": "吊盐水",
+   "jyutping": "diu3 jim4 seoi2",
+   "category_zh": "给药途径与剂型",
+   "type_code": "DOS",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DOS"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dos-004",
+   "term_norm": "Intramuscular injection",
+   "zh": "肌肉注射",
+   "yue": "打屁股针",
+   "jyutping": "daa2 pei3 gu2 zam1",
+   "category_zh": "给药途径与剂型",
+   "type_code": "DOS",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DOS"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dos-005",
+   "term_norm": "Subcutaneous injection",
+   "zh": "皮下注射",
+   "yue": "打肚皮针",
+   "jyutping": "daa2 tou5 pei4 zam1",
+   "category_zh": "给药途径与剂型",
+   "type_code": "DOS",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DOS"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dos-006",
+   "term_norm": "Topical",
+   "zh": "外用",
+   "yue": "搽药",
+   "jyutping": "caa4 joek6",
+   "category_zh": "给药途径与剂型",
+   "type_code": "DOS",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DOS"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dos-007",
+   "term_norm": "Inhalation",
+   "zh": "吸入",
+   "yue": "闻",
+   "jyutping": "man4",
+   "category_zh": "给药途径与剂型",
+   "type_code": "DOS",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DOS"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dos-008",
+   "term_norm": "Sublingual",
+   "zh": "舌下含服",
+   "yue": "含舌底",
+   "jyutping": "ham4 sit6 dai2",
+   "category_zh": "给药途径与剂型",
+   "type_code": "DOS",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DOS"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dos-009",
+   "term_norm": "Rectal",
+   "zh": "直肠给药",
+   "yue": "塞肛",
+   "jyutping": "sak1 gong1",
+   "category_zh": "给药途径与剂型",
+   "type_code": "DOS",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DOS"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dos-010",
+   "term_norm": "Eye drops",
+   "zh": "滴眼",
+   "yue": "滴眼药水",
+   "jyutping": "dik6 ngaan5 joek6 seoi2",
+   "category_zh": "给药途径与剂型",
+   "type_code": "DOS",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DOS"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dos-011",
+   "term_norm": "Nasal drops",
+   "zh": "滴鼻",
+   "yue": "滴鼻",
+   "jyutping": "dik6 bei6",
+   "category_zh": "给药途径与剂型",
+   "type_code": "DOS",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DOS"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dos-012",
+   "term_norm": "Spray",
+   "zh": "喷雾",
+   "yue": "喷",
+   "jyutping": "pan3",
+   "category_zh": "给药途径与剂型",
+   "type_code": "DOS",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DOS"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dos-013",
+   "term_norm": "Patch",
+   "zh": "贴剂",
+   "yue": "贴布",
+   "jyutping": "tip3 bou3",
+   "category_zh": "给药途径与剂型",
+   "type_code": "DOS",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DOS"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dos-014",
+   "term_norm": "Extended-release tablet",
+   "zh": "缓释片",
+   "yue": "长效药",
+   "jyutping": "coeng4 haau6 joek6",
+   "category_zh": "给药途径与剂型",
+   "type_code": "DOS",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DOS"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dos-015",
+   "term_norm": "Enteric-coated tablet",
+   "zh": "肠溶片",
+   "yue": "肠溶片",
+   "jyutping": "coeng4 jung4 pin2",
+   "category_zh": "给药途径与剂型",
+   "type_code": "DOS",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DOS"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dos-016",
+   "term_norm": "Granules",
+   "zh": "颗粒剂",
+   "yue": "冲剂",
+   "jyutping": "cung1 zai1",
+   "category_zh": "给药途径与剂型",
+   "type_code": "DOS",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DOS"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dos-017",
+   "term_norm": "Oral liquid",
+   "zh": "口服液",
+   "yue": "药水",
+   "jyutping": "joek6 seoi2",
+   "category_zh": "给药途径与剂型",
+   "type_code": "DOS",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DOS"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dos-018",
+   "term_norm": "Capsule",
+   "zh": "胶囊",
+   "yue": "胶囊",
+   "jyutping": "gaau1 nong4",
+   "category_zh": "给药途径与剂型",
+   "type_code": "DOS",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DOS"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dos-019",
+   "term_norm": "Injection solution",
+   "zh": "注射液",
+   "yue": "针剂",
+   "jyutping": "zam1 zai1",
+   "category_zh": "给药途径与剂型",
+   "type_code": "DOS",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DOS"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "dos-020",
+   "term_norm": "Ointment",
+   "zh": "药膏",
+   "yue": "药膏",
+   "jyutping": "joek6 gou1",
+   "category_zh": "给药途径与剂型",
+   "type_code": "DOS",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DOS"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "doc-001",
+   "term_norm": "Chief complaint",
+   "zh": "主诉",
+   "yue": "主诉",
+   "jyutping": "zyu2 sou3",
+   "category_zh": "医疗文书",
+   "type_code": "DOC",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DOC"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "doc-002",
+   "term_norm": "History of present illness",
+   "zh": "现病史",
+   "yue": "现病史",
+   "jyutping": "jin6 beng6 si2",
+   "category_zh": "医疗文书",
+   "type_code": "DOC",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DOC"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "doc-003",
+   "term_norm": "Social history",
+   "zh": "个人史",
+   "yue": "个人史",
+   "jyutping": "go3 jan4 si2",
+   "category_zh": "医疗文书",
+   "type_code": "DOC",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DOC"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "doc-004",
+   "term_norm": "Physical examination",
+   "zh": "体格检查",
+   "yue": "查身",
+   "jyutping": "caa4 san1",
+   "category_zh": "医疗文书",
+   "type_code": "DOC",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DOC"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "doc-005",
+   "term_norm": "Investigations",
+   "zh": "辅助检查",
+   "yue": "化验",
+   "jyutping": "faa3 jim6",
+   "category_zh": "医疗文书",
+   "type_code": "DOC",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DOC"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "doc-006",
+   "term_norm": "Working diagnosis",
+   "zh": "初步诊断",
+   "yue": "初步诊断",
+   "jyutping": "co1 bou6 zan2 dyun6",
+   "category_zh": "医疗文书",
+   "type_code": "DOC",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DOC"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "doc-007",
+   "term_norm": "Differential diagnosis",
+   "zh": "鉴别诊断",
+   "yue": "鉴别诊断",
+   "jyutping": "gaam2 bit6 zan2 dyun6",
+   "category_zh": "医疗文书",
+   "type_code": "DOC",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DOC"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "doc-008",
+   "term_norm": "Management plan",
+   "zh": "处理计划",
+   "yue": "处理",
+   "jyutping": "cyu2 lei5",
+   "category_zh": "医疗文书",
+   "type_code": "DOC",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DOC"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "doc-009",
+   "term_norm": "Medical orders",
+   "zh": "医嘱",
+   "yue": "医嘱",
+   "jyutping": "ji1 zuk1",
+   "category_zh": "医疗文书",
+   "type_code": "DOC",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DOC"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "doc-010",
+   "term_norm": "Informed consent",
+   "zh": "知情同意",
+   "yue": "签同意书",
+   "jyutping": "cim1 tung4 ji3 syu1",
+   "category_zh": "医疗文书",
+   "type_code": "DOC",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DOC"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "doc-011",
+   "term_norm": "Referral",
+   "zh": "转诊",
+   "yue": "转介",
+   "jyutping": "zyun2 gaai3",
+   "category_zh": "医疗文书",
+   "type_code": "DOC",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DOC"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "doc-012",
+   "term_norm": "Consultation",
+   "zh": "会诊",
+   "yue": "会诊",
+   "jyutping": "wui6 can2",
+   "category_zh": "医疗文书",
+   "type_code": "DOC",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DOC"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "doc-013",
+   "term_norm": "Discharge summary",
+   "zh": "出院小结",
+   "yue": "出院纸",
+   "jyutping": "ceot1 jyun2 zi2",
+   "category_zh": "医疗文书",
+   "type_code": "DOC",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DOC"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "doc-014",
+   "term_norm": "Outpatient record",
+   "zh": "门诊病历",
+   "yue": "病历",
+   "jyutping": "beng6 lik6",
+   "category_zh": "医疗文书",
+   "type_code": "DOC",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DOC"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "doc-015",
+   "term_norm": "Inpatient record",
+   "zh": "住院病历",
+   "yue": "住院病历",
+   "jyutping": "zyu6 jyun2 beng6 lik6",
+   "category_zh": "医疗文书",
+   "type_code": "DOC",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DOC"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "doc-016",
+   "term_norm": "Follow-up note",
+   "zh": "随访记录",
+   "yue": "覆诊记录",
+   "jyutping": "fuk1 can2 gei3 luk6",
+   "category_zh": "医疗文书",
+   "type_code": "DOC",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DOC"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "doc-017",
+   "term_norm": "Critical condition notice",
+   "zh": "病危通知书",
+   "yue": "病危通知书",
+   "jyutping": "beng6 ngai4 tung1 zi1 syu1",
+   "category_zh": "医疗文书",
+   "type_code": "DOC",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DOC"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "doc-018",
+   "term_norm": "Prescription",
+   "zh": "处方",
+   "yue": "药纸",
+   "jyutping": "joek6 zi2",
+   "category_zh": "医疗文书",
+   "type_code": "DOC",
+   "category": "abbr",
+   "aliases": [],
+   "auto_replace": false,
+   "skip_reasons": [
+    "type_not_auto:DOC"
+   ],
+   "note": ""
+  },
+  {
+   "term_id": "local-drug-001",
+   "term_norm": "Aspirin",
+   "zh": "阿司匹林",
+   "yue": "阿斯匹林",
+   "jyutping": "aa3 si1 pat1 lam4",
+   "category_zh": "药物",
+   "type_code": "DRU",
+   "category": "drug",
+   "aliases": [
+    "阿司匹林",
+    "阿斯匹林",
+    "亚士匹灵",
+    "拜阿司匹灵",
+    "阿士匹灵"
+   ],
+   "auto_replace": true,
+   "skip_reasons": [],
+   "note": "本地补充：源 xls 无该药条目，实测口述「阿斯匹林」无法纠正"
+  }
+ ]
+}

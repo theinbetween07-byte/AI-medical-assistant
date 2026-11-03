@@ -1,60 +1,36 @@
-# ============================================================
-# 一、绝对不能提交：真实病患数据（本仓库为 public）
-# ============================================================
-# 原始样本（10 份真实外科病理报告 docx / 上传的 zip）
-uploads/
-*.docx
-*.zip
-# 真实标本大体照片
-sample-images/
-# 本地数据库（含审计记录与报告正文）
-*.db
-report-engine/data/
+# 便携运行时与大体积二进制不进仓库
+medscribe-allinone/runtime/
+medscribe-allinone/bin/
+medscribe-allinone/app/models/*
+!medscribe-allinone/app/models/ext
+medscribe-allinone/app/models/ext/*
+!medscribe-allinone/app/models/ext/extensions.json
 
-# 工作区/工具临时目录
+# 运行期数据与日志
+**/data/
+**/logs/
+**/*.db
+**/*.db-wal
+**/*.db-shm
+**/__pycache__/
+**/.pytest_cache/
+*.pyc
+
+# 本地证据、构建产物与临时文件
+outputs/
 .deepworks/
 .opencode/
 .opencode-router/
+uploads/
+Sample2/
+Sample2.zip
+*.7z
+*.zip
+*.pdf
+屏幕截图*.png
 
-# ============================================================
-# 二、Python
-# ============================================================
-.venv/
-__pycache__/
-*.py[cod]
-.pytest_cache/
-*.egg-info/
-.eggs/
-
-# ============================================================
-# 三、构建产物（源码可复现，二进制不入库）
-# ============================================================
-**/dist/
-**/build/*
-!**/build/report_engine.spec
-*.exe
-*.pyd
-*.spec.bak
-
-# ============================================================
-# 四、编辑器 / 系统
-# ============================================================
+# 编辑器 / 系统
 .vscode/
 .idea/
 Thumbs.db
-Desktop.ini
-.DS_Store
-
-# ============================================================
-# App runtime bundles / binaries (desktop app source)
-# ============================================================
-models/
-node/
-backend/python/
-backend/ffmpeg.exe
-frontend/node_modules/
-backend/data/
-.tmp/
-backend/logs/
-*.log
-.vite/
+desktop.ini

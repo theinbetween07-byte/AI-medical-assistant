@@ -1,0 +1,26 @@
+# 运行数据：SQLite、音频、导出文件、引擎侧数据，全部本地生成
+data/
+logs/
+
+# Python 缓存
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# 本地临时脚本/校验产物（不属于交付物）
+.deepworks/
+
+# 编辑器与系统
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# 误放到这里的权重与音频
+*.wav
+*.mp3
+*.m4a
+*.webm
+*.mp4

@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+<meta charset="utf-8"/>
+<title>MedScribe HK — 项目文档集</title>
+<style>
+  :root { --ink:#1a1a1a; --muted:#5b6472; --line:#dfe3e8; --accent:#0f5c8c; --bg:#f7f8fa; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink);
+         font-family:"Segoe UI","Microsoft YaHei","PingFang HK","Noto Sans CJK SC",system-ui,sans-serif;
+         line-height:1.75; font-size:15px; }
+  .layout { display:flex; max-width:1400px; margin:0 auto; }
+  nav { position:sticky; top:0; align-self:flex-start; width:270px; flex:0 0 270px;
+        padding:28px 18px; height:100vh; overflow:auto; border-right:1px solid var(--line); background:#fff; }
+  nav h1 { font-size:16px; margin:0 0 4px; }
+  nav .sub { color:var(--muted); font-size:12px; margin-bottom:16px; }
+  nav ul { list-style:none; padding:0; margin:0; }
+  nav li { margin:2px 0; }
+  nav a { color:var(--ink); text-decoration:none; font-size:13px; display:block; padding:5px 8px; border-radius:6px; }
+  nav a:hover { background:#eef4f9; color:var(--accent); }
+  main { flex:1; min-width:0; padding:32px 44px 96px; background:#fff; }
+  section { padding-bottom:36px; margin-bottom:36px; border-bottom:2px solid var(--line); }
+  section:last-of-type { border-bottom:none; }
+  .doctitle { font-size:15px; color:var(--accent); letter-spacing:.02em;
+              border-left:4px solid var(--accent); padding-left:10px; margin:34px 0 18px; }
+  h2 { font-size:21px; margin:26px 0 10px; }
+  h3 { font-size:17px; margin:22px 0 8px; }
+  h4 { font-size:15px; margin:18px 0 6px; color:#333; }
+  p { margin:8px 0; }
+  code { background:#f2f4f7; padding:1px 5px; border-radius:4px; font-size:13px;
+         font-family:Consolas,"Cascadia Mono",monospace; }
+  pre { background:#f6f8fa; border:1px solid var(--line); border-radius:8px; padding:14px; overflow:auto; }
+  pre code { background:none; padding:0; font-size:12.5px; line-height:1.5; }
+  table { border-collapse:collapse; width:100%; margin:12px 0; font-size:13.5px; }
+  th, td { border:1px solid var(--line); padding:7px 9px; text-align:left; vertical-align:top; }
+  th { background:#f1f5f9; font-weight:600; }
+  tbody tr:nth-child(even) { background:#fafbfc; }
+  blockquote { margin:10px 0; padding:10px 14px; background:#fff8e6;
+               border-left:4px solid #e0a800; border-radius:0 6px 6px 0; font-size:14px; color:#4a4030; }
+  hr { border:none; border-top:1px solid var(--line); margin:20px 0; }
+  a { color:var(--accent); }
+  @media print {
+    nav { display:none; } main { padding:0; } section { break-after:page; border-bottom:none; }
+    body { background:#fff; font-size:11pt; }
+  }
+</style>
+</head>
+<body>
+<div class="layout">
+<nav>
+  <h1>MedScribe HK</h1>
+  <div class="sub">Project-based Course 1105<br/>项目文档集 · 2026-10-14</div>
+  <ul><li><a href="#README">文档索引与版本表</a></li>
+<li><a href="#project-plan">⓪ 7 周执行计划（项目规划）</a></li>
+<li><a href="#proposal">① 项目提案 Project Proposal</a></li>
+<li><a href="#research-plan">①&#x27; 调研方案（提案附录）</a></li>
+<li><a href="#mvp-prd">② MVP 产品需求文档</a></li>
+<li><a href="#technical-design">③ 简要技术设计</a></li>
+<li><a href="#decision-log">④ 决策与验证记录</a></li>
+<li><a href="#AGENTS">⑤ 仓库 AI 助手指令 AGENTS.md</a></li></ul>
+</nav>
+<main>
+<section id="README"><h2>MedScribe HK — 项目文档索引</h2>
+<blockquote>本目录是课程 <strong>Project-based Course 1105</strong> 的项目文档集，按课程规定的三个阶段组织。<br/>最后更新：2026-10-15 · 维护人：R1（项目负责人）</blockquote>
+<hr/>
+<h3>1. 文档清单</h3>
+<table><thead><tr><th>阶段</th><th>文档</th><th>建议篇幅</th><th>当前版本</th><th>状态</th></tr></thead><tbody><tr><td>1. 立项（implementation 之前）</td><td><a href="#proposal">proposal.md</a> — 项目提案</td><td>1–2 页</td><td>v0.3</td><td>草案，待团队评审</td></tr><tr><td>—</td><td><a href="#research-plan">research-plan.md</a> — 调研方案（书面确认 / 公开资料 / 语料）</td><td>附录，不计入篇幅</td><td>v0.3</td><td>待执行</td></tr><tr><td>2. 第一个原型之后</td><td><a href="#mvp-prd">mvp-prd.md</a> — MVP 产品需求文档</td><td>3–5 页</td><td>v0.3</td><td>草案，待原型完成后定稿 v1.0</td></tr><tr><td>3. 开发期间</td><td><a href="#technical-design">technical-design.md</a> — 简要技术设计</td><td>2–3 页</td><td>v0.1</td><td>初始草图</td></tr><tr><td>最终提交</td><td><a href="#decision-log">decision-log.md</a> — 决策与验证记录</td><td>简短，持续维护</td><td>v0.5</td><td>持续更新</td></tr><tr><td>贯穿全程</td><td><a href="#project-plan">project-plan.md</a> — 7 周执行计划（组件化 WBS / 里程碑门禁 / 周计划 / 甘特）</td><td>项目管理文件</td><td>v1.3</td><td>已生效，每周校准</td></tr><tr><td>最终提交</td><td><a href="#AGENTS">../AGENTS.md</a> — 仓库 AI 助手指令</td><td>简短</td><td>v0.1</td><td>草案</td></tr></tbody></table>
+<hr/>
+<h3>2. 版本记录</h3>
+<table><thead><tr><th>日期</th><th>文档</th><th>版本</th><th>变更摘要</th><th>修改人</th></tr></thead><tbody><tr><td>2026-10-14</td><td>全部</td><td>v0.1</td><td>首次创建：提案、调研方案、MVP PRD、技术设计、决策记录</td><td>R1</td></tr><tr><td>2026-10-15</td><td>全部 + 新增</td><td>v0.2</td><td><strong>周期由 12 周调整为 7 周</strong>：新增 project-plan.md（WBS/门禁/周计划/甘特/关键路径）；proposal 里程碑改为 M1–M6、spike 前移至 W1–W2；评测语料 ≥2h → 1h（含 20 分钟冻结回归集）；决策记录新增 D-09/D-10、U-07/U-08</td><td>R1</td></tr><tr><td>2026-10-15</td><td>交付物</td><td>—</td><td>生成 Word 分册（outputs/word/）与 7 周项目规划 PDF（outputs/medscribe-hk-project-plan-7weeks.pdf）</td><td>R1</td></tr><tr><td>2026-10-15</td><td>project-plan / proposal / decision-log</td><td>v1.1 / v0.2 / v0.3</td><td>计划锚定真实日历（W1 = 2026-10-12，W7 末 = 2026-11-29）；因 W1 已过半，M1 门禁下调并登记 D-11；范围裁剪经团队确认（D-09 生效）</td><td>R1</td></tr><tr><td>2026-10-15</td><td>project-plan / decision-log / proposal / README</td><td>v1.2 / v0.4 / v0.2 / —</td><td>按团队要求删除 project-plan 原 §8「角色与每周投入」，章节号顺延（原 §9–§11 → §8–§10），缓冲说明并入 §8；跨文件章节引用同步修正</td><td>R1</td></tr><tr><td>2026-10-15</td><td>project-plan / decision-log / proposal / research-plan / mvp-prd / README</td><td>v1.3 / v0.5 / v0.3 / v0.3 / v0.3 / —</td><td><strong>WBS 按系统组件重构</strong>（project-plan §4，与技术设计 §1.2 组件一一对应，新增组件→需求映射表，D-13）；<strong>移除访谈与现场观察环节</strong>（证据来源改为导师/助教书面确认 + 公开资料，D-12）；M1/M2 门禁、风险预案、交付物、假设验证方式与全套文档同步改写</td><td>R1</td></tr></tbody></table>
+<blockquote>规则：每次实质修改都要在本表登记；不覆盖历史版本，保留变更摘要以便评审时说明范围变化。</blockquote>
+<hr/>
+<h3>3. 稳定标识约定</h3>
+<p>文档之间用下列前缀互相引用，避免出现"第几节改了但引用没跟上"的问题。</p>
+<table><thead><tr><th>前缀</th><th>含义</th><th>定义位置</th></tr></thead><tbody><tr><td><code>P-xx</code></td><td>问题描述</td><td><a href="#proposal">proposal.md</a> §2.2</td></tr><tr><td><code>OBS-xx</code></td><td>已观察事实（有来源）</td><td><a href="#proposal">proposal.md</a> §3.2</td></tr><tr><td><code>ASSUMPTION-xx</code></td><td>未验证假设（必须写验证方式）</td><td><a href="#proposal">proposal.md</a> §3.2、<a href="#mvp-prd">mvp-prd.md</a> §10.2</td></tr><tr><td><code>WC-x</code></td><td>导师/助教<strong>书面确认</strong>问题清单</td><td><a href="#research-plan">research-plan.md</a> §2</td></tr><tr><td><code>CF-xx</code></td><td>书面确认记录（往来结论）</td><td><a href="#research-plan">research-plan.md</a> §2</td></tr><tr><td><code>DA-x</code></td><td>公开资料 / 模板样本桌面分析项</td><td><a href="#research-plan">research-plan.md</a> §3</td></tr><tr><td><code>R-xx</code></td><td>风险</td><td><a href="#proposal">proposal.md</a> §6</td></tr><tr><td><code>F1–F5</code></td><td>MVP 核心功能</td><td><a href="#mvp-prd">mvp-prd.md</a> §2</td></tr><tr><td><code>FR-xx</code></td><td>功能需求</td><td><a href="#mvp-prd">mvp-prd.md</a> §5</td></tr><tr><td><code>BR-xx</code></td><td>业务规则</td><td><a href="#mvp-prd">mvp-prd.md</a> §6.1</td></tr><tr><td><code>NFR-xx</code></td><td>非功能需求</td><td><a href="#mvp-prd">mvp-prd.md</a> §8</td></tr><tr><td><code>AC-xx</code></td><td>验收标准</td><td><a href="#mvp-prd">mvp-prd.md</a> §7</td></tr><tr><td><code>SM-xx</code></td><td>成功指标（用户价值）</td><td><a href="#mvp-prd">mvp-prd.md</a> §9.1</td></tr><tr><td><code>AI-01…03</code></td><td>产品内的 AI 功能</td><td><a href="#mvp-prd">mvp-prd.md</a> §11</td></tr><tr><td><code>Q-xx</code></td><td>开放问题</td><td><a href="#mvp-prd">mvp-prd.md</a> §10.3</td></tr><tr><td><code>D-xx</code></td><td>团队决策</td><td><a href="#decision-log">decision-log.md</a></td></tr><tr><td><code>WP-x</code> / <code>T-x.y</code></td><td>工作包 / 任务</td><td><a href="#project-plan">project-plan.md</a> §4</td></tr><tr><td><code>M1–M6</code> / <code>Gate 1–4</code></td><td>里程碑 / 门禁条件</td><td><a href="#project-plan">project-plan.md</a> §3</td></tr></tbody></table>
+<hr/>
+<h3>4. 阅读顺序建议</h3>
+<ol>
+<li><a href="#project-plan">project-plan.md</a> — 先看 7 周怎么排、每个里程碑要过什么门禁；</li>
+<li><a href="#proposal">proposal.md</a> — 再看我们想解决什么问题、凭什么认为值得做；</li>
+<li><a href="#mvp-prd">mvp-prd.md</a> — 然后看 MVP 做什么、怎么判断做对了；</li>
+<li><a href="#technical-design">technical-design.md</a> — 最后看技术怎么实现、怎么验证；</li>
+<li><a href="#decision-log">decision-log.md</a> — 评审时关注：我们如何判断 AI 的建议。</li>
+</ol>
+<hr/>
+<h3>5. 团队角色</h3>
+<table><thead><tr><th>编号</th><th>角色</th><th>姓名</th><th>主要文档责任</th></tr></thead><tbody><tr><td>R1</td><td>项目负责人 / 集成</td><td>待填</td><td>proposal、索引、追溯表</td></tr><tr><td>R2</td><td>语音与 ASR</td><td>待填</td><td>ASR 评测报告、NFR-03</td></tr><tr><td>R3</td><td>临床要素与术语库</td><td>待填</td><td>research-plan、术语库规则</td></tr><tr><td>R4</td><td>生成与提示工程</td><td>待填</td><td>模板与提示词规范</td></tr><tr><td>R5</td><td>校审界面与合规</td><td>待填</td><td>隐私与保留策略、NFR-04/05/07</td></tr></tbody></table>
+<hr/>
+<h3>6. 当前诚实状态声明</h3>
+<p>评审时请以本节为准，不要依赖文档中的"计划"当作业已完成：</p>
+<ol>
+<li><strong>本项目不设访谈与现场观察环节</strong>，尚无一手用户证据；ASSUMPTION-01 至 05 全部处于"待验证"状态，证据来源仅为导师/助教书面确认（<strong>尚未获得答复</strong>）与公开资料。任何"已完成用户调研"的表述都不成立；</li>
+<li><strong>ASR 实测指标尚无数据</strong>；CER ≤ 15% 是课程任务书给定的目标值，不是本团队的实测结果；</li>
+<li><strong>结构化准确率 ≥ 85% 同样是目标值</strong>，尚未有任何一次实测；</li>
+<li><strong>技术设计中的运行命令尚未执行</strong>，已在文档中标记为 unverified；</li>
+<li><strong>外部 API 成本未测量</strong>，成本表中不含任何预设价格；</li>
+<li>团队角色姓名待填；</li>
+<li>医院报告模板样本尚在申请中（Q-01）；</li>
+<li><strong>7 周计划本身未经验证</strong>：所有周次为计划排期，尚未有任何一周实际完成；首个可验证时点是 W1 末的 M1 与 W2 末的 Gate 1（见 <a href="#project-plan">project-plan.md</a> §3）。</li>
+</ol>
+<hr/>
+<h3>7. 对照课程要求的自查清单</h3>
+<table><thead><tr><th>课程要求</th><th>覆盖位置</th><th>状态</th></tr></thead><tbody><tr><td>Proposal：7 项内容（摘要 / 问题与用户 / 证据 / 现有方案 / 方案与 MVP 价值 / 可行性与风险 / 团队与里程碑）</td><td>proposal.md §1–§7</td><td>已完成</td></tr><tr><td>证据要求：至少一种真实证据 + 区分观察与假设 + 禁止编造</td><td>proposal.md §3、research-plan.md（导师/助教书面确认 + 公开资料）</td><td>结构就绪，<strong>证据待采集（书面答复未到）</strong></td></tr><tr><td>PRD：10 项必需内容</td><td>mvp-prd.md §1–§10</td><td>已完成</td></tr><tr><td>PRD：功能需求使用稳定 ID + 可观察行为</td><td>mvp-prd.md §5（FR-01…FR-10）</td><td>已完成</td></tr><tr><td>PRD：验收标准含成功与失败案例</td><td>mvp-prd.md §7.1–§7.2</td><td>已完成</td></tr><tr><td>PRD：区分验收标准与成功指标</td><td>mvp-prd.md §7 / §9</td><td>已完成</td></tr><tr><td>技术设计：7 项内容</td><td>technical-design.md §1–§7</td><td>已完成</td></tr><tr><td>技术设计：不适用项标注 Not applicable 并解释</td><td>technical-design.md §8</td><td>已完成</td></tr><tr><td>技术设计：拟议命令标记为未验证</td><td>technical-design.md §6</td><td>已完成</td></tr><tr><td>AI 功能附加说明（目的 / 数据访问 / 输出 / 失败 / 评估 / 成本 / 需确认操作）</td><td>mvp-prd.md §11</td><td>已完成</td></tr><tr><td>仓库指令 AGENTS.md</td><td>../AGENTS.md</td><td>草案</td></tr><tr><td>决策与验证记录</td><td>decision-log.md</td><td>已建立，持续更新</td></tr><tr><td>项目管理：任务拆分、里程碑门禁、周计划、关键路径</td><td>project-plan.md §3–§8</td><td>已完成（计划层面，执行结果待填）</td></tr><tr><td>追溯表（需求 / 组件 / 验证证据 / 最终状态）</td><td>technical-design.md §9</td><td>模板就绪，<strong>待填实际结果</strong></td></tr></tbody></table></section>
+<section id="project-plan"><h2>项目规划：MedScribe HK（7 周执行计划）</h2>
+<blockquote><strong>文档类型</strong>：执行计划（支撑 <a href="#proposal">proposal.md</a> §7 里程碑，并细化 <a href="#mvp-prd">mvp-prd.md</a> 的交付节奏）<br/><strong>版本</strong>：v1.3 · <strong>日期</strong>：2026-10-15 · <strong>周期</strong>：7 周（W1–W7）· <strong>团队</strong>：5 人<br/><strong>起止日期</strong>：2026-10-12（周一）— 2026-11-29（周日）；最终提交日 <strong>2026-11-29</strong><br/><strong>投入假设</strong>：每人每周约 1.5 个工作日（≈12 小时），全员合计约 52 人天可用工时<br/><strong>组织方式</strong>：工作包与 <a href="#technical-design">technical-design.md</a> §1.2「组件职责」<strong>一一对应</strong>；每个工作包只负责一个（或一组紧密耦合的）系统组件<br/><strong>v1.3 变更</strong>：WBS 按系统组件整体重构（WP1–WP9 重排，新增组件→需求映射表）；<strong>移除访谈与现场观察环节</strong>，证据来源改为导师/助教书面确认 + 公开报告规范<br/><strong>v1.2 变更</strong>：删除原 §8「角色与每周投入」，章节号顺延（原 §9–§11 → §8–§10）<br/><strong>v1.1 变更</strong>：周次锚定真实日历；因本文件于 W1 第 4 天（10-15）发出，W1 实为半周，M1 门禁据此调整（见 §1.1）</blockquote>
+<hr/>
+<h3>1. 规划概要</h3>
+<p><strong>目标</strong>：在 7 周内产出一个<strong>可演示、可验证</strong>的端到端 MVP——医生用粤语/英语/中英混合口述，系统完成"转写 → SOAP 要素抽取 → 模板化报告初稿 → 医生校审签署 → 导出"，并附上真实的验收测试结果与指标实测数据（而非目标值）。</p>
+<p><strong>组件主线（与 <a href="#technical-design">technical-design.md</a> §1 组件图对应）</strong></p>
+<table><thead><tr><th>主线</th><th>覆盖组件</th><th>负责</th><th>产出</th></tr></thead><tbody><tr><td>A. 交互与前端</td><td>S1 会话 / S2 录音 / S3 转写核对 / S4·S5 初稿与校审</td><td>R5</td><td>可走通的校审闭环界面</td></tr><tr><td>B. 语音与 ASR</td><td>ASR 适配层、外部 ASR 服务接口</td><td>R2</td><td>baseline 报告、回归评测脚本、实测 CER/WER</td></tr><tr><td>C. 后端数据流</td><td>音频管理 / 要素抽取 / 报告生成 / 导出 / 存档与审计 / SQLite</td><td>R4</td><td>六个核心接口与完整数据流</td></tr><tr><td>D. 语言资产与评测</td><td>术语纠正、术语库文件、模板文件、评分量表</td><td>R3</td><td>术语库、模板校验规则、结构化准确率</td></tr><tr><td>E. 集成与交付</td><td>全部组件的联调、门禁与文档</td><td>R1</td><td>追溯表、决策记录、演示与提交包</td></tr></tbody></table>
+<p><strong>七个交付物</strong></p>
+<ol>
+<li>提案定稿（含导师/助教书面确认证据）</li>
+<li>ASR baseline 报告（分语种实测）</li>
+<li>端到端可运行 MVP</li>
+<li>MVP PRD v1.0</li>
+<li>技术设计 v1.0 + 追溯表</li>
+<li>验收执行记录（AC-01–AC-14）</li>
+<li>演示材料与最终提交包</li>
+</ol>
+<h4>1.1 周次与日历对照</h4>
+<table><thead><tr><th>周次</th><th>日历区间</th><th>里程碑 / 门禁</th><th>本周必须交出</th></tr></thead><tbody><tr><td>W1</td><td>10-12（一）– 10-18（日）</td><td>M1 立项完成（10-18）</td><td>提案定稿、环境可运行、组件映射冻结、录制启动</td></tr><tr><td>W2</td><td>10-19 – 10-25</td><td><strong>M2 / Gate 1</strong>（10-25）</td><td>ASR 适配层 + baseline 报告、选型决策、术语库 v0.1</td></tr><tr><td>W3</td><td>10-26 – 11-01</td><td><strong>M3 / Gate 2</strong>（11-01）</td><td>命令行端到端细线演示记录</td></tr><tr><td>W4</td><td>11-02 – 11-08</td><td>—</td><td>录音 → 上传 → 转写核对可走通；2 个模板定义就绪</td></tr><tr><td>W5</td><td>11-09 – 11-15</td><td><strong>M4 / Gate 3</strong>（11-15）</td><td>F1–F5 可运行、PRD 功能冻结（v0.9）、语料冻结</td></tr><tr><td>W6</td><td>11-16 – 11-22</td><td><strong>M5 / Gate 4</strong>（11-22）</td><td>导出与存档可用、AC 执行记录、实测指标</td></tr><tr><td>W7</td><td>11-23 – 11-29</td><td><strong>M6 最终提交</strong>（11-29）</td><td>PRD 与技术设计 v1.0、追溯表、演示材料</td></tr></tbody></table>
+<blockquote><strong>起始条件（重要，请评审时注意）</strong>：本文件于 W1 第 4 天（2026-10-15，周四）发出，W1 窗口实际只剩 10-15 至 10-18（其中工作日 2 天）。据此做三处调整，<strong>不改变 7 周总长</strong>：<br/>1. <strong>M1 门禁按半周下调</strong>：提案定稿 + 环境可运行 + 组件→需求映射冻结 + 语料录制<strong>已启动</strong>（不再要求完成录制）。<br/>2. <strong>W1 任务重排</strong>：T2.1 录制只做启动，收尾并入 W2；术语库种子（T3.1）排在 W2。<br/>3. <strong>访谈环节整体移除</strong>（见 §2、§10）：证据来源改为导师/助教<strong>书面确认</strong>与公开报告规范。<br/>因此 W2 是全程负荷最重的周次之一（约 8 人天），缓冲优先供给 W2、W5、W6。</blockquote>
+<hr/>
+<h3>2. 范围决策：7 周下的取舍</h3>
+<p>原提案按 12 周编排。压缩到 7 周后<strong>必须显式裁剪范围</strong>，否则会出现"功能都是半成品"的最差结果。裁剪原则：<strong>保链路正确性，砍外围覆盖度</strong>。</p>
+<table><thead><tr><th>项目</th><th>原计划</th><th>7 周计划（决定）</th><th>理由</th></tr></thead><tbody><tr><td><strong>用户调研方式</strong></td><td>3–5 位医生半结构化访谈 + 现场观察</td><td><strong>不执行访谈与现场观察</strong>；改为导师/助教书面确认 + 公开报告规范</td><td>本项目不设访谈环节；代价是证据强度低，必须在提案与 README 中如实标注</td></tr><tr><td>ASR 技术验证</td><td>W2–W3 执行</td><td><strong>提前到 W1–W2</strong></td><td>选型结果决定后续全部实现路径，不能晚</td></tr><tr><td>评测语料规模</td><td>≥ 2 小时</td><td><strong>1 小时（含 20 分钟冻结回归集）</strong></td><td>标注是人力密集环节；1 小时足以分语种报告 CER/WER</td></tr><tr><td>报告模板数量</td><td>多专科覆盖</td><td><strong>2 个（门诊记录、出院摘要）</strong></td><td>已验证模板适配能力，多的模板不增加学习价值</td></tr><tr><td>校审界面实现</td><td>React 完整实现</td><td><strong>最简 Web 界面；进度落后时降级为 Streamlit 原型</strong></td><td>精力优先保证链路正确与可追溯</td></tr><tr><td>多说话人分离</td><td>不在 MVP</td><td>不在 MVP（不变）</td><td>与核心用户任务无关</td></tr><tr><td>模型微调</td><td>长期计划</td><td><strong>移出本次项目</strong></td><td>数据与算力不足</td></tr><tr><td>EHR 实时对接</td><td>导出替代</td><td>导出替代（不变）</td><td>需医院授权，周期不可控</td></tr><tr><td>文档更新</td><td>集中补写</td><td><strong>每周末增量更新</strong></td><td>7 周没有集中补写的时间窗口</td></tr></tbody></table>
+<blockquote><strong>范围变更须登记</strong>：以上取舍已写入 <a href="#decision-log">decision-log.md</a>（D-09 范围裁剪、D-12 移除访谈环节）。</blockquote>
+<hr/>
+<h3>3. 里程碑与门禁</h3>
+<p>每个里程碑设<strong>门禁条件（Gate）</strong>。门禁不通过时执行预先约定的动作，避免临场拍脑袋。</p>
+<table><thead><tr><th>里程碑</th><th>时点</th><th>门禁条件（全部满足才通过）</th><th>未通过时的动作</th></tr></thead><tbody><tr><td><strong>M1 立项完成</strong></td><td>W1 末（10-18）</td><td>提案定稿；开发环境可运行；<strong>组件→需求映射冻结</strong>（§4 映射表核对通过）；合成语料录制已启动</td><td>映射未冻结则 W2 首日补齐并顺延 M1 结论；<strong>不阻塞</strong>其他组件开发</td></tr><tr><td><strong>M2 技术可行性（Gate 1）</strong></td><td>W2 末（10-25）</td><td>ASR baseline 实测完成并分语种报告；<strong>ASR 适配层同一接口可切换引擎</strong>；导师/助教书面确认已收到或已登记为限制</td><td>CER &gt; 25% → 启用<strong>范围收缩预案</strong>："英语为主 + 粤语关键词"场景；确认未收到 → 改用公开报告规范并标注为假设，不阻塞</td></tr><tr><td><strong>M3 端到端细线（Gate 2）</strong></td><td>W3 末（11-01）</td><td>一段模拟口述可产出报告初稿（允许无界面、命令行即可）；来源引用可追溯</td><td>冻结范围，退到最小链："转写 + 抽取 + 导出纯文本"</td></tr><tr><td><strong>M4 功能完整（Gate 3）</strong></td><td>W5 末（11-15）</td><td>F1–F5 可运行；2 个模板可用；<strong>PRD 功能章节冻结（v0.9）</strong></td><td>砍掉出院摘要模板，保留门诊记录</td></tr><tr><td><strong>M5 验收通过（Gate 4）</strong></td><td>W6 末（11-22）</td><td>AC-01–AC-14 全部执行并记录结果；指标实测数据齐备</td><td>未通过项写入"已知限制"章节，<strong>如实报告，不隐瞒</strong></td></tr><tr><td><strong>M6 最终提交</strong></td><td>W7 末（11-29）</td><td>PRD 与技术设计 v1.0 定稿；追溯表、决策记录、演示材料齐备；文档版本表已更新</td><td>使用 W7 缓冲日（11-27 至 11-29）完成</td></tr></tbody></table>
+<hr/>
+<h3>4. 工作分解结构（WBS）</h3>
+<p>工时单位：人天（1 人天 ≈ 8 小时）。依赖列中的 ID 表示该任务开始前必须完成的任务。</p>
+<h4>4.1 组件 → 需求 → 工作包映射（与技术设计 §1.2 对齐）</h4>
+<table><thead><tr><th>组件 / 模块</th><th>支撑需求</th><th>对应工作包</th><th>负责</th></tr></thead><tbody><tr><td>S1 会话、S2 录音、S3 转写核对（前端）</td><td>FR-01, FR-02, FR-03</td><td>WP5</td><td>R5</td></tr><tr><td>S4 初稿、S5 校审（前端）</td><td>FR-07, FR-08</td><td>WP7</td><td>R5</td></tr><tr><td>音频管理</td><td>FR-01, BR-01/02</td><td>WP5</td><td>R4</td></tr><tr><td>ASR 适配层 + 外部 ASR 服务</td><td>FR-02, NFR-06</td><td>WP2</td><td>R2</td></tr><tr><td>术语纠正 + 术语库文件（版本化）</td><td>FR-03, BR-04, NFR-10</td><td>WP3</td><td>R3</td></tr><tr><td>要素抽取 + 外部 LLM 调用</td><td>FR-04</td><td>WP4</td><td>R4</td></tr><tr><td>报告生成 + 模板文件（版本化）</td><td>FR-05, FR-06</td><td>WP6</td><td>R4</td></tr><tr><td>校审与签署</td><td>FR-07, FR-08, BR-10</td><td>WP7</td><td>R5</td></tr><tr><td>导出</td><td>FR-09</td><td>WP8</td><td>R4</td></tr><tr><td>存档与审计</td><td>FR-10, BR-12</td><td>WP8（数据层在 WP1）</td><td>R4</td></tr><tr><td>SQLite 数据层（全部实体）</td><td>全部实体，§3.1</td><td>WP1</td><td>R4</td></tr><tr><td>评测与追溯（横向）</td><td>NFR-01…NFR-10, AC-01…AC-14</td><td>WP9</td><td>全员</td></tr></tbody></table>
+<blockquote>核对方式：技术设计 §1.2 的 8 个后端组件 + 5 个前端模块在本表中<strong>无遗漏、无重复</strong>；每个工作包只改自己负责的组件，跨组件改动必须经 R1 登记（避免并行开发互相覆盖）。</blockquote>
+<h4>WP1 工程底座与数据层（W1 · 10/12–10/18，半周）</h4>
+<blockquote><strong>半周执行口径</strong>：W1 实际可用日从 10-15 起。<strong>W1 内完成</strong> T1.1、T1.3、T1.4；<strong>T2.1 录制为启动</strong>（收尾进 W2）、<strong>T3.1 术语库种子排到 W2</strong>（依据 §1.1、§10）。</blockquote>
+<table><thead><tr><th>ID</th><th>任务</th><th>负责</th><th>工时</th><th>依赖</th><th>交付物</th><th>完成判据</th></tr></thead><tbody><tr><td>T1.1</td><td>提案定稿与团队评审</td><td>R1</td><td>0.5</td><td>—</td><td>提案 v1.0</td><td>5 人评审通过；假设均有责任人与验证方式</td></tr><tr><td>T1.2</td><td>导师/助教<strong>书面确认</strong>（问题清单 → 邮件/会议记录）+ 报告模板样本请求</td><td>R1 / R3</td><td>1.0</td><td>—</td><td>书面确认记录</td><td>有书面往来记录；未回复则登记为限制，不阻塞</td></tr><tr><td>T1.3</td><td>开发环境与仓库规范（依赖、密钥、目录约定）</td><td>R5</td><td>1.0</td><td>—</td><td>可运行空项目</td><td>新成员照文档 30 分钟内跑起环境</td></tr><tr><td>T1.4</td><td>数据模型落地（SQLite schema + 迁移脚本）</td><td>R4</td><td>1.0</td><td>T1.3</td><td>schema + 迁移</td><td>覆盖技术设计 §3.1 全部实体</td></tr></tbody></table>
+<p><strong>WP1 小计：3.5 人天</strong></p>
+<h4>WP2 ASR 适配层（W1–W2 · 10/12–10/25）★ 关键路径</h4>
+<table><thead><tr><th>ID</th><th>任务</th><th>负责</th><th>工时</th><th>依赖</th><th>交付物</th><th>完成判据</th></tr></thead><tbody><tr><td>T2.1</td><td>模拟口述脚本编写与录制（≥ 4 位说话人）</td><td>R2</td><td>2.0</td><td>T1.3</td><td>合成音频语料</td><td>覆盖粤/英/混合三类，标注 [SYNTHETIC]</td></tr><tr><td>T2.2</td><td>参考文本双人标注 + 分歧仲裁</td><td>R2 / R3</td><td>1.5</td><td>T2.1</td><td>参考文本</td><td>双人独立标注，分歧有仲裁记录</td></tr><tr><td>T2.3</td><td><strong>ASR 适配层实现</strong>：统一 <code>transcribe(audio_path) -&gt; [Segment]</code>，本地/云可切换</td><td>R2</td><td>1.0</td><td>T1.4</td><td>FR-02 实现</td><td>同一接口切换引擎，输出统一映射为 TranscriptSegment</td></tr><tr><td>T2.4</td><td>分语种评测 + baseline 报告（faster-whisper vs 云 API）</td><td>R2</td><td>1.5</td><td>T2.2, T2.3</td><td>baseline 报告</td><td><strong>分语种</strong>给出 CER/WER + 术语命中率；低置信度可标记</td></tr><tr><td>T2.5</td><td>选型决策与登记</td><td>R1 / R2</td><td>0.5</td><td>T2.4</td><td>决策条目</td><td>写入 decision-log，含实测依据</td></tr></tbody></table>
+<p><strong>WP2 小计：6.5 人天</strong></p>
+<h4>WP3 术语纠正（W2–W3 · 10/19–11/01）</h4>
+<table><thead><tr><th>ID</th><th>任务</th><th>负责</th><th>工时</th><th>依赖</th><th>交付物</th><th>完成判据</th></tr></thead><tbody><tr><td>T3.1</td><td>术语库种子（药名/病名/缩写 ≥ 100 条，含来源与类别）</td><td>R3</td><td>1.5</td><td>—</td><td>terms v0.1</td><td>每条含来源与类别，可被脚本加载</td></tr><tr><td>T3.2</td><td>术语纠正模块（归一化 → 精确匹配 → 模糊匹配 ≤ 2）</td><td>R3</td><td>2.0</td><td>T1.4, T3.1</td><td>FR-03 实现</td><td>通过 AC-03；模糊匹配仅对词长 ≥ 5 启用</td></tr><tr><td>T3.3</td><td>替换记录与撤销（TermCorrection 可回溯）</td><td>R3</td><td>0.5</td><td>T3.2</td><td>撤销能力</td><td>每次替换可查、可撤销，原始文本保留</td></tr></tbody></table>
+<p><strong>WP3 小计：4.0 人天</strong></p>
+<h4>WP4 要素抽取（W2–W3 · 10/19–11/01）★ 关键路径</h4>
+<table><thead><tr><th>ID</th><th>任务</th><th>负责</th><th>工时</th><th>依赖</th><th>交付物</th><th>完成判据</th></tr></thead><tbody><tr><td>T4.1</td><td>后端接口骨架（会话/上传/转写/纠正/抽取/生成六个接口）</td><td>R4</td><td>1.0</td><td>T1.4</td><td>API 骨架</td><td>六个核心接口返回结构正确</td></tr><tr><td>T4.2</td><td>抽取流水线（分块 + 滑动窗口 + JSON Schema 校验）</td><td>R4</td><td>2.0</td><td>T4.1, T2.3</td><td>FR-04 实现</td><td>通过 AC-04；输出固定 schema</td></tr><tr><td>T4.3</td><td>来源引用回填与真实性校验（片段 ID 存在性检查）</td><td>R4</td><td>1.5</td><td>T4.2</td><td>可追溯性</td><td>片段 ID 不存在的字段标"待核实"</td></tr><tr><td>T4.4</td><td>细线联调与命令行演示</td><td>R1</td><td>1.0</td><td>T4.3, T3.2</td><td>Gate 2 证据</td><td>一段口述 → 一份报告初稿，全程可复现</td></tr></tbody></table>
+<p><strong>WP4 小计：5.5 人天</strong></p>
+<h4>WP5 音频管理与会话/录音界面（W4 · 11/02–11/08）</h4>
+<table><thead><tr><th>ID</th><th>任务</th><th>负责</th><th>工时</th><th>依赖</th><th>交付物</th><th>完成判据</th></tr></thead><tbody><tr><td>T5.1</td><td>音频上传与校验（ffmpeg → 16 kHz 单声道 wav；时长与静音校验）</td><td>R4</td><td>1.0</td><td>T1.4</td><td>FR-01 实现</td><td>非法音频被拒并有明确提示</td></tr><tr><td>T5.2</td><td>S1 会话管理界面（列表/新建/删除）</td><td>R5</td><td>1.0</td><td>T5.1</td><td>会话界面</td><td>列表可用，删除走级联语义</td></tr><tr><td>T5.3</td><td>S2 录音界面（录音/暂停/继续/上传）</td><td>R5</td><td>2.0</td><td>T5.2</td><td>录音界面</td><td>通过 AC-01，录音不丢内容</td></tr><tr><td>T5.4</td><td>S3 转写核对页（低置信度高亮 + 人工修正 + 重跑抽取）</td><td>R5</td><td>1.5</td><td>T2.3, T5.3</td><td>核对界面</td><td>可修正并重新进入抽取</td></tr></tbody></table>
+<p><strong>WP5 小计：5.5 人天</strong></p>
+<h4>WP6 报告生成与模板（W4–W5 · 11/02–11/15）</h4>
+<table><thead><tr><th>ID</th><th>任务</th><th>负责</th><th>工时</th><th>依赖</th><th>交付物</th><th>完成判据</th></tr></thead><tbody><tr><td>T6.1</td><td>模板定义格式 + 2 个模板（门诊记录、出院摘要）</td><td>R4</td><td>1.5</td><td>T1.4</td><td>模板文件</td><td>声明式字段定义，引擎可加载</td></tr><tr><td>T6.2</td><td>模板引擎与字段填充（仅 confirmed/edited 要素；未覆盖填"未提及"）</td><td>R4</td><td>1.5</td><td>T6.1, T4.3</td><td>FR-05 实现</td><td>字段带片段 ID 与时间戳</td></tr><tr><td>T6.3</td><td>生成后规则校验（必填字段为空 + 来源依据）</td><td>R3</td><td>1.0</td><td>T6.2</td><td>FR-06 实现</td><td>不通过标"待核实"并<strong>阻断签署</strong></td></tr></tbody></table>
+<p><strong>WP6 小计：4.0 人天</strong></p>
+<h4>WP7 校审与签署（W5 · 11/09–11/15）★ 关键路径</h4>
+<table><thead><tr><th>ID</th><th>任务</th><th>负责</th><th>工时</th><th>依赖</th><th>交付物</th><th>完成判据</th></tr></thead><tbody><tr><td>T7.1</td><td>S4 初稿 + S5 校审页（字段卡片、采纳/编辑/拒绝、音频跳转 ≤ 2 秒）</td><td>R5</td><td>2.5</td><td>T6.2</td><td>FR-07 界面</td><td>通过 AC-07，差异可回溯</td></tr><tr><td>T7.2</td><td>FieldReview 留痕（保留 ai_value 不变，动作可查）</td><td>R5</td><td>0.5</td><td>T7.1</td><td>校审留痕</td><td>每次操作一条记录</td></tr><tr><td>T7.3</td><td>签署门禁（required 字段全部 accept/edit 才可签署）</td><td>R5</td><td>1.0</td><td>T7.2</td><td>FR-08 实现</td><td>通过 AC-08</td></tr></tbody></table>
+<p><strong>WP7 小计：4.0 人天</strong></p>
+<h4>WP8 导出与存档审计（W6 · 11/16–11/22）</h4>
+<table><thead><tr><th>ID</th><th>任务</th><th>负责</th><th>工时</th><th>依赖</th><th>交付物</th><th>完成判据</th></tr></thead><tbody><tr><td>T8.1</td><td>导出（文本 / PDF / JSON，含字段与来源 ID、时间戳）</td><td>R4</td><td>1.0</td><td>T7.1</td><td>FR-09 实现</td><td>三种格式可导出，不丢追溯信息</td></tr><tr><td>T8.2</td><td>存档与审计（会话历史、级联删除、AuditEvent、外发记录）</td><td>R4</td><td>1.5</td><td>T5.2</td><td>FR-10 实现</td><td>删除为级联且写审计；通过 AC-10</td></tr></tbody></table>
+<p><strong>WP8 小计：2.5 人天</strong></p>
+<h4>WP9 评测与交付（W5–W7 持续）</h4>
+<table><thead><tr><th>ID</th><th>任务</th><th>负责</th><th>工时</th><th>依赖</th><th>交付物</th><th>完成判据</th></tr></thead><tbody><tr><td>T9.1</td><td>评测语料扩充与冻结（1 小时，含 20 分钟回归集）</td><td>R2</td><td>1.5</td><td>T2.4</td><td>冻结数据集</td><td>标注版本号，冻结后不再改动</td></tr><tr><td>T9.2</td><td>ASR 回归脚本与报告</td><td>R2</td><td>1.0</td><td>T9.1</td><td>评测脚本 + 报告</td><td>一条命令产出分语种指标</td></tr><tr><td>T9.3</td><td>字段级评分量表 + 结构化准确率评测</td><td>R3</td><td>1.5</td><td>T6.3, T9.1</td><td>量表 + 准确率</td><td>双人评分 + 仲裁，抽样 ≥ 20 份</td></tr><tr><td>T9.4</td><td>AC-01–AC-14 验收执行与记录</td><td>R1</td><td>1.5</td><td>T7.3, T8.1</td><td>验收执行记录</td><td>每条含通过/失败与证据路径</td></tr><tr><td>T9.5</td><td>隐私与失败路径专项检查</td><td>R5</td><td>1.0</td><td>T8.2</td><td>检查报告</td><td>无音频外发；去标识化生效</td></tr><tr><td>T9.6</td><td>每周文档更新（版本表、决策记录）</td><td>R1</td><td>0.5/周</td><td>—</td><td>更新后的文档</td><td>每周五前完成并登记</td></tr><tr><td>T9.7</td><td>MVP PRD 定稿 v1.0</td><td>R1</td><td>1.0</td><td>T7.1</td><td>PRD v1.0</td><td>与实现一致，差异已登记</td></tr><tr><td>T9.8</td><td>技术设计 v1.0 + 追溯表（组件 → FR 映射核对）</td><td>R4 / R1</td><td>1.0</td><td>T9.4</td><td>设计 v1.0 + 追溯表</td><td>每条 FR 有组件、证据与最终状态</td></tr><tr><td>T9.9</td><td>命令验证标注与 AGENTS.md 更新</td><td>R4</td><td>0.5</td><td>T9.2</td><td>更新的指令文件</td><td>已执行命令标注"已验证 + 日期"</td></tr><tr><td>T9.10</td><td>演示材料与最终提交包</td><td>R1</td><td>1.0</td><td>T9.7, T9.8</td><td>演示材料</td><td>7 分钟内完整演示端到端任务</td></tr></tbody></table>
+<p><strong>WP9 小计：13.5 人天（含每周文档 0.5 × 7 = 3.5）</strong></p>
+<p><strong>工时合计</strong>：WP1 3.5 + WP2 6.5 + WP3 4.0 + WP4 5.5 + WP5 5.5 + WP6 4.0 + WP7 4.0 + WP8 2.5 + WP9 13.5 ≈ <strong>49 人天</strong>，在约 52 人天预算内，余额约 3 人天作为缓冲。</p>
+<hr/>
+<h3>5. 周计划</h3>
+<table><thead><tr><th>周</th><th>本周目标</th><th>主要任务</th><th>周末产出（可检查）</th></tr></thead><tbody><tr><td><strong>W1</strong>&lt;br&gt;10/12–10/18</td><td>工程底座 + 组件边界冻结（半周）</td><td>T1.1–T1.4、T2.1 启动</td><td>提案定稿、环境可运行、<strong>组件映射冻结</strong>、录制启动</td></tr><tr><td><strong>W2</strong>&lt;br&gt;10/19–10/25</td><td>拿到 ASR 实测数据（负荷最重周）</td><td>T2.1 收尾、T2.2–T2.5、T3.1、T4.1</td><td><strong>ASR 适配层可切换引擎 + baseline 报告</strong>（Gate 1）、术语库 v0.1、接口骨架</td></tr><tr><td><strong>W3</strong>&lt;br&gt;10/26–11/01</td><td>打通端到端细线</td><td>T3.2、T3.3、T4.2–T4.4</td><td><strong>命令行：一段口述产出报告初稿</strong>（Gate 2）</td></tr><tr><td><strong>W4</strong>&lt;br&gt;11/02–11/08</td><td>音频链路与界面基础</td><td>T5.1–T5.4、T6.1</td><td>录音 → 上传 → 转写 → 人工修正可走通；2 个模板定义就绪</td></tr><tr><td><strong>W5</strong>&lt;br&gt;11/09–11/15</td><td>报告闭环与校审（峰值周）</td><td>T6.2、T6.3、T7.1–T7.3、T9.1</td><td><strong>F1–F5 可运行</strong>（Gate 3）、PRD 功能冻结（v0.9）、语料冻结</td></tr><tr><td><strong>W6</strong>&lt;br&gt;11/16–11/22</td><td>导出、验收与实测</td><td>T8.1、T8.2、T9.2–T9.5</td><td><strong>AC-01–AC-14 执行记录 + 实测指标</strong>（Gate 4）、导出三种格式</td></tr><tr><td><strong>W7</strong>&lt;br&gt;11/23–11/29</td><td>文档、缓冲与提交</td><td>T9.7–T9.10 + 缓冲 2 天（11/27–11/29）</td><td>PRD 与技术设计 v1.0、追溯表、演示材料、最终提交包（M6）</td></tr></tbody></table>
+<p><strong>每周工时分配</strong>（人天）：W1 4.5（半周）· W2 8.0 · W3 7.0 · W4 7.0 · W5 8.0 · W6 7.5 · W7 3.5 + 缓冲（另含每周文档 0.5 × 7）。<strong>W2、W5、W6 是峰值周</strong>，超出人均 1.5 人天的部分由 W7 缓冲与跨角色支援吸收。</p>
+<p><strong>每周固定节奏</strong>：周一 15 分钟排期 → 周三中期同步（只报告阻塞）→ 周五 30 分钟演示与文档更新。任何任务延期 ≥ 1 天必须在当天提出。</p>
+<hr/>
+<h3>6. 进度视图（甘特）</h3>
+<p>■ = 该周为主要投入　▪ = 少量投入 / 收尾</p>
+<table><thead><tr><th>工作包</th><th>W1</th><th>W2</th><th>W3</th><th>W4</th><th>W5</th><th>W6</th><th>W7</th></tr></thead><tbody><tr><td>*周起始日*</td><td>*10/12*</td><td>*10/19*</td><td>*10/26*</td><td>*11/02*</td><td>*11/09*</td><td>*11/16*</td><td>*11/23*</td></tr><tr><td>WP1 工程底座与数据层</td><td>■</td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>WP2 ASR 适配层 ★</td><td>■</td><td>■</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>WP3 术语纠正</td><td></td><td>■</td><td>■</td><td></td><td></td><td></td><td></td></tr><tr><td>WP4 要素抽取 ★</td><td></td><td>■</td><td>■</td><td></td><td></td><td></td><td></td></tr><tr><td>WP5 音频管理与录音界面</td><td></td><td></td><td></td><td>■</td><td></td><td></td><td></td></tr><tr><td>WP6 报告生成与模板</td><td></td><td></td><td></td><td>■</td><td>■</td><td></td><td></td></tr><tr><td>WP7 校审与签署 ★</td><td></td><td></td><td></td><td></td><td>■</td><td></td><td></td></tr><tr><td>WP8 导出与存档审计</td><td></td><td></td><td></td><td></td><td>▪</td><td>■</td><td></td></tr><tr><td>WP9 评测与交付</td><td>▪</td><td>▪</td><td>▪</td><td>▪</td><td>■</td><td>■</td><td>■</td></tr><tr><td><strong>里程碑</strong></td><td>M1</td><td><strong>M2/G1</strong></td><td><strong>M3/G2</strong></td><td></td><td><strong>M4/G3</strong></td><td><strong>M5/G4</strong></td><td>M6</td></tr></tbody></table>
+<hr/>
+<h3>7. 关键路径与依赖</h3>
+<p><strong>关键路径（决定项目能否按时完成的最长链条）</strong>：</p>
+<pre><code>T2.1 录制 → T2.2 标注 → T2.3 适配层 → T2.4 评测 → T2.5 选型
+   → T4.1 接口骨架 → T4.2 抽取流水线 → T4.3 来源回填 → T4.4 细线
+   → T6.2 模板引擎 → T7.1 校审页 → T7.3 签署门禁 → T9.4 验收执行
+   → T9.8 追溯表 → T9.10 提交</code></pre>
+<p><strong>关键路径上的三个高风险点</strong></p>
+<ol>
+<li><strong>T2.1–T2.4（W1–W2）</strong>：语料录制与标注若延期，Gate 1 顺延，整个下游被推迟。<strong>对策</strong>：W1 第一件事就开工录制，标注与适配层开发并行推进。</li>
+<li><strong>T4.2（W3）</strong>：要素抽取质量不足会导致模板引擎与校审界面全部返工。<strong>对策</strong>：W3 用 3 份样本做"最小可用抽取"验证，不追求完美。</li>
+<li><strong>T7.1（W5）</strong>：校审页是最费人力的界面。<strong>对策</strong>：界面从简（单页字段卡片），必要时降级为 Streamlit，把时间留给签署门禁与可追溯。</li>
+</ol>
+<p><strong>非关键路径上的任务</strong>（T3.x 术语库、T5.2 会话界面、T9.3 评分量表）有一定浮动空间，可作为人员调剂池。</p>
+<hr/>
+<h3>8. 风险、缓冲与触发预案</h3>
+<table><thead><tr><th>触发器（可观察条件）</th><th>预案动作</th><th>决策人</th></tr></thead><tbody><tr><td>ASR 全部候选方案 CER &gt; 25%</td><td>收缩为"英语为主 + 粤语关键词"场景，更新 PRD §2 与 proposal §6.2，如实说明降级</td><td>R1 + R2</td></tr><tr><td>W2 末导师/助教仍未书面确认</td><td>改用公开报告规范与文献示例，标注为假设，PRD 中记录限制</td><td>R1</td></tr><tr><td>W3 末端到端细线未打通</td><td>冻结范围至最小链（转写 + 抽取 + 导出纯文本），砍掉 PDF 导出</td><td>R1</td></tr><tr><td>W5 末界面进度落后 &gt; 1 天</td><td>校审界面降级为 Streamlit 原型，保留字段级确认与签署门禁</td><td>R5</td></tr><tr><td>某一组件负责人在关键周缺席</td><td>由 R1 指派跨角色支援；该组件任务优先于非关键路径任务</td><td>R1</td></tr><tr><td>任一关键路径任务延期 ≥ 2 天</td><td>启用 W7 缓冲，并同步压缩非关键任务的完成度</td><td>R1</td></tr></tbody></table>
+<p><strong>缓冲安排</strong>：任务合计约 49 人天，可用工时约 52 人天（投入假设见 §1），差额约 3 人天即缓冲；W7 另保留 2 天机动（11/27–11/29），每周约留 1 人天松弛量。</p>
+<hr/>
+<h3>9. 交付物与提交清单</h3>
+<table><thead><tr><th>交付物</th><th>完成时点</th><th>责任人</th><th>对应课程阶段</th></tr></thead><tbody><tr><td>提案定稿 + 导师/助教书面确认</td><td>W1 末（确认 W2 补齐）</td><td>R1 / R3</td><td>阶段 1</td></tr><tr><td>ASR baseline 报告（分语种实测）</td><td>W2 末</td><td>R2</td><td>支撑技术设计</td></tr><tr><td>端到端可运行 MVP（F1–F5）</td><td>W5 末</td><td>全员</td><td>阶段 2/3</td></tr><tr><td>MVP PRD（功能冻结 v0.9）</td><td>W5 末</td><td>R1</td><td>阶段 2</td></tr><tr><td>MVP PRD v1.0 + 技术设计 v1.0 + 追溯表</td><td>W7 初</td><td>R1 / R4</td><td>阶段 3</td></tr><tr><td>验收执行记录（AC-01–AC-14）</td><td>W6 末</td><td>R1</td><td>最终提交</td></tr><tr><td>决策与验证记录（持续更新）</td><td>每周五</td><td>R1</td><td>最终提交</td></tr><tr><td>演示材料与最终提交包</td><td>W7 末</td><td>R1</td><td>最终提交</td></tr></tbody></table>
+<hr/>
+<h3>10. 变更登记</h3>
+<table><thead><tr><th>变更</th><th>说明</th><th>影响文档</th></tr></thead><tbody><tr><td>周期由 12 周调整为 7 周</td><td>课程实际排期确定；范围按 §2 裁剪</td><td><a href="#proposal">proposal.md</a> §7、<a href="#README">README.md</a> 版本表、<a href="#decision-log">decision-log.md</a> D-09</td></tr><tr><td>ASR 验证提前至 W1–W2</td><td>关键技术风险必须最先消除</td><td>proposal.md §7 里程碑</td></tr><tr><td>评测语料规模 2 小时 → 1 小时</td><td>标注人力受限；保留 20 分钟冻结回归集</td><td><a href="#research-plan">research-plan.md</a> §4</td></tr><tr><td>模板数量限定为 2 个</td><td>证明能力即可，不做全覆盖</td><td><a href="#mvp-prd">mvp-prd.md</a> §3</td></tr><tr><td><strong>范围裁剪经团队确认</strong>（模板 2 个、语料 1 小时、界面从简、移出微调）</td><td>2026-10-15 团队确认接受，D-09 生效</td><td>decision-log.md D-09</td></tr><tr><td><strong>计划锚定真实日历</strong>：W1 = 2026-10-12，W7 末 = 2026-11-29</td><td>团队确定按本周起算；据此补全全部日期</td><td>本文件 §1.1、§5、§6、§7</td></tr><tr><td><strong>W1 为半周</strong>：M1 门禁下调为可达成项</td><td>本文件于 W1 第 4 天（10-15）发出，原 M1 条件在剩余 2 个工作日内不可达</td><td>本文件 §1.1、§3、§5；decision-log.md D-11</td></tr><tr><td>删除原 §8「角色与每周投入」章节</td><td>团队要求精简；章节号顺延</td><td>本文件全文、decision-log.md U-07/U-08</td></tr><tr><td><strong>WBS 按系统组件重构</strong></td><td>工作包与技术设计 §1.2 组件职责一一对应（WP1–WP9），新增 §4.1 组件→需求→工作包映射表；任务编号整体重排</td><td>本文件 §1、§4、§6、§7；<a href="#technical-design">technical-design.md</a> §1.2</td></tr><tr><td><strong>移除访谈与现场观察环节</strong></td><td>项目不设访谈；证据来源改为导师/助教书面确认 + 公开报告规范；M1/M2 门禁、风险预案、交付物与范围表同步改写</td><td>本文件 §1.1/§2/§3/§8/§9；proposal.md §3/§5/§7；research-plan.md §1–§3；mvp-prd.md Q-05；decision-log.md D-11/U-01</td></tr></tbody></table>
+<blockquote>本文档的引脚编号（T/WP/M/Gate）与 <a href="#proposal">proposal.md</a>、<a href="#mvp-prd">mvp-prd.md</a> 中的 <code>FR</code>/<code>AC</code> 编号保持对应关系；周计划调整不改变需求编号。</blockquote></section>
+<section id="proposal"><h2>项目提案：MedScribe HK</h2>
+<blockquote><strong>阶段</strong>：Project Proposal · <strong>版本</strong>：v0.3 · <strong>日期</strong>：2026-10-15 · <strong>状态</strong>：待团队评审<br/><strong>v0.3 变更</strong>：<strong>本项目不设访谈与现场观察环节</strong>，P-01–P-04 与 ASSUMPTION-01–05 的证据来源改为导师/助教书面确认、公开报告规范与团队内部试标注；附录 A 与 R-04 同步改写（见 <a href="#decision-log">decision-log.md</a> D-12）<br/><strong>v0.2 变更</strong>：按课程实际排期，周期由 12 周调整为 <strong>7 周</strong>；里程碑、spike 时间窗与评测语料规模同步更新，任务拆分见 <a href="#project-plan">project-plan.md</a>，决策依据见 <a href="#decision-log">decision-log.md</a> D-09<br/><strong>依据</strong>：Project-based Course 1105《Project Documentation Guidelines》（2026-10-14 改编稿）· 建议篇幅 1–2 页</blockquote>
+<hr/>
+<h3>1. 项目摘要</h3>
+<p><strong>项目名称</strong>：MedScribe HK —— 香港临床口述智能病历助手</p>
+<p><strong>一句话描述</strong>：医生用粤语、英语或中英混合口语口述诊疗过程，系统完成"多语言转写 → 临床要素抽取 → 模板化结构化报告生成 → 医生校审确认"的闭环，输出符合医院报告规范的病历初稿。</p>
+<p><strong>核心价值主张</strong>：把 3–5 分钟口述变成 1 分钟内可审阅的病历初稿，且不改变医生现有的书写与审阅习惯。</p>
+<hr/>
+<h3>2. 问题与目标用户</h3>
+<table><thead><tr><th>用户</th><th>说明</th></tr></thead><tbody><tr><td><strong>主要</strong>：门诊 / 住院医生</td><td>英文撰写病历、口语混用粤英，看诊后需快速完成病历整理，每日多次</td></tr><tr><td><strong>次要</strong>：病案室 / 质控人员</td><td>检查病历完整性与模板合规性，退回不规范记录</td></tr><tr><td><strong>受影响</strong>：患者</td><td>希望医生把注意力放在问诊而非打字上，并确保健康数据被安全处理</td></tr></tbody></table>
+<p><strong>问题场景</strong>：门诊接诊后、查房后或交班前，医生需把刚发生的诊疗过程整理成结构化病历／报告。</p>
+<table><thead><tr><th>编号</th><th>问题描述</th><th>状态</th></tr></thead><tbody><tr><td>P-01</td><td>键盘录入或模板填空占用问诊后时间，高峰期为每份病历数分钟</td><td>待验证（ASSUMPTION-01）</td></tr><tr><td>P-02</td><td>粤语 + 英语 + 中英混合病名/药名的表达，通用语音输入识别效果明显下降</td><td>待验证（ASSUMPTION-02）</td></tr><tr><td>P-03</td><td>模板随专科与报告类型而变，手工复制粘贴易漏项、错项（过敏史、剂量、随访）</td><td>待验证（ASSUMPTION-03）</td></tr><tr><td>P-04</td><td>口述连续、口语化、非结构化，难以自动映射到 SOAP 临床要素</td><td>待验证（ASSUMPTION-04）</td></tr><tr><td>P-05</td><td>患者数据涉及隐私、安全与合规，须避免可识别信息流入不受控的第三方服务</td><td>已确认为设计约束</td></tr></tbody></table>
+<blockquote>团队完整性声明：P-01 至 P-04 目前均为<strong>假设</strong>，本项目<strong>不执行访谈与现场观察</strong>，故这些假设尚未被一手用户证据证实。本提案不引用任何未经执行的访谈引语、用户数量或市场规模数据；如需引用外部文献结论，将单独标注来源。</blockquote>
+<hr/>
+<h3>3. 证据</h3>
+<p>截至本版本，团队已完成问题背景梳理与调研设计（<strong>导师/助教书面确认问题清单</strong>、公开资料与模板样本分析计划、模拟口述脚本，见 <a href="#research-plan">research-plan.md</a>），<strong>尚未获得书面答复，也未执行任何用户访谈或现场观察</strong>。</p>
+<table><thead><tr><th>ID</th><th>类型</th><th>内容摘要</th><th>状态 / 验证方式</th></tr></thead><tbody><tr><td>OBS-01</td><td>观察</td><td>课程规范要求"完整用户任务 + 可验证交付物"，医疗场景另有隐私与合规约束</td><td>已确认（课程规范原文）</td></tr><tr><td>OBS-02</td><td>观察</td><td>医院报告存在固定模板（门诊记录、出院摘要、影像报告），字段结构相对稳定</td><td><strong>待验证</strong>（需导师/助教提供脱敏模板样本，R-03）</td></tr><tr><td>ASSUMPTION-01</td><td>假设</td><td>单份病历整理耗时约 3–8 分钟，是门诊流程显著负担</td><td>导师/助教<strong>书面确认</strong>（WC-1，见 research-plan.md §2）</td></tr><tr><td>ASSUMPTION-02</td><td>假设</td><td>通用 ASR 在粤英混合医学术语上的错误率显著高于单一语种</td><td>W1–W2 baseline 实验量化（R-01）</td></tr><tr><td>ASSUMPTION-03</td><td>假设</td><td>手工模板填写会导致漏项，尤其是过敏史与随访计划</td><td>导师/助教书面确认（WC-2）+ 公开报告规范与模板样本字段比对</td></tr><tr><td>ASSUMPTION-04</td><td>假设</td><td>口述可稳定映射为 SOAP 四要素，映射规则可被模板约束</td><td>团队成员<strong>双人试标注一致率 ≥ 0.8</strong></td></tr><tr><td>ASSUMPTION-05</td><td>假设</td><td>医院可接受"医生校审后导出"的过渡方式，而非要求一步接入 EHR</td><td>导师/助教书面确认（WC-8）</td></tr></tbody></table>
+<p>凡引用外部资料（公开评测、编码标准、隐私法规），须附来源链接与访问日期，并区分"公开资料结论"与"本项目实测结果"。</p>
+<hr/>
+<h3>4. 现有方案与差距</h3>
+<table><thead><tr><th>现有方式</th><th>已知局限</th></tr></thead><tbody><tr><td>键盘直接录入 / 科室宏</td><td>速度受限于打字，重复性高</td></tr><tr><td>模板填空 + 复制粘贴</td><td>易残留旧信息、漏项</td></tr><tr><td>通用语音输入法</td><td>不做临床要素抽取、不做报告模板；混合语种与术语表现需实测确认</td></tr><tr><td>录音后重听整理</td><td>延迟高、重听耗时</td></tr></tbody></table>
+<blockquote>不对任何具体产品的性能下断言；相关表现属于本项目需实测的项目之一（R-01）。</blockquote>
+<p><strong>差距（Gap）</strong>：缺少把以下四件事串成完整闭环、且能在受控数据环境下运行的方案——① 多语言混合 ASR；② SOAP 临床要素抽取；③ 模板化报告生成；④ <strong>医生校审闭环</strong>（逐字段确认、可追溯、签署后导出）。第 ④ 项是通用工具普遍缺失的一环：生成结果若无法被医生高效核对，临床上即不可用。</p>
+<hr/>
+<h3>5. 提议方案与 MVP 价值</h3>
+<p><strong>完整用户任务</strong>（MVP 必须跑通每一步）：</p>
+<pre><code>① 开启会话并口述 → ② 多语言转写 → ③ 抽取 SOAP 要素
+                                     ↓
+⑥ 按模板导出报告 ← ⑤ 医生校审/签署 ← ④ 生成结构化初稿</code></pre>
+<p>第 ⑥ 步以"导出可粘贴文本 / PDF / FHIR 风格 JSON"替代真实 EHR 写入，以控制集成风险。</p>
+<table><thead><tr><th>编号</th><th>MVP 功能</th><th>为什么最小可用</th></tr></thead><tbody><tr><td>F1</td><td>会话录音 + 多语言 ASR（含医学术语增强）</td><td>无可用转写，后续环节全部不成立</td></tr><tr><td>F2</td><td>临床要素抽取（S / O / A / P）</td><td>从"一段文字"到"结构化信息"的关键一跳</td></tr><tr><td>F3</td><td>模板化结构化报告生成</td><td>医生需要的是符合规范的报告，而非自由文本</td></tr><tr><td>F4</td><td>医生校审界面（逐字段确认 / 编辑 / 签署）</td><td>临床安全的最后防线</td></tr><tr><td>F5</td><td>术语库管理 + 会话本地存档</td><td>支撑 F1/F2 的领域词表，并提供可复现的评估数据</td></tr></tbody></table>
+<p><strong>不在 MVP 范围</strong>：真实患者数据接入、EHR/eHRSS 实时对接、移动端 App、多说话人分离、模型微调、多专科模板全覆盖。理由见 <a href="#mvp-prd">mvp-prd.md</a> §3。</p>
+<hr/>
+<h3>6. 可行性与风险</h3>
+<table><thead><tr><th>维度</th><th>评估</th></tr></thead><tbody><tr><td>时间</td><td><strong>7 周</strong>（课程确定排期），W1–W2 为技术验证 spike；完整任务拆分、门禁与缓冲见 <a href="#project-plan">project-plan.md</a></td></tr><tr><td>技能</td><td>具备 Python 与 Web 前端基础；<strong>缺口</strong>：粤语语音处理、临床术语知识，由企业导师 / 医生顾问补足</td></tr><tr><td>数据</td><td>不使用真实患者录音；使用团队录制的脚本化模拟口述（明确标注为非临床合成数据）</td></tr><tr><td>设备</td><td>1 台开发机（优先带 GPU）+ 麦克风；或使用云端 ASR 试用额度</td></tr><tr><td>预算</td><td>ASR 与 LLM API 费用，设定每月上限并监控</td></tr><tr><td>外部依赖</td><td>ASR 引擎、LLM API、医院报告模板样本</td></tr><tr><td>合规</td><td>遵守香港《个人资料（私隐）条例》(PDPO) 基本要求；MVP 不处理真实患者可识别信息</td></tr></tbody></table>
+<p><strong>最关键不确定性 R-01</strong>：粤英混合医学术语的 ASR 可达精度未知；若字错率无法接近 15% 目标，整个链条失效。</p>
+<p><strong>应对（W1–W2 spike）</strong>：① 录制 ≥ 1 小时（含 20 分钟冻结回归集）、≥ 4 位说话人的模拟口述（粤语为主 / 英语为主 / 中英混合三类）；② 双人标注 + 分歧仲裁；③ 对 2–3 个候选方案<strong>分语种</strong>计算 CER/WER，不合并为单一数字；④ 若全部 &gt; 25%，触发范围收缩预案——退化为"英语为主 + 粤语关键词"的受限场景，并在文档中说明降级理由。</p>
+<table><thead><tr><th>其他风险</th><th>缓解措施</th></tr></thead><tbody><tr><td>R-02 LLM 生成遗漏或编造关键信息</td><td>强制人工校审；字段级来源引用；幻觉字段数目标为 0（PRD §11 AI-03）</td></tr><tr><td>R-03 拿不到真实报告模板样本</td><td>W1 即向企业导师书面提出；否则退化为公开可得的结构示例并标注为假设</td></tr><tr><td>R-04 无一手用户证据（本项目不设访谈）</td><td>以导师/助教书面确认 + 公开报告规范 + 团队试标注作为证据来源；在提案、PRD 与 README 中如实标注证据强度局限，不夸大</td></tr><tr><td>R-05 团队 5 人、任务量偏大</td><td>严格限制 MVP 范围，先跑通一条端到端细线</td></tr><tr><td>R-06 API 成本或配额超限</td><td>设置调用上限与缓存；准备本地开源模型降级路径</td></tr></tbody></table>
+<hr/>
+<h3>7. 团队与里程碑</h3>
+<table><thead><tr><th>编号</th><th>角色</th><th>主要职责</th><th>姓名</th></tr></thead><tbody><tr><td>R1</td><td>项目负责人 / 集成</td><td>进度与范围管理、端到端集成、文档主责</td><td>待填</td></tr><tr><td>R2</td><td>语音与 ASR</td><td>音频采集、ASR 选型与调优、CER 评测</td><td>待填</td></tr><tr><td>R3</td><td>临床要素与术语库</td><td>SOAP 规则、术语/药品词表、标注规范</td><td>待填</td></tr><tr><td>R4</td><td>生成与提示工程</td><td>模板引擎、提示与输出约束、结构化校验</td><td>待填</td></tr><tr><td>R5</td><td>校审界面与合规</td><td>前端校审界面、隐私与数据保留策略</td><td>待填</td></tr></tbody></table>
+<table><thead><tr><th>里程碑</th><th>周次</th><th>门禁条件（Gate）</th><th>可评审产出</th></tr></thead><tbody><tr><td>M1 立项完成</td><td>W1</td><td>提案定稿 + 组件→需求映射冻结 + 录制启动</td><td>本提案 + 调研方案 + 术语种子</td></tr><tr><td>M2 技术可行性（Gate 1）</td><td>W2</td><td>ASR baseline 实测完成；若全部候选 CER &gt; 25%，触发范围收缩预案</td><td>ASR baseline 报告（分语种实测指标）</td></tr><tr><td>M3 端到端细线（Gate 2）</td><td>W3</td><td>一段模拟口述可产出报告初稿</td><td>命令行端到端演示记录</td></tr><tr><td>M4 功能完整（Gate 3）</td><td>W5</td><td>F1–F5 可运行 + 2 个报告模板</td><td>MVP PRD 功能冻结（v0.9）、可运行校审界面</td></tr><tr><td>M5 验收通过（Gate 4）</td><td>W6</td><td>AC-01–AC-14 全部执行并记录结果</td><td>验收记录、指标实测、技术设计 v1.0</td></tr><tr><td>M6 最终提交</td><td>W7</td><td>追溯表与决策记录齐备</td><td>追溯表、演示材料、AGENTS.md</td></tr></tbody></table>
+<blockquote>上表为 7 周排期下的精简里程碑。完整任务拆分（WBS）、每周计划、甘特视图、关键路径与风险预案见 <a href="#project-plan">project-plan.md</a> §3–§8；门禁不通过时按该文件 §3 的预案裁剪范围，并在此登记变更原因。</blockquote>
+<hr/>
+<h3>附录 A：本版本未完成项（诚实披露）</h3>
+<ol>
+<li><strong>本项目不设访谈与现场观察环节</strong>，ASSUMPTION-01 至 05 全部未验证，证据来源仅为导师/助教书面确认（尚未获得答复）与公开资料；</li>
+<li>ASR 实测数据尚无，CER ≤ 15% 为课程任务书目标值，非本团队实测结果；</li>
+<li>结构化准确率 ≥ 85% 同为<strong>目标值</strong>，尚无实测；</li>
+<li>医院报告模板样本尚未获取（Q-01）；</li>
+<li>团队角色负责人姓名待填；</li>
+<li>合规审查仅覆盖课程范围内的隐私原则，未做正式法律评估。</li>
+</ol></section>
+<section id="research-plan"><h2>调研方案：MedScribe HK</h2>
+<blockquote><strong>用途</strong>：支撑 <a href="#proposal">proposal.md</a> 第 3 节"证据"章节。本文件属于调研工具，不计入提案篇幅。<br/><strong>版本</strong>：v0.3 · <strong>日期</strong>：2026-10-15 · <strong>负责人</strong>：R3（临床要素与术语库）、R1（项目负责人）<br/><strong>v0.3 变更</strong>：<strong>本项目不设访谈与现场观察环节</strong>。原 §2「访谈方案」改为「导师/助教书面确认方案」，原 §3「现场观察方案」改为「公开资料与模板样本分析」；§1 证据形式、§6 时间安排、§7 引用规则同步改写（见 <a href="#decision-log">decision-log.md</a> D-12）。<br/><strong>v0.2 变更</strong>：按 7 周排期，评测语料规模由 ≥ 2 小时调整为 <strong>1 小时（含 20 分钟冻结回归集）</strong>，录制与标注时间整体前移；见 <a href="#project-plan">project-plan.md</a> §2。</blockquote>
+<hr/>
+<h3>1. 调研目标</h3>
+<blockquote><strong>前提说明（重要）</strong>：本项目<strong>不设访谈环节，也不进入临床现场观察</strong>。证据来源限定为：① 团队向企业导师/助教提交问题清单后获得的<strong>书面确认</strong>；② 公开报告规范与公开医学文本；③ 团队内部的合成语料试标注一致率。因此下表所有证据形式均不含"访谈"。</blockquote>
+<table><thead><tr><th>目标</th><th>对应待验证假设</th><th>需要的证据形式</th><th>状态</th></tr></thead><tbody><tr><td>确认病历书写耗时与流程瓶颈</td><td>ASSUMPTION-01</td><td>导师/助教<strong>书面确认</strong> + 公开文献与报告规范</td><td>待验证</td></tr><tr><td>确认粤英混合口语与术语表达习惯</td><td>ASSUMPTION-02</td><td>导师/助教书面确认 + 团队合成语料术语收集</td><td>待验证</td></tr><tr><td>确认漏项 / 错项实际发生情况</td><td>ASSUMPTION-03</td><td>公开报告规范比对 + 模板样本字段核对</td><td>待验证</td></tr><tr><td>确认口述→SOAP 映射是否可稳定标注</td><td>ASSUMPTION-04</td><td>团队成员<strong>双人试标注一致率</strong>（可自行执行，证据最强）</td><td>待验证</td></tr><tr><td>确认医院可接受的集成方式</td><td>ASSUMPTION-05</td><td>导师/助教书面确认</td><td>待验证</td></tr></tbody></table>
+<hr/>
+<h3>2. 导师/助教书面确认方案（替代原访谈方案）</h3>
+<p><strong>做法</strong>：团队整理一份<strong>书面问题清单</strong>（邮件或书面会议记录形式，非访谈），提交给课程企业导师/助教；由对方书面答复或确认，团队据答复更新假设状态。</p>
+<p><strong>确认对象</strong>：课程企业导师、助教；如涉及临床流程细节，请求其协助确认或指出公开规范出处（<strong>不要求其提供患者信息</strong>）。</p>
+<p><strong>书面问题清单</strong>（对应原 IQ 提纲的验证目标，全部以书面问答形式提交）：</p>
+<table><thead><tr><th>ID</th><th>书面问题</th><th>想验证什么</th></tr></thead><tbody><tr><td>WC-1</td><td>门诊病历从接诊结束到完成书写，通常耗时区间大致是多少？主要瓶颈在哪一步？</td><td>ASSUMPTION-01</td></tr><tr><td>WC-2</td><td>病历中最易漏项或错项的内容通常是哪些类别？</td><td>ASSUMPTION-03</td></tr><tr><td>WC-3</td><td>临床口述中粤语、英语、中英混合的使用比例大致如何？药名/病名习惯如何表达？</td><td>ASSUMPTION-02</td></tr><tr><td>WC-4</td><td>医生对"语音口述生成病历"的主要顾虑是什么？</td><td>风险与阻力</td></tr><tr><td>WC-5</td><td>初稿核对更倾向逐字段确认还是整体浏览？</td><td>F4 校审界面设计</td></tr><tr><td>WC-6</td><td>门诊与出院报告模板的字段差异主要在哪？可否提供脱敏模板样本或字段清单？</td><td>R-03 / 模板定义</td></tr><tr><td>WC-7</td><td>系统输出中哪些错误不可接受、哪些可容忍？</td><td>安全边界</td></tr><tr><td>WC-8</td><td>在无 EHR 对接条件下，导出文件（PDF/JSON）是否满足演示与试用需要？</td><td>ASSUMPTION-05</td></tr></tbody></table>
+<p><strong>记录方式</strong>：每次书面往来存一份记录，含日期、往来方式（邮件/书面会议记录）、原文要点与团队提炼的结论编号（CF-xx）。<strong>禁止</strong>把书面答复改写为"访谈引语"，也不得虚构答复内容；未获答复的问题保持"待验证"。</p>
+<p><strong>隐私与伦理</strong>：书面确认只涉及工作流程与规范，<strong>不收集任何患者个案资料</strong>；引用时匿名化处理，不记录医院名称与可识别信息；未获对方同意不对外公开原文。</p>
+<hr/>
+<h3>3. 公开资料与模板样本分析（替代原现场观察方案）</h3>
+<blockquote>说明：本项目<strong>不进入临床现场观察</strong>。原 OB-1–OB-3 观察项改为通过公开资料与脱敏模板样本做桌面分析，证据强度弱于现场观察，<strong>须在提案中如实标注为限制</strong>。</blockquote>
+<table><thead><tr><th>ID</th><th>分析对象</th><th>记录要点</th></tr></thead><tbody><tr><td>DA-1</td><td>公开病历书写规范 / 报告格式指南</td><td>门诊记录与出院摘要的必填字段、书写顺序</td></tr><tr><td>DA-2</td><td>导师/助教提供的<strong>脱敏</strong>模板样本或字段清单</td><td>哪些字段被跳过、哪些易残留旧信息</td></tr><tr><td>DA-3</td><td>公开医学文本中的口语化表达与常见缩写</td><td>术语表种子（供 WP3 使用）</td></tr></tbody></table>
+<p>分析不涉及任何患者可识别信息；若无法获得模板样本，则依据公开报告规范自行定义字段，并在 <a href="#decision-log">decision-log.md</a> 登记该假设。</p>
+<hr/>
+<h3>4. 模拟口述语料录制脚本（用于 ASR 评测）</h3>
+<p><strong>目的</strong>：在没有真实患者录音的前提下，构造可评测、可复现的测试集。</p>
+<p><strong>规模</strong>：≥ 1 小时（其中 <strong>20 分钟为冻结回归集</strong>，冻结后不再改动），≥ 4 位说话人（尽量男女各半、含至少 1 位粤语母语与 1 位英语母语）。</p>
+<blockquote>规模说明：早期版本计划录制约 2 小时，受 7 周排期与标注人力限制缩减为 1 小时。该规模仍足以<strong>分语种</strong>报告 CER/WER，但混合语种样本量会偏少——此局限须在 baseline 报告中如实说明，不得用平均值掩盖。</blockquote>
+<p><strong>覆盖矩阵</strong>：</p>
+<table><thead><tr><th>维度</th><th>取值</th></tr></thead><tbody><tr><td>语种</td><td>纯粤语 / 纯英语 / 中英混合</td></tr><tr><td>报告类型</td><td>门诊记录、出院摘要、影像报告</td></tr><tr><td>含术语密度</td><td>高（药名 + 剂量 + 检查名）、中、低</td></tr><tr><td>语速</td><td>正常 / 偏快</td></tr><tr><td>环境</td><td>安静诊室、有背景人声</td></tr></tbody></table>
+<p><strong>脚本结构</strong>：每位说话人录制 4 段 × 约 5 分钟，内容由团队依据公开医学文本改写为口语化口述（<strong>不含任何真实患者信息</strong>），并明确声明为"合成的非临床数据"。</p>
+<p><strong>标注规范</strong>：双人独立标注 + 分歧仲裁；标注文本保留口语重复与停顿信息时需在文档中说明处理规则。</p>
+<hr/>
+<h3>5. 评测指标定义（避免含糊）</h3>
+<table><thead><tr><th>指标</th><th>定义</th><th>报告方式</th></tr></thead><tbody><tr><td>CER（中文部分）</td><td>字符级编辑距离 / 参考文本字符数</td><td>按语种分列报告</td></tr><tr><td>WER（英文部分）</td><td>词级编辑距离 / 参考文本词数</td><td>按语种分列报告</td></tr><tr><td>混合段</td><td>同一句内切换语种时单独统计</td><td>单独列出一行</td></tr><tr><td>术语命中率</td><td>关键医学术语（词表命中项）正确转写比例</td><td>按药品名 / 病名 / 检查名分组</td></tr><tr><td>结构化初稿准确率</td><td>按字段级评分量表计算（满分 / 实际得分）</td><td>见 <a href="#mvp-prd">mvp-prd.md</a> 第 7 节</td></tr></tbody></table>
+<blockquote>注意：<strong>不得</strong>把不同语种的错误率平均成一个数字，也不得只报告最好语种的结果。</blockquote>
+<hr/>
+<h3>6. 时间安排</h3>
+<table><thead><tr><th>周次</th><th>工作</th><th>产出</th></tr></thead><tbody><tr><td>W1</td><td>整理并提交导师/助教<strong>书面问题清单</strong>（WC-1–WC-8）、请求脱敏模板样本、启动语料录制</td><td>本文件 v0.3、语料录制已启动</td></tr><tr><td>W1–W2</td><td>完成录制模拟语料（≥ 1 小时）并双人标注 + 分歧仲裁</td><td>评测语料 + 参考文本</td></tr><tr><td>W2</td><td>收集书面答复并更新假设状态（ASSUMPTION-01–05）；桌面分析公开规范与模板样本（DA-1–DA-3）</td><td>书面确认记录（CF-xx）+ 假设状态更新</td></tr><tr><td>W2 末</td><td>ASR baseline 评测</td><td>baseline 报告（含分语种实测指标）</td></tr><tr><td>W2 末</td><td>更新 proposal 的证据章节与假设状态</td><td>proposal v0.3</td></tr></tbody></table>
+<blockquote>时间安排已按 7 周排期前移，与 <a href="#project-plan">project-plan.md</a> §4–§5 中的 T1.2（书面确认）、T2.1–T2.4（录制与评测）、T3.1（术语库种子）一致。</blockquote>
+<hr/>
+<h3>7. 证据写入规则（团队约定）</h3>
+<ol>
+<li><strong>书面确认</strong>必须是真实往来记录，并标注日期与往来方式（邮件/书面会议记录）；<strong>禁止</strong>把书面答复改写为访谈引语或润色成更"漂亮"的说法，也不得虚构答复人或答复内容。</li>
+<li>未完成的调研一律保留为假设，并在文档中标注"待验证"；<strong>不得</strong>用推测填补缺失证据。</li>
+<li>每条假设必须有明确的责任人与验证方式；验证完成后更新状态（已确认 / 已否定 / 仍待验证）。</li>
+<li>假设被否定时，<strong>不删除原假设</strong>，改为记录否定结论与依据，便于追溯范围变化。</li>
+</ol></section>
+<section id="mvp-prd"><h2>MVP 产品需求文档：MedScribe HK</h2>
+<blockquote><strong>阶段</strong>：MVP PRD（阶段 2）<br/><strong>版本</strong>：v0.3 · <strong>日期</strong>：2026-10-15 · <strong>状态</strong>：草案，待第一个原型完成后定稿<br/><strong>v0.3 变更</strong>：本项目<strong>不设访谈环节</strong>，Q-05 的决定依据改为团队走查与导师/助教书面确认；篇幅说明同步调整；需求编号 FR/BR/NFR/AC 未变。<br/><strong>v0.2 变更</strong>：周期与评测语料规模随 7 周排期同步更新（见 §7.3、§10.1）；需求编号 FR/BR/NFR/AC 未变。<br/><strong>上游文档</strong>：<a href="#proposal">proposal.md</a> · <strong>下游文档</strong>：<a href="#technical-design">technical-design.md</a><br/><strong>建议篇幅</strong>：3–5 页（不含调研方案、原型图片与附录；本项目不含访谈记录）</blockquote>
+<hr/>
+<h3>1. 概述与用户</h3>
+<h4>1.1 问题回顾</h4>
+<p>香港临床医生需要在有限时间内完成病历与报告书写，而其口语表达普遍为<strong>粤语、英语与中英混合医学术语</strong>。现有工具缺少"多语言转写 + 临床要素结构化 + 模板化报告 + 人工校审"的完整闭环（详见 <a href="#proposal">proposal.md</a> §4.2）。</p>
+<h4>1.2 目标用户</h4>
+<table><thead><tr><th>用户</th><th>需求</th><th>在本 MVP 中的角色</th></tr></thead><tbody><tr><td>门诊 / 住院医生（主要）</td><td>用最短时间把口述变成可提交的病历初稿</td><td>唯一操作者：录音、校审、签署、导出</td></tr><tr><td>病案室 / 质控人员（次要）</td><td>病历字段完整、格式合规</td><td>MVP 仅通过导出格式间接服务，无独立界面</td></tr><tr><td>患者（受影响方）</td><td>数据不被滥用</td><td>非操作者；由隐私与数据保留规则保护</td></tr></tbody></table>
+<h4>1.3 预期价值</h4>
+<p>将一段 3–5 分钟的口述，转化为一份<strong>医生可在 1 分钟内完成审阅</strong>的结构化报告初稿，且初稿中每个临床要素都能追溯到原始音频片段。</p>
+<h4>1.4 与提案证据的关联</h4>
+<p>本 PRD 依赖的假设（ASSUMPTION-01 至 05）及其验证状态见 <a href="#proposal">proposal.md</a> §3.2。<strong>本版本中相关假设尚未验证</strong>，因此以下需求中的量化目标均为待实测确认的目标值，而非已达成结果。</p>
+<hr/>
+<h3>2. MVP 范围</h3>
+<p>MVP 包含 <strong>5 个核心功能</strong>，共同构成一条完整用户任务；任何一项缺失都会导致该任务不成立。</p>
+<table><thead><tr><th>编号</th><th>核心功能</th><th>为什么必须包含</th></tr></thead><tbody><tr><td><strong>F1</strong></td><td>会话录音 + 多语言 ASR 转写（粤 / 英 / 中混合，含医学术语增强）</td><td>是整个链路的输入；没有可读的转写文本，后续全部不成立</td></tr><tr><td><strong>F2</strong></td><td>临床要素抽取（Subjective / Objective / Assessment / Plan）</td><td>把连续口语变成有结构的临床信息，是"能用的病历"与"一堆文字"的分界</td></tr><tr><td><strong>F3</strong></td><td>模板化结构化报告生成（按报告类型选择模板）</td><td>医生要交付的是符合规范的报告，而非自由文本；模板决定字段与顺序</td></tr><tr><td><strong>F4</strong></td><td>医生校审界面（逐字段查看 / 编辑 / 采纳 / 拒绝 / 签署）</td><td>临床安全的必要环节：AI 输出必须经医生确认才能成为病历</td></tr><tr><td><strong>F5</strong></td><td>术语库管理 + 会话本地存档</td><td>支撑 F1/F2 的领域词表；同时提供可复现的评估与回归测试数据</td></tr></tbody></table>
+<p><strong>范围取舍原则</strong>：先跑通"一条端到端细线"（一个报告类型、一个科室模板、一种语料组合），再横向扩展模板与语种覆盖。</p>
+<hr/>
+<h3>3. 明确排除项（Out of Scope）</h3>
+<table><thead><tr><th>排除项</th><th>原因</th></tr></thead><tbody><tr><td>真实患者数据接入</td><td>合规与隐私风险超出课程项目可控范围；MVP 使用合成的模拟口述语料</td></tr><tr><td>EHR / eHRSS 实时对接（HL7 FHIR API 写入）</td><td>需要医院侧授权与接口文档，周期不可控；MVP 以导出文本 + JSON 替代（见 FR-09）</td></tr><tr><td>移动端 App</td><td>与 MVP 用户任务无关，Web 界面已足够验证核心价值</td></tr><tr><td>多说话人分离（多人查房场景）</td><td>显著提高技术难度；MVP 限定单人连续口述</td></tr><tr><td>模型微调（fine-tuning）</td><td>需要大规模标注数据与算力；MVP 先用提示工程 + 术语库，微调列入长期计划</td></tr><tr><td>多专科模板全覆盖</td><td>模板适配能力通过 2–3 个模板验证即可证明可行性；穷举无额外学习价值</td></tr><tr><td>用户账号体系 / 单点登录</td><td>MVP 为单机单用户或演示角色模式；系统不做权限分级（见技术设计 §8）</td></tr><tr><td>公网部署与多租户</td><td>本地运行即可满足课程要求，且避免患者数据外流</td></tr><tr><td>自动诊断或治疗建议</td><td>超出产品定位，存在临床与法律风险；系统只做"整理"，不做"判断"</td></tr></tbody></table>
+<hr/>
+<h3>4. 用户旅程与原型</h3>
+<h4>4.1 端到端主流程</h4>
+<pre><code>[S1 新建会话] → [S2 口述录音] → [S3 转写结果核对]
+                                        ↓
+[E 导出/粘贴] ← [S5 校审与签署] ← [S4 结构化初稿 + 模板选择]
+                        ↑
+              （缺失要素提示 / 低置信度标记）</code></pre>
+<h4>4.2 关键界面与交互</h4>
+<table><thead><tr><th>界面</th><th>主要元素</th><th>关键决策点</th></tr></thead><tbody><tr><td><strong>S1 会话首页</strong></td><td>新建会话、历史会话列表（本地）、术语库入口</td><td>是否需要继续上次未完成会话</td></tr><tr><td><strong>S2 录音页</strong></td><td>录音按钮、时长计时、音量指示、可选实时字幕开关、暂停/继续</td><td>是否允许超时自动停止（见 BR-01）</td></tr><tr><td><strong>S3 转写核对页</strong></td><td>带时间戳的分段转写文本、每段语种标签、低置信度高亮、手动修正框</td><td>是否接受转写直接进入抽取（低置信度段落建议先修正）</td></tr><tr><td><strong>S4 结构化初稿页</strong></td><td>左侧 SOAP 四栏，右侧模板选择器（门诊记录 / 出院摘要 / 影像报告）</td><td>模板选错时需可切换并保留已确认内容</td></tr><tr><td><strong>S5 校审页</strong></td><td>字段卡片：AI 值 + 音频跳转按钮 + 采纳/编辑/拒绝；未确认项计数；签署按钮</td><td>存在未确认字段时禁止签署（BR-10）</td></tr><tr><td><strong>E 导出页</strong></td><td>预览成品、复制为纯文本、下载 PDF、下载 JSON</td><td>导出后会话锁定（BR-11）</td></tr></tbody></table>
+<h4>4.3 重要决策点说明</h4>
+<ol>
+<li><strong>录音结束后的处理时机</strong>：MVP 采用"录音结束后一次性提交"（准实时），不做逐字流式转写。理由：降低复杂度，避免在音频不完整时反复触发抽取与生成。</li>
+<li><strong>模板切换时机</strong>：允许在 S4 重新选择模板并重新生成；已校审字段的修改以<strong>字段级差异</strong>保留，不要求医生重做。</li>
+<li><strong>要素缺失处理</strong>：若口述中未提及某必要字段（如过敏史），系统<strong>标记为"未提及"并要求医生确认</strong>，绝不自动填充推测内容（BR-03）。</li>
+</ol>
+<hr/>
+<h3>5. 功能需求</h3>
+<blockquote>每条需求均使用稳定 ID，便于在技术设计与测试用例中交叉引用。</blockquote>
+<table><thead><tr><th>ID</th><th>需求</th><th>可观察的预期行为</th></tr></thead><tbody><tr><td><strong>FR-01</strong></td><td>会话创建与录音</td><td>用户可新建会话并录制音频；录音过程中显示已录时长；暂停与继续不丢失已录内容；结束后生成一个本地音频文件</td></tr><tr><td><strong>FR-02</strong></td><td>多语言转写</td><td>对 ≥ 10 秒的有效音频，系统输出带时间戳的分段文本；每段标注识别语种（粤 / 英 / 混合）；对置信度低于阈值（默认 0.6，可配置）的片段加高亮标记</td></tr><tr><td><strong>FR-03</strong></td><td>术语纠正</td><td>转写文本中命中术语库的词条按下述优先级替换：<strong>术语库精确匹配 &gt; 术语库模糊匹配（编辑距离 ≤ 2）&gt; 原始 ASR 输出</strong>；替换行为在界面上可见并可一键撤销</td></tr><tr><td><strong>FR-04</strong></td><td>临床要素抽取</td><td>系统把转写文本划分为 S / O / A / P 四类要素；每个要素必须携带<strong>指向原始转写片段的引用</strong>（片段 ID + 时间戳）；无法归类的内容进入"未分类"区，不丢弃</td></tr><tr><td><strong>FR-05</strong></td><td>模板化报告生成</td><td>用户选择模板后，系统按模板字段顺序生成报告初稿；模板中未被口述覆盖的字段显示为"未提及"占位，而非空白或猜测内容</td></tr><tr><td><strong>FR-06</strong></td><td>缺失与风险提示</td><td>若模板要求的必填字段在口述中缺失，界面显示缺失清单；若生成内容与音频原文存在明显不一致（如药名或剂量不匹配），标记为"待核实"</td></tr><tr><td><strong>FR-07</strong></td><td>逐字段校审</td><td>医生对每个字段可执行"采纳 / 编辑 / 拒绝"；系统保留 AI 原始值与编辑后值的差异记录；每个字段可一键跳转到对应音频时间点</td></tr><tr><td><strong>FR-08</strong></td><td>签署</td><td>所有必填字段均已确认（采纳或编辑）后，"签署"按钮可用；签署记录包含时间戳与操作者标识（演示角色）</td></tr><tr><td><strong>FR-09</strong></td><td>导出</td><td>支持三种导出：纯文本（可直接粘贴进 EHR）、PDF（含模板排版）、JSON（字段级结构，含来源引用）。导出后该字段内容标记为锁定</td></tr><tr><td><strong>FR-10</strong></td><td>会话存档与重放</td><td>历史会话可重新打开，查看转写、抽取结果、校审差异与导出记录；支持按会话删除（见 BR-12）</td></tr></tbody></table>
+<hr/>
+<h3>6. 业务规则与边界情况</h3>
+<h4>6.1 业务规则</h4>
+<table><thead><tr><th>ID</th><th>规则</th></tr></thead><tbody><tr><td>BR-01</td><td>单次录音上限 15 分钟；达到上限时自动停止并提示，不丢弃已录内容。长度超过阈值的会话在转写时按段落切分处理</td></tr><tr><td>BR-02</td><td>有效音频定义为时长 ≥ 10 秒且非静音（信噪比不足时提示重新录制）</td></tr><tr><td>BR-03</td><td><strong>禁止编造</strong>：任何未在口述中出现的临床内容，一律以"未提及"呈现；系统不得推断诊断、剂量或过敏史</td></tr><tr><td>BR-04</td><td>术语库优先级：精确匹配 &gt; 模糊匹配（编辑距离 ≤ 2）&gt; 原始输出；术语库更新后需可重新运行纠正（可复现）</td></tr><tr><td>BR-05</td><td>药物名称与剂量必须以音频原文为依据；若 ASR 结果与术语库药名冲突，标为"待核实"而非自动替换</td></tr><tr><td>BR-06</td><td>模板缺失时的回退：若所选模板未注册，系统给出提示并回退到"通用 SOAP 模板"，同时记录该事件</td></tr><tr><td>BR-07</td><td>模板中的字段分为"必填"与"可选"；必填字段缺失即触发 FR-06 的缺失提示</td></tr><tr><td>BR-08</td><td>中文与英文输出规则：报告正文默认保留英文医学表达（对齐香港病历习惯），可在导出时选择"中英对照"模式</td></tr><tr><td>BR-09</td><td>低置信度片段默认不参与自动要素抽取的最终定稿，需医生在 S3 确认或修正后再进入 S4</td></tr><tr><td>BR-10</td><td>存在未确认的必填字段时，禁止签署；导出同样被阻止</td></tr><tr><td>BR-11</td><td>签署并导出后，报告内容锁定为只读；如需修改必须"另建修订版本"，原版本保留</td></tr><tr><td>BR-12</td><td>数据保留：会话默认本地保存；提供"删除会话"功能，删除后音频、转写与报告一并移除，并在存档中记录删除事件</td></tr></tbody></table>
+<h4>6.2 边界与异常情况</h4>
+<table><thead><tr><th>场景</th><th>期望行为</th></tr></thead><tbody><tr><td>空录音 / 纯静音</td><td>提示"未检测到有效语音"，不进入转写流程，不计入评测数据</td></tr><tr><td>极短录音（&lt; 10 秒）</td><td>允许录音但提示过短，转写结果标注"结果可能不完整"</td></tr><tr><td>纯粤语且含大量本地俗语</td><td>正常转写；俗语与缩写尽可能进入"未分类"区而非强行归入 SOAP</td></tr><tr><td>口述中缺少 Assessment 或 Plan</td><td>对应字段显示"未提及"，不阻塞流程，但计入缺失提示</td></tr><tr><td>音频中含多人对话</td><td>MVP 不分离说话人；转写结果合并展示，并在界面提示"检测到多人语音，请核对"</td></tr><tr><td>音频中出现患者姓名等可识别信息</td><td>按去标识化规则处理（见 NFR-04），并在界面提示已做处理</td></tr><tr><td>ASR / LLM 服务超时或不可用</td><td>保留音频与已完成步骤，允许重试；不产生半成品报告</td></tr><tr><td>API 配额耗尽</td><td>提示明确错误信息并保留现场，允许切换到本地模型降级路径（若已配置）</td></tr><tr><td>转写文本为空但音频有效</td><td>视为转写失败，记录该样本用于改进，不生成空报告</td></tr><tr><td>模板切换后字段冲突</td><td>保留已确认字段，新模板未覆盖的字段进入"待处理"清单</td></tr></tbody></table>
+<hr/>
+<h3>7. 验收标准</h3>
+<blockquote>验收标准回答"系统是否按规格运行"；是否真正帮助用户由第 9 节的<strong>成功指标</strong>回答。两者不可混淆。</blockquote>
+<h4>7.1 主流程验收</h4>
+<table><thead><tr><th>ID</th><th>关联需求</th><th>验收标准</th></tr></thead><tbody><tr><td>AC-01</td><td>FR-01</td><td>录制一段 ≥ 30 秒音频，暂停后再继续，最终音频文件完整可播放，时长等于实际有效录制时长（误差 ≤ 1 秒）</td></tr><tr><td>AC-02</td><td>FR-02</td><td><strong>Given</strong> 一段 30 秒中英混合模拟口述，<strong>When</strong> 系统完成转写，<strong>Then</strong> 输出分段带时间戳文本，每段语种标签正确率 ≥ 80%，且低置信度片段被高亮</td></tr><tr><td>AC-03</td><td>FR-03</td><td><strong>Given</strong> 音频中出现"Panadol"（术语库条目），<strong>When</strong> ASR 输出为"Panadol"或"pana dol"，<strong>Then</strong> 均被纠正为词表中的规范写法，且界面显示替换记录、可撤销</td></tr><tr><td>AC-04</td><td>FR-04</td><td><strong>Given</strong> 一段包含明确 S/O/A/P 的口述，<strong>When</strong> 执行抽取，<strong>Then</strong> 每一类要素均带指向原始片段的引用，且不存在丢失内容的语句（未归类内容出现在"未分类"区）</td></tr><tr><td>AC-05</td><td>FR-05</td><td><strong>Given</strong> 选择"门诊记录"模板，<strong>When</strong> 生成初稿，<strong>Then</strong> 字段顺序与模板定义一致；口述未覆盖的字段显示"未提及"</td></tr><tr><td>AC-06</td><td>FR-06</td><td><strong>Given</strong> 口述中未提及过敏史而模板要求必填，<strong>When</strong> 生成初稿，<strong>Then</strong> 界面出现过敏史缺失提示，且该字段<strong>不含任何推测内容</strong></td></tr><tr><td>AC-07</td><td>FR-07</td><td>对任一字段执行"编辑"后，系统保留 AI 原始值与编辑后值的差异；点击字段可跳转到对应音频时间点（误差 ≤ 2 秒）</td></tr><tr><td>AC-08</td><td>FR-08</td><td><strong>Given</strong> 存在 1 个未确认必填字段，<strong>When</strong> 用户尝试签署，<strong>Then</strong> 签署被阻止并给出具体缺失字段名</td></tr><tr><td>AC-09</td><td>FR-09</td><td>完成签署后导出 PDF 与 JSON：PDF 中每个字段与界面显示一致；JSON 中每个字段包含来源引用（片段 ID 与时间戳）</td></tr><tr><td>AC-10</td><td>FR-10</td><td>关闭并重新打开应用后，历史会话仍可打开并完整显示转写、差异与导出记录；执行"删除会话"后该会话不再出现在列表中，且本地文件中已无对应音频</td></tr></tbody></table>
+<h4>7.2 失败与异常验收</h4>
+<table><thead><tr><th>ID</th><th>场景</th><th>期望结果</th></tr></thead><tbody><tr><td>AC-11</td><td>提交纯静音录音</td><td>提示"未检测到有效语音"，不调用 LLM，不生成报告</td></tr><tr><td>AC-12</td><td>模拟 LLM 服务超时</td><td>界面显示明确错误，音频与已完成步骤保留；重试成功后生成报告，不出现半成品</td></tr><tr><td>AC-13</td><td>模拟 ASR 返回空文本</td><td>记录失败样本并提示重录，不生成空报告</td></tr><tr><td>AC-14</td><td>选择未注册模板</td><td>提示模板不可用并回退到通用 SOAP 模板，事件写入日志</td></tr></tbody></table>
+<h4>7.3 量化指标的测量方法（必须可复现）</h4>
+<p><strong>指标 1：ASR 字错率（CER / WER）</strong></p>
+<ul>
+<li>测试集：<code>research-plan.md</code> §4 定义的 ≥ 1 小时合成语料，其中留出 20 分钟作为固定回归集（冻结后不再改动）；</li>
+<li>计算：中文部分按字符编辑距离，英文部分按词编辑距离，<strong>分语种报告</strong>，混合句单独统计；</li>
+<li>报告要求：同时给出平均值与最差语种值；不得只报告最优结果。</li>
+</ul>
+<p><strong>指标 2：结构化初稿准确率</strong></p>
+<ul>
+<li>评分单位：<strong>模板字段</strong>（field-level）；</li>
+<li>评分量表：每个字段 <code>1.0</code> = 内容与参考标注一致；<code>0.5</code> = 内容正确但位置/格式不符（如要素归错栏目）；<code>0.0</code> = 错误、缺失或编造；</li>
+<li>准确率 = Σ字段得分 ÷ 字段总数；</li>
+<li>评分方式：双人独立评分 + 分歧仲裁，抽样 ≥ 20 份报告；评分量表需在评分前冻结并登记版本。</li>
+</ul>
+<hr/>
+<h3>8. 非功能需求</h3>
+<table><thead><tr><th>ID</th><th>类别</th><th>要求</th><th>测试条件（现实可测）</th></tr></thead><tbody><tr><td>NFR-01</td><td>性能</td><td>15 分钟音频的转写与生成本地往返时间 ≤ 3 分钟</td><td>开发机（或指定规格机器）单会话串行执行</td></tr><tr><td>NFR-02</td><td>性能</td><td>单个字段的校审操作（采纳/编辑）界面响应 ≤ 300 ms</td><td>本地无网络干扰环境</td></tr><tr><td>NFR-03</td><td>准确性</td><td>ASR 字错率目标 ≤ 15%（课程任务书目标值，待实测确认）</td><td>按 §7.3 指标 1 方法测量</td></tr><tr><td>NFR-04</td><td>隐私</td><td>音频、转写与报告默认仅存于本地；导出前对常见可识别信息（姓名、身份证号、电话）执行去标识化提示</td><td>用含虚构姓名的测试音频验证</td></tr><tr><td>NFR-05</td><td>隐私</td><td>不使用真实患者数据；所有评测语料为合成数据并在文件名与界面中标注 [SYNTHETIC]</td><td>语料目录抽查</td></tr><tr><td>NFR-06</td><td>安全</td><td>调用外部 API 前必须在界面明确提示"将发送文本到外部服务"，且可在设置中禁用外部调用</td><td>关闭开关后发起请求，应被阻止并提示</td></tr><tr><td>NFR-07</td><td>安全</td><td>校审界面在无操作 15 分钟后锁定当前会话（防止他人误看屏幕）</td><td>手动等待验证</td></tr><tr><td>NFR-08</td><td>可用性</td><td>新用户无需培训即可独立完成一次端到端任务（录音 → 签署 → 导出）</td><td>3 名未参与开发的团队成员独立试用，记录是否需要协助</td></tr><tr><td>NFR-09</td><td>兼容性</td><td>支持最新版 Chrome / Edge 桌面浏览器；屏幕宽度 ≥ 1280 px 时布局不破版</td><td>手动检查两个浏览器</td></tr><tr><td>NFR-10</td><td>可维护性</td><td>术语库与提示词模板以文件形式版本化（带版本号与变更记录）</td><td>检查文件与变更日志</td></tr><tr><td>NFR-11</td><td>成本</td><td>单次完整会话的外部 API 调用成本 ≤ 设定上限，且系统记录累计用量</td><td>查看用量日志（上限值见技术设计 §7）</td></tr><tr><td>NFR-12</td><td>可解释性</td><td>报告中每个字段可追溯到原始音频时间点</td><td>抽查 10 个字段</td></tr></tbody></table>
+<hr/>
+<h3>9. 成功指标与 MVP 完成定义</h3>
+<h4>9.1 成功指标（用户价值层面）</h4>
+<table><thead><tr><th>ID</th><th>指标</th><th>评估方法</th><th>目标值</th></tr></thead><tbody><tr><td>SM-01</td><td>医生可无协助完成端到端任务</td><td>3 名有医学背景的试用者独立操作，观察是否需要人工干预</td><td>≥ 2/3 全程无协助</td></tr><tr><td>SM-02</td><td>校审时间显著短于手工书写</td><td>对比同一段口述：手工整理耗时 vs 校审耗时</td><td>校审耗时 ≤ 手工整理的 50%</td></tr><tr><td>SM-03</td><td>初稿可用度</td><td>统计需修改字段比例</td><td>需修改字段 ≤ 30%</td></tr><tr><td>SM-04</td><td>安全感</td><td>试用者评价中"不敢直接使用"的理由被记录并归类</td><td>不出现"无法察觉的错误"类投诉</td></tr></tbody></table>
+<blockquote>评测方法与目标值在测试开始前登记；结果如实报告，包括未达标项。</blockquote>
+<h4>9.2 MVP 完成定义（可演示）</h4>
+<p>MVP 视为可演示，需同时满足：</p>
+<ol>
+<li>F1–F5 五个核心功能全部可运行；</li>
+<li>AC-01 至 AC-14 全部执行完毕，并记录通过 / 失败结果；</li>
+<li>至少 1 个报告类型（门诊记录）+ 1 个补充类型（出院摘要或影像报告）可完整生成；</li>
+<li>使用合成语料完成一次端到端演示：录音 → 转写 → 抽取 → 生成 → 校审 → 签署 → 导出；</li>
+<li>追溯表（技术设计 §9）中每条 FR 均有对应的验证证据与最终状态。</li>
+</ol>
+<hr/>
+<h3>10. 约束、假设与开放问题</h3>
+<h4>10.1 约束</h4>
+<ul>
+<li>团队 5 人，周期 <strong>7 周</strong>（<a href="#proposal">proposal.md</a> §7、<a href="#project-plan">project-plan.md</a>）；范围已按该周期裁剪（模板限 2 个、语料限 1 小时）；</li>
+<li>不接触真实患者数据；</li>
+<li>MVP 为本地运行的单用户 Web 应用，不做账号体系与公网部署；</li>
+<li>预算上限：外部 API 费用按月设限。</li>
+</ul>
+<h4>10.2 假设</h4>
+<p>沿用 proposal 的 ASSUMPTION-01 至 05；本 PRD 新增：</p>
+<table><thead><tr><th>ID</th><th>假设</th><th>若不成立的影响</th></tr></thead><tbody><tr><td>ASSUMPTION-06</td><td>报告模板字段相对稳定，可用有限模板覆盖演示场景</td><td>模板引擎需重新设计，F3 范围收缩</td></tr><tr><td>ASSUMPTION-07</td><td>医生愿意接受"逐字段确认"的校审方式，而非整体浏览</td><td>F4 交互需改为整体 diff 视图，影响 NFR-08 指标</td></tr></tbody></table>
+<h4>10.3 开放问题</h4>
+<table><thead><tr><th>ID</th><th>问题</th><th>负责人</th><th>下一步行动</th></tr></thead><tbody><tr><td>Q-01</td><td>是否能在 W2 前拿到真实报告模板样本？</td><td>R1</td><td>向企业导师提交书面需求（W1）</td></tr><tr><td>Q-02</td><td>15% CER 目标是按"混合语种合并"还是"分语种"计算？</td><td>R2</td><td>在 baseline 报告中两种口径都给出，供课程评审确认</td></tr><tr><td>Q-03</td><td>校审界面的字段粒度：按 SOAP 大项还是按模板字段？</td><td>R4</td><td>用第一个原型做 A/B 走查，记录用时</td></tr><tr><td>Q-04</td><td>去标识化采用规则匹配还是模型识别？</td><td>R5</td><td>先用规则列表实现，评估漏检率后决定</td></tr><tr><td>Q-05</td><td>是否需要"中英对照"导出模式作为 MVP 必备项？</td><td>R3</td><td>团队内部走查 + 导师/助教书面确认（WC-5/WC-8）后决定；未获答复则不纳入 MVP</td></tr><tr><td>Q-06</td><td>术语库由谁维护、如何更新？</td><td>R3</td><td>制定术语库版本规则（含来源与审核人）</td></tr></tbody></table>
+<hr/>
+<h3>11. AI 功能附加说明</h3>
+<blockquote>依据课程规范 §7.1：产品自身包含 AI 功能时，须额外说明其目的、允许的数据访问、期望输出、失败行为、评估示例与成本限制，并指出需要用户确认的操作。<br/>本产品包含 <strong>3 个 AI 功能</strong>。</blockquote>
+<h4>AI-01 多语言 ASR 转写</h4>
+<table><thead><tr><th>项目</th><th>说明</th></tr></thead><tbody><tr><td><strong>目的</strong></td><td>把粤 / 英 / 中混合的临床口述转成带时间戳文本</td></tr><tr><td><strong>允许的数据访问</strong></td><td>仅当前会话音频；不读取历史会话音频、不读取系统其他文件</td></tr><tr><td><strong>期望输出</strong></td><td>分段文本 + 时间戳 + 语种标签 + 置信度</td></tr><tr><td><strong>失败行为</strong></td><td>超时/空结果 → 提示重试或重录；<strong>不生成</strong>任何替代文本；低置信度片段高亮并要求人工确认（BR-09）</td></tr><tr><td><strong>评估示例</strong></td><td>合成语料回归集 30 分钟，计算分语种 CER/WER 与术语命中率；示例用例见 AC-02、AC-03、AC-13</td></tr><tr><td><strong>成本限制</strong></td><td>单价 × 音频时长的累计预算上限（技术设计 §7）；超限时强制切换本地模型或阻止调用</td></tr><tr><td><strong>需用户确认的操作</strong></td><td>首次启用外部 ASR 服务前必须明确同意（NFR-06）</td></tr></tbody></table>
+<h4>AI-02 临床要素抽取</h4>
+<table><thead><tr><th>项目</th><th>说明</th></tr></thead><tbody><tr><td><strong>目的</strong></td><td>将转写文本划分为 S / O / A / P 并保留来源引用</td></tr><tr><td><strong>允许的数据访问</strong></td><td>仅当前会话的转写文本与术语库；不发送音频，不发送其他会话内容</td></tr><tr><td><strong>期望输出</strong></td><td>结构化要素列表，每项含类别、文本、来源片段 ID 与时间戳；无法归类内容进入"未分类"</td></tr><tr><td><strong>失败行为</strong></td><td>抽取失败 → 保留转写文本、允许重试；不得用默认值填充；<strong>不得推断</strong>未提及内容（BR-03）</td></tr><tr><td><strong>评估示例</strong></td><td>20 份标注样本上计算要素归属准确率与"丢失语句率"；AC-04 覆盖主流程</td></tr><tr><td><strong>成本限制</strong></td><td>单次抽取的 token 上限与调用次数上限</td></tr><tr><td><strong>需用户确认的操作</strong></td><td>抽取结果默认处于"待确认"状态，任何字段进入报告前需医生确认（FR-07）</td></tr></tbody></table>
+<h4>AI-03 结构化报告生成</h4>
+<table><thead><tr><th>项目</th><th>说明</th></tr></thead><tbody><tr><td><strong>目的</strong></td><td>按模板生成符合报告规范的初稿</td></tr><tr><td><strong>允许的数据访问</strong></td><td>当前会话已确认的要素 + 模板定义；禁止访问其他会话</td></tr><tr><td><strong>期望输出</strong></td><td>按模板字段组织的初稿，字段值必须来自要素内容，未覆盖字段为"未提及"</td></tr><tr><td><strong>失败行为</strong></td><td>生成超时或校验失败（如字段缺失、出现无来源内容）→ 阻止输出并提示；<strong>不允许</strong>输出含无来源内容的报告</td></tr><tr><td><strong>评估示例</strong></td><td>按 §7.3 指标 2 的字段级评分量表评测；额外统计"幻觉字段数"（有内容但音频中无依据的字段），目标为 0</td></tr><tr><td><strong>成本限制</strong></td><td>每份报告的生成调用上限（含最多 1 次自动重试）</td></tr><tr><td><strong>需用户确认的操作</strong></td><td>① 模板选择；② 每个字段的采纳/编辑；③ 签署（FR-08）；④ 导出（FR-09）。<strong>系统不得自动签署或自动导出</strong></td></tr></tbody></table>
+<h4>通用原则</h4>
+<ol>
+<li>AI 生成内容一律以"初稿"呈现，界面必须持续显示"待医生校审"状态标识；</li>
+<li>每个 AI 输出字段都必须可追溯到来源（音频时间点或要素 ID），无法追溯的内容不得进入报告；</li>
+<li>提示词模板与模型版本号需记录在报告元数据中，便于复现与追责。</li>
+</ol></section>
+<section id="technical-design"><h2>简要技术设计：MedScribe HK</h2>
+<blockquote><strong>阶段</strong>：Brief Technical Design（阶段 3）<br/><strong>版本</strong>：v0.1 · <strong>日期</strong>：2026-10-14 · <strong>状态</strong>：初始草图，将于第一个原型后细化<br/><strong>上游文档</strong>：<a href="#proposal">proposal.md</a> · <a href="#mvp-prd">mvp-prd.md</a><br/><strong>建议篇幅</strong>：2–3 页（不含附录与追溯表）</blockquote>
+<hr/>
+<h3>1. 系统结构</h3>
+<h4>1.1 组件图</h4>
+<pre><code>┌──────────────────────────────────────────────────────────────────┐
+│                浏览器（医生工作站，本地 localhost）                │
+│  S1 会话  |  S2 录音  |  S3 转写核对  |  S4/S5 初稿与校审  |  E 导出 │
+└───────────────────────────┬──────────────────────────────────────┘
+                            │ HTTP (JSON)
+┌───────────────────────────▼──────────────────────────────────────┐
+│                     后端服务（Python 单体应用）                    │
+│  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌─────────┐ │
+│  │ 音频管理  │ │ ASR 适配层│ │ 术语纠正  │ │ 要素抽取  │ │ 报告生成 │ │
+│  │ (FR-01)  │ │ (FR-02)  │ │ (FR-03)  │ │ (FR-04)  │ │(FR-05/06)│ │
+│  └──────────┘ └──────────┘ └──────────┘ └──────────┘ └─────────┘ │
+│  ┌───────────────────────┐ ┌──────────────┐ ┌──────────────────┐ │
+│  │ 校审与签署 (FR-07/08)  │ │ 导出 (FR-09)  │ │ 存档与审计(FR-10)│ │
+│  └───────────────────────┘ └──────────────┘ └──────────────────┘ │
+└───────┬───────────────────────┬──────────────────────┬───────────┘
+        │                       │                      │
+   ┌────▼─────┐          ┌──────▼───────┐        ┌─────▼──────┐
+   │ 本地文件  │          │  SQLite      │        │ 外部服务   │
+   │ 音频/导出 │          │  会话与结构化 │        │ ASR / LLM  │
+   │ (原始数据)│          │  数据        │        │ (可选, 可控)│
+   └──────────┘          └──────────────┘        └────────────┘
+                                    ▲
+                       ┌────────────┴────────────┐
+                       │ 术语库 / 模板文件（版本化）│
+                       └─────────────────────────┘</code></pre>
+<h4>1.2 组件职责</h4>
+<table><thead><tr><th>组件</th><th>职责</th><th>支撑需求</th><th>为什么需要</th><th>更简单的做法？</th><th>失败时会怎样</th></tr></thead><tbody><tr><td>音频管理</td><td>录音上传、时长与静音校验、文件命名</td><td>FR-01, BR-01/02</td><td>一切数据流的起点</td><td>直接由前端存浏览器，但无法持久化</td><td>提示重录，不进入后续流程</td></tr><tr><td>ASR 适配层</td><td>统一本地模型与云 API 的调用接口、输出分段与置信度</td><td>FR-02</td><td>需在成本/隐私/精度间切换方案</td><td>只接一个引擎，但会失去降级路径</td><td>提示重试；低置信度片段标黄，人工核对</td></tr><tr><td>术语纠正</td><td>词表匹配与替换、保留可撤销记录</td><td>FR-03, BR-04</td><td>混合语种下 ASR 对药名/病名最不可靠</td><td>可由医生手改，但耗时且不可复现</td><td>保留原始文本，仅记录未纠正</td></tr><tr><td>要素抽取</td><td>转写文本 → S/O/A/P + 来源引用</td><td>FR-04</td><td>结构化是后续模板生成的前提</td><td>正则规则可覆盖部分模式，但覆盖不足</td><td>保留转写文本，允许重试</td></tr><tr><td>报告生成</td><td>模板 + 要素 → 字段化初稿</td><td>FR-05, FR-06</td><td>用户最终交付物</td><td>直接拼字符串，但无法适配模板与校验</td><td>校验不通过则不输出，报告保持草稿态</td></tr><tr><td>校审与签署</td><td>字段级采纳/编辑/拒绝、签署门禁</td><td>FR-07, FR-08</td><td>临床安全的必要环节</td><td>只有整体"确认"按钮，但无法追溯</td><td>未确认字段禁止签署（BR-10）</td></tr><tr><td>导出</td><td>文本 / PDF / JSON</td><td>FR-09</td><td>与 EHR 的替代集成方式</td><td>只导出文本，但会丢失字段追溯信息</td><td>导出失败不影响已保存数据</td></tr><tr><td>存档与审计</td><td>会话历史、删除、事件日志</td><td>FR-10, BR-12</td><td>可复现与合规追溯</td><td>无存档，但无法回归测试</td><td>只读历史不可用时不影响新会话</td></tr></tbody></table>
+<hr/>
+<h3>2. 技术选择</h3>
+<table><thead><tr><th>层</th><th>选择</th><th>理由</th><th>更简单的替代方案</th></tr></thead><tbody><tr><td>前端</td><td>React + Vite + TypeScript</td><td>校审界面交互状态多（字段级编辑、差异显示），组件化便于维护</td><td>单页原生 HTML + 少量 JS，或 Streamlit；若进度紧张可退化为 Streamlit 原型</td></tr><tr><td>后端</td><td>Python + FastAPI</td><td>与 ASR/LLM 生态同为 Python；自动生成接口文档便于团队协作</td><td>纯脚本 + 命令行，但无法支持界面对话</td></tr><tr><td>ASR</td><td><strong>本地 faster-whisper 为主，云 ASR API 为可选增强</strong></td><td>本地运行满足隐私约束（NFR-04），成本可控；云 API 用于精度对比</td><td>仅用云 API：精度可能更高，但违反"数据不出本机"的默认假设</td></tr><tr><td>语言模型</td><td>通用 LLM API（结构化 JSON 输出）+ 提示词约束</td><td>团队精力应放在术语、模板与校审闭环，而非模型训练</td><td>本地小模型：隐私最好，但中文医学结构化质量需实测，可能不达标</td></tr><tr><td>输出约束</td><td>JSON Schema + 后端校验（pydantic）</td><td>防止 LLM 返回自由文本导致字段缺失（BR-03、AI-03 失败行为）</td><td>纯提示词要求"只输出 JSON"，但无法拦截违规输出</td></tr><tr><td>存储</td><td>SQLite（结构化）+ 本地文件系统（音频、导出）</td><td>单机单用户场景足够，零运维</td><td>纯 JSON 文件：简单但并发与查询能力弱</td></tr><tr><td>术语库</td><td>版本化 JSON/CSV 文件（可导入 SQLite 加速）</td><td>便于人工审核与 diff，符合 NFR-10</td><td>直接写进代码常量，但不可维护与回溯</td></tr><tr><td>评测</td><td>Python + 编辑距离库（如 <code>jiwer</code>）计算 CER/WER</td><td>与学术定义一致，结果可复现</td><td>手工抽样比对，但无法覆盖 1 小时语料</td></tr></tbody></table>
+<p><strong>关键取舍说明</strong></p>
+<ol>
+<li><strong>准实时而非流式</strong>：录音结束后统一处理，避免在音频不完整时反复触发抽取与生成（PRD §4.3）。</li>
+<li><strong>不做微调</strong>：MVP 阶段用提示工程 + 术语库 + 模板约束达到可验证效果；微调需要数据规模，列入长期计划（PRD §3）。</li>
+<li><strong>模板用声明式定义</strong>：模板以 JSON 描述字段（key/label/required/order），新增报告类型只需新增文件，不改代码。</li>
+</ol>
+<hr/>
+<h3>3. 数据模型</h3>
+<h4>3.1 主要实体</h4>
+<table><thead><tr><th>实体</th><th>关键字段</th><th>关系</th></tr></thead><tbody><tr><td><code>Session</code></td><td>id, created_at, status, audio_path, duration_ms, deleted_at</td><td>1 : N <code>TranscriptSegment</code>、<code>ClinicalElement</code>、<code>GeneratedReport</code></td></tr><tr><td><code>TranscriptSegment</code></td><td>id, session_id, start_ms, end_ms, text_raw, text_corrected, lang_tag, confidence</td><td>N : 1 <code>Session</code>；被 <code>ClinicalElement.source_segment_ids</code> 引用</td></tr><tr><td><code>TermEntry</code></td><td>id, term_norm, aliases[], category(drug/disease/exam/abbr), source, version, reviewed_by</td><td>独立词表；被 <code>TermCorrection</code> 引用</td></tr><tr><td><code>TermCorrection</code></td><td>id, segment_id, before, after, rule(exact/fuzzy), term_id, reversible</td><td>N : 1 <code>TranscriptSegment</code></td></tr><tr><td><code>ClinicalElement</code></td><td>id, session_id, type(S/O/A/P/uncategorized), text, source_segment_ids[], state(pending/confirmed/edited/rejected)</td><td>N : 1 <code>Session</code></td></tr><tr><td><code>ReportTemplate</code></td><td>id, name, specialty, version, fields[{key,label,required,order,type}]</td><td>文件化定义，带版本号</td></tr><tr><td><code>GeneratedReport</code></td><td>id, session_id, template_id, model_meta(model, prompt_version), status(draft/signed), signed_at, signed_by</td><td>N : 1 <code>Session</code>；1 : N <code>FieldReview</code>、<code>ExportRecord</code></td></tr><tr><td><code>FieldReview</code></td><td>id, report_id, field_key, ai_value, final_value, action(accept/edit/reject), reviewed_at</td><td>N : 1 <code>GeneratedReport</code></td></tr><tr><td><code>ExportRecord</code></td><td>id, report_id, format, path, exported_at</td><td>N : 1 <code>GeneratedReport</code></td></tr><tr><td><code>EvalRun</code></td><td>id, dataset_version, metric, value, worst_language, notes</td><td>独立记录，用于回归</td></tr><tr><td><code>AuditEvent</code></td><td>id, session_id, event_type, payload, at</td><td>记录删除、外部调用、签署等关键事件</td></tr></tbody></table>
+<h4>3.2 持久化与访问规则</h4>
+<ul>
+<li><strong>默认全部本地</strong>：SQLite 数据库文件 + <code>data/audio/</code>、<code>data/exports/</code> 目录；无云端同步。</li>
+<li><strong>外部访问边界</strong>：仅当用户显式启用时，才把<strong>文本</strong>（不发送音频）发送给外部 LLM；外部 ASR 需单独启用（NFR-06）。</li>
+<li><strong>可识别信息</strong>：在写库前对转写文本执行一次规则化去标识化（姓名/电话/证件号模式），处理结果记入 <code>AuditEvent</code>（NFR-04、Q-04）。</li>
+<li><strong>删除语义</strong>：删除会话为级联删除，音频文件同步物理移除（BR-12、AC-10）。</li>
+<li><strong>版本化</strong>：<code>ReportTemplate</code> 与 <code>TermEntry</code> 均带 <code>version</code>；<code>GeneratedReport.model_meta</code> 记录生成时使用的模板与提示词版本，保证可复现。</li>
+</ul>
+<hr/>
+<h3>4. 关键实现方法</h3>
+<h4>4.1 需求到模块的映射</h4>
+<table><thead><tr><th>需求</th><th>实现要点</th></tr></thead><tbody><tr><td>FR-01</td><td>前端 MediaRecorder 采集音频（webm/opus）→ 上传 → 后端用 ffmpeg 转为 16 kHz 单声道 wav；校验时长与静音（能量阈值）</td></tr><tr><td>FR-02</td><td>ASR 适配层接口 <code>transcribe(audio_path) -&gt; [Segment]</code>；本地用 faster-whisper（按段落切分处理长音频），可选云 API；输出统一映射为 <code>TranscriptSegment</code>，语种标签由模型 language probability + 段内混合检测规则产生</td></tr><tr><td>FR-03</td><td>归一化（转小写、去标点、全角转半角）→ 精确匹配 → 模糊匹配（编辑距离 ≤ 2，仅对词长 ≥ 5 的词启用，避免误替换短词）→ 记录 <code>TermCorrection</code></td></tr><tr><td>FR-04</td><td>分块 + 滑动窗口调用 LLM，要求输出固定 schema；每段带 <code>segment_id</code>，模型必须回填来源 ID；后端校验来源 ID 是否真实存在，不存在则标记为"待核实"</td></tr><tr><td>FR-05</td><td>模板引擎读取 <code>ReportTemplate.fields</code>，把 <code>ClinicalElement</code>（仅 state ∈ {confirmed, edited}）填入对应字段；未覆盖字段填"未提及"</td></tr><tr><td>FR-06</td><td>生成后用规则校验：① 必填字段是否为空；② 字段文本是否能在来源片段中找到依据（关键词/相似度阈值）；不通过则标"待核实"，<strong>不阻断显示但阻断签署</strong></td></tr><tr><td>FR-07</td><td>前端字段卡片直接读取 <code>FieldReview</code>；每次操作写入一条记录，保留 <code>ai_value</code> 不变（差异可回溯，AC-07）</td></tr><tr><td>FR-08</td><td>签署前校验：所有 <code>required</code> 字段的 <code>FieldReview.action ∈ {accept, edit}</code>；通过后 <code>status = signed</code></td></tr><tr><td>FR-09</td><td>文本导出：字段拼接为可粘贴文本；PDF：模板排版渲染；JSON：字段 + <code>source_segment_ids</code> + 时间戳</td></tr><tr><td>FR-10</td><td>会话列表读取 SQLite；删除触发级联删除并写 <code>AuditEvent</code></td></tr></tbody></table>
+<h4>4.2 主要接口（最小集合，非完整 API 规范）</h4>
+<table><thead><tr><th>方法</th><th>路径</th><th>说明</th></tr></thead><tbody><tr><td>POST</td><td><code>/sessions</code></td><td>新建会话</td></tr><tr><td>POST</td><td><code>/sessions/{id}/audio</code></td><td>上传录音，返回时长与校验结果</td></tr><tr><td>POST</td><td><code>/sessions/{id}/transcribe</code></td><td>执行 ASR，返回分段转写</td></tr><tr><td>PATCH</td><td><code>/segments/{id}</code></td><td>人工修正转写片段</td></tr><tr><td>POST</td><td><code>/sessions/{id}/correct-terms</code></td><td>运行术语纠正，返回替换记录</td></tr><tr><td>POST</td><td><code>/sessions/{id}/extract</code></td><td>抽取 S/O/A/P 要素</td></tr><tr><td>GET</td><td><code>/templates</code></td><td>列出可用模板</td></tr><tr><td>POST</td><td><code>/sessions/{id}/generate</code></td><td>指定模板生成初稿</td></tr><tr><td>PATCH</td><td><code>/reports/{id}/fields/{key}</code></td><td>字段校审（采纳/编辑/拒绝）</td></tr><tr><td>POST</td><td><code>/reports/{id}/sign</code></td><td>签署（含必填校验）</td></tr><tr><td>POST</td><td><code>/reports/{id}/export</code></td><td>导出 text / pdf / json</td></tr></tbody></table>
+<h4>4.3 LLM 调用结构（防止幻觉的具体手段）</h4>
+<pre><code>system:   你是病历整理助手。只能使用给定转写文本中的信息；
+          输出必须严格符合 schema；无法确定的内容写 &quot;未提及&quot;；
+          禁止推断诊断、剂量、过敏史。
+few-shot: 1–2 个&quot;转写 → JSON&quot;示例（含一条故意缺失的字段，示范写 &quot;未提及&quot;）
+user:     [S-001 | 00:12-00:19] …口述片段…
+          [S-002 | 00:19-00:27] …
+          schema: { subjective: [...], objective: [...], assessment: [...], plan: [...] }
+后处理:   JSON Schema 校验 → 来源 ID 校验 → 失败则重试 1 次 → 仍失败则报错，不输出</code></pre>
+<hr/>
+<h3>5. 失败处理</h3>
+<table><thead><tr><th>失败情形</th><th>系统行为</th><th>用户可见反馈</th></tr></thead><tbody><tr><td>音频为空 / 静音</td><td>不调用 ASR，不调用 LLM</td><td>"未检测到有效语音，请重新录制"（AC-11）</td></tr><tr><td>ASR 返回空文本</td><td>记录失败样本，保存音频</td><td>"转写失败，请重试或重录"（AC-13）</td></tr><tr><td>ASR / LLM 超时</td><td>保留已完成步骤，允许重试；不产生半成品报告</td><td>明确错误信息 + 重试按钮（AC-12）</td></tr><tr><td>LLM 输出不符合 schema</td><td>自动重试 1 次；仍失败则中止本次生成</td><td>"生成失败，未修改任何已确认内容"</td></tr><tr><td>LLM 输出含无来源内容</td><td>标为"待核实"并计入幻觉统计；<strong>禁止签署</strong>直至处理</td><td>字段旁红色标记（AI-03 评估指标：幻觉字段数 = 0）</td></tr><tr><td>模板不存在 / 版本不匹配</td><td>回退到通用 SOAP 模板，记录事件</td><td>提示"模板不可用，已使用通用模板"（AC-14）</td></tr><tr><td>术语库文件损坏</td><td>跳过纠正步骤，保留原始转写</td><td>提示"术语库加载失败，结果未做术语纠正"</td></tr><tr><td>外部 API 配额耗尽 / 密钥失效</td><td>阻止调用，保留现场；若配置了本地模型则提示切换</td><td>明确错误 + 降级说明</td></tr><tr><td>磁盘写入失败（音频/导出）</td><td>中止并保留内存中数据，提示另存</td><td>错误信息 + 路径</td></tr><tr><td>数据库损坏</td><td>启动时自检；损坏则提示并允许进入只读模式</td><td>只读模式提示</td></tr></tbody></table>
+<hr/>
+<h3>6. 运行与验证指令</h3>
+<blockquote><strong>状态说明</strong>：以下命令为<strong>拟定命令</strong>，尚未执行验证（unverified）。团队首次跑通后须在本文档标注"已验证 + 日期 + 执行人"。</blockquote>
+<h4>6.1 前置条件</h4>
+<ul>
+<li>Windows / macOS / Linux 桌面环境；</li>
+<li>Python 3.11+、Node.js 20+、<code>ffmpeg</code>（需在 PATH 中）；</li>
+<li>可选：NVIDIA GPU（加速本地 ASR）；无 GPU 时使用较小模型或云 API；</li>
+<li>可选的 LLM API 密钥（写入本地 <code>.env</code>，<strong>不提交到仓库</strong>）。</li>
+</ul>
+<h4>6.2 安装与启动（拟定）</h4>
+<pre><code># 后端
+python -m venv .venv
+.venv\Scripts\activate            # Windows
+pip install -r requirements.txt
+python -m uvicorn app.main:app --reload --port 8000
+
+# 前端
+npm install
+npm run dev                        # 默认 http://localhost:5173</code></pre>
+<h4>6.3 验证步骤</h4>
+<table><thead><tr><th>检查项</th><th>方法</th><th>期望结果</th></tr></thead><tbody><tr><td>端到端细线</td><td>用 <code>data/eval/sample_*.wav</code> 走完录音 → 转写 → 抽取 → 生成 → 校审 → 导出</td><td>得到 PDF 与 JSON，字段可追溯到时间点</td></tr><tr><td>ASR 回归</td><td><code>python scripts/eval_asr.py --dataset data/eval/regression_30min --report reports/asr_report.json</code></td><td>输出分语种 CER/WER 与术语命中率（指标 1）</td></tr><tr><td>结构化准确率</td><td><code>python scripts/eval_report.py --samples data/eval/reports --rubric docs/rubric_v1.md</code></td><td>输出字段级准确率与幻觉字段数（指标 2）</td></tr><tr><td>失败路径</td><td>依次触发 AC-11 至 AC-14 场景</td><td>与 PRD §7.2 描述一致</td></tr><tr><td>隐私检查</td><td>用含虚构姓名的音频跑一次，检查本地存储与外部请求内容</td><td>无音频外发；文本已去标识化</td></tr></tbody></table>
+<h4>6.4 目录约定（拟定）</h4>
+<pre><code>app/            后端服务
+web/            前端界面
+data/audio/     会话音频（本地，不提交）
+data/eval/      评测语料（合成数据，标注 [SYNTHETIC]）
+terms/          术语库（版本化）
+templates/      报告模板（版本化）
+scripts/        评测与工具脚本
+docs/           本文档集</code></pre>
+<hr/>
+<h3>7. 部署与成本</h3>
+<table><thead><tr><th>项目</th><th>说明</th></tr></thead><tbody><tr><td><strong>运行位置</strong></td><td>本地单机（开发机 / 演示笔记本），由团队控制；不部署到公网</td></tr><tr><td><strong>配置项</strong></td><td>外部 ASR 与 LLM 的开关、模型名、密钥（<code>.env</code>）、术语库与模板版本、API 成本上限</td></tr><tr><td><strong>成本来源</strong></td><td>① 外部 ASR 按音频时长计费（若启用）；② LLM 按 token 计费；③ 若使用云主机则另计</td></tr><tr><td><strong>成本控制</strong></td><td>单次会话 token 上限与调用次数上限（AI-01/02/03）；每日累计用量日志；超限即拒绝调用并提示；默认走本地 ASR 以降低费用</td></tr><tr><td><strong>成本登记要求</strong></td><td>具体单价与月度实测金额由团队在首次执行后填入下表，<strong>本文档不预设未经核实的价格数字</strong></td></tr></tbody></table>
+<table><thead><tr><th>月份</th><th>外部 ASR 用时</th><th>LLM token 用量</th><th>实际费用</th><th>备注</th></tr></thead><tbody><tr><td>待填</td><td>待填</td><td>待填</td><td>待填</td><td>首次实测后回填</td></tr></tbody></table>
+<hr/>
+<h3>8. 明确不适用的设计项</h3>
+<table><thead><tr><th>项目</th><th>结论</th><th>解释</th></tr></thead><tbody><tr><td>用户认证 / 单点登录</td><td><strong>Not applicable</strong></td><td>MVP 为单机单用户工具，无多用户权限需求；访问控制由操作系统账户提供。若未来接入医院环境，需重新评估（见 PRD §10.3）</td></tr><tr><td>微服务 / 容器编排</td><td><strong>Not applicable</strong></td><td>组件数量少、负载低，单体应用已足够；引入会显著增加 5 人团队负担</td></tr><tr><td>支付 / 计费系统</td><td><strong>Not applicable</strong></td><td>项目为课程原型，非商业产品</td></tr><tr><td>公网托管 / CDN</td><td><strong>Not applicable</strong></td><td>本地运行即可满足课程要求，且可避免患者数据外流</td></tr><tr><td>分布式数据库 / 分片</td><td><strong>Not applicable</strong></td><td>单机 SQLite 足以支撑单用户数据量</td></tr><tr><td>多智能体编排</td><td><strong>Not applicable</strong></td><td>三个 AI 功能为顺序流水线，无需智能体框架</td></tr><tr><td>EHR 实时对接</td><td>暂缓（非"不适用"）</td><td>需求成立但依赖医院授权，MVP 以导出替代（PRD §3）</td></tr></tbody></table>
+<hr/>
+<h3>9. 追溯表（交付时填写）</h3>
+<table><thead><tr><th>需求</th><th>组件 / 模块</th><th>验证证据</th><th>最终状态</th></tr></thead><tbody><tr><td>FR-01</td><td>音频管理</td><td>待填（AC-01 测试记录）</td><td>待填</td></tr><tr><td>FR-02</td><td>ASR 适配层</td><td>待填（AC-02 记录 + ASR 回归报告）</td><td>待填</td></tr><tr><td>FR-03</td><td>术语纠正</td><td>待填（AC-03 记录）</td><td>待填</td></tr><tr><td>FR-04</td><td>要素抽取</td><td>待填（AC-04 记录 + 要素准确率）</td><td>待填</td></tr><tr><td>FR-05</td><td>报告生成</td><td>待填（AC-05 记录）</td><td>待填</td></tr><tr><td>FR-06</td><td>缺失与风险提示</td><td>待填（AC-06 记录 + 幻觉字段数）</td><td>待填</td></tr><tr><td>FR-07</td><td>校审与签署</td><td>待填（AC-07 记录）</td><td>待填</td></tr><tr><td>FR-08</td><td>校审与签署</td><td>待填（AC-08 记录）</td><td>待填</td></tr><tr><td>FR-09</td><td>导出</td><td>待填（AC-09 记录）</td><td>待填</td></tr><tr><td>FR-10</td><td>存档与审计</td><td>待填（AC-10 记录）</td><td>待填</td></tr></tbody></table>
+<blockquote>最终状态取值为：implemented / changed / removed / incomplete。范围变化必须写明原因，不得静默改写原计划（课程规范 §8）。</blockquote>
+<hr/>
+<h3>10. 本文档的验证状态</h3>
+<table><thead><tr><th>项目</th><th>状态</th></tr></thead><tbody><tr><td>架构与组件划分</td><td>设计草案，未实现</td></tr><tr><td>技术选型</td><td>待 spike 结果确认（ASR 与 LLM 的实际表现决定最终选择）</td></tr><tr><td>运行命令</td><td><strong>未验证</strong>（unverified），首次跑通后回填</td></tr><tr><td>成本数据</td><td><strong>未测量</strong>，首次实测后回填</td></tr><tr><td>数据模型</td><td>草案，随第一个原型迭代</td></tr></tbody></table></section>
+<section id="decision-log"><h2>决策与验证记录：MedScribe HK</h2>
+<blockquote><strong>阶段</strong>：AI 辅助开发支持记录（课程规范 §7.3）<br/><strong>版本</strong>：v0.5 · <strong>日期</strong>：2026-10-15 · <strong>维护人</strong>：R1<br/><strong>v0.5 变更</strong>：新增 D-12（<strong>不执行访谈与现场观察</strong>，改用导师/助教书面确认）；新增 D-13（WBS 按系统组件重构）；D-11 去掉访谈相关表述；U-01 验证方式改写<br/><strong>v0.4 变更</strong>：project-plan 删除原 §8「角色与每周投入」，U-07/U-08 的章节引用同步修正<br/><strong>v0.3 变更</strong>：新增 D-11（计划锚定 2026-10-12 起算、W1 半周与 M1 门禁调整）；D-09 经团队确认生效<br/><strong>说明</strong>：不需要完整聊天记录。只记录有代表性的决策，重点是<strong>团队如何评估 AI 建议</strong>，以及<strong>由谁、用什么方式验证</strong>。</blockquote>
+<hr/>
+<h3>1. 决策记录</h3>
+<table><thead><tr><th>ID</th><th>AI 建议或主张</th><th>团队回应</th><th>理由与验证方式</th></tr></thead><tbody><tr><td>D-01</td><td>加入用户登录与角色权限体系</td><td><strong>推迟</strong></td><td>当前需求未要求多用户与权限分级；MVP 为单机单用户。访问控制由操作系统账户承担。若后续接入医院环境需重新评估（technical-design.md §8）</td></tr><tr><td>D-02</td><td>直接接入医院 EHR 写入接口（HL7 FHIR）</td><td><strong>推迟</strong></td><td>依赖医院授权与接口文档，周期不可控。改为导出纯文本 + JSON 作为替代集成方式（FR-09）；FHIR 映射留作长期计划</td></tr><tr><td>D-03</td><td>使用向量数据库做"相似历史病历检索"以提升生成质量</td><td><strong>拒绝</strong></td><td>会让生成结果依赖其他患者的病历内容，与"每份报告只能引用本会话音频"的约束冲突（AI-03 允许的数据访问）。改用术语库 + 模板约束</td></tr><tr><td>D-04</td><td>用一次 LLM 调用同时完成转写后处理、要素抽取与报告生成</td><td><strong>拒绝</strong></td><td>单步调用无法区分失败原因，也无法分别评估（指标 1 与指标 2 会混在一起）。改为流水线分步，各自可测、可重试（technical-design.md §4.1）</td></tr><tr><td>D-05</td><td>报告目标"结构化准确率达到 85%"已达成</td><td><strong>拒绝，要求实测</strong></td><td>课程任务书中的 85% 是<strong>目标值</strong>，团队尚未有实测数据。任何达标声明必须附测试集版本、评分量表与执行记录（PRD §7.3）</td></tr><tr><td>D-06</td><td>移除低置信度片段，不进入抽取</td><td><strong>部分采纳（改为需人工确认）</strong></td><td>直接丢弃会静默丢信息。改为高亮标注 + 医生确认后再进入抽取（BR-09），保留原始内容</td></tr><tr><td>D-07</td><td>用真实门诊录音做评测以提高说服力</td><td><strong>拒绝</strong></td><td>未获伦理与机构许可，且课程项目不处理真实患者数据。改用合成的脚本化模拟语料，并在文档中如实说明这一局限（research-plan.md §4）</td></tr><tr><td>D-08</td><td>模板引擎用通用自然语言提示替代结构化模板文件</td><td><strong>拒绝</strong></td><td>无法保证字段完整性与顺序一致性，也不便于新增报告类型。改为声明式模板文件（technical-design.md §2）</td></tr><tr><td>D-09</td><td>7 周内保留原 12 周的全部范围（多专科模板、≥ 2 小时语料、完整界面）</td><td><strong>拒绝，改为范围裁剪</strong></td><td>7 周为课程确定排期，5 人 × 每周约 1.5 天 ≈ 52 人天，无法承载原范围。按"保链路正确性、砍外围覆盖度"裁剪：报告模板限 2 个、评测语料 1 小时（含 20 分钟冻结回归集）、校审界面从简（必要时降级 Streamlit）。<strong>验证方式</strong>：W2/W3/W5/W6 末按 project-plan.md §3 的门禁条件逐项检查并记录通过情况；未通过则执行既定预案并再次登记。<strong>2026-10-15 团队确认接受本裁剪，D-09 生效</strong></td></tr><tr><td>D-10</td><td>为压缩周期取消 ASR 技术验证，直接进入开发</td><td><strong>拒绝</strong></td><td>ASR 精度是全局前置假设（R-01）；跳过验证会把风险推到 W5 之后才发现。改为把验证<strong>提前</strong>到 W1–W2（T2.1–T2.4），并用 Gate 1 明确留出降级路径</td></tr><tr><td>D-11</td><td>计划按 W1 = 2026-10-12（本周）起算，起算时 W1 已过半（10-15 为第 4 天）</td><td><strong>采纳，并调整 W1 门禁</strong></td><td>7 周总长不变（W7 末 = 2026-11-29）。因 W1 只剩 2 个工作日，原 M1 条件（含证据采集与语料录制 50%）不可达；改为 M1 只要求"提案定稿 + 环境可运行 + 组件→需求映射冻结 + 语料录制已启动"。<strong>验证方式</strong>：10-18 与 10-25 分别核对 M1、M2 的实际达成情况并登记结果</td></tr><tr><td>D-12</td><td>按 3–5 位医生半结构化访谈 + 现场观察采集一手用户证据</td><td><strong>拒绝，改为不执行访谈</strong></td><td>本项目<strong>不设访谈环节</strong>（课程排期与可接触对象均不满足），现场观察亦不进入。证据来源改为：① 向企业导师/助教提交<strong>书面问题清单</strong>（WC-1–WC-8）并取得书面确认；② 公开病历书写规范与脱敏模板样本桌面分析（DA-1–DA-3）；③ 团队内部合成语料双人试标注一致率。<strong>代价</strong>：ASSUMPTION-01/03/05 仅能获得间接证据，证据强度显著低于访谈，必须在 proposal §3、README 与最终报告中如实标注（不得称"用户调研已完成"）。<strong>验证方式</strong>：W2 末核对是否收到书面答复并更新假设状态；未收到则保持"待验证"并登记为限制</td></tr><tr><td>D-13</td><td>沿用原按"立项/证据、语音、生成、界面"划分的 WBS</td><td><strong>采纳，重构为按系统组件划分</strong></td><td>原 WBS 的一条主线是"证据与需求"，访谈移除后该主线失去内容；改为与技术设计 §1.2「组件职责」<strong>一一对应</strong>（WP1 数据层与底座、WP2 ASR 适配层、WP3 术语纠正、WP4 要素抽取、WP5 音频管理与会话/录音界面、WP6 报告生成、WP7 校审与签署、WP8 导出与存档审计、WP9 评测与交付），并新增组件→需求→工作包映射表以便核对无遗漏。<strong>验证方式</strong>：M1 门禁核对映射表覆盖全部组件与 FR-01–FR-10；W7 末在追溯表中逐条回填最终状态</td></tr></tbody></table>
+<hr/>
+<h3>2. 缺陷与验证记录</h3>
+<blockquote>格式：症状 → 期望行为 → 排查过程 → 修复 → 复现验证。<strong>不得</strong>只写"AI 说已修复"。</blockquote>
+<table><thead><tr><th>ID</th><th>日期</th><th>症状</th><th>期望行为</th><th>排查与修复</th><th>验证方式与结果</th><th>状态</th></tr></thead><tbody><tr><td>—</td><td>—</td><td>尚无记录（原型未开始）</td><td>—</td><td>—</td><td>—</td><td>待填</td></tr></tbody></table>
+<p><strong>记录模板（复制使用）</strong></p>
+<pre><code>BUG-xx
+症状：
+期望行为（关联 FR/AC）：
+排查过程：
+修复内容：
+复现验证：执行步骤 + 实际观察到的结果（附截图或日志路径）
+结论：已解决 / 未解决（保留失败样本）</code></pre>
+<hr/>
+<h3>3. 未验证声明的登记</h3>
+<p>团队约定：凡是在文档、演示或汇报中出现，但<strong>尚未实测</strong>的说法，必须在此登记，避免评审时被误认为已完成。</p>
+<table><thead><tr><th>ID</th><th>声明</th><th>出现位置</th><th>状态</th><th>解除条件</th></tr></thead><tbody><tr><td>U-01</td><td>医生单份病历整理耗时 3–8 分钟</td><td>proposal.md §2.2 (P-01)</td><td><strong>未验证（假设）</strong></td><td>导师/助教书面确认（WC-1）</td></tr><tr><td>U-02</td><td>通用 ASR 在粤英混合术语上表现明显下降</td><td>proposal.md §2.2 (P-02)</td><td><strong>未验证（假设）</strong></td><td>完成 W1–W2 baseline 实验并对比</td></tr><tr><td>U-03</td><td>ASR 字错率 ≤ 15%</td><td>proposal.md 摘要、PRD NFR-03</td><td><strong>未验证（目标值）</strong></td><td>在回归集上实测并出报告</td></tr><tr><td>U-04</td><td>结构化初稿准确率 ≥ 85%</td><td>proposal.md 摘要、PRD §9</td><td><strong>未验证（目标值）</strong></td><td>按 PRD §7.3 评分量表实测</td></tr><tr><td>U-05</td><td>病历书写时间可缩短 50%</td><td>proposal.md 长期目标</td><td><strong>未验证（长期目标，MVP 不承诺）</strong></td><td>需真实临床对照测量，MVP 阶段不做承诺</td></tr><tr><td>U-06</td><td>技术设计中的运行命令可用</td><td>technical-design.md §6</td><td><strong>未验证（unverified）</strong></td><td>首次成功执行并回填日期与执行人</td></tr><tr><td>U-07</td><td>7 周计划可在期限内交付已裁剪的 MVP 范围</td><td>project-plan.md §1、§4</td><td><strong>未验证（计划，非结果）</strong></td><td>每个里程碑实际达到 Gate 条件；若延期，按 project-plan.md §8 预案裁剪并登记原因</td></tr><tr><td>U-08</td><td>每人每周 1.5 天投入（合计 52 人天）成立</td><td>project-plan.md §1（投入假设）、§4（任务工时）</td><td><strong>未验证（排期假设）</strong></td><td>每周五核对实际投入工时；连续两周低于 80% 则触发范围复审</td></tr></tbody></table>
+<hr/>
+<h3>4. 团队评审要点（自查）</h3>
+<ul>
+<li>[ ] 每条 <code>ASSUMPTION-xx</code> 都有责任人与验证方式；</li>
+<li>[ ] 每条 <code>FR-xx</code> 都能在追溯表中找到组件与验证证据（technical-design.md §9）；</li>
+<li>[ ] 每个 AI 功能（AI-01…03）都有失败行为与成本上限（PRD §11）；</li>
+<li>[ ] 文档中没有未登记的目标值被表述为已达成结果；</li>
+<li>[ ] 范围变化已记录原因，而非静默改写原计划。</li>
+</ul></section>
+<section id="AGENTS"><h2>AGENTS.md — MedScribe HK</h2>
+<blockquote>本文件为仓库内的 AI 编程助手指令（课程规范 §7.2）。保持简短，只写对助手真正有用的内容。<br/>更新日期：2026-10-15 · 版本 v0.2</blockquote>
+<h3>项目一句话</h3>
+<p>MedScribe HK：把医生粤语/英语/中英混合的临床口述，转成符合医院报告规范的结构化病历初稿，并由医生校审签署。</p>
+<h3>权威文档（冲突时以此为准）</h3>
+<ul>
+<li>需求：<a href="#mvp-prd">docs/mvp-prd.md</a>（FR/BR/AC/NFR 编号唯一）</li>
+<li>计划：<a href="#project-plan">docs/project-plan.md</a>（7 周计划：W1 2026-10-12 – W7 2026-11-29、里程碑门禁 M1–M6、按系统组件划分的工作包 WP1–WP9 与任务编号 T-x.y）</li>
+<li>技术方案：<a href="#technical-design">docs/technical-design.md</a></li>
+<li>问题与证据：<a href="#proposal">docs/proposal.md</a></li>
+<li>决策记录：<a href="#decision-log">docs/decision-log.md</a>（重要技术决策必须登记）</li>
+</ul>
+<p>不要在本文件里重复这些文档的内容；改动请改源文档。</p>
+<h3>项目约束（硬性）</h3>
+<ol>
+<li><strong>隐私</strong>：本仓库不得包含真实患者数据。所有测试语料必须是合成的，文件名或元数据标注 <code>[SYNTHETIC]</code>。</li>
+<li><strong>禁止编造</strong>：任何临床内容若在音频/转写中无依据，一律输出"未提及"；不得让模型推断诊断、剂量或过敏史。本项目<strong>不设访谈与现场观察环节</strong>，不得引用或虚构访谈记录、受访者数量与引语；用户证据只来自导师/助教书面确认与公开资料（见 docs/research-plan.md），未获答复的假设必须保持"待验证"。</li>
+<li><strong>可追溯</strong>：报告中每个字段必须能追溯到原始转写片段 ID 与时间戳。</li>
+<li><strong>范围</strong>：不实现账号体系、公网部署、EHR 实时对接（理由见 technical-design.md §8）。新增此类功能前先在 decision-log.md 登记决策。</li>
+<li><strong>密钥</strong>：不提交 <code>.env</code>、API key、任何凭据；不提交 <code>data/audio/</code> 下的真实音频。</li>
+</ol>
+<h3>常用命令</h3>
+<pre><code># 后端（拟定，未验证）
+python -m uvicorn app.main:app --reload --port 8000
+# 前端（拟定，未验证）
+npm run dev
+# ASR 回归评测（拟定，未验证）
+python scripts/eval_asr.py --dataset data/eval/regression_30min --report reports/asr_report.json</code></pre>
+<blockquote>上述命令首次成功执行后，请在此处标注"已验证 + 日期"，并同步 technical-design.md §6。</blockquote>
+<h3>验证期望</h3>
+<ul>
+<li>改动与某个 <code>FR-xx</code> 相关时，必须给出对应的 <code>AC-xx</code> 验证方式，并说明实际执行结果；</li>
+<li>声称"完成"前必须实际运行验证步骤；不得仅凭代码可读性下结论；</li>
+<li>指标类结论（CER、结构化准确率）必须写明测试集版本、评分口径与计算脚本路径，并说明是否已执行；</li>
+<li>失败样本要记录，不要删除。</li>
+</ul>
+<h3>与本助手协作的方式</h3>
+<ul>
+<li>先读源文档，再改代码；不要凭猜测补需求；</li>
+<li>发现文档与代码不一致时，<strong>报告不一致</strong>，不要静默改文档来匹配代码；</li>
+<li>AI 提出的建议如被采纳或拒绝，由团队在 <a href="#decision-log">docs/decision-log.md</a> 记录理由与验证方式。</li>
+</ul></section>
+</main>
+</div>
+</body>
+</html>

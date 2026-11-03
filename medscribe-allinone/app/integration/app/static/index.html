@@ -1,0 +1,404 @@
+﻿<!DOCTYPE html>
+<html lang="zh-Hans" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MedScribe HK · 口述病历助手</title>
+<link rel="stylesheet" href="/static/app.css">
+<link rel="stylesheet" href="/static/app-extra.css">
+</head>
+<body>
+
+<svg class="sprite" aria-hidden="true" focusable="false">
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m16 16 4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M18.7 5.3l-1.4 1.4M6.7 17.3l-1.4 1.4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.4A8.2 8.2 0 0 1 9.6 4 8.5 8.5 0 1 0 20 14.4Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></symbol>
+  <symbol id="i-monitor" viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="12.5" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M8.5 21h7M12 17v4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M8.5 5.5v13l10-6.5-10-6.5Z" fill="currentColor"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5.5v13M16 5.5v13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.2 4.2L19 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-check-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m8.5 12.3 2.4 2.4 4.8-5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 4 21 20H3L12 4Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M12 9.5v4.5M12 17.2v.2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 7.5V12l3 1.8" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="3.5" width="6" height="11" rx="3" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3M9 21h6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3.5 19 6v5.5c0 4.3-2.8 7.7-7 9-4.2-1.3-7-4.7-7-9V6l7-2.5Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="m9 12 2 2 4-4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5.5" y="10.5" width="13" height="9" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+  <symbol id="i-more" viewBox="0 0 24 24"><circle cx="6" cy="12" r="1.2" fill="currentColor"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/><circle cx="18" cy="12" r="1.2" fill="currentColor"/></symbol>
+  <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M9.6 9.2a2.5 2.5 0 0 1 4.9.7c0 1.7-2.5 2-2.5 3.8M12 17.2v.2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4.5 6.5h15M9 6.5V4.8h6v1.7M6.5 6.5l.8 13.2h9.4l.8-13.2M10 10v6M14 10v6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-pulse" viewBox="0 0 24 24"><path d="M2.5 12h4l2.2-6 4.1 12 2.4-6h6.3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24"><path d="M4 6.5h16M4 12h16M4 17.5h16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+</svg>
+
+<div class="drawer-backdrop" id="drawer-backdrop" hidden></div>
+
+<div class="app">
+  <aside class="rail" aria-label="会话列表" data-i18n-aria="rail.aria">
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true"><svg><use href="#i-pulse"/></svg></div>
+      <div class="brand-text">
+        <div class="brand-name">MedScribe</div>
+      </div>
+    </div>
+
+    <button class="new-session" id="new-session" type="button">
+      <svg class="icon"><use href="#i-plus"/></svg>
+      <span data-i18n="session.new">新建会话</span>
+    </button>
+
+    <label class="search">
+      <svg class="icon icon-sm"><use href="#i-search"/></svg>
+      <input id="session-search" type="search" placeholder="搜索患者或会话号" aria-label="搜索会话" data-i18n-placeholder="search.placeholder" data-i18n-aria="search.aria">
+    </label>
+
+    <div class="rail-scroll" id="session-list">
+      <div class="rail-empty" data-i18n="rail.empty">暂无会话</div>
+    </div>
+
+    <div class="rail-foot">
+      <div>
+        <div class="theme-label"><span data-i18n="pref.theme">界面主题</span></div>
+        <div class="theme-control" role="group" aria-label="界面主题" data-i18n-aria="pref.themeAria">
+          <button type="button" data-theme-set="light" aria-pressed="false"><svg class="icon"><use href="#i-sun"/></svg><span data-i18n="theme.light">浅色</span></button>
+          <button type="button" data-theme-set="dark" aria-pressed="false"><svg class="icon"><use href="#i-moon"/></svg><span data-i18n="theme.dark">深色</span></button>
+          <button type="button" data-theme-set="system" aria-pressed="true"><svg class="icon"><use href="#i-monitor"/></svg><span data-i18n="theme.system">系统</span></button>
+        </div>
+      </div>
+      <div>
+        <div class="theme-label"><span data-i18n="pref.language">界面语言</span></div>
+        <div class="lang-control" role="group" aria-label="界面语言" data-i18n-aria="pref.languageAria">
+          <button type="button" data-lang-set="zh" aria-pressed="true" data-i18n="language.zh">简体中文</button>
+          <button type="button" data-lang-set="zh-Hant" aria-pressed="false" data-i18n="language.zhHant">繁體中文</button>
+          <button type="button" data-lang-set="en" aria-pressed="false" data-i18n="language.en">English</button>
+        </div>
+      </div>
+      <div class="zoom-hint"><span data-i18n="zoom.hint">Ctrl+滚轮以缩放界面</span></div>
+      <div class="user">
+        <span class="avatar" data-i18n="avatar.user">林</span>
+        <span>
+          <span class="user-name" data-i18n="user.name">林医生</span>
+          <span class="user-role" data-i18n="user.role">内科</span>
+        </span>
+      </div>
+    </div>
+  </aside>
+
+  <main class="workspace">
+    <header class="topbar">
+      <div class="patient">
+        <h1>
+          <span id="session-title" data-i18n="patient.empty">未选择会话</span>
+          <span class="patient-age" id="session-meta"></span>
+          <span class="case-status" id="status-chip"><span class="dot"></span><span id="status-text" data-i18n="status.created">已建会话</span></span>
+        </h1>
+      </div>
+      <div class="topbar-actions">
+        <button class="icon-btn mobile-sessions" id="mobile-sessions" type="button" aria-label="会话列表" title="会话列表" data-i18n-aria="rail.aria" data-i18n-title="rail.aria">
+          <svg class="icon icon-sm"><use href="#i-list"/></svg>
+        </button>
+        <div class="health-wrap" id="health-wrap">
+          <button class="health-pill" id="health-pill" type="button" aria-expanded="false" aria-controls="health-popover" data-i18n-title="health.tooltip" title="查看本地服务状态">
+            <span class="pulse"></span><span id="health-label">检查中</span>
+          </button>
+          <div class="health-popover" id="health-popover" hidden>
+            <div class="health-card" aria-label="服务状态" data-i18n-aria="health.aria">
+              <div class="health-title"><span data-i18n="health.title">本地服务</span><span id="health-summary">检查中</span></div>
+              <div class="health-row"><span class="health-left"><span class="dot" id="dot-asr"></span><span data-i18n="health.asr">语音识别</span></span><span class="port">:18000</span></div>
+              <div class="health-row"><span class="health-left"><span class="dot" id="dot-engine"></span><span data-i18n="health.report">报告引擎</span></span><span class="port">:8790</span></div>
+              <div class="health-row"><span class="health-left"><span class="dot ok"></span><span data-i18n="health.integration">集成层</span></span><span class="port">:8100</span></div>
+            </div>
+          </div>
+        </div>
+        <button class="icon-btn" id="delete-session" type="button" aria-label="删除会话" title="删除会话" data-i18n-aria="more.delete" data-i18n-title="more.delete" disabled>
+          <svg class="icon icon-sm"><use href="#i-trash"/></svg>
+        </button>
+        <button class="icon-btn mobile-lang" id="mobile-lang" type="button" aria-label="切换语言" title="切换语言" data-i18n-aria="language.switch" data-i18n-title="language.switch">繁</button>
+        <button class="icon-btn" id="help-btn" type="button" aria-label="查看快捷键" title="快捷键" data-i18n-aria="help.aria" data-i18n-title="help.title">
+          <svg class="icon icon-sm"><use href="#i-help"/></svg>
+        </button>
+        <button class="icon-btn" id="more-btn" type="button" aria-label="更多操作" title="更多操作" data-i18n-aria="more.aria" data-i18n-title="more.title">
+          <svg class="icon icon-sm"><use href="#i-more"/></svg>
+        </button>
+        <button class="icon-btn mobile-theme" id="mobile-theme" type="button" aria-label="切换主题" title="切换主题" data-i18n-aria="theme.switch" data-i18n-title="theme.switch">
+          <svg class="icon icon-sm sun-icon"><use href="#i-sun"/></svg>
+          <svg class="icon icon-sm moon-icon"><use href="#i-moon"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <div class="stepper-wrap">
+      <nav class="stepper" id="stepper" aria-label="记录流程" data-i18n-aria="stepper.aria">
+        <button class="step" type="button" data-step="0"><span class="step-num">1</span><span class="step-label" data-i18n="step.record">录音</span></button>
+        <button class="step" type="button" data-step="1"><span class="step-num">2</span><span class="step-label" data-i18n="step.transcribe">转写</span></button>
+        <button class="step" type="button" data-step="2"><span class="step-num">3</span><span class="step-label" data-i18n="step.review">校对</span></button>
+        <button class="step" type="button" data-step="3"><span class="step-num">4</span><span class="step-label" data-i18n="step.extract">抽取</span></button>
+        <button class="step" type="button" data-step="4"><span class="step-num">5</span><span class="step-label" data-i18n="step.approve">校审</span></button>
+        <button class="step" type="button" data-step="5"><span class="step-num">6</span><span class="step-label" data-i18n="step.sign">签署</span></button>
+      </nav>
+    </div>
+
+    <div class="empty-state" id="empty-state">
+      <div class="empty-card">
+        <div class="empty-mark"><svg class="icon"><use href="#i-pulse"/></svg></div>
+        <h2 data-i18n="empty.title">还没有会话</h2>
+        <p data-i18n="empty.sub">新建会话后，按「录音 → 转写 → 术语纠正 → 抽取 → 生成初稿 → 校审 → 签署 → 导出」完成一次病历记录。</p>
+        <button class="new-session" id="empty-new" type="button"><svg class="icon"><use href="#i-plus"/></svg><span data-i18n="empty.cta">新建会话</span></button>
+      </div>
+    </div>
+
+    <div class="content" id="content" hidden>
+      <section class="workbench" aria-labelledby="workbench-title">
+        <div class="section-head">
+          <div>
+            <h2 id="workbench-title" data-i18n="review.title">转写校对</h2>
+            <p class="section-sub" data-i18n="review.sub">核对低置信内容并修正文本。报告字段随校审更新；必填项和低置信片段未处理前不可签署。</p>
+          </div>
+          <div class="filters" role="group" aria-label="片段筛选" data-i18n-aria="filters.aria">
+            <button type="button" aria-pressed="true" data-filter="all"><span data-i18n="filter.all">全部</span> <span class="count" id="count-all">0</span></button>
+            <button type="button" aria-pressed="false" data-filter="low"><span data-i18n="filter.low">低置信</span> <span class="count" id="count-low">0</span></button>
+            <button type="button" aria-pressed="false" data-filter="confirmed"><span data-i18n="filter.confirmed">已确认</span> <span class="count" id="count-confirmed">0</span></button>
+          </div>
+        </div>
+
+        <div class="audio-card" aria-label="音频播放器" data-i18n-aria="audio.aria">
+          <button class="play-btn" id="play-btn" type="button" aria-label="播放音频" aria-pressed="false" data-i18n-aria="audio.play" disabled>
+            <svg class="icon play-icon"><use href="#i-play"/></svg>
+            <svg class="icon pause-icon"><use href="#i-pause"/></svg>
+          </button>
+          <div class="waveform" id="waveform" aria-hidden="true"></div>
+          <span class="audio-time" id="audio-time">00:00 / 00:00</span>
+          <button class="speed" type="button" id="speed-btn" aria-label="播放速度" data-i18n-aria="audio.speed">1.0×</button>
+          <div class="audio-tools">
+            <button class="tool-btn" id="btn-record" type="button"><span class="rec-dot"></span><span id="record-label" data-i18n="audio.record">录音</span></button>
+            <label class="tool-btn upload-label" title="上传音频文件">
+              <input type="file" id="file-input" accept="audio/*" hidden>
+              <span data-i18n="audio.upload">上传音频</span>
+            </label>
+          </div>
+          <audio id="player" preload="none"></audio>
+        </div>
+
+        <div class="pipeline-bar">
+          <label class="pipeline-label" for="model-select" data-i18n="action.model">模型</label>
+          <select class="pipeline-select model-select" id="model-select" aria-label="语音识别模型" data-i18n-aria="action.modelAria"></select>
+          <label class="pipeline-label" for="template-select" data-i18n="action.template">模板</label>
+          <select class="pipeline-select" id="template-select"></select>
+          <button class="tool-btn" id="btn-transcribe" type="button" data-i18n="action.transcribe">转写</button>
+          <button class="tool-btn" id="btn-correct" type="button" data-i18n="action.correct">术语纠正</button>
+          <button class="tool-btn" id="btn-undo" type="button" data-i18n="action.undo">撤销纠正</button>
+          <button class="tool-btn" id="btn-extract" type="button" data-i18n="action.extract">抽取 S/O/A/P</button>
+          <button class="tool-btn primary" id="btn-generate" type="button" data-i18n="action.generate">生成初稿</button>
+          <span class="pipeline-hint" id="pipeline-hint"></span>
+        </div>
+
+        <div class="transcript">
+          <div class="transcript-head">
+            <span class="transcript-title" data-i18n="transcript.title">转写原文</span>
+            <div class="meta-row transcript-meta-row">
+              <span class="chip"><svg class="icon"><use href="#i-mic"/></svg><span id="meta-lang">—</span></span>
+              <span class="chip warn" id="low-chip" hidden><svg class="icon"><use href="#i-alert"/></svg><span id="low-chip-text"></span></span>
+              <span class="chip"><svg class="icon"><use href="#i-shield"/></svg><span data-i18n="meta.local">音频仅在本机处理</span></span>
+              <span class="chip"><svg class="icon"><use href="#i-clock"/></svg><span id="meta-speaker">—</span></span>
+            </div>
+          </div>
+          <div class="segments" id="segments"></div>
+        </div>
+
+        <div class="corrections" id="corrections" hidden>
+          <div class="corrections-head">
+            <span class="transcript-title" data-i18n="corrections.title">术语纠正记录</span>
+            <span class="corrections-count" id="corrections-count">0</span>
+          </div>
+          <div id="corrections-body"></div>
+        </div>
+      </section>
+
+      <aside class="report" aria-labelledby="report-title">
+        <div class="report-head">
+          <div>
+            <h2 id="report-title" data-i18n="report.title">报告初稿</h2>
+          </div>
+          <div class="completeness"><span id="completeness-num">0</span><small>%</small></div>
+        </div>
+        <div class="progress"><i id="completeness-bar"></i></div>
+
+        <div class="report-body" id="report-body">
+          <p class="muted" data-i18n="report.empty">尚未生成初稿。</p>
+        </div>
+
+        <div class="report-foot">
+          <p class="gate-note" id="gate-note">
+            <svg class="icon icon-xs"><use href="#i-alert"/></svg>
+            <span data-i18n="gate.needGenerate">生成初稿后才能签署。</span>
+          </p>
+          <button class="sign-btn" id="sign-btn" type="button" disabled data-i18n="report.sign">签署报告</button>
+          <button class="export-btn" id="export-btn" type="button" disabled data-i18n="report.export">导出 PDF / JSON</button>
+        </div>
+      </aside>
+    </div>
+  </main>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<dialog id="help-dialog" class="help-dialog" aria-labelledby="help-title">
+  <div class="dialog-head">
+    <div>
+      <h3 id="help-title" data-i18n="help.title">帮助说明</h3>
+      <p data-i18n="help.shortcuts">快捷键：T 切换主题，/ 聚焦搜索，Esc 关闭弹层。</p>
+    </div>
+    <button class="icon-btn" id="close-help" type="button" aria-label="关闭" data-i18n-aria="dialog.close">
+      <svg class="icon icon-sm"><use href="#i-x"/></svg>
+    </button>
+  </div>
+  <div class="dialog-body help-body">
+    <h4 data-i18n="help.asrTitle">语音识别与转录实现</h4>
+    <p data-i18n="help.asrLead">默认使用本地 faster-whisper medium（CPU int8，音频不出本机）。也可以选用 CapsWriter-Offline：识别准确性更高，但处理耗时可能更长，需要一定的本地硬件算力支持。</p>
+    <div class="help-table-wrap">
+    <table class="help-table">
+      <thead>
+        <tr>
+          <th scope="col" data-i18n="help.table.dim">维度</th>
+          <th scope="col" data-i18n="help.table.default">默认：faster-whisper</th>
+          <th scope="col" data-i18n="help.table.optional">可选：CapsWriter-Offline</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row" data-i18n="help.table.os">系统</th>
+          <td data-i18n="help.table.os.default">Windows / macOS / Linux，需 ffmpeg</td>
+          <td data-i18n="help.table.os.optional">仅保证 Windows 10/11 64 位，需 VC++ 运行库与 ffmpeg</td>
+        </tr>
+        <tr>
+          <th scope="row" data-i18n="help.table.cpu">CPU</th>
+          <td data-i18n="help.table.cpu.default">4 核起，无需独显</td>
+          <td data-i18n="help.table.cpu.optional">无独显可用 SenseVoice-Small / Fun-ASR-Nano</td>
+        </tr>
+        <tr>
+          <th scope="row" data-i18n="help.table.ram">内存</th>
+          <td data-i18n="help.table.ram.default">约 2 GB 量级</td>
+          <td data-i18n="help.table.ram.optional">官方未给统一门槛，模型包 0.5–1.5 GB</td>
+        </tr>
+        <tr>
+          <th scope="row" data-i18n="help.table.gpu">显卡</th>
+          <td data-i18n="help.table.gpu.default">非必需；CUDA 可选，约 1.5–2 GB 显存</td>
+          <td data-i18n="help.table.gpu.optional">可选 DirectML / Vulkan；显存 &lt;1 GB 至 1–2 GB</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <p class="help-note" data-i18n="help.asrNote">两条路径都在本机处理音频；切换前请在同一批语料上比较准确率与耗时。项目内尚未接入 CapsWriter 适配层。</p>
+    <h4 data-i18n="help.benchTitle">实测数据（2026-11）</h4>
+    <p data-i18n="help.benchEnv">测试机：Intel Core Ultra 7 270K Plus（24 核）/ 32 GB / RTX 5070 Ti 16 GB；3 条合成语料 + 6 种扰动；错误率越低越好。</p>
+    <div class="help-table-wrap">
+    <table class="help-table help-bench">
+      <thead>
+        <tr>
+          <th scope="col" data-i18n="help.bench.model">模型</th>
+          <th scope="col" data-i18n="help.bench.err">平均错误率</th>
+          <th scope="col" data-i18n="help.bench.cpu">CPU RTF</th>
+          <th scope="col" data-i18n="help.bench.gpu">GPU RTF</th>
+          <th scope="col" data-i18n="help.bench.mem">内存 / 显存</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row">Whisper-small</th><td>12.3%</td><td>0.10</td><td>0.02</td><td>0.6 / 0.6 GB</td></tr>
+        <tr><th scope="row">Whisper-medium</th><td>13.0%</td><td>0.28</td><td>0.04</td><td>1.4 / 1.9 GB</td></tr>
+        <tr><th scope="row">Whisper-large-v3</th><td>9.2%</td><td>—</td><td>0.05</td><td>0.8 / 3.8 GB</td></tr>
+        <tr><th scope="row">Qwen3-ASR-1.7B</th><td>8.1%</td><td>0.18</td><td>0.09</td><td>4.0 / 2.1 GB</td></tr>
+        <tr><th scope="row">SenseVoice-Small</th><td>23.2%</td><td>0.05</td><td>0.04</td><td>1.5 / 1.0 GB</td></tr>
+        <tr><th scope="row">Paraformer</th><td>41.3%</td><td>0.08</td><td>—</td><td>0.6 / 0 GB</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <h4 data-i18n="help.pickTitle">选型建议</h4>
+    <ul class="help-picks">
+      <li data-i18n="help.pick1">有 8 GB 显卡：综合选 medium；病理长术语选 large-v3 或 Qwen3-ASR。</li>
+      <li data-i18n="help.pick2">无显卡：8 核选 small；4 核或内存 ≤8 GB 选 SenseVoice。</li>
+      <li data-i18n="help.pick3">噪声或长音频：medium 最稳；large-v3 在噪声下退化，需前置降噪。</li>
+    </ul>
+    <p class="help-note" data-i18n="help.benchNote">完整数据表与局限见 outputs/ui-integration/asr-benchmark/REPORT.md；合成语料，结论为方向性。</p>
+  </div>
+  <div class="dialog-foot">
+    <a class="help-link" href="https://github.com/HaujetZhao/CapsWriter-Offline" target="_blank" rel="noreferrer">CapsWriter-Offline ↗</a>
+    <button class="confirm" id="help-ok" type="button" data-i18n="dialog.close">关闭</button>
+  </div>
+</dialog>
+
+<dialog id="ext-dialog" class="help-dialog ext-dialog" aria-labelledby="ext-title">
+  <div class="dialog-head">
+    <div>
+      <h3 id="ext-title" data-i18n="ext.title">安装扩展模型</h3>
+      <p data-i18n="ext.sub">该模型以扩展包形式提供，下载后按下列步骤安装。</p>
+    </div>
+  </div>
+  <div class="help-body">
+    <p class="ext-name" id="ext-name"></p>
+    <p class="ext-meta"><span data-i18n="ext.size">包大小</span> <strong id="ext-size">—</strong>
+      <span data-i18n="ext.sha">SHA-256</span> <code id="ext-sha">—</code></p>
+    <p><a id="ext-url" class="ext-url" href="#" target="_blank" rel="noopener noreferrer"></a></p>
+    <h4 data-i18n="ext.steps">安装步骤</h4>
+    <ol class="help-picks" id="ext-steps"></ol>
+    <p class="help-note" id="ext-note"></p>
+  </div>
+  <div class="dialog-foot">
+    <button class="ghost" id="ext-close" type="button" data-i18n="ext.close">关闭</button>
+  </div>
+</dialog>
+
+<dialog id="sign-dialog" aria-labelledby="sign-title">
+  <div class="dialog-head">
+    <div>
+      <h3 id="sign-title" data-i18n="dialog.title">签署前确认</h3>
+      <p data-i18n="dialog.sub">签署后内容锁定，只能查看或导出。</p>
+    </div>
+    <button class="icon-btn" id="close-dialog" type="button" aria-label="关闭" data-i18n-aria="dialog.close">
+      <svg class="icon icon-sm"><use href="#i-x"/></svg>
+    </button>
+  </div>
+  <div class="dialog-body">
+    <div class="checklist" id="sign-checklist"></div>
+    <label class="consent">
+      <input type="checkbox" id="consent-check">
+      <span data-i18n="dialog.consent">我已逐项核对报告内容，确认签署。此操作会写入审计记录。</span>
+    </label>
+  </div>
+  <div class="dialog-foot">
+    <button class="secondary" id="cancel-sign" type="button" data-i18n="dialog.cancel">取消</button>
+    <button class="confirm" id="confirm-sign" type="button" disabled data-i18n="dialog.sign">确认签署</button>
+  </div>
+</dialog>
+
+<dialog id="export-dialog" class="export-dialog" aria-labelledby="export-title">
+  <div class="dialog-head">
+    <div>
+      <h3 id="export-title" data-i18n="export.title">导出预览</h3>
+      <p data-i18n="export.sub">核对版式与字段后再下载。</p>
+    </div>
+    <button class="icon-btn" id="close-export" type="button" aria-label="关闭" data-i18n-aria="dialog.close">
+      <svg class="icon icon-sm"><use href="#i-x"/></svg>
+    </button>
+  </div>
+  <div class="export-tabs" role="tablist" aria-label="导出格式" data-i18n-aria="export.formatAria">
+    <button class="export-tab" id="tab-pdf" type="button" role="tab" aria-selected="true" aria-controls="export-pdf-preview" data-export-tab="pdf" data-i18n="export.pdf">PDF 版式</button>
+    <button class="export-tab" id="tab-json" type="button" role="tab" aria-selected="false" aria-controls="export-json-preview" data-export-tab="json" data-i18n="export.json">JSON 数据</button>
+  </div>
+  <div class="dialog-body export-body">
+    <div class="export-preview" id="export-preview-pane">
+      <div id="export-pdf-preview" class="export-paper" role="tabpanel" aria-labelledby="tab-pdf"></div>
+      <pre id="export-json-preview" class="export-code" role="tabpanel" aria-labelledby="tab-json" hidden></pre>
+    </div>
+  </div>
+  <div class="dialog-foot">
+    <span class="export-note" id="export-note" data-i18n="export.real">本地文件</span>
+    <button class="secondary" id="cancel-export" type="button" data-i18n="dialog.cancel">取消</button>
+    <button class="confirm" id="download-export" type="button" data-i18n="export.download">下载 PDF</button>
+  </div>
+</dialog>
+
+<script src="/static/app.js"></script>
+</body>
+</html>

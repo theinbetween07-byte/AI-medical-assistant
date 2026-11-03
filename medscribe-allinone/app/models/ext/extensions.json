@@ -1,0 +1,22 @@
+{
+  "version": "1.0.0",
+  "updated": "2026-11-03",
+  "extensions": [
+    {
+      "id": "caps-qwen3",
+      "name": "Qwen3-ASR（CapsWriter 高精度扩展）",
+      "kind": "caps",
+      "dir": "caps-qwen3",
+      "size_mb": 2800,
+      "url": "https://github.com/theinbetween07-byte/AI-medical-assistant/releases/download/v1.0.0/MedScribe-ext-caps-qwen3-v1.0.0.7z.001",
+      "sha256": "",
+      "note": "完全离线，安装后不联网。病理长术语实测错误率 3.64%（内置 Whisper small 为 9.09%），代价是首次转写需加载约 1.4 GB 模型（30–90 秒）。",
+      "steps": [
+        "下载扩展包的全部分卷（.7z.001、.002 …）以及同目录的安装说明",
+        "用 7-Zip 解压 .7z.001（只需解第一个，自动合并其余分卷）",
+        "解压得到 app 文件夹，把它合并到 MedScribe 根目录（提示时选择“合并/替换”）",
+        "重启 MedScribe，在工具条「模型」中选择 Qwen3-ASR"
+      ]
+    }
+  ]
+}
