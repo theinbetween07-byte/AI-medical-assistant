@@ -168,7 +168,7 @@ class ASRClient:
         """切换上游 Whisper 型号。
 
         上游接口是 `POST /asr/load-model?model=<id>`，成功时同步返回加载耗时。
-        首次加载未下载的型号会触发 HuggingFace 下载，因此沿用 asr_timeout_s。
+        扩展模型首次加载需读取本地权重（数十秒），因此沿用 asr_timeout_s。
         """
         url = f"{self.cfg.asr_url}/asr/load-model?{urllib.parse.urlencode({'model': model})}"
         for attempt in (0, 1):

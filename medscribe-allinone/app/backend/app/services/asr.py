@@ -3,7 +3,7 @@ ASR 服務 - 封裝 faster-whisper
 
 職責：
 - 單例加載 Whisper 模型（首次慢，後續常駐內存）
-- 動態切換模型型號（tiny / base / small / medium / large-v3）
+- 動態切換模型型號（內置 small；擴展包提供 medium / large-v3 與 CapsWriter 引擎）
 - 統一音頻預處理（ffmpeg → 16kHz mono WAV）
 - 提供同步轉寫接口
 - 粵/普/英 多語言支持
