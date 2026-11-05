@@ -55,8 +55,14 @@ def main() -> int:
             if not isinstance(pid, int) or pid in killed:
                 continue
             cmd = command_line(pid)
-            if not command_matches(name, cmd):
-                skipped.append(f"{name}(pid {pid} 命令行不匹配，可能已被复用)")
+            # 命令行读不到（CIM 受限/超时）时退回「pid 仍在对应端口监听」这一证据，
+            # 否则受限环境会永远停不掉自己的服务。
+            if cmd:
+                if not command_matches(name, cmd):
+                    skipped.append(f"{name}(pid {pid} 命令行不匹配，可能已被复用)")
+                    continue
+            elif pid not in pids_on_port(PORTS.get(name, -1)):
+                skipped.append(f"{name}(pid {pid} 无法确认监听端口)")
                 continue
             kill_pid(pid)
             killed.add(pid)
@@ -71,7 +77,9 @@ def main() -> int:
         for pid in pids_on_port(port):
             if pid in killed:
                 continue
-            if not command_matches(name, command_line(pid)):
+            cmd = command_line(pid)
+            # 端口 + HTTP 身份已确认时，命令行读不到不再阻断停止
+            if cmd and not command_matches(name, cmd):
                 skipped.append(f"{name}(port {port} pid {pid} 命令行不匹配)")
                 continue
             kill_pid(pid)

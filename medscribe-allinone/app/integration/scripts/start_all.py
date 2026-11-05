@@ -119,8 +119,10 @@ def claim_port(name: str, port: int, label: str) -> str:
     return "foreign"
 
 
-def verify_identity(name: str, port: int, label: str) -> bool:
-    if is_ours(name, port):
+def verify_identity(name: str, port: int, label: str, pid: int | None = None) -> bool:
+    # pid 是我们刚 spawn 的进程：存活 + 健康检查通过即足够，
+    # 不再依赖 PowerShell 读命令行（受限环境会误报"身份校验失败"）。
+    if is_ours(name, port, pid=pid):
         return True
     print(f"  [!!] {label} 健康检查通过，但身份校验失败（{describe(port)}）")
     return False
@@ -272,13 +274,17 @@ def main() -> int:
     asr_ok = True
     if not args.no_asr:
         asr_ok = wait_health(f"http://127.0.0.1:{ASR_PORT}/health", 180, "ASR")
-        asr_ok = asr_ok and verify_identity("asr", ASR_PORT, "ASR")
+        asr_ok = asr_ok and verify_identity("asr", ASR_PORT, "ASR", pids.get("asr"))
     engine_ok = True
     if not args.no_engine:
         engine_ok = wait_health(f"http://127.0.0.1:{ENGINE_PORT}/health", 90, "报告引擎")
-        engine_ok = engine_ok and verify_identity("engine", ENGINE_PORT, "报告引擎")
+        engine_ok = engine_ok and verify_identity(
+            "engine", ENGINE_PORT, "报告引擎", pids.get("engine")
+        )
     app_ok = wait_health(f"http://127.0.0.1:{APP_PORT}/health/live", 90, "集成层")
-    app_ok = app_ok and verify_identity("integration", APP_PORT, "集成层")
+    app_ok = app_ok and verify_identity(
+        "integration", APP_PORT, "集成层", pids.get("integration")
+    )
     ok = asr_ok and engine_ok and app_ok
 
     print("-" * 60)

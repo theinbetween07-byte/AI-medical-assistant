@@ -109,15 +109,47 @@ def pids_on_port(port: int) -> list[int]:
 
 
 def command_line(pid: int) -> str:
+    """读取进程命令行；受限环境（CIM 被禁用、PowerShell 冷启动慢）返回空串。
+
+    PowerShell 首次启动在部分机器上可能超过 10s（杀软扫描、组策略脚本），
+    因此这里给足超时并重试一次，避免把「读得慢」误判成「不是本服务」。
+    """
+    for attempt in range(2):
+        if platform.system() == "Windows":
+            script = (
+                f"Get-CimInstance Win32_Process -Filter \"ProcessId={int(pid)}\" "
+                "| Select-Object -ExpandProperty CommandLine"
+            )
+            text = _run_text(
+                ["powershell", "-NoProfile", "-NonInteractive", "-Command", script], 20
+            ).strip()
+        else:
+            text = _run_text(["ps", "-p", str(int(pid)), "-o", "command="], 10).strip()
+        if text:
+            return text
+    return ""
+
+
+def pid_alive(pid: int) -> bool:
+    """判断进程是否仍存在；Windows 下不能用 os.kill(pid, 0)（会发送终止信号）。"""
+    if not isinstance(pid, int) or pid <= 0:
+        return False
     if platform.system() == "Windows":
-        script = (
-            f"Get-CimInstance Win32_Process -Filter \"ProcessId={int(pid)}\" "
-            "| Select-Object -ExpandProperty CommandLine"
-        )
-        return _run_text(
-            ["powershell", "-NoProfile", "-NonInteractive", "-Command", script], 15
-        ).strip()
-    return _run_text(["ps", "-p", str(int(pid)), "-o", "command="], 10).strip()
+        import ctypes
+
+        PROCESS_QUERY_LIMITED_INFORMATION = 0x1000
+        kernel32 = ctypes.windll.kernel32
+        handle = kernel32.OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, False, pid)
+        if not handle:
+            return False
+        kernel32.CloseHandle(handle)
+        return True
+    try:
+        os.kill(pid, 0)
+        return True
+    except OSError:
+        return False
+
 
 
 def command_matches(name: str, cmdline: str) -> bool:
@@ -132,12 +164,27 @@ def command_matches(name: str, cmdline: str) -> bool:
     return False
 
 
-def is_ours(name: str, port: int) -> bool:
-    """端口上既有本服务的健康检查形状，监听进程也带本服务的命令行标记。"""
+def is_ours(name: str, port: int, pid: int | None = None) -> bool:
+    """端口上是否本服务。
+
+    证据分三层，任一成立即可：
+    1. 调用方刚启动并持有的 pid 仍存活（最强，不依赖 PowerShell）；
+    2. 监听进程命令行带本服务标记；
+    3. HTTP 形状已完全匹配、但命令行读不到（受限环境）——降级信任 HTTP。
+    读到命令行却不匹配时仍判定为陌生进程，保留原有误杀保护。
+    """
     if identify(port) != name:
         return False
+    if pid is not None and pid_alive(pid):
+        return True
     pids = pids_on_port(port)
-    return any(command_matches(name, command_line(pid)) for pid in pids)
+    if not pids:
+        return False
+    evidence = [command_line(p) for p in pids]
+    if any(command_matches(name, c) for c in evidence):
+        return True
+    return not any(evidence)
+
 
 
 def describe(port: int) -> str:
