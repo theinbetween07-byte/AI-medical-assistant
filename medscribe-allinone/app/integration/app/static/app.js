@@ -655,7 +655,7 @@
       'help.title': 'Help',
       'help.shortcuts': 'Shortcuts: T switches theme, / focuses search, Esc closes dialogs.',
       'help.asrTitle': 'Speech recognition & transcription',
-      'help.asrLead': 'The default is local faster-whisper small (CPU int8; audio never leaves this machine). The Model dropdown ships with small, plus optional Qwen3-ASR, Whisper medium and Whisper large-v3 packs; uninstalled entries show a download link and steps, and nothing is fetched online. CapsWriter''s high-accuracy tier leads on pathology terms but is slower.',
+      'help.asrLead': 'The default is local faster-whisper small (CPU int8; audio never leaves this machine). The Model dropdown ships with small, plus optional Qwen3-ASR, Whisper medium and Whisper large-v3 packs; uninstalled entries show a download link and steps, and nothing is fetched online. CapsWriter\'s high-accuracy tier leads on pathology terms but is slower.',
       'help.table.dim': 'Aspect',
       'help.table.default': 'Default: faster-whisper',
       'help.table.optional': 'Optional: CapsWriter-Offline',
