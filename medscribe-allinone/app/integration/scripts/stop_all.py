@@ -46,14 +46,23 @@ def main() -> int:
     skipped: list[str] = []
     killed: set[int] = set()
 
+    saved_ports: dict[str, int] = {}
     if PID_FILE.is_file():
         try:
-            pids = json.loads(PID_FILE.read_text(encoding="utf-8"))
+            data = json.loads(PID_FILE.read_text(encoding="utf-8"))
         except json.JSONDecodeError:
-            pids = {}
+            data = {}
+        # 新格式 {"pids": {...}, "ports": {...}}；兼容旧格式 {"asr": 123, ...}
+        if isinstance(data.get("pids"), dict):
+            pids = data["pids"]
+            raw_ports = data.get("ports") or {}
+            saved_ports = {k: v for k, v in raw_ports.items() if isinstance(v, int)}
+        else:
+            pids = data
         for name, pid in pids.items():
             if not isinstance(pid, int) or pid in killed:
                 continue
+            port = saved_ports.get(name, PORTS.get(name, -1))
             cmd = command_line(pid)
             # 命令行读不到（CIM 受限/超时）时退回「pid 仍在对应端口监听」这一证据，
             # 否则受限环境会永远停不掉自己的服务。
@@ -61,7 +70,7 @@ def main() -> int:
                 if not command_matches(name, cmd):
                     skipped.append(f"{name}(pid {pid} 命令行不匹配，可能已被复用)")
                     continue
-            elif pid not in pids_on_port(PORTS.get(name, -1)):
+            elif port < 0 or pid not in pids_on_port(port):
                 skipped.append(f"{name}(pid {pid} 无法确认监听端口)")
                 continue
             kill_pid(pid)
@@ -71,7 +80,9 @@ def main() -> int:
             PID_FILE.unlink(missing_ok=True)
 
     # 回退：仅在服务身份与命令行都匹配时才按端口停止
-    for name, port in PORTS.items():
+    fallback = dict(PORTS)
+    fallback.update(saved_ports)
+    for name, port in fallback.items():
         if not is_ours(name, port):
             continue
         for pid in pids_on_port(port):

@@ -53,7 +53,10 @@ class EngineClient:
             url = f"{url}?{urllib.parse.urlencode({k: v for k, v in query.items() if v is not None})}"
 
         data = None
-        headers = {"Accept": "text/plain" if raw_text else "application/json"}
+        headers = {
+            "Accept": "text/plain" if raw_text else "application/json",
+            "Connection": "close",
+        }
         if payload is not None:
             data = json.dumps(payload, ensure_ascii=False).encode("utf-8")
             headers["Content-Type"] = "application/json"

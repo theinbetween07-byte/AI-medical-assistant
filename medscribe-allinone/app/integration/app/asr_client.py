@@ -14,6 +14,7 @@
 
 from __future__ import annotations
 
+import http.client
 import json
 import mimetypes
 import threading
@@ -34,79 +35,87 @@ class ASRError(RuntimeError):
         self.status = status
 
 
-def _urlopen_retry(req, timeout: int, retries: int = 2, delay: float = 0.8):
-    """Windows 下 localhost 偶发 ConnectionResetError（WinError 10054）突发，有界重试两次。"""
-    for attempt in range(retries + 1):
-        try:
-            return urllib.request.urlopen(req, timeout=timeout)
-        except urllib.error.URLError as exc:
-            if not isinstance(exc.reason, ConnectionResetError):
-                raise
-            if attempt < retries:
-                time.sleep(delay)
-                continue
-            raise
-        except ConnectionResetError:
-            if attempt < retries:
-                time.sleep(delay)
-                continue
-            raise
-    raise RuntimeError("unreachable")  # pragma: no cover
+_RST_TYPES = (ConnectionResetError, ConnectionAbortedError)
 
 
-def _read_body_retry(req, timeout: int, retries: int = 2, delay: float = 0.8) -> bytes:
-    """读取完整响应体，并对 Windows localhost 偶发的连接重置做有界重试。
+def _is_transport_reset(exc: BaseException) -> bool:
+    """是否属于 Windows 回环上「响应完成前后连接被重置」这一类可重试故障。"""
+    if isinstance(exc, _RST_TYPES):
+        return True
+    if isinstance(exc, urllib.error.URLError):
+        return isinstance(exc.reason, _RST_TYPES)
+    # IncompleteRead / RemoteDisconnected：同源，读 body 时连接已断
+    return isinstance(exc, http.client.HTTPException)
 
-    已知现象：连接已建立，但读取响应时抛 ConnectionResetError [WinError 10054]。
-    只重试这类传输错误；HTTP 错误码与其它网络错误原样抛出。
+
+def _request_retry(req, timeout: int, retries: int = 6) -> tuple[int, bytes]:
+    """发请求并读完响应体；传输层重置自动重试。
+
+    RST 既可能发生在建立连接（urlopen）阶段，也可能发生在读 body 阶段，
+    因此必须把「发请求 + 读 body」放在同一个重试单元里，否则会漏掉后者。
     """
-    for attempt in range(retries + 1):
+    last: BaseException | None = None
+    for attempt in range(retries):
         try:
             with urllib.request.urlopen(req, timeout=timeout) as resp:
-                return resp.read()
-        except urllib.error.HTTPError:
-            raise
-        except urllib.error.URLError as exc:
-            if not isinstance(exc.reason, ConnectionResetError):
+                return resp.status, resp.read()
+        except urllib.error.HTTPError as exc:
+            try:
+                return exc.code, exc.read()
+            except Exception as inner:  # body 读到一半被重置
+                if not _is_transport_reset(inner):
+                    raise
+                last = inner
+        except Exception as exc:
+            if not _is_transport_reset(exc):
                 raise
-            if attempt >= retries:
+            last = exc
+        if attempt < retries - 1:
+            time.sleep(min(0.4 * (2**attempt), 3.0))
+    raise ASRError(f"与本机服务通信被重置（已重试 {retries} 次）：{last}") from last
+
+
+def _urlopen_retry(req, timeout: int, retries: int = 4):
+    """兼容旧调用：只关心响应对象、需要自行读取 body 的场景请改用 _request_retry。"""
+    for attempt in range(retries):
+        try:
+            return urllib.request.urlopen(req, timeout=timeout)
+        except Exception as exc:
+            if not _is_transport_reset(exc) or attempt >= retries - 1:
                 raise
-            time.sleep(delay)
-        except (ConnectionResetError, ConnectionAbortedError):
-            if attempt >= retries:
-                raise
-            time.sleep(delay)
+            time.sleep(0.25 * (attempt + 1))
     raise RuntimeError("unreachable")  # pragma: no cover
+
+
+def _read_body_retry(req, timeout: int, retries: int = 4) -> bytes:
+    """读取完整响应体，并对 Windows localhost 偶发的连接重置做有界重试。"""
+    return _request_retry(req, timeout, retries)[1]
+
 
 
 def _json_request(
     url: str, payload: Optional[dict], timeout: int, token: str = ""
 ) -> tuple[int, Any]:
     data = None
-    headers = {"Accept": "application/json"}
+    # Connection: close 让服务端在响应后正常 FIN，避免 Windows 回环 keep-alive 关闭竞态触发 RST
+    headers = {"Accept": "application/json", "Connection": "close"}
     if payload is not None:
         data = json.dumps(payload, ensure_ascii=False).encode("utf-8")
         headers["Content-Type"] = "application/json"
     if token:
         headers["Authorization"] = f"Bearer {token}"
     req = urllib.request.Request(url, data=data, headers=headers, method="POST")
+    status, raw = _request_retry(req, timeout)
+    body = raw.decode("utf-8", errors="replace")
     try:
-        with _urlopen_retry(req, timeout) as resp:
-            body = resp.read().decode("utf-8", errors="replace")
-            return resp.status, json.loads(body) if body else None
-    except urllib.error.HTTPError as exc:
-        body = exc.read().decode("utf-8", errors="replace")
-        try:
-            parsed = json.loads(body)
-        except json.JSONDecodeError:
-            parsed = {"detail": body}
-        return exc.code, parsed
-    except urllib.error.URLError as exc:
-        raise ASRError(f"无法连接 ASR 服务：{exc.reason}") from exc
+        parsed = json.loads(body) if body else None
+    except json.JSONDecodeError:
+        parsed = {"detail": body}
+    return status, parsed
 
 
 def _get_json(url: str, timeout: int) -> Any:
-    req = urllib.request.Request(url, headers={"Accept": "application/json"})
+    req = urllib.request.Request(url, headers={"Accept": "application/json", "Connection": "close"})
     try:
         # 用带重试的读取：Windows 上 localhost 的 RST 常发生在 urlopen 成功之后
         body = _read_body_retry(req, timeout)
@@ -177,6 +186,7 @@ class ASRClient:
                 data=b"",
                 headers={
                     "Accept": "application/json",
+                    "Connection": "close",
                     "Authorization": f"Bearer {self.token(refresh=attempt > 0)}",
                     "Content-Length": "0",
                 },
@@ -232,6 +242,7 @@ class ASRClient:
                 headers={
                     "Content-Type": f"multipart/form-data; boundary={boundary}",
                     "Accept": "application/json",
+                    "Connection": "close",
                     "Authorization": f"Bearer {self.token(refresh=attempt > 0)}",
                     "Content-Length": str(len(body)),
                 },

@@ -108,15 +108,27 @@ def port_busy(port: int) -> bool:
         return sock.connect_ex(("127.0.0.1", port)) == 0
 
 
-def claim_port(name: str, port: int, label: str) -> str:
-    """返回 free / ours / foreign；foreign 时调用方必须中止，不能盲目跳过。"""
+def pick_free_port(port: int, tries: int = 20) -> int:
+    for offset in range(1, tries + 1):
+        candidate = port + offset
+        if not port_busy(candidate):
+            return candidate
+    raise RuntimeError(f"{port} 起的 {tries} 个端口都不可用")
+
+
+def claim_port(name: str, port: int, label: str) -> tuple[str, int]:
+    """返回 (state, port)。state 为 free / ours / moved。
+
+    端口被陌生程序占用时不再中止：自动换一个空闲端口继续，
+    用户不需要理解端口冲突，也不需要设置环境变量。
+    """
     if not port_busy(port):
-        return "free"
+        return "free", port
     if is_ours(name, port):
-        return "ours"
-    print(f"  [!!] 端口 {port} 已被其它程序占用（身份校验：{describe(port)}），中止启动")
-    print(f"       请释放端口，或用 MSHK_ASR_PORT 等环境变量换端口；不会把它当作 {label}")
-    return "foreign"
+        return "ours", port
+    alt = pick_free_port(port)
+    print(f"  [info] {label} 端口 {port} 被其他程序占用，已自动改用 {alt}")
+    return "moved", alt
 
 
 def verify_identity(name: str, port: int, label: str, pid: int | None = None) -> bool:
@@ -181,21 +193,22 @@ def main() -> int:
     print("-" * 60)
 
     pids: dict[str, int] = {}
+    ports: dict[str, int] = {}
+    asr_port, engine_port, app_port = ASR_PORT, ENGINE_PORT, APP_PORT
 
     # ---------------------------------------------------------------- ASR
     if not args.no_asr:
-        state = claim_port("asr", ASR_PORT, "ASR")
-        if state == "foreign":
-            return 1
+        state, asr_port = claim_port("asr", asr_port, "ASR")
+        ports["asr"] = asr_port
         if state == "ours":
-            print(f"  [skip] 端口 {ASR_PORT} 已是本项目的 ASR 服务")
+            print(f"  [skip] 端口 {asr_port} 已是本项目的 ASR 服务")
         elif not (ASR_DIR / "app" / "main.py").is_file():
             print(f"  [!!] 找不到 ASR 后端：{ASR_DIR}")
         else:
             proc = spawn(
                 "asr",
                 [python, "-m", "uvicorn", "app.main:app",
-                 "--host", "127.0.0.1", "--port", str(ASR_PORT),
+                 "--host", "127.0.0.1", "--port", str(asr_port),
                  # Windows 上 httptools+ProactorEventLoop 会间歇性 RST 连接（WinError 10054），
                  # 统一用纯 Python 的 h11 解析器，转写长连接稳定
                  "--http", "h11"],
@@ -207,11 +220,10 @@ def main() -> int:
 
     # ------------------------------------------------------------- 引擎
     if not args.no_engine:
-        state = claim_port("engine", ENGINE_PORT, "报告引擎")
-        if state == "foreign":
-            return 1
+        state, engine_port = claim_port("engine", engine_port, "报告引擎")
+        ports["engine"] = engine_port
         if state == "ours":
-            print(f"  [skip] 端口 {ENGINE_PORT} 已是本项目的报告引擎")
+            print(f"  [skip] 端口 {engine_port} 已是本项目的报告引擎")
         elif not (ENGINE_DIR / "run.py").is_file():
             print(f"  [!!] 找不到报告引擎：{ENGINE_DIR}")
         else:
@@ -223,7 +235,7 @@ def main() -> int:
             proc = spawn(
                 "engine",
                 [python, str(ROOT / "scripts" / "run_engine.py"), str(ENGINE_DIR),
-                 "--port", str(ENGINE_PORT)],
+                 "--port", str(engine_port)],
                 ENGINE_DIR,
                 {
                     "MSHK_TERMS_DIR": str(terms),
@@ -236,11 +248,10 @@ def main() -> int:
                 pids["engine"] = proc.pid
 
     # --------------------------------------------------------- 集成层
-    state = claim_port("integration", APP_PORT, "集成层")
-    if state == "foreign":
-        return 1
+    state, app_port = claim_port("integration", app_port, "集成层")
+    ports["integration"] = app_port
     if state == "ours":
-        print(f"  [skip] 端口 {APP_PORT} 已是本项目的集成层")
+        print(f"  [skip] 端口 {app_port} 已是本项目的集成层")
     else:
         proc = spawn(
             "integration",
@@ -248,8 +259,9 @@ def main() -> int:
             ROOT,
             {
                 **_BASE_ENV,
-                # 显式告诉集成层 ASR 真实地址，避免与 config.py 默认值（18000）脱节
-                "MSHK_ASR_URL": f"http://127.0.0.1:{ASR_PORT}",
+                # 显式告诉集成层下游真实地址，端口被自动切换时也不会脱节
+                "MSHK_ASR_URL": f"http://127.0.0.1:{asr_port}",
+                "MSHK_ENGINE_URL": f"http://127.0.0.1:{engine_port}",
             },
         )
         if proc:
@@ -258,43 +270,52 @@ def main() -> int:
     PID_FILE.parent.mkdir(parents=True, exist_ok=True)
     # 保留上一轮仍在运行、且身份匹配的服务 pid（例如本次只重启集成层）
     try:
-        previous = json.loads(PID_FILE.read_text(encoding="utf-8"))
+        data = json.loads(PID_FILE.read_text(encoding="utf-8"))
+        if isinstance(data.get("pids"), dict):
+            previous = data["pids"]
+            saved_ports = {k: v for k, v in (data.get("ports") or {}).items() if isinstance(v, int)}
+        else:  # 旧格式
+            previous = data
+            saved_ports = {}
     except (OSError, json.JSONDecodeError):
-        previous = {}
+        previous, saved_ports = {}, {}
     for name, pid in previous.items():
         if name in pids or not isinstance(pid, int):
             continue
-        port = {"asr": ASR_PORT, "engine": ENGINE_PORT, "integration": APP_PORT}.get(name)
+        port = ports.get(name, saved_ports.get(name))
         if port is not None and is_ours(name, port):
             pids[name] = pid
-    PID_FILE.write_text(json.dumps(pids, indent=2), encoding="utf-8")
+            ports.setdefault(name, port)
+    PID_FILE.write_text(
+        json.dumps({"pids": pids, "ports": ports}, indent=2), encoding="utf-8"
+    )
 
     print("-" * 60)
     print("等待服务就绪…")
     asr_ok = True
     if not args.no_asr:
-        asr_ok = wait_health(f"http://127.0.0.1:{ASR_PORT}/health", 180, "ASR")
-        asr_ok = asr_ok and verify_identity("asr", ASR_PORT, "ASR", pids.get("asr"))
+        asr_ok = wait_health(f"http://127.0.0.1:{asr_port}/health", 180, "ASR")
+        asr_ok = asr_ok and verify_identity("asr", asr_port, "ASR", pids.get("asr"))
     engine_ok = True
     if not args.no_engine:
-        engine_ok = wait_health(f"http://127.0.0.1:{ENGINE_PORT}/health", 90, "报告引擎")
+        engine_ok = wait_health(f"http://127.0.0.1:{engine_port}/health", 90, "报告引擎")
         engine_ok = engine_ok and verify_identity(
-            "engine", ENGINE_PORT, "报告引擎", pids.get("engine")
+            "engine", engine_port, "报告引擎", pids.get("engine")
         )
-    app_ok = wait_health(f"http://127.0.0.1:{APP_PORT}/health/live", 90, "集成层")
+    app_ok = wait_health(f"http://127.0.0.1:{app_port}/health/live", 90, "集成层")
     app_ok = app_ok and verify_identity(
-        "integration", APP_PORT, "集成层", pids.get("integration")
+        "integration", app_port, "集成层", pids.get("integration")
     )
     ok = asr_ok and engine_ok and app_ok
 
     print("-" * 60)
-    print(f"界面   http://127.0.0.1:{APP_PORT}/")
-    print(f"接口   http://127.0.0.1:{APP_PORT}/docs")
+    print(f"界面   http://127.0.0.1:{app_port}/")
+    print(f"接口   http://127.0.0.1:{app_port}/docs")
     print("停止   stop.bat（或 python scripts/stop_all.py）")
     print("-" * 60)
 
     if args.open and ok:
-        webbrowser.open(f"http://127.0.0.1:{APP_PORT}/")
+        webbrowser.open(f"http://127.0.0.1:{app_port}/")
     return 0 if ok else 1
 
 

@@ -81,6 +81,27 @@ class _Server(ThreadingHTTPServer):
     allow_reuse_address = True
 
 
+def fetch_bytes(url: str, timeout: float = 30, retries: int = 3) -> bytes:
+    """下载响应体；对 Windows localhost 偶发 ConnectionResetError 做有界重试。"""
+    last: Exception | None = None
+    for attempt in range(retries):
+        try:
+            req = urllib.request.Request(url, headers={"Connection": "close"})
+            with urllib.request.urlopen(req, timeout=timeout) as resp:
+                return resp.read()
+        except urllib.error.HTTPError:
+            raise
+        except urllib.error.URLError as exc:
+            if not isinstance(exc.reason, ConnectionResetError):
+                raise
+            last = exc
+        except (ConnectionResetError, ConnectionAbortedError) as exc:
+            last = exc
+        if attempt < retries - 1:
+            time.sleep(0.8)
+    raise last or RuntimeError(url)
+
+
 def serve(handler_cls) -> tuple[_Server, str]:
     port = free_port()
     srv = _Server(("127.0.0.1", port), handler_cls)
@@ -111,11 +132,14 @@ def send_json(handler, code: int, payload) -> None:
 # ===========================================================================
 class AsrState:
     probability = 0.92
-    segments = [
+    # 默认三段；个别用例会临时改成单段，统一由 EndToEndTest.setUp 还原，
+    # 避免用例中途失败时把污染留给后面的用例（曾导致 1 != 3 的连锁失败）。
+    default_segments = [
         {"id": 0, "start": 0.0, "end": 4.0, "text": "病人今日有發燒，血壓高"},
         {"id": 1, "start": 4.0, "end": 8.0, "text": "照咗胸肺片，無明顯異常"},
         {"id": 2, "start": 8.0, "end": 12.0, "text": "建議食退燒藥，兩日後覆診"},
     ]
+    segments = list(default_segments)
     registered = False
     token = "stub-asr-token"
     calls = {"transcribe": 0}
@@ -858,6 +882,11 @@ class EndToEndTest(unittest.TestCase):
         else:
             raise RuntimeError("集成层未能在 20s 内启动")
 
+    def setUp(self):
+        # 上游 stub 是共享的：每个用例开始前还原，避免某个用例中途失败后污染后续用例
+        AsrState.segments = list(AsrState.default_segments)
+        AsrState.probability = 0.92
+
     @classmethod
     def tearDownClass(cls):
         cls.server.should_exit = True
@@ -867,7 +896,7 @@ class EndToEndTest(unittest.TestCase):
     # ---------------------------------------------------------------- HTTP
     def _req(self, method: str, path: str, payload=None, raw: bytes | None = None,
              ctype: str | None = None):
-        data, headers = None, {}
+        data, headers = None, {"Connection": "close"}
         if payload is not None:
             data = json.dumps(payload, ensure_ascii=False).encode("utf-8")
             headers["Content-Type"] = "application/json"
@@ -878,7 +907,7 @@ class EndToEndTest(unittest.TestCase):
                                      method=method)
         # 本机 Windows 下 localhost 偶发 ConnectionResetError（WinError 10054）突发，
         # 与业务代码无关（纯 http.server / uvicorn / urllib 之间亦复现），做有界重试。
-        for attempt in range(3):
+        for attempt in range(6):
             try:
                 with urllib.request.urlopen(req, timeout=60) as resp:
                     body = resp.read()
@@ -892,8 +921,8 @@ class EndToEndTest(unittest.TestCase):
             except (ConnectionResetError, urllib.error.URLError) as exc:
                 if isinstance(exc, urllib.error.URLError) and not isinstance(exc.reason, ConnectionResetError):
                     raise
-                if attempt < 2:
-                    time.sleep(0.8)
+                if attempt < 5:
+                    time.sleep(min(0.5 * (attempt + 1), 2.5))
                     continue
                 raise
         raise RuntimeError("unreachable")  # pragma: no cover
@@ -1032,9 +1061,7 @@ class EndToEndTest(unittest.TestCase):
 
         # --- 导出文件可下载
         name = body["records"][0]["local_path"]
-        with urllib.request.urlopen(f"{self.base}/exports/{name}", timeout=10) as resp:
-            self.assertEqual(resp.status, 200)
-            self.assertGreater(len(resp.read()), 0)
+        self.assertGreater(len(fetch_bytes(f"{self.base}/exports/{name}", timeout=15)), 0)
 
         # --- 最终状态与审计
         status, detail = self._req("GET", f"/sessions/{sid}")
@@ -1092,13 +1119,7 @@ class EndToEndTest(unittest.TestCase):
                     (self._req("GET", f"/api/audit?session_id={sid}")[1])]
         self.assertIn("sign_blocked", statuses)
         self.assertNotEqual(detail["session"]["status"], "signed")
-
-        AsrState.segments = AsrState.segments  # 复原由下一个用例负责
-        AsrState.segments = [
-            {"id": 0, "start": 0.0, "end": 4.0, "text": "病人今日有發燒，血壓高"},
-            {"id": 1, "start": 4.0, "end": 8.0, "text": "照咗胸肺片，無明顯異常"},
-            {"id": 2, "start": 8.0, "end": 12.0, "text": "建議食退燒藥，兩日後覆診"},
-        ]
+        # AsrState.segments 由 EndToEndTest.setUp 在每个用例前还原
 
     def test_delete_session_cascades(self):
         status, session = self._req("POST", "/sessions", {"title": "to-delete"})

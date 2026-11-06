@@ -436,7 +436,14 @@ class TermCorrector:
 
         return result, corrections
 
-    def correct_segments(self, segments: list[dict]) -> tuple[list[dict], list[dict]]:
+    def correct_segments(
+        self, segments: list[dict], keep_raw: bool = False
+    ) -> tuple[list[dict], list[dict]]:
+        """keep_raw=True 表示该会话已有纠正记录：保留既有 text_raw 作为撤销基线。
+
+        没有这个开关时，重复执行纠正（例如客户端在连接重置后重发同一次请求）
+        会把 text_raw 覆盖成"已经替换过术语"的文本，撤销就退不回原文了。
+        """
         out: list[dict] = []
         all_corrections: list[dict] = []
         for seg in segments:
@@ -447,6 +454,7 @@ class TermCorrector:
                 new_seg["text"] = corrected
                 # text_raw 记录**纠正前**的文本（含人工修正），这样撤销只回退术语替换，
                 # 不会把医生的编辑一起丢掉。
-                new_seg["text_raw"] = seg.get("text", "")
+                if not (keep_raw and seg.get("text_raw")):
+                    new_seg["text_raw"] = seg.get("text", "")
             out.append(new_seg)
         return out, all_corrections

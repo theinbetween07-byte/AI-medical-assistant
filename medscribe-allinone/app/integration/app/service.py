@@ -224,7 +224,8 @@ class IntegrationService:
             path = self.cfg.audio_dir / audio_name
             if path.is_file():
                 path.unlink()
-                removed_audio = True
+            # 以「删除后文件不存在」为准：客户端在连接重置后重发删除时也应幂等返回 True
+            removed_audio = not path.exists()
 
         engine_deleted = False
         if report_id:
@@ -409,9 +410,15 @@ class IntegrationService:
             warnings.append(
                 f"{trad} 个片段为繁体输出，术语匹配已按简体折叠（原文未被改写）"
             )
-        corrected, corrections = self.corrector.correct_segments(segments)
+        corrected, corrections = self.corrector.correct_segments(
+            segments, keep_raw=bool(self.store.load_corrections(session_id))
+        )
         self.store.replace_segments(session_id, corrected)
-        self.store.save_corrections(session_id, corrections, utcnow_iso())
+        if corrections:
+            self.store.save_corrections(session_id, corrections, utcnow_iso())
+        # 本次没有产生新替换（例如客户端在连接重置后重发同一次纠正）时保留旧记录：
+        # 清空会让 _engine_segments 失去回滚依据，引擎就会收到 Fever/Hypertension
+        # 这类英文术语，中文关键词规则整段失配。
         session.status = "corrected" if _rank(session.status) <= _rank("corrected") else session.status
         self._save(session)
         self._audit(
@@ -474,10 +481,18 @@ class IntegrationService:
         out: list[dict] = []
         for seg in segments:
             text = seg.get("text", "")
-            for corr in by_seg.get(seg["id"], []):
-                before, after = corr.get("before", ""), corr.get("after", "")
-                if after and after in text:
-                    text = text.replace(after, before, 1)
+            # 首选 text_raw：它就是「术语纠正前的文本」，比逐词回滚更可靠
+            # （纠正在连接重置后被重发时，corrections 记录可能已被覆盖）。
+            raw = seg.get("text_raw") or ""
+            # 只有该段确实纠正过（有记录）才回滚到 text_raw；否则 text_raw 还是
+            # 转写原文，拿它回滚会把医生的手工编辑一起抹掉。
+            if raw and raw != text and by_seg.get(seg["id"]):
+                text = raw
+            else:
+                for corr in by_seg.get(seg["id"], []):
+                    before, after = corr.get("before", ""), corr.get("after", "")
+                    if after and after in text:
+                        text = text.replace(after, before, 1)
             item = dict(seg)
             item["text"] = text
             item["text_raw"] = None
