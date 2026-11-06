@@ -221,8 +221,23 @@ class ASRService:
         template: str = "discharge_summary",
         beam_size: int = DEFAULT_BEAM_SIZE,
         vad_filter: bool = DEFAULT_VAD_FILTER,
+        progress=None,
     ) -> dict:
-        """同步轉寫音頻文件（自動確保模型已加載）"""
+        """同步轉寫音頻文件（自動確保模型已加載）
+
+        ``progress``：可選回調 ``(fraction, phase, detail)``，用於上報真實進度。
+        phase 取值：prepare / load / decode / finalize。
+        """
+
+        def emit(fraction: float, phase: str, detail: Optional[dict] = None) -> None:
+            if progress is None:
+                return
+            try:
+                progress(max(0.0, min(1.0, float(fraction))), phase, detail or {})
+            except Exception:  # 進度上報失敗不影響轉寫
+                pass
+
+        emit(0.02, "prepare")
         self.ensure_loaded()
 
         if not os.path.exists(audio_path):
@@ -235,14 +250,18 @@ class ASRService:
             f"(engine={self.engine}, model={self.current_model_size}, language={language})"
         )
         t0 = time.time()
+        emit(0.06, "prepare")
         wav_path = self._convert_to_wav(audio_path)
         t_convert = time.time() - t0
         logger.info(f"[ASR] 音頻轉碼耗時 {t_convert:.2f}s")
+        emit(0.12, "decode")
 
         try:
             if self.engine == "caps":
+                emit(0.2, "decode")
                 result = self.caps.transcribe(wav_path, language)
                 result["template"] = template
+                emit(1.0, "finalize")
                 return result
 
             # 取一次引用：切換模型只會替換 self.model，已開始的轉寫繼續用舊實例。
@@ -256,6 +275,7 @@ class ASRService:
                 logger.info(f"[ASR] 語言：{language}（手動指定）")
 
             t1 = time.time()
+            emit(0.14, "decode")
             segments_iter, info = model.transcribe(
                 wav_path,
                 language=effective_lang,
@@ -265,8 +285,11 @@ class ASRService:
                 word_timestamps=True,
                 condition_on_previous_text=True,
             )
+            total = float(getattr(info, "duration", 0.0) or 0.0)
+            emit(0.16, "decode", {"processed": 0.0, "total": total})
             segments = []
             text_parts = []
+            last_emit = 0.0
             for seg in segments_iter:
                 seg_data = {
                     "id": seg.id,
@@ -276,7 +299,16 @@ class ASRService:
                 }
                 segments.append(seg_data)
                 text_parts.append(seg.text.strip())
+                # 按已識別音頻時長推進進度；節流到 ~4 次/秒，避免過度寫狀態
+                now = time.time()
+                if now - last_emit >= 0.25:
+                    last_emit = now
+                    ratio = (float(seg.end) / total) if total > 0 else 0.0
+                    emit(0.16 + 0.80 * min(max(ratio, 0.0), 1.0), "decode",
+                         {"processed": round(float(seg.end), 1), "total": round(total, 1)})
+            emit(0.96, "finalize", {"processed": round(total, 1), "total": round(total, 1)})
             t_transcribe = time.time() - t1
+            emit(1.0, "finalize", {"processed": round(total, 1), "total": round(total, 1)})
             logger.info(
                 f"[ASR] 轉寫完成：{len(segments)} 段，"
                 f"音頻 {info.duration:.1f}s，耗時 {t_transcribe:.1f}s，"

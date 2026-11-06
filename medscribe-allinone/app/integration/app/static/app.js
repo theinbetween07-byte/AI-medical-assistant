@@ -33,7 +33,11 @@
     chunks: [],
     recTimer: null,
     recSeconds: 0,
-    playing: false
+    playing: false,
+    transcribing: false,
+    transcribeJob: null,
+    pendingAudioName: '',
+    extUrl: ''
   };
 
   /* ------------------------------------------------------------------ i18n */
@@ -107,12 +111,23 @@
       'model.switching': '正在切换模型：{name}（首次使用需加载模型，可能耗时数十秒）…',
       'model.switched': '已切换到 {name}（{s}s）',
       'action.transcribe': '转写',
+      'action.transcribing': '转写中…',
       'action.correct': '术语纠正',
       'action.undo': '撤销纠正',
       'action.extract': '抽取 S/O/A/P',
       'action.generate': '生成初稿',
       'transcript.title': '转写原文',
       'transcript.empty': '尚无转写结果。录音或上传音频后点击「转写」。',
+      'transcript.progressTitle': '正在转写音频',
+      'transcript.progressSub': '首次加载模型可能需要 20–60 秒，请保持页面打开。',
+      'phase.prepare': '准备音频',
+      'phase.load': '加载模型',
+      'phase.decode': '识别语音',
+      'phase.finalize': '整理文本',
+      'phase.save': '写入结果',
+      'transcript.progressClock': '已识别 {done} / {total} · 已用 {elapsed}',
+      'transcript.progressElapsed': '已用 {elapsed}',
+      'toast.transcribeTimeout': '转写超时，请重试或改用更短的录音。',
       'meta.local': '音频仅在本机处理',
       'meta.lang': '{lang} · 置信 {conf}',
       'meta.langUnknown': '语种待识别',
@@ -167,6 +182,8 @@
       'ext.close': '关闭',
       'ext.uninstalled': ' · 未安装',
       'ext.installed': ' · 扩展',
+      'ext.copy': '复制链接',
+      'ext.copied': '已复制',
       'dialog.consent': '我已逐项核对报告内容，确认签署。此操作会写入审计记录。',
       'dialog.cancel': '取消',
       'dialog.sign': '确认签署',
@@ -324,12 +341,23 @@
       'model.switching': '正在切換模型：{name}（首次使用需載入模型，可能耗時數十秒）…',
       'model.switched': '已切換到 {name}（{s}s）',
       'action.transcribe': '轉寫',
+      'action.transcribing': '轉寫中…',
       'action.correct': '術語糾正',
       'action.undo': '撤銷糾正',
       'action.extract': '抽取 S/O/A/P',
       'action.generate': '生成初稿',
       'transcript.title': '轉寫原文',
       'transcript.empty': '尚無轉寫結果。錄音或上傳音頻後點擊「轉寫」。',
+      'transcript.progressTitle': '正在轉寫音頻',
+      'transcript.progressSub': '首次加載模型可能需要 20–60 秒，請保持頁面打開。',
+      'phase.prepare': '準備音頻',
+      'phase.load': '加載模型',
+      'phase.decode': '識別語音',
+      'phase.finalize': '整理文本',
+      'phase.save': '寫入結果',
+      'transcript.progressClock': '已識別 {done} / {total} · 已用 {elapsed}',
+      'transcript.progressElapsed': '已用 {elapsed}',
+      'toast.transcribeTimeout': '轉寫超時，請重試或改用更短的錄音。',
       'meta.local': '音頻僅在本機處理',
       'meta.lang': '{lang} · 信心度 {conf}',
       'meta.langUnknown': '語種待識別',
@@ -384,6 +412,8 @@
       'ext.close': '關閉',
       'ext.uninstalled': ' · 未安裝',
       'ext.installed': ' · 擴展',
+      'ext.copy': '複製連結',
+      'ext.copied': '已複製',
       'dialog.consent': '我已逐項核對報告內容，確認簽署。此操作會寫入稽核記錄。',
       'dialog.cancel': '取消',
       'dialog.sign': '確認簽署',
@@ -541,12 +571,23 @@
       'model.switching': 'Switching model: {name} (first use loads the local model, may take up to a minute)…',
       'model.switched': 'Switched to {name} ({s}s)',
       'action.transcribe': 'Transcribe',
+      'action.transcribing': 'Transcribing…',
       'action.correct': 'Correct terms',
       'action.undo': 'Undo corrections',
       'action.extract': 'Extract S/O/A/P',
       'action.generate': 'Generate draft',
       'transcript.title': 'Transcript',
       'transcript.empty': 'No transcript yet. Record or upload audio, then choose Transcribe.',
+      'transcript.progressTitle': 'Transcribing audio',
+      'transcript.progressSub': 'The first run may take 20–60 seconds while the model loads. Keep this page open.',
+      'phase.prepare': 'Preparing audio',
+      'phase.load': 'Loading model',
+      'phase.decode': 'Recognising speech',
+      'phase.finalize': 'Assembling text',
+      'phase.save': 'Saving result',
+      'transcript.progressClock': '{done} / {total} recognised · {elapsed} elapsed',
+      'transcript.progressElapsed': '{elapsed} elapsed',
+      'toast.transcribeTimeout': 'Transcription timed out. Try again or use a shorter recording.',
       'meta.local': 'Audio stays on this device',
       'meta.lang': '{lang} · confidence {conf}',
       'meta.langUnknown': 'Language pending',
@@ -601,6 +642,8 @@
       'ext.close': 'Close',
       'ext.uninstalled': ' · not installed',
       'ext.installed': ' · extension',
+      'ext.copy': 'Copy link',
+      'ext.copied': 'Copied',
       'dialog.consent': 'I have reviewed every item and confirm signing. This action is written to the audit log.',
       'dialog.cancel': 'Cancel',
       'dialog.sign': 'Sign',
@@ -960,6 +1003,96 @@
     el.style.height = Math.min(el.scrollHeight, 260) + 'px';
   }
 
+  function progressCardHtml() {
+    return '<div class="tr-progress" id="tr-progress" data-phase="prepare" role="status" aria-live="polite">' +
+      '<div class="tr-progress-head">' +
+      '<span class="tr-spinner" aria-hidden="true"></span>' +
+      '<span class="tr-progress-title">' + esc(t('transcript.progressTitle')) + '</span>' +
+      '<span class="tr-progress-pct" id="tr-progress-pct">0%</span>' +
+      '</div>' +
+      '<div class="tr-bar"><i id="tr-progress-bar" style="width:0%"></i></div>' +
+      '<p class="tr-progress-meta">' +
+      '<span id="tr-progress-phase">' + esc(t('phase.prepare')) + '</span>' +
+      '<span id="tr-progress-clock"></span>' +
+      '</p>' +
+      '<p class="tr-progress-sub">' + esc(t('transcript.progressSub')) + '</p>' +
+      '</div>';
+  }
+
+  var progressTimer = null;
+
+  function stopProgressTicker() {
+    if (progressTimer) {
+      clearInterval(progressTimer);
+      progressTimer = null;
+    }
+  }
+
+  function paintProgress(shown) {
+    var bar = $('tr-progress-bar');
+    var pctEl = $('tr-progress-pct');
+    var pct = Math.round(Math.max(0, Math.min(1, shown)) * 100);
+    if (bar) bar.style.width = pct + '%';
+    if (pctEl) pctEl.textContent = pct + '%';
+    var clockEl = $('tr-progress-clock');
+    if (!clockEl) return;
+    var job = state.transcribeJob || {};
+    var total = Number(job.total) || 0;
+    var done = Number(job.processed) || 0;
+    var elapsed = state.transcribeStartedAt
+      ? Math.max(0, (Date.now() - state.transcribeStartedAt) / 1000) : 0;
+    clockEl.textContent = (total > 0 && done > 0)
+      ? t('transcript.progressClock', {
+        done: fmtClock(done * 1000),
+        total: fmtClock(total * 1000),
+        elapsed: Math.round(elapsed) + 's'
+      })
+      : t('transcript.progressElapsed', { elapsed: Math.round(elapsed) + 's' });
+  }
+
+  function startProgressTicker() {
+    stopProgressTicker();
+    state.progressShown = 0.02;
+    state.progressTarget = 0.02;
+    state.transcribeStartedAt = state.transcribeStartedAt || Date.now();
+    progressTimer = setInterval(function () {
+      var target = Number(state.progressTarget) || 0;
+      var shown = Number(state.progressShown) || 0;
+      if (target > shown) {
+        shown += Math.max((target - shown) * 0.22, 0.004);
+        if (shown > target) shown = target;
+      } else if (target < 0.96) {
+        // 分段回调稀疏时（长录音一次解码很久），缓慢蠕升，避免进度条完全不动
+        shown = Math.min(target + 0.1, shown + 0.0007);
+      }
+      state.progressShown = shown;
+      paintProgress(shown);
+    }, 200);
+    paintProgress(state.progressShown);
+  }
+
+  function updateTranscribeProgress(job) {
+    state.transcribeJob = job || {};
+    if (job && job.status === 'done') {
+      state.progressTarget = 1;
+      state.progressShown = 1;
+      stopProgressTicker();
+      paintProgress(1);
+      return;
+    }
+    if (job && typeof job.progress === 'number') {
+      state.progressTarget = Math.max(state.progressTarget || 0, job.progress);
+    }
+    var card = $('tr-progress');
+    if (card) card.setAttribute('data-phase', (job && job.phase) || 'decode');
+    var phaseEl = $('tr-progress-phase');
+    if (phaseEl) {
+      var label = t('phase.' + ((job && job.phase) || 'decode'));
+      phaseEl.textContent = (label && label.indexOf('phase.') !== 0) ? label : t('phase.decode');
+    }
+    paintProgress(state.progressShown || 0);
+  }
+
   function renderSegments() {
     var box = $('segments');
     var segments = state.detail.segments || [];
@@ -975,6 +1108,12 @@
     var low = unconfirmedLow().length;
     $('low-chip').hidden = low === 0;
     $('low-chip-text').textContent = lowPhrase(low);
+
+    if (state.transcribing) {
+      box.innerHTML = progressCardHtml();
+      if (state.transcribeJob) updateTranscribeProgress(state.transcribeJob);
+      return;
+    }
 
     if (!segments.length) {
       box.innerHTML = '<p class="muted" style="padding:18px 16px">' +
@@ -1280,6 +1419,7 @@
     var level = rank(status);
     var signed = level >= rank('signed');
     $('btn-transcribe').disabled = signed || state.busy || level < rank('recorded');
+    $('btn-transcribe').textContent = t(state.transcribing ? 'action.transcribing' : 'action.transcribe');
     $('btn-correct').disabled = signed || state.busy || level < rank('transcribed');
     $('btn-undo').disabled = signed || state.busy ||
       !(state.detail.corrections && state.detail.corrections.length);
@@ -1290,7 +1430,8 @@
     $('btn-record').disabled = signed || state.busy;
 
     var hint = '';
-    if (level < rank('recorded')) hint = t('transcript.empty');
+    if (state.transcribing) hint = t('toast.transcribing');
+    else if (level < rank('recorded')) hint = t('transcript.empty');
     else if (level < rank('transcribed')) hint = t('action.transcribe');
     else if (level < rank('generated')) hint = t('action.generate');
     else hint = t('report.title');
@@ -1376,6 +1517,13 @@
       return '<li>' + esc(step) + '</li>';
     }).join('');
     $('ext-note').textContent = info.note || '';
+    var copyBtn = $('ext-copy');
+    if (copyBtn) {
+      copyBtn.disabled = !url;
+      copyBtn.classList.remove('done');
+      copyBtn.textContent = t('ext.copy');
+    }
+    state.extUrl = url;
     var dialog = $('ext-dialog');
     if (typeof dialog.showModal === 'function') dialog.showModal();
     else dialog.setAttribute('open', '');
@@ -1411,7 +1559,11 @@
       select.title = '';
       return;
     }
-    select.innerHTML = state.models.map(function (model) {
+    // Qwen3-ASR 作为可选高精度档，排在列表最末，避免抢默认项的注意力
+    var ordered = state.models.slice().sort(function (a, b) {
+      return (a.id === 'caps-qwen3' ? 1 : 0) - (b.id === 'caps-qwen3' ? 1 : 0);
+    });
+    select.innerHTML = ordered.map(function (model) {
       return '<option value="' + esc(model.id) + '">' +
         esc(modelLabel(model) + modelNote(model)) + '</option>';
     }).join('');
@@ -1554,26 +1706,70 @@
   }
 
   /* ---------------------------------------------------------------- action */
+  var TRANSCRIBE_TIMEOUT_MS = 15 * 60 * 1000;
+
+  function pollTranscribe(jobId) {
+    return new Promise(function (resolve, reject) {
+      var started = Date.now();
+      function tick() {
+        api('/transcribe-jobs/' + encodeURIComponent(jobId)).then(function (job) {
+          if (job.status === 'running') {
+            updateTranscribeProgress(job);
+            if (Date.now() - started > TRANSCRIBE_TIMEOUT_MS) {
+              reject(new Error(t('toast.transcribeTimeout')));
+              return;
+            }
+            setTimeout(tick, 500);
+            return;
+          }
+          updateTranscribeProgress(job);
+          if (job.status === 'error') {
+            reject(new Error(job.error || t('toast.error', { msg: '' })));
+            return;
+          }
+          resolve(job);
+        }).catch(function (err) {
+          // 轮询偶发连接重置：在总超时内继续重试，避免一次抖动中断整个转写
+          if (Date.now() - started > TRANSCRIBE_TIMEOUT_MS) { reject(err); return; }
+          setTimeout(tick, 900);
+        });
+      }
+      tick();
+    });
+  }
+
   async function doTranscribe() {
     if (!state.sessionId) { showToast(t('toast.noSession')); return; }
     state.busy = true;
+    state.transcribing = true;
+    state.transcribeStartedAt = Date.now();
+    state.transcribeJob = { progress: 0.02, phase: 'prepare', processed: 0, total: 0 };
     $('pipeline-hint').textContent = t('toast.transcribing');
     renderPipeline();
+    renderSegments();
+    startProgressTicker();
     try {
-      var result = await api('/sessions/' + encodeURIComponent(state.sessionId) + '/transcribe',
+      var job = await api('/sessions/' + encodeURIComponent(state.sessionId) + '/transcribe-jobs',
         jsonOptions('POST', {
           language: '', beam_size: 5, asr_template: 'soap'
         }));
+      var done = await pollTranscribe(job.job_id);
+      state.transcribing = false;
       showToast(t('toast.transcribed', {
-        n: result.segments.length,
-        low: result.low_confidence.length
+        n: (done.result && done.result.segments) || 0,
+        low: (done.result && done.result.low_confidence) || 0
       }));
       await refresh();
       await loadSessions();
     } catch (e) {
+      state.transcribing = false;
       fail(e);
+      try { await refresh(); } catch (ignored) { /* 保留当前界面 */ }
     } finally {
+      stopProgressTicker();
       state.busy = false;
+      state.transcribeJob = null;
+      state.transcribeStartedAt = null;
       if (state.detail) renderPipeline();
     }
   }
@@ -1802,6 +1998,20 @@
     if (!state.playing) {
       $('audio-time').textContent = '00:00 / ' + fmtClock(session ? session.duration_ms : 0);
     }
+    // 文件名展示在波形与时长之间，方便确认导入的是哪一段录音
+    var fileEl = $('audio-file');
+    if (fileEl) {
+      var name = (session && session.audio_filename) || state.pendingAudioName || '';
+      if (name) {
+        fileEl.textContent = name;
+        fileEl.title = name;
+        fileEl.hidden = false;
+      } else {
+        fileEl.textContent = '';
+        fileEl.removeAttribute('title');
+        fileEl.hidden = true;
+      }
+    }
   }
 
   function seek(ms) {
@@ -1863,13 +2073,17 @@
     if (!state.sessionId) { showToast(t('toast.noSession')); return; }
     var form = new FormData();
     form.append('file', blob, name);
+    state.pendingAudioName = name || '';
+    renderAudio();
     try {
       var result = await api('/sessions/' + encodeURIComponent(state.sessionId) + '/audio',
         { method: 'POST', body: form });
       showToast(t('toast.uploaded', { dur: fmtClock(result.duration_ms) }));
+      state.pendingAudioName = '';
       await refresh();
       await loadSessions();
     } catch (e) {
+      state.pendingAudioName = '';
       fail(e);
     }
   }
@@ -1966,6 +2180,35 @@
     switchModel(this.value);
   });
   $('ext-close').addEventListener('click', closeExtDialog);
+
+  $('ext-copy').addEventListener('click', function () {
+    var url = state.extUrl || '';
+    if (!url) return;
+    var button = $('ext-copy');
+    var done = function () {
+      button.classList.add('done');
+      button.textContent = t('ext.copied');
+      setTimeout(function () {
+        button.classList.remove('done');
+        button.textContent = t('ext.copy');
+      }, 1800);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(url).then(done, function () { showToast(t('toast.error', { msg: '' })); });
+      return;
+    }
+    var temp = document.createElement('textarea');
+    temp.value = url;
+    document.body.appendChild(temp);
+    temp.select();
+    try {
+      document.execCommand('copy');
+      done();
+    } catch (e) {
+      showToast(t('toast.error', { msg: '' }));
+    }
+    document.body.removeChild(temp);
+  });
   $('mobile-theme').addEventListener('click', cycleTheme);
 
   document.querySelectorAll('[data-lang-set]').forEach(function (btn) {

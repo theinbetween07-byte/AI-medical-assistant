@@ -15,6 +15,8 @@ import importlib.util
 import json
 import shutil
 import tempfile
+import threading
+import time
 import uuid
 from pathlib import Path
 from typing import Optional
@@ -79,6 +81,25 @@ def _rank(status: str) -> int:
         return STATUS_ORDER.index(status)
     except ValueError:
         return -1
+
+
+# 轉寫任務表：僅保存在進程內，供前端輪詢實時進度（重啟後丟失，不影響數據）
+_TRANSCRIBE_JOBS: dict[str, dict] = {}
+_TRANSCRIBE_LOCK = threading.Lock()
+_TRANSCRIBE_JOB_TTL_S = 1800
+
+
+def _sweep_transcribe_jobs() -> None:
+    now = time.time()
+    with _TRANSCRIBE_LOCK:
+        stale = [
+            job_id
+            for job_id, job in _TRANSCRIBE_JOBS.items()
+            if job.get("status") != "running"
+            and now - job.get("updated", now) > _TRANSCRIBE_JOB_TTL_S
+        ]
+        for job_id in stale:
+            _TRANSCRIBE_JOBS.pop(job_id, None)
 
 
 class IntegrationService:
@@ -314,6 +335,7 @@ class IntegrationService:
         language: str = "",
         beam_size: int = 5,
         asr_template: str = "soap",
+        progress=None,
     ) -> dict:
         session = self._require(session_id)
         self._need(session, "recorded", "转写")
@@ -321,16 +343,32 @@ class IntegrationService:
         if not wav_path.is_file():
             raise InvalidState("找不到会话音频文件，请重新上传录音")
 
+        def forward(fraction: float, phase: str, detail: dict) -> None:
+            if progress is None:
+                return
+            # 上游 0..1 映射到 0.02..0.92，留出写库/整理的时间
+            try:
+                progress(0.02 + 0.90 * max(0.0, min(1.0, float(fraction))), phase, detail or {})
+            except Exception:
+                pass
+
         try:
             result = self.asr.transcribe(
                 wav_path,
                 language=language or self.cfg.default_language,
                 asr_template=asr_template,
                 beam_size=beam_size,
+                progress=forward if progress is not None else None,
             )
         except ASRError as exc:
             self._audit(session_id, "transcribe_failed", {"error": str(exc)})
             raise UpstreamError(f"转写失败，请重试或重录：{exc}") from exc
+
+        if progress is not None:
+            try:
+                progress(0.94, "save", {})
+            except Exception:
+                pass
 
         mapped = refine_segments(map_segments(result, self.cfg.low_confidence_threshold))
         if not mapped:
@@ -367,6 +405,110 @@ class IntegrationService:
             "low_confidence": low,
             "note": "上游 ASR 未返回逐段置信度，confidence 为按整段语言概率推算的代理值",
         }
+
+    # ------------------------------------------------ 转写任务（带实时进度）
+    def start_transcribe_job(
+        self,
+        session_id: str,
+        language: str = "",
+        beam_size: int = 5,
+        asr_template: str = "soap",
+    ) -> dict:
+        """建立异步转写任务，立即返回 job_id；前端轮询 transcribe_job 取进度。"""
+        session = self._require(session_id)
+        self._need(session, "recorded", "转写")
+        _sweep_transcribe_jobs()
+        job_id = uuid.uuid4().hex
+        with _TRANSCRIBE_LOCK:
+            _TRANSCRIBE_JOBS[job_id] = {
+                "id": job_id,
+                "session_id": session_id,
+                "status": "running",
+                "phase": "prepare",
+                "progress": 0.02,
+                "processed": 0.0,
+                "total": round((session.duration_ms or 0) / 1000.0, 1),
+                "updated": time.time(),
+                "result": None,
+                "error": None,
+            }
+        threading.Thread(
+            target=self._run_transcribe_job,
+            args=(job_id, session_id, language, beam_size, asr_template),
+            daemon=True,
+            name=f"transcribe-{job_id[:8]}",
+        ).start()
+        return {"job_id": job_id, "status": "running"}
+
+    def _run_transcribe_job(
+        self,
+        job_id: str,
+        session_id: str,
+        language: str,
+        beam_size: int,
+        asr_template: str,
+    ) -> None:
+        def on_progress(fraction: float, phase: str, detail: dict) -> None:
+            with _TRANSCRIBE_LOCK:
+                job = _TRANSCRIBE_JOBS.get(job_id)
+                if job is None:
+                    return
+                job["progress"] = round(float(fraction), 4)
+                job["phase"] = phase
+                if detail:
+                    if detail.get("processed") is not None:
+                        job["processed"] = detail.get("processed")
+                    if detail.get("total") is not None:
+                        job["total"] = detail.get("total")
+                job["updated"] = time.time()
+
+        try:
+            result = self.transcribe(
+                session_id,
+                language=language,
+                beam_size=beam_size,
+                asr_template=asr_template,
+                progress=on_progress,
+            )
+            summary = {
+                "session_id": session_id,
+                "segments": len(result.get("segments") or []),
+                "low_confidence": len(result.get("low_confidence") or []),
+            }
+            with _TRANSCRIBE_LOCK:
+                job = _TRANSCRIBE_JOBS.get(job_id)
+                if job is not None:
+                    job.update(status="done", phase="done", progress=1.0,
+                               result=summary, updated=time.time())
+        except NotFound as exc:
+            with _TRANSCRIBE_LOCK:
+                job = _TRANSCRIBE_JOBS.get(job_id)
+                if job is not None:
+                    job.update(status="error", phase="error", error=str(exc),
+                               updated=time.time())
+        except Exception as exc:  # noqa: BLE001 - 失败原因需要回传前端
+            with _TRANSCRIBE_LOCK:
+                job = _TRANSCRIBE_JOBS.get(job_id)
+                if job is not None:
+                    job.update(status="error", phase="error", error=str(exc),
+                               updated=time.time())
+
+    def transcribe_job(self, job_id: str) -> dict:
+        with _TRANSCRIBE_LOCK:
+            job = _TRANSCRIBE_JOBS.get(job_id)
+            if job is None:
+                raise NotFound(f"转写任务不存在或已过期：{job_id}")
+            return {
+                "id": job["id"],
+                "session_id": job["session_id"],
+                "status": job["status"],
+                "phase": job["phase"],
+                "progress": job["progress"],
+                "processed": job.get("processed"),
+                "total": job.get("total"),
+                "error": job.get("error"),
+                "result": job.get("result") if job["status"] == "done" else None,
+            }
 
     # --------------------------------------------------- 人工修正分段（PATCH）
     def patch_segment(self, session_id: str, segment_id: str, text: Optional[str],

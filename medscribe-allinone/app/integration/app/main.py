@@ -171,6 +171,22 @@ def create_app() -> FastAPI:
             asr_template=opts.asr_template,
         )
 
+    @app.post("/sessions/{session_id}/transcribe-jobs",
+              summary="建立转写任务（带实时进度）")
+    def start_transcribe_job(
+        session_id: str, opts: TranscribeOptions = Body(default=TranscribeOptions())
+    ) -> dict:
+        return service.start_transcribe_job(
+            session_id,
+            language=opts.language,
+            beam_size=opts.beam_size,
+            asr_template=opts.asr_template,
+        )
+
+    @app.get("/transcribe-jobs/{job_id}", summary="查询转写任务进度")
+    def transcribe_job(job_id: str) -> dict:
+        return service.transcribe_job(job_id)
+
     @app.patch("/sessions/{session_id}/segments/{segment_id}",
                summary="人工修正/确认转写片段（FR-02/BR-09）")
     def patch_segment(session_id: str, segment_id: str, patch: SegmentPatch) -> dict:

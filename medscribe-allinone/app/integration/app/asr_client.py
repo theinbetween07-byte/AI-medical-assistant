@@ -211,6 +211,7 @@ class ASRClient:
         language: str = "",
         asr_template: str = "soap",
         beam_size: int = 5,
+        progress: Optional[Any] = None,
     ) -> dict:
         boundary = f"----MedScribe{uuid.uuid4().hex}"
         mime = mimetypes.guess_type(str(wav_path))[0] or "audio/wav"
@@ -234,6 +235,9 @@ class ASRClient:
         )
         parts.append(f"--{boundary}--\r\n".encode("utf-8"))
         body = b"".join(parts)
+
+        if progress is not None:
+            return self._transcribe_via_job(body, boundary, progress)
 
         for attempt in (0, 1):
             req = urllib.request.Request(
@@ -264,6 +268,95 @@ class ASRClient:
                 raise ASRError(f"无法连接 ASR 服务：{exc.reason}") from exc
         raise ASRError("ASR 转写失败：鉴权重试后仍未通过。", status=401)
 
+    # --------------------------------------------------- transcribe with progress
+    def _transcribe_via_job(self, body: bytes, boundary: str, progress) -> dict:
+        """提交异步转写任务并轮询进度；进度回调 (fraction, phase, detail)。"""
+        job_id = self._create_job(body, boundary)
+        deadline = time.time() + max(float(self.cfg.asr_timeout_s), 180.0)
+        delay = 0.35
+        while True:
+            if time.time() > deadline:
+                raise ASRError("转写超时：上游长时间没有返回结果，请重试。")
+            time.sleep(delay)
+            delay = min(delay * 1.15, 1.2)
+            state = self._get_job(job_id)
+            status = state.get("status")
+            if status == "running":
+                try:
+                    progress(
+                        float(state.get("progress") or 0.0),
+                        str(state.get("phase") or "decode"),
+                        {
+                            "processed": state.get("processed"),
+                            "total": state.get("total"),
+                        },
+                    )
+                except Exception:  # 进度回调异常不影响转写
+                    pass
+                continue
+            if status == "done":
+                result = state.get("result")
+                if not result:
+                    raise ASRError("转写任务已完成但未返回结果，请重试。")
+                return result
+            raise ASRError(f"ASR 转写失败：{state.get('error') or '未知错误'}")
+
+    def _create_job(self, body: bytes, boundary: str) -> str:
+        for attempt in (0, 1):
+            req = urllib.request.Request(
+                f"{self.cfg.asr_url}/asr/transcribe-jobs",
+                data=body,
+                headers={
+                    "Content-Type": f"multipart/form-data; boundary={boundary}",
+                    "Accept": "application/json",
+                    "Connection": "close",
+                    "Authorization": f"Bearer {self.token(refresh=attempt > 0)}",
+                    "Content-Length": str(len(body)),
+                },
+                method="POST",
+            )
+            try:
+                raw = _read_body_retry(req, 120.0)
+                return str(json.loads(raw.decode("utf-8", errors="replace"))["job_id"])
+            except urllib.error.HTTPError as exc:
+                detail = exc.read().decode("utf-8", errors="replace")
+                if exc.code in (401, 403) and attempt == 0:
+                    continue
+                if exc.code == 413:
+                    raise ASRError("音频文件超过上游 50 MB 限制，请缩短录音。", status=413) from exc
+                if exc.code in (404, 405):
+                    # 上游版本较旧，没有任务端点
+                    raise ASRError("当前 ASR 服务版本不支持进度任务，请更新基础包。",
+                                   status=exc.code) from exc
+                raise ASRError(f"ASR 转写失败（{exc.code}）：{detail}", status=exc.code) from exc
+            except urllib.error.URLError as exc:
+                raise ASRError(f"无法连接 ASR 服务：{exc.reason}") from exc
+        raise ASRError("ASR 转写失败：鉴权重试后仍未通过。", status=401)
+
+    def _get_job(self, job_id: str) -> dict:
+        url = f"{self.cfg.asr_url}/asr/transcribe-jobs/{urllib.parse.quote(job_id)}"
+        for attempt in (0, 1):
+            req = urllib.request.Request(
+                url,
+                headers={
+                    "Accept": "application/json",
+                    "Connection": "close",
+                    "Authorization": f"Bearer {self.token(refresh=attempt > 0)}",
+                },
+                method="GET",
+            )
+            try:
+                raw = _read_body_retry(req, 30.0)
+                return json.loads(raw.decode("utf-8", errors="replace"))
+            except urllib.error.HTTPError as exc:
+                if exc.code in (401, 403) and attempt == 0:
+                    continue
+                detail = exc.read().decode("utf-8", errors="replace")
+                raise ASRError(f"读取转写进度失败（{exc.code}）：{detail}", status=exc.code) from exc
+            except urllib.error.URLError as exc:
+                raise ASRError(f"无法连接 ASR 服务：{exc.reason}") from exc
+        raise ASRError("读取转写进度失败：鉴权重试后仍未通过。", status=401)
+
 
 # --------------------------------------------------------------------------
 # 分段映射（ASR 结构 -> TranscriptSegment）
@@ -290,6 +383,11 @@ def detect_lang(text: str, global_lang: str = "") -> str:
     return "mixed"
 
 
+def _has_content(text: str) -> bool:
+    """至少含一个文字或数字，用于过滤纯标点/占位符号（防上游幻觉污染转写）。"""
+    return any(ch.isalnum() for ch in text)
+
+
 def map_segments(result: dict, threshold: float) -> list[dict]:
     """把 ASR 返回的 segments 映射为集成层分段结构。"""
     global_lang = str(result.get("language") or "").lower()
@@ -299,7 +397,7 @@ def map_segments(result: dict, threshold: float) -> list[dict]:
 
     for i, seg in enumerate(raw_segments):
         text = (seg.get("text") or "").strip()
-        if not text:
+        if not text or not _has_content(text):
             continue
         lang = detect_lang(text, global_lang)
         # 代理置信度：整段概率 × 语种一致性折扣

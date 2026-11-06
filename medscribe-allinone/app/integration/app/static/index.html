@@ -170,6 +170,7 @@
             <svg class="icon pause-icon"><use href="#i-pause"/></svg>
           </button>
           <div class="waveform" id="waveform" aria-hidden="true"></div>
+          <span class="audio-file" id="audio-file" hidden></span>
           <span class="audio-time" id="audio-time">00:00 / 00:00</span>
           <button class="speed" type="button" id="speed-btn" aria-label="播放速度" data-i18n-aria="audio.speed">1.0×</button>
           <div class="audio-tools">
@@ -336,11 +337,22 @@
       <p data-i18n="ext.sub">该模型以扩展包形式提供，下载后按下列步骤安装。</p>
     </div>
   </div>
-  <div class="help-body">
+  <div class="help-body ext-body">
     <p class="ext-name" id="ext-name"></p>
-    <p class="ext-meta"><span data-i18n="ext.size">包大小</span> <strong id="ext-size">—</strong>
-      <span data-i18n="ext.sha">SHA-256</span> <code id="ext-sha">—</code></p>
-    <p><a id="ext-url" class="ext-url" href="#" target="_blank" rel="noopener noreferrer"></a></p>
+    <dl class="ext-facts">
+      <div>
+        <dt data-i18n="ext.size">包大小</dt>
+        <dd id="ext-size">—</dd>
+      </div>
+      <div>
+        <dt data-i18n="ext.sha">SHA-256</dt>
+        <dd><code id="ext-sha">—</code></dd>
+      </div>
+    </dl>
+    <div class="ext-link-row">
+      <a id="ext-url" class="ext-url" href="#" target="_blank" rel="noopener noreferrer"></a>
+      <button class="ext-copy" id="ext-copy" type="button" data-i18n="ext.copy">复制链接</button>
+    </div>
     <h4 data-i18n="ext.steps">安装步骤</h4>
     <ol class="help-picks" id="ext-steps"></ol>
     <p class="help-note" id="ext-note"></p>
