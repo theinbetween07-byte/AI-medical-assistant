@@ -1,4 +1,4 @@
-﻿  :root {
+  :root {
     color-scheme: light;
     --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei UI", "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", "Helvetica Neue", Arial, sans-serif;
     --font-display: var(--font-sans);
@@ -26,7 +26,7 @@
     --success: #1c7549;
     --success-weak: #e6f4ec;
     --focus: #1d6fd6;
-    --grid: rgba(22, 33, 29, 0.035);
+    --grid: rgba(22, 33, 29, 0.055);
     --shadow: 0 1px 2px rgba(18, 34, 26, 0.05), 0 10px 28px rgba(18, 34, 26, 0.045);
     --shadow-float: 0 14px 44px rgba(18, 34, 26, 0.14);
     --radius: 10px;
@@ -56,7 +56,7 @@
     --success: #78d6a5;
     --success-weak: #12291f;
     --focus: #8db9e3;
-    --grid: rgba(232, 240, 235, 0.028);
+    --grid: rgba(232, 240, 235, 0.045);
     --shadow: 0 1px 2px rgba(0, 0, 0, 0.28), 0 14px 34px rgba(0, 0, 0, 0.18);
     --shadow-float: 0 18px 54px rgba(0, 0, 0, 0.45);
   }
