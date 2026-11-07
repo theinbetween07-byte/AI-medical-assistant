@@ -26,10 +26,23 @@ import webbrowser
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from service_identity import describe, is_ours  # noqa: E402
+from service_identity import (  # noqa: E402
+    command_line,
+    command_matches,
+    describe,
+    is_ours,
+    pids_on_port,
+)
 
 ROOT = Path(__file__).resolve().parents[1]              # integration/
 REPO = ROOT.parent
+
+sys.path.insert(0, str(ROOT))
+from app.assets import build_version  # noqa: E402
+
+# 当前这份程序的前端资源版本；用于识别端口上是否还挂着覆盖安装前的旧进程。
+LOCAL_BUILD = build_version(ROOT / "app" / "static")
+
 
 
 def _pick_dir(env_name: str, candidates: list[Path], marker: str) -> Path:
@@ -129,6 +142,39 @@ def claim_port(name: str, port: int, label: str) -> tuple[str, int]:
     alt = pick_free_port(port)
     print(f"  [info] {label} 端口 {port} 被其他程序占用，已自动改用 {alt}")
     return "moved", alt
+
+
+def running_build(port: int) -> str | None:
+    """读取端口上集成层自报的构建版本；旧版本没有该字段时返回 None。"""
+    try:
+        with urllib.request.urlopen(
+            f"http://127.0.0.1:{port}/health/live", timeout=3
+        ) as resp:
+            data = json.loads(resp.read().decode("utf-8", errors="replace"))
+    except (urllib.error.URLError, OSError, ValueError):
+        return None
+    if not isinstance(data, dict):
+        return None
+    build = data.get("build")
+    return build if isinstance(build, str) else None
+
+
+def stop_previous_process(name: str, port: int) -> bool:
+    """停止 pid 文件记录的本目录服务进程；命令行不匹配时放弃，避免误杀。"""
+    try:
+        data = json.loads(PID_FILE.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return False
+    pids = data.get("pids") if isinstance(data.get("pids"), dict) else data
+    pid = pids.get(name) if isinstance(pids, dict) else None
+    if not isinstance(pid, int) or pid not in pids_on_port(port):
+        return False
+    cmd = command_line(pid)
+    if cmd and not command_matches(name, cmd):
+        return False
+    subprocess.run(["taskkill", "/F", "/T", "/PID", str(pid)], capture_output=True)
+    time.sleep(1.0)
+    return True
 
 
 def verify_identity(name: str, port: int, label: str, pid: int | None = None) -> bool:
@@ -249,6 +295,17 @@ def main() -> int:
 
     # --------------------------------------------------------- 集成层
     state, app_port = claim_port("integration", app_port, "集成层")
+    live_build = running_build(app_port) if state == "ours" else LOCAL_BUILD
+    if state == "ours" and live_build != LOCAL_BUILD:
+        # 覆盖安装后旧进程仍在监听：直接跳过会让用户看到旧界面，这里先尝试重启本目录的进程。
+        seen = live_build or "未知（旧版本）"
+        print(f"  [info] 端口 {app_port} 上是旧版集成层（build {seen}，当前 {LOCAL_BUILD}）")
+        if stop_previous_process("integration", app_port):
+            print("  [info] 已停止旧进程，按当前版本重新启动")
+        else:
+            app_port = pick_free_port(app_port)
+            print(f"  [info] 旧进程不属于本次安装，改在 {app_port} 启动当前版本")
+        state = "free"
     ports["integration"] = app_port
     if state == "ours":
         print(f"  [skip] 端口 {app_port} 已是本项目的集成层")

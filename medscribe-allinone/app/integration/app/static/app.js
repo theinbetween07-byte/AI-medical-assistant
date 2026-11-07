@@ -2373,18 +2373,30 @@
   }
 
   /* -------------------------------------------------------------------- boot */
+  function reportBootFailure(err) {
+    try { console.error(err); } catch (e) {}
+    var box = document.createElement('div');
+    box.className = 'boot-failure';
+    box.setAttribute('role', 'alert');
+    box.textContent = '界面加载不完整：请按 Ctrl+F5 强制刷新；若仍异常，请重启服务后再打开页面。';
+    document.body.appendChild(box);
+  }
+
   var initialTheme = 'system';
   try { initialTheme = localStorage.getItem(THEME_KEY) || 'system'; } catch (e) {}
-  applyTheme(initialTheme, false);
-
   var initialLang = 'zh';
   try { initialLang = localStorage.getItem(LANG_KEY) || 'zh'; } catch (e) {}
-  applyLanguage(initialLang);
 
-  renderAll();
-  loadTemplates();
-  loadModels();
-  loadHealth();
-  loadSessions();
-  setInterval(loadHealth, 30000);
+  try {
+    applyTheme(initialTheme, false);
+    applyLanguage(initialLang);
+    renderAll();
+    loadTemplates();
+    loadModels();
+    loadHealth();
+    loadSessions();
+    setInterval(loadHealth, 30000);
+  } catch (err) {
+    reportBootFailure(err);
+  }
 })();

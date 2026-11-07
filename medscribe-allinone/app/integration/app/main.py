@@ -25,6 +25,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, HTMLResponse, JSONResponse, PlainTextResponse
 from fastapi.staticfiles import StaticFiles
 
+from .assets import build_version
 from .config import settings
 from .schemas import (
     CorrectTermsOptions,
@@ -49,6 +50,20 @@ ERROR_CODES = {
 }
 
 
+class _RevalidatingStaticFiles(StaticFiles):
+    """静态资源允许浏览器缓存，但每次必须回源校验（ETag 命中时 304，不重传正文）。
+
+    没有 Cache-Control 时浏览器会按 Last-Modified 做启发式缓存，
+    升级后仍使用旧的 app.js，与新 index.html 混搭导致界面元素缺失。
+    """
+
+    async def get_response(self, path: str, scope):  # type: ignore[override]
+        response = await super().get_response(path, scope)
+        if response.status_code < 400:
+            response.headers["Cache-Control"] = "no-cache, must-revalidate"
+        return response
+
+
 def create_app() -> FastAPI:
     app = FastAPI(
         title="MedScribe HK · 端到端集成层",
@@ -56,6 +71,9 @@ def create_app() -> FastAPI:
         description="录音 → 多语言 ASR → 术语纠正 → S/O/A/P 抽取 → 模板化初稿 → 校审签署 → 导出",
     )
     app.state.service = service
+    # 静态资源版本：随文件内容变化，避免浏览器沿用旧脚本（见 assets.py 注释）。
+    asset_version = build_version(settings.static_dir)
+    app.state.asset_version = asset_version
 
     app.add_middleware(
         CORSMiddleware,
@@ -75,17 +93,29 @@ def create_app() -> FastAPI:
     def index() -> HTMLResponse:
         page = settings.static_dir / "index.html"
         if not page.is_file():
-            return HTMLResponse("<h1>集成层已启动</h1><p>界面文件缺失，请访问 /docs。</p>")
-        return HTMLResponse(page.read_text(encoding="utf-8"))
+            return HTMLResponse("<h1>静态资源缺失</h1><p>请重新解压基础包，或访问 /docs。</p>")
+        html = page.read_text(encoding="utf-8").replace("__ASSET_VERSION__", asset_version)
+        return HTMLResponse(
+            html,
+            headers={
+                "Cache-Control": "no-store, must-revalidate",
+                "Pragma": "no-cache",
+                "Expires": "0",
+            },
+        )
 
     if settings.static_dir.is_dir():
-        app.mount("/static", StaticFiles(directory=str(settings.static_dir)), name="static")
+        app.mount("/static", _RevalidatingStaticFiles(directory=str(settings.static_dir)), name="static")
 
     # ---------------------------------------------------------------- 健康
     @app.get("/health/live", summary="集成层存活探针（不聚合上游）", include_in_schema=False)
     def health_live() -> dict:
-        """启动与身份校验使用：上游全挂时 /health 会变慢，这里必须立即返回。"""
-        return {"ok": True, "service": "integration"}
+        """启动与身份校验使用：上游全挂时 /health 会变慢，这里必须立即返回。
+
+        `build` 是静态资源内容哈希：启动脚本据此判断已在运行的进程是不是当前这版代码，
+        覆盖安装后旧进程仍在监听时可以自动重启，而不是直接跳过、让用户看到旧界面。
+        """
+        return {"ok": True, "service": "integration", "build": asset_version}
 
     @app.get("/health", summary="三段链路健康检查")
     def health() -> dict:

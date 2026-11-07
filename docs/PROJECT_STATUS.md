@@ -192,3 +192,14 @@ MVP 必须跑通五个能力：
 - `docs/agent-skills/README.md` 原先把 `README.md` / `README-2.md` 当作事实来源；`README-2.md` 在工作区不存在，`README.md` 现已补建为项目入口。技能基线来源已改为实际技能目录、锁文件与质量方案 §4.5。
 - `technical-design.md` 中标注为“拟定 / unverified”的命令仍保持未验证状态，不应被引用为已执行证据。
 - 当前目录不是 Git 仓库；本文件不提供提交历史，只记录可检查的文件与验证结果。
+
+## 10. 2026-11-07 更新：浏览器缓存与版本一致性
+
+- 现象：同一浏览器第一次打开正常，重启服务后界面元素缺失。
+- 根因：`index.html` 的资源版本串写死为 `?v=20261106`，且静态响应只有 ETag/Last-Modified、没有 `Cache-Control`。浏览器按 Last-Modified 做启发式缓存（新鲜期约为文件年龄的 1/10），重启服务并不会清浏览器缓存，于是新的 `index.html` 与旧的 `app.js` / `app-extra.css` 混搭；新元素由新脚本创建，旧脚本创建不出来，表现为缺块。
+- 修复：
+  - 新增 `app/integration/app/assets.py`，按 `app.css` / `app-extra.css` / `app.js` 的内容哈希生成 12 位版本号；`/` 返回前把 `__ASSET_VERSION__` 替换为真实版本。
+  - 首页响应 `Cache-Control: no-store, must-revalidate`；静态资源由 `_RevalidatingStaticFiles` 统一加 `no-cache, must-revalidate`（ETag 命中仍返回 304，不重传正文）。
+  - `/health/live` 增加 `build` 字段；`start_all.py` 发现端口上进程的 build 与当前程序不一致时，自动停止本目录旧进程并重启（不属于本安装时改用空闲端口）。
+  - 前端启动逻辑加 `try/catch`，渲染异常时显示可见提示，不再静默缺块。
+- 验证：旧缓存 profile（缓存过 93,614 B 的旧 `app.js`）加载新页面时强制取到 102,935 B 新脚本；连续两次停服 / 启动后关键元素全部可见（`#segments`、`#btn-transcribe`、`#model-select`、`#report-body`、`#export-btn` 等）；篡改静态文件触发 build 变化时启动脚本输出「端口 8100 上是旧版集成层」并自动重启；集成测试 40/40 通过。
