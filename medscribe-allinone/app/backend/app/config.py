@@ -56,7 +56,7 @@ EXTENSIONS_ROOT = Path(
 EXTENSIONS_MANIFEST = EXTENSIONS_ROOT / "extensions.json"
 
 # ============ ASR 默認參數 ============
-DEFAULT_LANGUAGE = "yue"  # 默認粵語，香港醫療場景
+DEFAULT_LANGUAGE = "auto"  # 默認粵語，香港醫療場景
 DEFAULT_BEAM_SIZE = 5
 DEFAULT_VAD_FILTER = True
 

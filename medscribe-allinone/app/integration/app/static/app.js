@@ -7,6 +7,7 @@
 
   var THEME_KEY = 'medscribe-theme';
   var LANG_KEY = 'medscribe-lang';
+  var ASR_LANG_KEY = 'medscribe-asr-language';
   var root = document.documentElement;
   var media = window.matchMedia('(prefers-color-scheme: dark)');
 
@@ -25,6 +26,7 @@
     templates: [],
     models: [],
     asrModel: '',
+    asrLanguage: 'auto',
     asrDevice: '',
     filter: 'all',
     exportFormat: 'pdf',
@@ -106,6 +108,14 @@
       'action.template': '模板',
       'action.model': '模型',
       'action.modelAria': '语音识别模型',
+      'action.language': '语言',
+      'action.languageAria': '识别语言',
+      'asr.lang.auto': '自动识别',
+      'asr.lang.zh': '中文',
+      'asr.lang.yue': '粤语',
+      'asr.lang.en': '英语',
+      'asr.lang.ja': '日语',
+      'asr.lang.ko': '韩语',
       'model.localSuffix': ' · 本地',
       'model.remoteSuffix': ' · 未安装',
       'model.switching': '正在切换模型：{name}（首次使用需加载模型，可能耗时数十秒）…',
@@ -336,6 +346,14 @@
       'action.template': '模板',
       'action.model': '模型',
       'action.modelAria': '語音識別模型',
+      'action.language': '語言',
+      'action.languageAria': '識別語言',
+      'asr.lang.auto': '自動識別',
+      'asr.lang.zh': '中文',
+      'asr.lang.yue': '粵語',
+      'asr.lang.en': '英語',
+      'asr.lang.ja': '日語',
+      'asr.lang.ko': '韓語',
       'model.localSuffix': ' · 本地',
       'model.remoteSuffix': ' · 未安裝',
       'model.switching': '正在切換模型：{name}（首次使用需載入模型，可能耗時數十秒）…',
@@ -566,6 +584,14 @@
       'action.template': 'Template',
       'action.model': 'Model',
       'action.modelAria': 'Speech recognition model',
+      'action.language': 'Language',
+      'action.languageAria': 'Recognition language',
+      'asr.lang.auto': 'Auto detect',
+      'asr.lang.zh': 'Chinese',
+      'asr.lang.yue': 'Cantonese',
+      'asr.lang.en': 'English',
+      'asr.lang.ja': 'Japanese',
+      'asr.lang.ko': 'Korean',
       'model.localSuffix': ' · local',
       'model.remoteSuffix': ' · not installed',
       'model.switching': 'Switching model: {name} (first use loads the local model, may take up to a minute)…',
@@ -1413,6 +1439,15 @@
       '"/></svg><span>' + esc(message) + '</span>';
   }
 
+  function syncLanguageSelect() {
+    var select = $('lang-select');
+    if (!select) return;
+    select.value = state.asrLanguage || 'auto';
+    var signed = !!(state.detail && state.detail.session &&
+      rank(state.detail.session.status) >= rank('signed'));
+    select.disabled = state.busy || state.transcribing || signed;
+  }
+
   function renderPipeline() {
     var session = state.detail.session;
     var status = session.status;
@@ -1439,6 +1474,7 @@
   }
 
   function renderAll() {
+    syncLanguageSelect();
     if (!state.detail) {
       $('content').hidden = true;
       $('empty-state').hidden = false;
@@ -1751,7 +1787,7 @@
     try {
       var job = await api('/sessions/' + encodeURIComponent(state.sessionId) + '/transcribe-jobs',
         jsonOptions('POST', {
-          language: '', beam_size: 5, asr_template: 'soap'
+          language: state.asrLanguage, beam_size: 5, asr_template: 'soap'
         }));
       var done = await pollTranscribe(job.job_id);
       state.transcribing = false;
@@ -2258,6 +2294,10 @@
   });
 
   $('btn-transcribe').addEventListener('click', doTranscribe);
+  $('lang-select').addEventListener('change', function () {
+    state.asrLanguage = this.value || 'auto';
+    try { localStorage.setItem(ASR_LANG_KEY, state.asrLanguage); } catch (e) {}
+  });
   $('btn-correct').addEventListener('click', doCorrect);
   $('btn-undo').addEventListener('click', undoCorrect);
   $('btn-extract').addEventListener('click', doExtract);
@@ -2384,6 +2424,7 @@
 
   var initialTheme = 'system';
   try { initialTheme = localStorage.getItem(THEME_KEY) || 'system'; } catch (e) {}
+  try { state.asrLanguage = localStorage.getItem(ASR_LANG_KEY) || 'auto'; } catch (e) {}
   var initialLang = 'zh';
   try { initialLang = localStorage.getItem(LANG_KEY) || 'zh'; } catch (e) {}
 

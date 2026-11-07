@@ -252,6 +252,7 @@
 .help-bench tbody th { white-space: nowrap; }
 .help-body h4:first-child { margin-top: 0; }
 .model-select { max-width: 148px; }
+.lang-select { max-width: 104px; }
 
 /* extension install dialog: give the body real breathing room */
 .ext-dialog { width: min(620px, 94vw); }

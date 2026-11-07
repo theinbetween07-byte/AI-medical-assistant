@@ -203,3 +203,16 @@ MVP 必须跑通五个能力：
   - `/health/live` 增加 `build` 字段；`start_all.py` 发现端口上进程的 build 与当前程序不一致时，自动停止本目录旧进程并重启（不属于本安装时改用空闲端口）。
   - 前端启动逻辑加 `try/catch`，渲染异常时显示可见提示，不再静默缺块。
 - 验证：旧缓存 profile（缓存过 93,614 B 的旧 `app.js`）加载新页面时强制取到 102,935 B 新脚本；连续两次停服 / 启动后关键元素全部可见（`#segments`、`#btn-transcribe`、`#model-select`、`#report-body`、`#export-btn` 等）；篡改静态文件触发 build 变化时启动脚本输出「端口 8100 上是旧版集成层」并自动重启；集成测试 40/40 通过。
+
+## 11. 2026-11-07 更新：识别语言可选与自动识别
+
+- 现象：界面无法指定识别语言，转写不传 `language`，后端落到默认值 `yue`（粤语），普通话录音被强制按粤语解码，出现「嘟嘟嘟…」一类幻觉。
+- 修复：
+  - 转写工具条新增「语言」下拉：自动识别 / 中文 / 粤语 / 英语 / 日语 / 韩语，随界面语言切换标签，选择结果存 `localStorage`（键 `medscribe-asr-language`）。
+  - 转写请求体带 `language`；`auto` 时后端传 `None` 给 faster-whisper 做语言检测，其余值强制解码语言。
+  - 默认值统一改为 `auto`：`backend/app/config.py` 的 `DEFAULT_LANGUAGE`、`asr_router.py` 两处 `Form(default=...)`、集成层 `MSHK_DEFAULT_LANGUAGE`。
+- 验证：
+  - 普通话样本指定 `zh`：`language=zh`、`language_probability=1.0`、8 段正常中文，不再出现整篇占位符号。
+  - 英语样本选择 `auto`：`language=en`、`language_probability=0.9993`、13 段。
+  - 下拉默认 `auto`，切换后刷新仍保留；英文界面标签为「Auto detect / Chinese / Cantonese / English / Japanese / Korean」；无 JS 错误。
+  - 集成测试 40/40 通过。

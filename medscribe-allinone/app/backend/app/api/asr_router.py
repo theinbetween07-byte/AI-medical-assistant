@@ -100,7 +100,7 @@ def load_model(
 def transcribe(
     file: UploadFile = File(..., description="音頻文件（webm / wav / mp3 / m4a）"),
     template: str = Form(default="discharge_summary"),
-    language: Optional[str] = Form(default="yue"),
+    language: Optional[str] = Form(default="auto"),
     beam_size: int = Form(default=5),
     user=Depends(get_current_user),
 ):
@@ -273,7 +273,7 @@ def _run_transcribe_job(
 async def create_transcribe_job(
     file: UploadFile = File(..., description="音頻文件（webm / wav / mp3 / m4a）"),
     template: str = Form(default="discharge_summary"),
-    language: Optional[str] = Form(default="yue"),
+    language: Optional[str] = Form(default="auto"),
     beam_size: int = Form(default=5),
     user=Depends(get_current_user),
 ):

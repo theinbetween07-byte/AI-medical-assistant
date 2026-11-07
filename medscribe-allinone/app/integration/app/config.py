@@ -100,7 +100,7 @@ class Settings:
 
         # ---- 默认值
         self.default_template: str = _env("MSHK_DEFAULT_TEMPLATE", "outpatient_record")
-        self.default_language: str = _env("MSHK_DEFAULT_LANGUAGE", "yue")
+        self.default_language: str = _env("MSHK_DEFAULT_LANGUAGE", "auto")
         self.synthetic_tag: str = "【SYNTHETIC】"
         # 引擎自带脱敏基于简易 NER，会把「病人今日發熱」整句当成姓名替换成
         # [NAME_ZH_1]，破坏可读性；PRD 无强制脱敏要求，默认关闭。
