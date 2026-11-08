@@ -260,6 +260,10 @@
 .ext-dialog .help-body > *:first-child { margin-top: 0; }
 .ext-dialog .dialog-head { padding: 16px 22px 13px; }
 .ext-dialog .dialog-foot { padding: 13px 22px 15px; }
+.ext-dialog .dialog-foot.ext-foot { justify-content: space-between; align-items: center; gap: 12px; }
+.ext-foot-hint { font-size: 11.5px; line-height: 1.4; color: var(--muted); }
+.ext-foot-hint.ok { color: var(--success); }
+.ext-foot-actions { display: flex; gap: 7px; flex: none; }
 .ext-name { margin: 0 0 14px !important; font-size: 14.5px !important; font-weight: 650; color: var(--text) !important; }
 .ext-facts {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -271,6 +275,7 @@
 .ext-facts dd code {
   display: block; font-family: var(--font-mono); font-size: 11.5px; line-height: 1.5;
   color: var(--muted); overflow-wrap: anywhere; word-break: break-all;
+  white-space: pre-line;
 }
 .ext-link-row {
   display: flex; align-items: stretch; gap: 8px;

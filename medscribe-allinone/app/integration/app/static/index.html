@@ -92,7 +92,6 @@
       <div class="patient">
         <h1>
           <span id="session-title" data-i18n="patient.empty">未选择会话</span>
-          <span class="patient-age" id="session-meta"></span>
           <span class="case-status" id="status-chip"><span class="dot"></span><span id="status-text" data-i18n="status.created">已建会话</span></span>
         </h1>
       </div>
@@ -374,8 +373,12 @@
     <ol class="help-picks" id="ext-steps"></ol>
     <p class="help-note" id="ext-note"></p>
   </div>
-  <div class="dialog-foot">
-    <button class="ghost" id="ext-close" type="button" data-i18n="ext.close">关闭</button>
+  <div class="dialog-foot ext-foot">
+    <span class="ext-foot-hint" id="ext-foot-hint" data-i18n="ext.refreshHint">安装完成后请点击刷新</span>
+    <div class="ext-foot-actions">
+      <button class="secondary" id="ext-refresh" type="button" data-i18n="ext.refresh">刷新</button>
+      <button class="confirm" id="ext-close" type="button" data-i18n="ext.close">关闭</button>
+    </div>
   </div>
 </dialog>
 

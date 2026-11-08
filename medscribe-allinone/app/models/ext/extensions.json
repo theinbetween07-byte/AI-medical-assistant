@@ -8,11 +8,11 @@
       "kind": "caps",
       "dir": "caps-qwen3",
       "size_mb": 2800,
-      "url": "https://github.com/theinbetween07-byte/AI-medical-assistant/releases/download/v1.0.1/MedScribe-ext-caps-qwen3-v1.0.1.7z.001",
-      "sha256": "",
+      "url": "https://github.com/theinbetween07-byte/AI-medical-assistant/releases",
+      "sha256": "4202f37b81be346ec49f284114d3b34d99e7a397b7baed5ef3c77740cd4fe198  .7z.001\n6079ec6e65987f37c268a5173a965cfe05b7e9429938278fc42d11fd47084092  .7z.002",
       "note": "完全离线，安装后不联网。病理长术语实测错误率 3.64%（内置 Whisper small 为 9.09%），代价是首次转写需加载约 1.4 GB 模型（20–60 秒）。",
       "steps": [
-        "下载扩展包的全部分卷（.7z.001、.002 …）以及同目录的安装说明",
+        "在 Release 页面下载 MedScribe-ext-caps-qwen3-v1.0.1.7z.001 与 .002 两个分卷",
         "用 7-Zip 解压 .7z.001（只需解第一个，自动合并其余分卷）",
         "解压得到 MedScribe-ext 文件夹，把其中的 app 复制到 MedScribe 根目录（提示时选择“合并/替换”）",
         "重启 MedScribe，在工具条「模型」中选择 Qwen3-ASR"
@@ -24,11 +24,11 @@
       "kind": "whisper",
       "dir": "faster-whisper-medium",
       "size_mb": 1465,
-      "url": "https://github.com/theinbetween07-byte/AI-medical-assistant/releases/download/v1.0.1/MedScribe-ext-whisper-medium-v1.0.1.7z",
-      "sha256": "",
+      "url": "https://github.com/theinbetween07-byte/AI-medical-assistant/releases",
+      "sha256": "f9f161cc5d636ea8b09f34987d0c2d925df1d5a1f3d4a463eb98d7d78a6fb06b  .7z",
       "note": "比内置 small 更准、更慢：CPU int8 约 2–3 倍耗时，常驻内存约 2.5 GB。适合门诊长段口述。",
       "steps": [
-        "下载 MedScribe-ext-whisper-medium-v1.0.1.7z",
+        "在 Release 页面下载 MedScribe-ext-whisper-medium-v1.0.1.7z",
         "用 7-Zip 解压（单文件，无需合并），得到 MedScribe-ext 文件夹",
         "把其中的 app 复制到 MedScribe 根目录（提示时选择“合并/替换”）",
         "重启 MedScribe，在工具条「模型」中选择 Whisper medium"
@@ -40,11 +40,11 @@
       "kind": "whisper",
       "dir": "faster-whisper-large-v3",
       "size_mb": 2950,
-      "url": "https://github.com/theinbetween07-byte/AI-medical-assistant/releases/download/v1.0.1/MedScribe-ext-whisper-large-v3-v1.0.1.7z.001",
-      "sha256": "",
+      "url": "https://github.com/theinbetween07-byte/AI-medical-assistant/releases",
+      "sha256": "ac2271cdb4d175645aad39efdef63cc4c5840e3fc8b161d133ba2d169c62de86  .7z.001\nf6afc104470a6e8a25e012b09c3fd81961d598f18e5d5ee7d345207b1b4a70c0  .7z.002",
       "note": "精度最高、速度最慢：CPU int8 约 5–6 倍耗时，常驻内存约 4 GB（建议 16 GB 内存）。适合病理长术语复核。",
       "steps": [
-        "下载 MedScribe-ext-whisper-large-v3-v1.0.1.7z.001",
+        "在 Release 页面下载 MedScribe-ext-whisper-large-v3-v1.0.1.7z.001 与 .002 两个分卷",
         "用 7-Zip 解压 .7z.001（会自动合并其余分卷），得到 MedScribe-ext 文件夹",
         "把其中的 app 复制到 MedScribe 根目录（提示时选择“合并/替换”）",
         "重启 MedScribe，在工具条「模型」中选择 Whisper large-v3"

@@ -226,3 +226,13 @@ MVP 必须跑通五个能力：
   - 选择结果写入 `localStorage`（`medscribe-asr-language`），重启后保留；空态选择会带到新建会话。
   - 指定非中文语言时不再注入中文术语提示词，否则 faster-whisper 的解码结果会被拉回中文。
 - 验证：指定 `en` 转写中文测试音频，返回 `language=en` 且文本为英文（`The patient is 52 years…`）；自动识别返回 `zh`（概率 0.9953）；空态与工作台下拉值同步；简体 / 繁体 / 英文三套选项文案正确；集成测试 40/40。
+
+## 12. 2026-11-08 更新：会话列表与模型安装引导整理
+
+- 会话列表去掉左侧首字母头像，改为标题 + 状态 + 时间的两列布局（`grid-template-columns: minmax(0,1fr) auto`），可用宽度还给标题。
+- 顶部标题区去掉「会话 ID · 状态 · 时长 · 语种概率」副行（`#session-meta` 元素移除），状态只由标题旁的胶囊表达，不再同一信息出现两次。
+- 扩展模型安装引导（模型下拉选中未安装扩展时弹出的「安装扩展模型」）：
+  - 下载链接统一指向 Release 列表页 `https://github.com/theinbetween07-byte/AI-medical-assistant/releases`；具体文件名写进安装步骤第一条，分卷包注明需要下载 .001 与 .002。
+  - 补全三个扩展包的 SHA-256：Qwen3-ASR（.001/.002）、Whisper medium（.7z）、Whisper large-v3（.001/.002），分卷逐条列出，`#ext-sha` 用 `white-space: pre-line` 保留换行。
+  - 底部新增「安装完成后请点击刷新」提示与「刷新」按钮，与「关闭」同一行（`justify-content: space-between`）。刷新重新请求 `/api/asr/models`（后端每次读清单并检查磁盘），检测到模型后提示「已检测到模型，可在工具条「模型」中选择」。
+- 验证：17 条会话项 `.session .avatar` 计数 0、`#session-meta` 不存在；弹窗 SHA-256 显示 2 行、链接为 Release 页、刷新与关闭 top 差 <2px；`zh / zh-Hant / en` 三套文案正确；刷新后按钮恢复可用且不误报已安装；集成测试 40/40。

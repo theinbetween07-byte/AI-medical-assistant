@@ -210,6 +210,10 @@
       'ext.sub': '该模型以扩展包形式提供，下载后按下列步骤安装；装好即可离线使用。',
       'ext.size': '包大小',
       'ext.sha': 'SHA-256',
+      'ext.refresh': '刷新',
+      'ext.refreshHint': '安装完成后请点击刷新',
+      'ext.refreshing': '刷新中…',
+      'ext.refreshOk': '已检测到模型，可在工具条「模型」中选择',
       'ext.steps': '安装步骤',
       'ext.open': '打开下载地址',
       'ext.close': '关闭',
@@ -455,6 +459,10 @@
       'ext.sub': '該模型以擴展包形式提供，下載後按下列步驟安裝；裝好即可離線使用。',
       'ext.size': '包大小',
       'ext.sha': 'SHA-256',
+      'ext.refresh': '重新整理',
+      'ext.refreshHint': '安裝完成後請點擊重新整理',
+      'ext.refreshing': '重新整理中…',
+      'ext.refreshOk': '已偵測到模型，可在工具列「模型」中選擇',
       'ext.steps': '安裝步驟',
       'ext.open': '開啟下載位址',
       'ext.close': '關閉',
@@ -700,6 +708,10 @@
       'ext.sub': 'This model ships as an extension pack. Download it, then follow the steps below; it runs fully offline once installed.',
       'ext.size': 'Pack size',
       'ext.sha': 'SHA-256',
+      'ext.refresh': 'Refresh',
+      'ext.refreshHint': 'Click Refresh after installation',
+      'ext.refreshing': 'Refreshing…',
+      'ext.refreshOk': 'Model detected — pick it in the Model menu',
       'ext.steps': 'Install steps',
       'ext.open': 'Open download page',
       'ext.close': 'Close',
@@ -1004,7 +1016,6 @@
         html += '<button class="session' + (session.id === state.sessionId ? ' active' : '') +
           '" type="button" data-session-id="' + esc(session.id) + '"' +
           (session.id === state.sessionId ? ' aria-current="true"' : '') + '>' +
-          '<span class="avatar">' + esc(String(title).slice(0, 1)) + '</span>' +
           '<span class="session-main">' +
           '<span class="session-name">' + esc(title) + '</span>' +
           '<span class="session-meta"><span class="dot ' + dotClass + '"></span><span>' +
@@ -1019,11 +1030,6 @@
   function renderHeader() {
     var session = state.detail.session;
     $('session-title').textContent = session.title || session.id;
-    var parts = [session.id, t('status.' + session.status), fmtClock(session.duration_ms)];
-    if (session.language) {
-      parts.push(session.language + ' (' + Math.round((session.language_probability || 0) * 100) + '%)');
-    }
-    $('session-meta').textContent = parts.join(' · ');
     $('status-text').textContent = t('status.' + session.status);
     $('status-chip').classList.toggle('ok', rank(session.status) >= rank('signed'));
     $('delete-session').disabled = false;
@@ -1537,7 +1543,6 @@
       $('content').hidden = true;
       $('empty-state').hidden = false;
       $('session-title').textContent = t('patient.empty');
-      $('session-meta').textContent = '';
       $('status-text').textContent = t('status.created');
       $('delete-session').disabled = true;
       $('report-body').innerHTML = '<p class="muted">' + esc(t('report.empty')) + '</p>';
@@ -1601,6 +1606,12 @@
 
   function showExtDialog(model) {
     var info = model.install || {};
+    state.extModelId = model.id;
+    var hint = $('ext-foot-hint');
+    if (hint) {
+      hint.textContent = t('ext.refreshHint');
+      hint.classList.remove('ok');
+    }
     $('ext-name').textContent = model.label || modelLabel(model);
     $('ext-size').textContent = info.size_mb ? (info.size_mb / 1024).toFixed(1) + ' GB' : '—';
     $('ext-sha').textContent = info.sha256 || '—';
@@ -1627,6 +1638,31 @@
     var dialog = $('ext-dialog');
     if (typeof dialog.close === 'function') dialog.close();
     else dialog.removeAttribute('open');
+  }
+
+  async function refreshExtension() {
+    var btn = $('ext-refresh');
+    if (!btn || btn.disabled) return;
+    var modelId = state.extModelId || '';
+    var hint = $('ext-foot-hint');
+    btn.disabled = true;
+    btn.textContent = t('ext.refreshing');
+    try {
+      await loadModels();
+      var found = (state.models || []).filter(function (model) {
+        return model.id === modelId;
+      })[0];
+      var ready = !!(found && (found.installed || found.local));
+      if (hint) {
+        hint.textContent = ready ? t('ext.refreshOk') : t('ext.refreshHint');
+        hint.classList.toggle('ok', ready);
+      }
+    } catch (e) {
+      if (hint) hint.textContent = t('ext.refreshHint');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = t('ext.refresh');
+    }
   }
 
   async function loadModels() {
@@ -2274,6 +2310,7 @@
     }
     switchModel(this.value);
   });
+  $('ext-refresh').addEventListener('click', refreshExtension);
   $('ext-close').addEventListener('click', closeExtDialog);
 
   $('ext-copy').addEventListener('click', function () {
