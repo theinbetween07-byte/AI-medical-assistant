@@ -236,3 +236,17 @@ MVP 必须跑通五个能力：
   - 补全三个扩展包的 SHA-256：Qwen3-ASR（.001/.002）、Whisper medium（.7z）、Whisper large-v3（.001/.002），分卷逐条列出，`#ext-sha` 用 `white-space: pre-line` 保留换行。
   - 底部新增「安装完成后请点击刷新」提示与「刷新」按钮，与「关闭」同一行（`justify-content: space-between`）。刷新重新请求 `/api/asr/models`（后端每次读清单并检查磁盘），检测到模型后提示「已检测到模型，可在工具条「模型」中选择」。
 - 验证：17 条会话项 `.session .avatar` 计数 0、`#session-meta` 不存在；弹窗 SHA-256 显示 2 行、链接为 Release 页、刷新与关闭 top 差 <2px；`zh / zh-Hant / en` 三套文案正确；刷新后按钮恢复可用且不误报已安装；集成测试 40/40。
+
+## 13. 2026-11-08 修复：Firefox 下「刷新」看不到反馈
+
+- 现象：Firefox 里点模型安装引导页的「刷新」，界面毫无变化，看起来像没生效。
+- 定位（Playwright Firefox 实测）：
+  - 点击确实发出了 `/api/asr/models` 请求（每点一次 +1），事件与请求都正常，问题在于**结果不可见**——未检测到模型时提示文案与点击前一字不差。
+  - `/api/*` 响应没有任何缓存头，Firefox 对无缓存头的 GET 会走启发式缓存，刷新可能拿回旧列表（Chromium 不易复现）。
+  - 另验证：即使 `?v=` 未变（服务未重启），Firefox 按 F5 仍能通过 ETag 取到新文件（脚本染色 A→B 实测通过），静态资源缓存策略在 Firefox 下有效。
+- 处理：
+  - `main.py` 新增 `_no_store_api` 中间件，`/api/*` 响应统一 `Cache-Control: no-store`。
+  - 前端 `api()` 对 GET 固定 `cache: 'no-store'`；`loadModels(force)` 额外拼 `?fresh=<ts>` 穿透任何中间层缓存。
+  - 刷新后必定更新提示：成功「已检测到模型…」；未检测到「HH:MM:SS 已刷新，仍未检测到模型；请确认已解压到本程序目录后重试」（`--warn` 色）；异常「刷新失败：<msg>」。
+  - 打开弹窗时清除上一次的 ok / miss 状态。
+- 验证：Firefox 与 Chromium 各点两次刷新，请求数 2→3→4，提示时间戳 21:52:38 → 21:52:41，接口响应 `cache-control: no-store`，无前端错误；集成测试 40/40。

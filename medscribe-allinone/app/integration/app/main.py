@@ -82,6 +82,14 @@ def create_app() -> FastAPI:
         allow_headers=["*"],
     )
 
+    @app.middleware("http")
+    async def _no_store_api(request: Request, call_next):
+        # API 响应不缓存：Firefox 对没有缓存头的 GET 会启发式缓存，刷新会拿到旧列表
+        response = await call_next(request)
+        if request.url.path.startswith("/api/"):
+            response.headers["Cache-Control"] = "no-store"
+        return response
+
     for exc_type, code in ERROR_CODES.items():
         def _handler(_request: Request, exc: Exception, _code: int = code) -> JSONResponse:
             return JSONResponse(status_code=_code, content={"detail": str(exc)})

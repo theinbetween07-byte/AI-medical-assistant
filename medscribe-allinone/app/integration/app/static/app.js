@@ -212,6 +212,8 @@
       'ext.sha': 'SHA-256',
       'ext.refresh': '刷新',
       'ext.refreshHint': '安装完成后请点击刷新',
+      'ext.refreshMiss': '{time} 已刷新，仍未检测到模型；请确认已解压到本程序目录后重试',
+      'ext.refreshFail': '刷新失败：{msg}',
       'ext.refreshing': '刷新中…',
       'ext.refreshOk': '已检测到模型，可在工具条「模型」中选择',
       'ext.steps': '安装步骤',
@@ -461,6 +463,8 @@
       'ext.sha': 'SHA-256',
       'ext.refresh': '重新整理',
       'ext.refreshHint': '安裝完成後請點擊重新整理',
+      'ext.refreshMiss': '{time} 已重新整理，仍未偵測到模型；請確認已解壓到本程式目錄後重試',
+      'ext.refreshFail': '重新整理失敗：{msg}',
       'ext.refreshing': '重新整理中…',
       'ext.refreshOk': '已偵測到模型，可在工具列「模型」中選擇',
       'ext.steps': '安裝步驟',
@@ -710,6 +714,8 @@
       'ext.sha': 'SHA-256',
       'ext.refresh': 'Refresh',
       'ext.refreshHint': 'Click Refresh after installation',
+      'ext.refreshMiss': 'Refreshed at {time} — model still not found. Check that it was extracted into the app folder.',
+      'ext.refreshFail': 'Refresh failed: {msg}',
       'ext.refreshing': 'Refreshing…',
       'ext.refreshOk': 'Model detected — pick it in the Model menu',
       'ext.steps': 'Install steps',
@@ -853,7 +859,11 @@
   }
 
   async function api(path, options) {
-    var response = await fetch(path, options || {});
+    var opts = options || {};
+    var method = opts.method ? String(opts.method).toUpperCase() : 'GET';
+    // Firefox 会对没有缓存头的 GET 做启发式缓存，刷新时可能拿回旧列表，这里显式绕开
+    if (method === 'GET') opts = Object.assign({}, opts, { cache: 'no-store' });
+    var response = await fetch(path, opts);
     var type = response.headers.get('content-type') || '';
     var body;
     if (type.indexOf('json') >= 0) {
@@ -1611,6 +1621,7 @@
     if (hint) {
       hint.textContent = t('ext.refreshHint');
       hint.classList.remove('ok');
+      hint.classList.remove('miss');
     }
     $('ext-name').textContent = model.label || modelLabel(model);
     $('ext-size').textContent = info.size_mb ? (info.size_mb / 1024).toFixed(1) + ' GB' : '—';
@@ -1648,26 +1659,34 @@
     btn.disabled = true;
     btn.textContent = t('ext.refreshing');
     try {
-      await loadModels();
+      await loadModels(true);
       var found = (state.models || []).filter(function (model) {
         return model.id === modelId;
       })[0];
       var ready = !!(found && (found.installed || found.local));
+      var stamp = new Date().toTimeString().slice(0, 8);
       if (hint) {
-        hint.textContent = ready ? t('ext.refreshOk') : t('ext.refreshHint');
+        hint.textContent = ready
+          ? t('ext.refreshOk')
+          : t('ext.refreshMiss', { time: stamp });
         hint.classList.toggle('ok', ready);
+        hint.classList.toggle('miss', !ready);
       }
     } catch (e) {
-      if (hint) hint.textContent = t('ext.refreshHint');
+      if (hint) {
+        hint.textContent = t('ext.refreshFail', { msg: (e && e.message) || 'network' });
+        hint.classList.remove('ok');
+        hint.classList.add('miss');
+      }
     } finally {
       btn.disabled = false;
       btn.textContent = t('ext.refresh');
     }
   }
 
-  async function loadModels() {
+  async function loadModels(force) {
     try {
-      var info = await api('/api/asr/models');
+      var info = await api('/api/asr/models' + (force ? '?fresh=' + Date.now() : ''));
       state.models = info.supported || [];
       state.asrModel = info.current || '';
       state.asrDevice = info.device || '';

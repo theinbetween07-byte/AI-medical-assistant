@@ -263,6 +263,7 @@
 .ext-dialog .dialog-foot.ext-foot { justify-content: space-between; align-items: center; gap: 12px; }
 .ext-foot-hint { font-size: 11.5px; line-height: 1.4; color: var(--muted); }
 .ext-foot-hint.ok { color: var(--success); }
+.ext-foot-hint.miss { color: var(--warn); }
 .ext-foot-actions { display: flex; gap: 7px; flex: none; }
 .ext-name { margin: 0 0 14px !important; font-size: 14.5px !important; font-weight: 650; color: var(--text) !important; }
 .ext-facts {
