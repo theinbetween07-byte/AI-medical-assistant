@@ -250,3 +250,13 @@ MVP 必须跑通五个能力：
   - 刷新后必定更新提示：成功「已检测到模型…」；未检测到「HH:MM:SS 已刷新，仍未检测到模型；请确认已解压到本程序目录后重试」（`--warn` 色）；异常「刷新失败：<msg>」。
   - 打开弹窗时清除上一次的 ok / miss 状态。
 - 验证：Firefox 与 Chromium 各点两次刷新，请求数 2→3→4，提示时间戳 21:52:38 → 21:52:41，接口响应 `cache-control: no-store`，无前端错误；集成测试 40/40。
+
+## 14. 2026-11-08 修复：扩展模型装在别处时检测不到
+
+- 现象：把 Whisper large-v3 解压到另一个 MedScribe 副本（如 `Desktop\工作区\MedScribe\app`），当前程序仍提示「未检测到模型」。
+- 根因：扩展检测只看程序自身的 `app/models/ext`。用户保留多份解压目录时，模型装在 B 副本，对正在运行的 A 副本不可见。
+- 处理：
+  - `extensions.py` 支持多根目录：默认根 + `app/backend/data/model_roots.json` 登记的额外根（`{"roots": ["...\\app\\models\\ext"]}`），按顺序查找，命中即用。
+  - `/asr/models` 的 install 信息新增 `path`，返回实际检查的目录（未安装时返回默认根，即“应该放这里”）。
+  - 安装引导新增「检测位置」一行（`#ext-path`），直接显示路径，用户可对照自己解压的位置。
+- 验证：把 `Desktop\工作区\MedScribe\app\models\ext` 登记为额外根后，`/asr/models` 返回 `whisper-large-v3 installed=true`，`path` 指向该目录；下拉显示「Whisper-large-v3 · 本地」，切换后后端 6.3 s 加载完成（200）；Firefox 下无引导弹窗、下拉可用；集成测试 40/40。

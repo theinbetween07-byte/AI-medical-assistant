@@ -19,7 +19,9 @@ from typing import Optional
 
 from loguru import logger
 
-from app.config import EXTENSIONS_MANIFEST, EXTENSIONS_ROOT
+from app.config import DATA_DIR, EXTENSIONS_MANIFEST, EXTENSIONS_ROOT
+
+_MODEL_ROOTS_FILE = DATA_DIR / "model_roots.json"
 
 _DEFAULT_INSTALL_STEPS = [
     "下载扩展包的**全部**分卷（.7z.001、.002 …）与说明文件",
@@ -41,8 +43,51 @@ def _read_manifest() -> list[dict]:
     return [e for e in (entries or []) if isinstance(e, dict) and e.get("id")]
 
 
+def _extra_roots() -> list[Path]:
+    """``data/model_roots.json`` 中登记的额外模型根目录。
+
+    允许用户把扩展装到另一个 MedScribe 副本里而不必复制几个 GB 的模型文件，
+    文件内容形如 ``["D:/backup/MedScribe/app/models/ext"]``。
+    """
+    if not _MODEL_ROOTS_FILE.exists():
+        return []
+    try:
+        data = json.loads(_MODEL_ROOTS_FILE.read_text(encoding="utf-8"))
+    except Exception as exc:
+        logger.warning(f"額外模型目錄讀取失敗：{exc}")
+        return []
+    items = data.get("roots") if isinstance(data, dict) else data
+    roots: list[Path] = []
+    for raw in items or []:
+        try:
+            path = Path(str(raw)).expanduser()
+        except Exception:
+            continue
+        if path.is_dir():
+            roots.append(path)
+    return roots
+
+
+def extension_roots() -> list[Path]:
+    roots: list[Path] = []
+    seen: set[str] = set()
+    for path in [EXTENSIONS_ROOT, *_extra_roots()]:
+        key = str(path.resolve()).lower()
+        if key in seen:
+            continue
+        seen.add(key)
+        roots.append(path)
+    return roots
+
+
 def extension_path(entry: dict) -> Path:
-    return EXTENSIONS_ROOT / str(entry.get("dir") or entry["id"])
+    """扩展实际所在目录：依次在默认根与额外根中查找，都没有则返回默认根（即“应该放这里”）。"""
+    name = str(entry.get("dir") or entry["id"])
+    for root in extension_roots():
+        candidate = root / name
+        if candidate.is_dir():
+            return candidate
+    return EXTENSIONS_ROOT / name
 
 
 def is_installed(entry: dict) -> bool:
@@ -62,6 +107,7 @@ def _install_info(entry: dict) -> dict:
         "size_mb": entry.get("size_mb", 0),
         "sha256": entry.get("sha256", ""),
         "steps": steps,
+        "path": str(extension_path(entry)),
         "note": entry.get(
             "note",
             "扩展包完全离线，安装后不再联网；卸载只需删除 app/models/ext/<目录> 后重启。",

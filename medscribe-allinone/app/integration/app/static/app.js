@@ -210,6 +210,7 @@
       'ext.sub': '该模型以扩展包形式提供，下载后按下列步骤安装；装好即可离线使用。',
       'ext.size': '包大小',
       'ext.sha': 'SHA-256',
+      'ext.path': '检测位置',
       'ext.refresh': '刷新',
       'ext.refreshHint': '安装完成后请点击刷新',
       'ext.refreshMiss': '{time} 已刷新，仍未检测到模型；请确认已解压到本程序目录后重试',
@@ -461,6 +462,7 @@
       'ext.sub': '該模型以擴展包形式提供，下載後按下列步驟安裝；裝好即可離線使用。',
       'ext.size': '包大小',
       'ext.sha': 'SHA-256',
+      'ext.path': '檢測位置',
       'ext.refresh': '重新整理',
       'ext.refreshHint': '安裝完成後請點擊重新整理',
       'ext.refreshMiss': '{time} 已重新整理，仍未偵測到模型；請確認已解壓到本程式目錄後重試',
@@ -712,6 +714,7 @@
       'ext.sub': 'This model ships as an extension pack. Download it, then follow the steps below; it runs fully offline once installed.',
       'ext.size': 'Pack size',
       'ext.sha': 'SHA-256',
+      'ext.path': 'Checked path',
       'ext.refresh': 'Refresh',
       'ext.refreshHint': 'Click Refresh after installation',
       'ext.refreshMiss': 'Refreshed at {time} — model still not found. Check that it was extracted into the app folder.',
@@ -1626,6 +1629,7 @@
     $('ext-name').textContent = model.label || modelLabel(model);
     $('ext-size').textContent = info.size_mb ? (info.size_mb / 1024).toFixed(1) + ' GB' : '—';
     $('ext-sha').textContent = info.sha256 || '—';
+    $('ext-path').textContent = info.path || '—';
     var url = info.url || '';
     $('ext-url').textContent = url || '—';
     $('ext-url').href = url || '#';
