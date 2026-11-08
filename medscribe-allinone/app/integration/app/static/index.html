@@ -146,6 +146,14 @@
         <div class="empty-mark"><svg class="icon"><use href="#i-pulse"/></svg></div>
         <h2 data-i18n="empty.title">还没有会话</h2>
         <p data-i18n="empty.sub">新建会话后，按「录音 → 转写 → 术语纠正 → 抽取 → 生成初稿 → 校审 → 签署 → 导出」完成一次病历记录。</p>
+        <div class="empty-lang">
+          <label class="pipeline-label" for="empty-lang-select" data-i18n="action.language">语言</label>
+          <select class="pipeline-select lang-select" id="empty-lang-select" aria-label="识别语言" data-i18n-aria="action.languageAria">
+            <option value="auto" data-i18n="asr.lang.auto">自动识别</option>
+            <option value="zh" data-i18n="asr.lang.zh">中文</option>
+            <option value="en" data-i18n="asr.lang.en">英语</option>
+          </select>
+        </div>
         <button class="new-session" id="empty-new" type="button"><svg class="icon"><use href="#i-plus"/></svg><span data-i18n="empty.cta">新建会话</span></button>
       </div>
     </div>

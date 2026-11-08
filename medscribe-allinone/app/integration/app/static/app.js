@@ -7,6 +7,22 @@
 
   var THEME_KEY = 'medscribe-theme';
   var LANG_KEY = 'medscribe-lang';
+  // 识别语言：单一数据源，工作台与空态两处下拉都由它生成，避免选项不一致。
+  var ASR_LANGUAGES = [
+    { value: 'auto', key: 'asr.lang.auto' },
+    { value: 'zh', key: 'asr.lang.zh' },
+    { value: 'yue', key: 'asr.lang.yue' },
+    { value: 'en', key: 'asr.lang.en' },
+    { value: 'ja', key: 'asr.lang.ja' },
+    { value: 'ko', key: 'asr.lang.ko' },
+    { value: 'fr', key: 'asr.lang.fr' },
+    { value: 'de', key: 'asr.lang.de' },
+    { value: 'es', key: 'asr.lang.es' },
+    { value: 'ru', key: 'asr.lang.ru' },
+    { value: 'pt', key: 'asr.lang.pt' },
+    { value: 'it', key: 'asr.lang.it' },
+    { value: 'ar', key: 'asr.lang.ar' }
+  ];
   var ASR_LANG_KEY = 'medscribe-asr-language';
   var root = document.documentElement;
   var media = window.matchMedia('(prefers-color-scheme: dark)');
@@ -116,6 +132,13 @@
       'asr.lang.en': '英语',
       'asr.lang.ja': '日语',
       'asr.lang.ko': '韩语',
+      'asr.lang.fr': '法语',
+      'asr.lang.de': '德语',
+      'asr.lang.es': '西班牙语',
+      'asr.lang.ru': '俄语',
+      'asr.lang.pt': '葡萄牙语',
+      'asr.lang.it': '意大利语',
+      'asr.lang.ar': '阿拉伯语',
       'model.localSuffix': ' · 本地',
       'model.remoteSuffix': ' · 未安装',
       'model.switching': '正在切换模型：{name}（首次使用需加载模型，可能耗时数十秒）…',
@@ -354,6 +377,13 @@
       'asr.lang.en': '英語',
       'asr.lang.ja': '日語',
       'asr.lang.ko': '韓語',
+      'asr.lang.fr': '法語',
+      'asr.lang.de': '德語',
+      'asr.lang.es': '西班牙語',
+      'asr.lang.ru': '俄語',
+      'asr.lang.pt': '葡萄牙語',
+      'asr.lang.it': '義大利語',
+      'asr.lang.ar': '阿拉伯語',
       'model.localSuffix': ' · 本地',
       'model.remoteSuffix': ' · 未安裝',
       'model.switching': '正在切換模型：{name}（首次使用需載入模型，可能耗時數十秒）…',
@@ -592,6 +622,13 @@
       'asr.lang.en': 'English',
       'asr.lang.ja': 'Japanese',
       'asr.lang.ko': 'Korean',
+      'asr.lang.fr': 'French',
+      'asr.lang.de': 'German',
+      'asr.lang.es': 'Spanish',
+      'asr.lang.ru': 'Russian',
+      'asr.lang.pt': 'Portuguese',
+      'asr.lang.it': 'Italian',
+      'asr.lang.ar': 'Arabic',
       'model.localSuffix': ' · local',
       'model.remoteSuffix': ' · not installed',
       'model.switching': 'Switching model: {name} (first use loads the local model, may take up to a minute)…',
@@ -1439,13 +1476,34 @@
       '"/></svg><span>' + esc(message) + '</span>';
   }
 
+  function renderLanguageOptions() {
+    var selects = document.querySelectorAll('.lang-select');
+    Array.prototype.forEach.call(selects, function (select) {
+      var current = select.value || state.asrLanguage || 'auto';
+      select.innerHTML = '';
+      ASR_LANGUAGES.forEach(function (item) {
+        var opt = document.createElement('option');
+        opt.value = item.value;
+        opt.textContent = t(item.key);
+        select.appendChild(opt);
+      });
+      select.value = current;
+    });
+  }
+
+  function applyAsrLanguage(value) {
+    state.asrLanguage = value || 'auto';
+    try { localStorage.setItem(ASR_LANG_KEY, state.asrLanguage); } catch (e) {}
+    syncLanguageSelect();
+  }
+
   function syncLanguageSelect() {
-    var select = $('lang-select');
-    if (!select) return;
-    select.value = state.asrLanguage || 'auto';
     var signed = !!(state.detail && state.detail.session &&
       rank(state.detail.session.status) >= rank('signed'));
-    select.disabled = state.busy || state.transcribing || signed;
+    Array.prototype.forEach.call(document.querySelectorAll('.lang-select'), function (select) {
+      select.value = state.asrLanguage || 'auto';
+      select.disabled = state.busy || state.transcribing || signed;
+    });
   }
 
   function renderPipeline() {
@@ -2197,6 +2255,7 @@
     renderSessions();
     renderAll();
     renderModelSelect();
+    renderLanguageOptions();
     loadHealth();
     if ($('export-dialog').open) renderExportPreview();
   }
@@ -2294,9 +2353,8 @@
   });
 
   $('btn-transcribe').addEventListener('click', doTranscribe);
-  $('lang-select').addEventListener('change', function () {
-    state.asrLanguage = this.value || 'auto';
-    try { localStorage.setItem(ASR_LANG_KEY, state.asrLanguage); } catch (e) {}
+  Array.prototype.forEach.call(document.querySelectorAll('.lang-select'), function (select) {
+    select.addEventListener('change', function () { applyAsrLanguage(this.value); });
   });
   $('btn-correct').addEventListener('click', doCorrect);
   $('btn-undo').addEventListener('click', undoCorrect);

@@ -274,12 +274,16 @@ class ASRService:
                 effective_lang = language
                 logger.info(f"[ASR] 語言：{language}（手動指定）")
 
+            # 中文術語提示詞只對中文 / 粵語有效。指定其他語言時再帶上它，
+            # 會把解碼結果重新拉回中文（實測指定 en 仍輸出中文），因此按語言取捨。
+            prompt = INITIAL_PROMPT if effective_lang in (None, "zh", "yue") else None
+
             t1 = time.time()
             emit(0.14, "decode")
             segments_iter, info = model.transcribe(
                 wav_path,
                 language=effective_lang,
-                initial_prompt=INITIAL_PROMPT,
+                initial_prompt=prompt,
                 beam_size=beam_size,
                 vad_filter=vad_filter,
                 word_timestamps=True,

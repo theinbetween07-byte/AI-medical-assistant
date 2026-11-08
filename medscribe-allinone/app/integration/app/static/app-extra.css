@@ -346,3 +346,10 @@
 [data-theme="dark"] .boot-failure {
   border-color: #6b3a34; background: #2a1c1a; color: #f2b8ad;
 }
+
+/* 空态也能先选识别语言，新建会话后沿用 */
+.empty-lang {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  margin: 16px 0 2px;
+}
+.empty-lang .pipeline-select { min-width: 132px; height: 30px; font-size: 11.5px; }
