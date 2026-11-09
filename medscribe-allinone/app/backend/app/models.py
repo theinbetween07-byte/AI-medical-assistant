@@ -27,6 +27,7 @@ class HealthResponse(BaseModel):
     device: str
     compute_type: str
     model_loaded: bool
+    root: str = ""
 
 
 class Segment(BaseModel):

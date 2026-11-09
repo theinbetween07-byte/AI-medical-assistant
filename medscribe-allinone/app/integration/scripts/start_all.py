@@ -312,7 +312,7 @@ def main() -> int:
     else:
         proc = spawn(
             "integration",
-            [python, "run.py"],
+            [python, "run.py", "--port", str(app_port)],
             ROOT,
             {
                 **_BASE_ENV,

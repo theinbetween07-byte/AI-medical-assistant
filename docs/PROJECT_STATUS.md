@@ -260,3 +260,16 @@ MVP 必须跑通五个能力：
   - `/asr/models` 的 install 信息新增 `path`，返回实际检查的目录（未安装时返回默认根，即“应该放这里”）。
   - 安装引导新增「检测位置」一行（`#ext-path`），直接显示路径，用户可对照自己解压的位置。
 - 验证：把 `Desktop\工作区\MedScribe\app\models\ext` 登记为额外根后，`/asr/models` 返回 `whisper-large-v3 installed=true`，`path` 指向该目录；下拉显示「Whisper-large-v3 · 本地」，切换后后端 6.3 s 加载完成（200）；Firefox 下无引导弹窗、下拉可用；集成测试 40/40。
+
+## 14. 2026-11-09 修复：第二份安装启动时报「集成层 未在 90s 内就绪」
+
+- 现象：机器上已有一份 MedScribe 在跑（占用 8100）时，双击另一份 `MedScribe.bat`，报「集成层 未在 90s 内就绪」；`app/integration/logs/integration.log` 里是 `[Errno 10048] bind 8100`。
+- 根因两处：
+  1. `start_all.py` 已自动换了空闲端口（打印「已自动改用 8101」），但 spawn 集成层时只写了 `[python, "run.py"]`，**实际端口没有传给子进程**，`run.py` 仍按默认 8100 启动 → bind 冲突 → 90 s 超时。
+  2. `service_identity.is_ours()` 只按 HTTP 形状与命令行判断，把「同类型但属于另一份安装」的服务当成本项目实例，于是既不复用也不换端口。
+- 处理：
+  - `start_all.py` 启动集成层时传 `--port <实际端口>`。
+  - 集成层 `/health/live` 与 ASR `/health` 新增 `root` 字段（程序目录）；`is_ours()` 校验该路径必须位于本程序的 `app` 目录下，否则判定为陌生实例 → 自动换端口，且不会尝试停止它。
+  - 报告引擎的复用判断增加程序目录前缀校验（`run_engine.py` 命令行里带绝对路径）。
+  - backend `HealthResponse` 增加 `root` 字段（默认空，旧客户端不受影响）。
+- 验证：两套安装同时运行（8100 被占），第二套自动改用 ASR 18001 / 引擎 8791 / 集成层 8101，三条链路全部就绪，浏览器地址指向 8101；该实例 `whisper-large-v3 installed=true`，模型下拉显示「Whisper-large-v3 · 本地」（模型就在它自己的目录里，不再依赖 `model_roots.json`）；集成测试 40/40。

@@ -123,7 +123,12 @@ def create_app() -> FastAPI:
         `build` 是静态资源内容哈希：启动脚本据此判断已在运行的进程是不是当前这版代码，
         覆盖安装后旧进程仍在监听时可以自动重启，而不是直接跳过、让用户看到旧界面。
         """
-        return {"ok": True, "service": "integration", "build": asset_version}
+        return {
+            "ok": True,
+            "service": "integration",
+            "build": asset_version,
+            "root": str(Path(__file__).resolve().parents[1]),
+        }
 
     @app.get("/health", summary="三段链路健康检查")
     def health() -> dict:

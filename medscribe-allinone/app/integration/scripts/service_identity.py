@@ -21,6 +21,10 @@ import subprocess
 import time
 import urllib.error
 import urllib.request
+from pathlib import Path
+
+# 本文件的上一级（app/integration）；用于判断端口上的服务是否属于同一份安装
+APP_ROOT = Path(__file__).resolve().parents[1]
 
 TIMEOUT_S = 2.0
 
@@ -158,7 +162,7 @@ def command_matches(name: str, cmdline: str) -> bool:
     if name == "asr":
         return "uvicorn" in cmdline and "app.main:app" in cmdline
     if name == "engine":
-        return "run_engine.py" in cmdline
+        return "run_engine.py" in cmdline and str(APP_ROOT.parent).lower() in cmdline.lower()
     if name == "integration":
         return bool(re.search(r"(^|\s|\\\\)run\.py(\s|$)", cmdline))
     return False
@@ -175,6 +179,20 @@ def is_ours(name: str, port: int, pid: int | None = None) -> bool:
     """
     if identify(port) != name:
         return False
+    # 同类型服务可能来自另一份 MedScribe 安装（用户解压了多个副本）：
+    # 这类实例既不能复用（模型/数据目录不同），也不能被本脚本停止。
+    live = None
+    if name == "integration":
+        live = _http_json(port, "/health/live", timeout=2.0)
+    elif name == "asr":
+        live = _http_json(port)
+    if isinstance(live, dict):
+        served_root = live.get("root")
+        if served_root:
+            try:
+                Path(str(served_root)).resolve().relative_to(APP_ROOT.parent)
+            except (ValueError, OSError):
+                return False
     if pid is not None and pid_alive(pid):
         return True
     pids = pids_on_port(port)

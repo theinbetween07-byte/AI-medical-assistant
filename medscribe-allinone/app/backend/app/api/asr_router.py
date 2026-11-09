@@ -20,7 +20,7 @@ from loguru import logger
 
 from app import db
 from app.auth import get_current_user
-from app.config import LOCAL_MODELS, SUPPORTED_MODELS
+from app.config import BASE_DIR, LOCAL_MODELS, SUPPORTED_MODELS
 from app.models import HealthResponse, TranscribeResponse
 from app.services import extensions
 from app.services.asr import get_asr_service
@@ -40,6 +40,7 @@ async def health():
         device=os.environ.get("WHISPER_DEVICE", "cpu"),
         compute_type=os.environ.get("WHISPER_COMPUTE_TYPE", "int8"),
         model_loaded=asr.model is not None,
+        root=str(BASE_DIR),
     )
 
 
