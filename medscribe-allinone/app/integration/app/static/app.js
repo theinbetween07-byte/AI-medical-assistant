@@ -153,6 +153,7 @@
       'transcript.empty': '尚无转写结果。录音或上传音频后点击「转写」。',
       'transcript.progressTitle': '正在转写音频',
       'transcript.progressSub': '首次加载模型可能需要 20–60 秒，请保持页面打开。',
+      'phase.preprocess': '预处理音频',
       'phase.prepare': '准备音频',
       'phase.load': '加载模型',
       'phase.decode': '识别语音',
@@ -405,6 +406,7 @@
       'transcript.empty': '尚無轉寫結果。錄音或上傳音頻後點擊「轉寫」。',
       'transcript.progressTitle': '正在轉寫音頻',
       'transcript.progressSub': '首次加載模型可能需要 20–60 秒，請保持頁面打開。',
+      'phase.preprocess': '預處理音頻',
       'phase.prepare': '準備音頻',
       'phase.load': '加載模型',
       'phase.decode': '識別語音',
@@ -657,6 +659,7 @@
       'transcript.empty': 'No transcript yet. Record or upload audio, then choose Transcribe.',
       'transcript.progressTitle': 'Transcribing audio',
       'transcript.progressSub': 'The first run may take 20–60 seconds while the model loads. Keep this page open.',
+      'phase.preprocess': 'Preprocessing audio',
       'phase.prepare': 'Preparing audio',
       'phase.load': 'Loading model',
       'phase.decode': 'Recognising speech',
@@ -1328,8 +1331,16 @@
     var reviews = reviewsByKey(report);
     var missing = missingRequired();
     var fields = report.fields || [];
+    // 引擎的 warnings 以前只在接口里返回、界面不展示，用户看到一屏「未提及」
+    // 却不知道是模板不匹配还是转写为空。这里把可操作提示直接显示在初稿顶部。
+    var warnings = (report.warnings || []).filter(Boolean);
+    var warningsHtml = warnings.length
+      ? '<div class="report-warnings">' + warnings.map(function (item) {
+          return '<p class="muted">' + esc(item) + '</p>';
+        }).join('') + '</div>'
+      : '';
 
-    body.innerHTML = fields.map(function (field) {
+    body.innerHTML = warningsHtml + fields.map(function (field) {
       var review = reviews[field.key];
       var value = displayValue(field, review);
       var section = sectionOf(field);
@@ -1893,6 +1904,8 @@
 
   async function doTranscribe() {
     if (!state.sessionId) { showToast(t('toast.noSession')); return; }
+    // 连点会让同一个会话建出多个转写任务（后端口虽会复用，但界面先要拦住）
+    if (state.busy || state.transcribing) { return; }
     state.busy = true;
     state.transcribing = true;
     state.transcribeStartedAt = Date.now();

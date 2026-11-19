@@ -61,6 +61,20 @@ def _resolve_ffmpeg() -> str:
     return "ffmpeg"
 
 
+def _resolve_ffprobe(ffmpeg: str) -> str:
+    """ffprobe 通常与 ffmpeg 同目录；也允许单独用 MSHK_FFPROBE 指定。"""
+    candidate = _env("MSHK_FFPROBE")
+    if candidate:
+        return candidate
+    sibling = Path(ffmpeg).with_name("ffprobe.exe" if os.name == "nt" else "ffprobe")
+    if sibling.is_file():
+        return str(sibling)
+    found = shutil.which("ffprobe")
+    if found:
+        return found
+    return "ffprobe"
+
+
 class Settings:
     def __init__(self) -> None:
         # ---- 集成层自身
@@ -84,7 +98,29 @@ class Settings:
 
         # ---- 外部依赖
         self.ffmpeg: str = _resolve_ffmpeg()
+        self.ffprobe: str = _resolve_ffprobe(self.ffmpeg)
         self.ffmpeg_timeout_s: int = _env_int("MSHK_FFMPEG_TIMEOUT_S", 180)
+
+        # ---- 音频预处理（转写前自动执行，见 audio_prep.py）
+        self.prep_enabled: bool = _env_bool("MSHK_PREP_ENABLED", True)
+        self.prep_target_sr: int = _env_int("MSHK_PREP_SR", 16000)
+        # 目标响度：-20 LUFS 是 Whisper 类模型的稳妥值；-23 LUFS 为 EBU R128 广播标准
+        self.prep_target_lufs: float = _env_float("MSHK_PREP_LUFS", -20.0)
+        self.prep_true_peak: float = _env_float("MSHK_PREP_TP", -2.0)
+        self.prep_lra: float = _env_float("MSHK_PREP_LRA", 11.0)
+        self.prep_highpass_hz: int = _env_int("MSHK_PREP_HIGHPASS_HZ", 80)
+        self.prep_denoise: str = _env("MSHK_PREP_DENOISE", "auto")      # auto|on|off
+        self.prep_denoise_nr: float = _env_float("MSHK_PREP_DENOISE_NR", 10.0)
+        self.prep_noise_gate_db: float = _env_float("MSHK_PREP_NOISE_GATE_DB", -55.0)
+        self.prep_snr_gate_db: float = _env_float("MSHK_PREP_SNR_GATE_DB", 30.0)
+        self.prep_dereverb: str = _env("MSHK_PREP_DEREVERB", "auto")    # auto|on|off
+        self.prep_dereverb_snr_gate_db: float = _env_float("MSHK_PREP_DEREVERB_SNR_DB", 18.0)
+        self.prep_vad: bool = _env_bool("MSHK_PREP_VAD", True)
+        self.prep_silence_db: float = _env_float("MSHK_PREP_SILENCE_DB", -38.0)
+        self.prep_silence_min_s: float = _env_float("MSHK_PREP_SILENCE_MIN_S", 0.55)
+        self.prep_keep_pad_ms: int = _env_int("MSHK_PREP_KEEP_PAD_MS", 250)
+        self.prep_trim_mid: bool = _env_bool("MSHK_PREP_TRIM_MID", True)
+        self.prep_mid_gap_ms: int = _env_int("MSHK_PREP_MID_GAP_MS", 8000)
 
         # ---- 业务阈值（PRD BR-01 / BR-02 / FR-02）
         self.min_duration_ms: int = _env_int("MSHK_MIN_DURATION_MS", 10_000)

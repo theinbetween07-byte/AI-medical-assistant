@@ -19,6 +19,7 @@ import json
 import mimetypes
 import threading
 import time
+import uuid
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -302,6 +303,9 @@ class ASRClient:
             raise ASRError(f"ASR 转写失败：{state.get('error') or '未知错误'}")
 
     def _create_job(self, body: bytes, boundary: str) -> str:
+        # 幂等键：读响应被重置时客户端要重发整个请求（请求体已发出），
+        # 服务端凭同一个键复用任务，避免同一段音频被重复转写（实测重复 3 次）。
+        idem = uuid.uuid4().hex
         for attempt in (0, 1):
             req = urllib.request.Request(
                 f"{self.cfg.asr_url}/asr/transcribe-jobs",
@@ -312,6 +316,7 @@ class ASRClient:
                     "Connection": "close",
                     "Authorization": f"Bearer {self.token(refresh=attempt > 0)}",
                     "Content-Length": str(len(body)),
+                    "X-Idempotency-Key": idem,
                 },
                 method="POST",
             )
@@ -392,6 +397,10 @@ def map_segments(result: dict, threshold: float) -> list[dict]:
     """把 ASR 返回的 segments 映射为集成层分段结构。"""
     global_lang = str(result.get("language") or "").lower()
     prob = float(result.get("language_probability") or 0.0)
+    # 显式指定语言（language=en/zh）时上游常返回 0.0，这不代表"识别不可信"，
+    # 只代表没有语种概率可参考。若按 0 处理，所有片段都会被判低置信度，
+    # 抽取/生成直接报"没有可用于生成的转写片段"（实测报障点）。
+    prob_valid = prob > 0.0
     raw_segments = result.get("segments") or []
     mapped: list[dict] = []
 
@@ -408,6 +417,11 @@ def map_segments(result: dict, threshold: float) -> list[dict]:
         )
         conf = prob if consistent else round(prob * 0.75, 4)
         conf = max(0.0, min(1.0, conf))
+        source = "asr-global"
+        if not prob_valid:
+            # 语言已显式指定：文本本身正常，置信度没有上游依据，不应阻断定稿
+            conf = 1.0
+            source = "asr-fixed-language"
         mapped.append(
             {
                 "id": f"S-{i + 1:03d}",
@@ -418,7 +432,7 @@ def map_segments(result: dict, threshold: float) -> list[dict]:
                 "text_raw": text,
                 "lang": lang,
                 "confidence": conf,
-                "confidence_source": "asr-global",
+                "confidence_source": source,
                 "low_confidence": conf < threshold,
                 "confirmed": False,
                 "edited": False,

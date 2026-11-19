@@ -17,7 +17,7 @@
     {"key": "physical_examination", "label": "体格检查 / Physical Examination", "section": "O", "required": true, "order": 5,
      "keywords": ["examination", "檢查", "检查", "O/E", "vitals", "blood pressure", "血壓", "血压"]},
     {"key": "investigations", "label": "检查结果 / Investigations", "section": "O", "order": 6,
-     "keywords": ["blood test", "x-ray", "CT", "investigation", "檢驗", "检验", "報告", "报告"]},
+     "keywords": ["blood test", "x-ray", "CT", "investigation", "輔助檢查", "辅助检查", "檢查結果", "检查结果", "血常規", "血常规", "化驗", "化验", "檢驗", "检验", "報告", "报告"]},
     {"key": "assessment", "label": "诊断/评估 / Assessment", "section": "A", "required": true, "order": 7,
      "keywords": ["diagnosis", "impression", "assessment", "診斷", "诊断", "評估", "评估"]},
     {"key": "plan", "label": "处理计划 / Plan", "section": "P", "required": true, "order": 8,

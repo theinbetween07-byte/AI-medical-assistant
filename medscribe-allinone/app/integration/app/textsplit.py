@@ -16,11 +16,16 @@ from __future__ import annotations
 
 import re
 
-MAX_CHARS = 24
+MAX_CHARS = 24          # 中文按字数切：中文没有词间空格，短句才便于规则匹配
+LATIN_MAX_CHARS = 80    # 英文/拉丁文按短语切：过短会把 "tumour size" 之类的关键词拆散
 MIN_CLAUSE = 6
 
-_SENT = re.compile(r"(?<=[。！？!?])")
+# 中文句末标点无条件切；英文句号只在后接空白时切，避免把 "3.5 cm" 拆开
+_SENT = re.compile(r"(?<=[。！？!?])|(?<=[.])(?=\s)")
 _CLAUSE = re.compile(r"(?<=[，、；;])")
+_LATIN_CLAUSE = re.compile(r"(?<=[,;，；])\s*")
+_CJK_RE = re.compile(r"[\u3400-\u4dbf\u4e00-\u9fff]")
+_LATIN_RE = re.compile(r"[A-Za-z]")
 _PUNCT_MAP = {
     "\ufe50": "，",  # ﹐ small comma
     "\ufe51": "、",  # ﹑ small ideographic comma
@@ -36,16 +41,31 @@ def tidy(text: str) -> str:
     return text.strip()
 
 
-_UNIT_TAIL = {"cm", "mm", "mg", "ml", "kg", "g", "l", "no", "on", "in", "of", "to"}
+# 纯单位结尾不能续接下一个词（"6 cm" + "proximal margin" 是两条独立信息）
+_UNIT_TAIL = {"cm", "mm", "mg", "ml", "kg", "g", "l", "no"}
+# 介词/连词结尾说明句子被分段截断，续接时要补空格而不是拼成一个词
+_CONNECTORS = {"of", "to", "in", "on", "and", "or", "with", "for", "the", "a", "at", "by"}
 
 
-def _is_continuation(prev: str, cur: str) -> bool:
+def _is_latin(text: str) -> bool:
+    """英文/拉丁文段落：按空格分词，不能套用中文的固定字数硬切。"""
+    cjk = len(_CJK_RE.findall(text))
+    latin = len(_LATIN_RE.findall(text))
+    if not latin:
+        return False
+    return cjk / max(1, cjk + latin) < 0.2
+
+
+def _is_continuation(prev: str, cur: str, same_source: bool = False) -> bool:
     """判断 cur 是否是 prev 被 ASR 从中间切断的续片。
 
     真实语音里 Whisper 常在冒号、逗号停顿处，甚至在单词中间断句：
     "histological tumor grade" / ", moderately differentiated"、
     "relation of tumor to ant" / "erior peritoneum reflection, not applicable"。
-    这些碎片如果各自成为要素，字段只能拿到标签或半个词。
+
+    same_source=True 表示两片来自同一个 ASR segment（本模块自己切出来的）：
+    此时英文逗号是刻意的短语边界（"tumour size 3.5 cm" / "no perforation"），
+    不能再合并，否则字段又会互相抢占内容。
     """
     if not prev or not cur:
         return False
@@ -53,10 +73,14 @@ def _is_continuation(prev: str, cur: str) -> bool:
         return True
     if prev.rstrip().endswith(("。", "！", "？", ".", "!", "?")):
         return False
-    # 中文逗号是分句符，不合并；英文半角逗号后接小写才是续接
+    # 中文逗号是分句符，不合并
     if prev.rstrip().endswith(("，", "、", "；")):
         return False
     if prev.rstrip().endswith((",", ";")) and cur[:1].isascii() and cur[:1].islower():
+        return not same_source
+    # 跨段的词中断词：ASR 把 "near-complete" 断成 "near-complet" / "e, ..."，
+    # 或 "differentiated" 断成 "differentiate" / "d adenocarsin"。
+    if not same_source and re.match(r"^[a-z](?=[\s,;，；])", cur):
         return True
     if len(prev) + len(cur) > 140:
         return False
@@ -71,13 +95,22 @@ def _is_continuation(prev: str, cur: str) -> bool:
 
 def _join(prev: str, cur: str) -> str:
     """断词直接拼接，逗号后补空格；中文不加空格。"""
-    tail = prev.rstrip().split(" ")[-1]
+    p, c = prev.rstrip(), cur.lstrip()
+    if p.endswith((",", "，", ";", "；", "、")):
+        sep = " " if p[-1:].isascii() else ""
+        return p + sep + c
+    # ASR 词中断词：cur 只剩 1 个字母（"d adenocarsin" / "e, mesorectal"）
+    if re.match(r"^[a-z](?=[\s,;，；])", c):
+        return p + c
+    tail = p.split(" ")[-1]
+    if tail.lower() in _CONNECTORS:
+        return p + " " + c
     if re.fullmatch(r"[A-Za-z]{1,4}", tail) and tail.lower() not in _UNIT_TAIL:
-        return prev + cur
-    if prev.rstrip().endswith((",", "，", ";", "；", "、")):
-        sep = " " if prev.rstrip()[-1:].isascii() else ""
-        return prev.rstrip() + sep + cur.lstrip()
-    return prev + cur
+        return p + c
+    # 中英文边界不加空格；英文词与词之间的续片补空格
+    if not (p[-1:].isascii() and c[:1].isascii()):
+        return p + c
+    return p + " " + c
 
 
 def _split_long(part: str, max_chars: int) -> list[str]:
@@ -103,15 +136,50 @@ def _split_long(part: str, max_chars: int) -> list[str]:
     return out
 
 
+def _split_words(part: str, max_chars: int) -> list[str]:
+    """超长拉丁短语只在空格处切；找不到空格就整段保留，绝不劈开单词。"""
+    out: list[str] = []
+    piece = part
+    while len(piece) > max_chars * 2:
+        cut = piece.rfind(" ", 0, max_chars * 2)
+        if cut <= 0:
+            break
+        out.append(piece[:cut].rstrip())
+        piece = piece[cut:].lstrip()
+    if piece:
+        out.append(piece)
+    return out
+
+
+def _split_latin(part: str, max_chars: int) -> list[str]:
+    """英文/病理口述：按逗号、分号切成完整短语，保留关键词（如 tumour size）。"""
+    if len(part) <= max_chars:
+        return [part]
+    pieces = [p.strip() for p in _LATIN_CLAUSE.split(part) if p.strip()]
+    merged: list[str] = []
+    for piece in pieces:
+        if merged and len(piece) < MIN_CLAUSE:
+            merged[-1] = _join(merged[-1], piece)
+        else:
+            merged.append(piece)
+    out: list[str] = []
+    for piece in merged:
+        out.extend(_split_words(piece, max_chars))
+    return out
+
+
 def split_text(text: str, max_chars: int = MAX_CHARS) -> list[str]:
     text = tidy(text)
     if not text:
         return []
+    latin = _is_latin(text)
+    limit = LATIN_MAX_CHARS if latin else max_chars
     parts: list[str] = []
     for sent in _SENT.split(text):
         sent = sent.strip()
-        if sent:
-            parts.extend(_split_long(sent, max_chars))
+        if not sent:
+            continue
+        parts.extend(_split_latin(sent, limit) if latin else _split_long(sent, limit))
     return parts
 
 
@@ -138,7 +206,9 @@ def refine_segments(segments: list[dict], max_chars: int = MAX_CHARS) -> list[di
 
     merged: list[tuple[str, int, int, dict]] = []
     for text, start, end, seg in pieces:
-        if merged and _is_continuation(merged[-1][0], text):
+        if merged and _is_continuation(
+            merged[-1][0], text, same_source=merged[-1][3] is seg
+        ):
             merged[-1] = (_join(merged[-1][0], text), merged[-1][1], end, merged[-1][3])
         else:
             merged.append((text, start, end, seg))

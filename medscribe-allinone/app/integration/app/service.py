@@ -22,6 +22,7 @@ from pathlib import Path
 from typing import Optional
 
 from . import audio as audio_mod
+from . import audio_prep
 from .asr_client import ASRClient, ASRError, map_segments
 from .postprocess import EMPTY_MARK, hide_rebalanced_source, rebalance_report
 from .history import filter_sessions
@@ -248,6 +249,13 @@ class IntegrationService:
             # 以「删除后文件不存在」为准：客户端在连接重置后重发删除时也应幂等返回 True
             removed_audio = not path.exists()
 
+        # 预处理产物（转写输入副本 + 指标报告）随会话一并清理
+        for extra in (
+            self.cfg.audio_dir / f"{session_id}.asr.wav",
+            self.cfg.audio_dir / f"{session_id}.prep.json",
+        ):
+            extra.unlink(missing_ok=True)
+
         engine_deleted = False
         if report_id:
             try:
@@ -346,15 +354,56 @@ class IntegrationService:
         def forward(fraction: float, phase: str, detail: dict) -> None:
             if progress is None:
                 return
-            # 上游 0..1 映射到 0.02..0.92，留出写库/整理的时间
+            # 预处理占 0.02..0.10；上游进度映射到 0.10..0.92，留出写库/整理的时间
             try:
-                progress(0.02 + 0.90 * max(0.0, min(1.0, float(fraction))), phase, detail or {})
+                progress(0.10 + 0.82 * max(0.0, min(1.0, float(fraction))), phase, detail or {})
+            except Exception:
+                pass
+
+        # ---------------------------------------------------------- 转写前预处理
+        # 诊断 -> 条件化降噪/去混响 -> 响度归一化 -> VAD 裁切 -> 16 kHz 单声道 PCM
+        prep_summary: Optional[dict] = None
+        prep_warnings: list[str] = []
+        time_map: list[dict] = []
+        asr_path = wav_path
+        prep_out = self.cfg.audio_dir / f"{session_id}.asr.wav"
+        if getattr(self.cfg, "prep_enabled", False):
+            if progress is not None:
+                try:
+                    progress(0.04, "preprocess", {})
+                except Exception:
+                    pass
+            try:
+                prep_report = audio_prep.preprocess(
+                    self.cfg,
+                    wav_path,
+                    prep_out,
+                    self.cfg.audio_dir / f"{session_id}.prep.json",
+                )
+                asr_path = prep_out
+                prep_summary = audio_prep.summary(prep_report)
+                time_map = prep_summary.get("time_map") or []
+                prep_warnings = list(prep_report.get("warnings") or [])
+                self._audit(session_id, "audio_preprocessed", prep_summary)
+            except audio_prep.PrepError as exc:
+                # 预处理是增强项：失败时回退原始 16 kHz wav，不阻断转写
+                self._audit(session_id, "preprocess_failed", {"error": str(exc)})
+                prep_warnings.append(f"音频预处理未执行（已回退原始音频）：{exc}")
+                prep_out.unlink(missing_ok=True)
+            except Exception as exc:  # noqa: BLE001 - 兜底：任何异常都不能挡住转写
+                self._audit(session_id, "preprocess_failed", {"error": repr(exc)})
+                prep_warnings.append(f"音频预处理异常（已回退原始音频）：{exc}")
+                prep_out.unlink(missing_ok=True)
+
+        if progress is not None:
+            try:
+                progress(0.10, "prepare", {})
             except Exception:
                 pass
 
         try:
             result = self.asr.transcribe(
-                wav_path,
+                asr_path,
                 language=language or self.cfg.default_language,
                 asr_template=asr_template,
                 beam_size=beam_size,
@@ -371,6 +420,9 @@ class IntegrationService:
                 pass
 
         mapped = refine_segments(map_segments(result, self.cfg.low_confidence_threshold))
+        # VAD 裁掉首尾静音后，ASR 时间戳是相对处理后音频的；按 time_map 映射回原始时间轴
+        if time_map:
+            audio_prep.apply_time_map(mapped, time_map)
         if not mapped:
             self._audit(session_id, "transcribe_empty", {"asr": result})
             raise UpstreamError("转写失败：未得到任何文本，请重试或重录（AC-13）")
@@ -382,10 +434,13 @@ class IntegrationService:
         session.language = str(result.get("language") or "")
         session.language_probability = float(result.get("language_probability") or 0.0)
         session.segment_count = len(mapped)
-        session.warnings = (session.warnings or []) + (
-            [f"{len(low)} 个片段置信度低于 {self.cfg.low_confidence_threshold}，"
-             "已高亮，请核对后再抽取（BR-09）"] if low else []
-        )
+        extra_warnings = list(prep_warnings)
+        if low:
+            extra_warnings.append(
+                f"{len(low)} 个片段置信度低于 {self.cfg.low_confidence_threshold}，"
+                "已高亮，请核对后再抽取（BR-09）"
+            )
+        session.warnings = (session.warnings or []) + extra_warnings
         self._save(session)
         self._audit(
             session_id,
@@ -397,12 +452,21 @@ class IntegrationService:
                 "low_confidence": low,
                 "model": result.get("model"),
                 "elapsed": result.get("elapsed"),
+                "preprocess": (
+                    {
+                        "steps": prep_summary.get("steps"),
+                        "before": prep_summary.get("before"),
+                        "after": prep_summary.get("after"),
+                    }
+                    if prep_summary else None
+                ),
             },
         )
         return {
             "session": session.model_dump(),
             "segments": [Segment(**s) for s in mapped],
             "low_confidence": low,
+            "preprocess": prep_summary,
             "note": "上游 ASR 未返回逐段置信度，confidence 为按整段语言概率推算的代理值",
         }
 
@@ -418,6 +482,18 @@ class IntegrationService:
         session = self._require(session_id)
         self._need(session, "recorded", "转写")
         _sweep_transcribe_jobs()
+        # 同一会话已有排队/运行中的任务时直接复用。重复点击、连点或开多个
+        # 标签页会把同一段音频重复解码多次（实测 1 秒内 3 次请求 → 用户等 18s），
+        # 还会让后端串行跑三遍同一份音频。
+        with _TRANSCRIBE_LOCK:
+            for existing_id, existing in _TRANSCRIBE_JOBS.items():
+                if (existing.get("session_id") == session_id
+                        and existing.get("status") in ("queued", "running")):
+                    return {
+                        "job_id": existing_id,
+                        "status": existing.get("status", "running"),
+                        "reused": True,
+                    }
         job_id = uuid.uuid4().hex
         with _TRANSCRIBE_LOCK:
             _TRANSCRIBE_JOBS[job_id] = {
@@ -661,7 +737,7 @@ class IntegrationService:
                 ],
                 elements=None,
                 deidentify=deidentify,
-                term_correction=True,
+                term_correction=False,
                 language_mode="bilingual",
             )
         except EngineError as exc:
@@ -725,7 +801,7 @@ class IntegrationService:
                 segments=engine_segments,
                 elements=elements,
                 deidentify=self.cfg.deidentify_enabled if deidentify is None else deidentify,
-                term_correction=True,
+                term_correction=False,
                 language_mode=language_mode,
                 keep_unclassified=keep_unclassified,
             )
@@ -739,7 +815,7 @@ class IntegrationService:
                     segments=engine_segments,
                     elements=elements,
                     deidentify=self.cfg.deidentify_enabled,
-                    term_correction=True,
+                    term_correction=False,
                     language_mode=language_mode,
                 )
                 warnings = [*warnings, "所选模板不可用，已回退到通用 SOAP 模板（BR-06）"]

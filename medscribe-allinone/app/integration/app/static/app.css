@@ -441,6 +441,11 @@
   .progress { height: 3px; background: var(--surface-2); }
   .progress i { display: block; height: 100%; width: 76%; background: var(--primary); transition: width 0.28s ease; }
   .report-body { display: grid; gap: 12px; padding: 13px 15px 15px; }
+  .report-warnings {
+    display: grid; gap: 4px; padding: 8px 10px; border: 1px solid var(--warn-line);
+    border-left: 3px solid var(--warn); border-radius: 5px; background: var(--warn-weak);
+  }
+  .report-warnings p { margin: 0; font-size: 9.5px; line-height: 1.5; color: var(--warn); }
   .field-group { display: grid; gap: 5px; }
   .field-label {
     display: flex; align-items: center; gap: 5px;

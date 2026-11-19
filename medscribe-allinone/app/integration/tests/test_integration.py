@@ -17,6 +17,7 @@ import json
 import math
 import os
 import re
+import shutil
 import socket
 import struct
 import sys
@@ -35,6 +36,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from app.audio import validate as validate_audio  # noqa: E402
+from app import audio_prep  # noqa: E402
 from app.config import Settings  # noqa: E402
 from app.terms import TermCorrector, compile_terms  # noqa: E402
 from app.postprocess import EMPTY_MARK, hide_rebalanced_source, rebalance_report  # noqa: E402
@@ -716,6 +718,54 @@ class TextSplitTest(unittest.TestCase):
         self.assertIn("，", out[0]["text"])
         self.assertNotIn("﹐", out[0]["text"])
 
+    def test_latin_long_segment_splits_on_commas_not_words(self):
+        # 实测病理口述：Whisper 输出一整段无句号的英文，旧逻辑按 24 字符硬切，
+        # 产生 "laparo" / "scopic" 这种词中间碎片，报告字段全部匹配失败。
+        text = (
+            "39661 left colon, laparoscopic left colectomy, moderately differentiated "
+            "adeno-carcinoma, tumour size 3.5 cm, no perforation, invasion to visceral "
+            "peritoneum, lymphatic and venous invasion absent, proximal distal and "
+            "circumferential margin negative."
+        )
+        out = refine_segments([{"id": "S-001", "index": 0, "start_ms": 0, "end_ms": 28653,
+                                "text": text}])
+        self.assertGreater(len(out), 1)
+        joined = " ".join(s["text"] for s in out)
+        # 字段关键词必须保持完整，不能被切成 "tumour" / "size 3.5" 两片
+        for phrase in ("laparoscopic left colectomy", "tumour size 3.5 cm", "no perforation",
+                       "invasion to visceral peritoneum", "lymphatic and venous invasion absent",
+                       "circumferential margin negative"):
+            self.assertIn(phrase, joined)
+        # 不丢失原文词汇：拼接后每个原词都应完整出现
+        for token in re.findall(r"[A-Za-z][A-Za-z-]+", text):
+            self.assertIn(token, joined)
+
+    def test_latin_sentences_split_on_period(self):
+        text = "Patient has fever. No allergy. Plan is follow up."
+        out = refine_segments([{"id": "S-001", "index": 0, "start_ms": 0, "end_ms": 9000,
+                                "text": text}])
+        self.assertGreaterEqual(len(out), 3)
+        self.assertIn("Patient has fever.", [s["text"] for s in out])
+
+    def test_latin_resumes_across_asr_segments(self):
+        # 实测：Whisper 在短语/单词中间分段，必须跨段接回，否则关键词仍失配
+        segs = [
+            {"id": "S-001", "index": 0, "start_ms": 0, "end_ms": 4000,
+             "text": "understaff, size of"},
+            {"id": "S-002", "index": 1, "start_ms": 4000, "end_ms": 8000,
+             "text": "tumor 5.2 cm, no"},
+            {"id": "S-003", "index": 2, "start_ms": 8000, "end_ms": 12000,
+             "text": "perforation, astride, interior Peritoneum"},
+            {"id": "S-004", "index": 3, "start_ms": 12000, "end_ms": 16000,
+             "text": "recession, near-complet"},
+            {"id": "S-005", "index": 4, "start_ms": 16000, "end_ms": 20000,
+             "text": "e, mesorectal excision"},
+        ]
+        out = refine_segments(segs)
+        joined = " ".join(s["text"] for s in out)
+        self.assertIn("size of tumor 5.2 cm", joined)
+        self.assertIn("near-complete, mesorectal excision", joined)
+
 
 # ===========================================================================
 # 1c. 引擎输出后处理：体征内容归位到体格检查
@@ -827,6 +877,106 @@ class AudioRuleTest(unittest.TestCase):
         res = validate_audio(self.cfg, self._write(make_wav(12)))
         self.assertTrue(res["ok"])
         self.assertGreaterEqual(res["duration_ms"], 11900)
+
+
+# ===========================================================================
+# 2.1 音频预处理（诊断 / 决策 / 时间映射）
+# ===========================================================================
+class AudioPrepTest(unittest.TestCase):
+    def setUp(self):
+        self.tmp = Path(tempfile.mkdtemp(prefix="mshk-prep-test-"))
+        self.cfg = Settings()
+        self.cfg.prep_highpass_hz = 80
+        self.cfg.prep_denoise = "auto"
+        self.cfg.prep_dereverb = "off"
+        self.cfg.prep_vad = True
+        self.cfg.prep_trim_mid = False
+
+    def _wav(self, seconds: float = 6.0, freq: int = 220, amp: int = 9000) -> Path:
+        path = self.tmp / "in.wav"
+        path.write_bytes(make_wav(seconds, freq, amp))
+        return path
+
+    def _ffmpeg_ok(self) -> bool:
+        return Path(self.cfg.ffmpeg).is_file() or bool(shutil.which(self.cfg.ffmpeg))
+
+    def test_probe_reports_format(self):
+        info = audio_prep.probe(self.cfg, self._wav(2))
+        self.assertEqual(info["sample_rate"], 16000)
+        self.assertEqual(info["channels"], 1)
+        self.assertEqual(info["codec"], "pcm_s16le")
+        self.assertAlmostEqual(info["duration_s"], 2.0, delta=0.1)
+
+    def test_measure_returns_loudness_and_silence(self):
+        m = audio_prep.measure(self.cfg, self._wav(6), 6.0)
+        self.assertIsNotNone(m["integrated_lufs"])
+        self.assertGreater(m["peak_dbfs"], -20)
+        self.assertLess(m["silence_ratio"], 0.1)
+        self.assertIn("snr_db_est", m)
+
+    def test_scene_detects_telephone(self):
+        scene = audio_prep.classify_scene(
+            {"sample_rate": 8000, "channels": 1, "codec": "amr_nb", "duration_s": 60},
+            {"snr_db_est": 25, "silence_ratio": 0.1,
+             "speech_segments": 5, "median_speech_segment_s": 3.0},
+        )
+        self.assertEqual(scene["label"], "telephone")
+        self.assertTrue(scene["is_estimate"])
+
+    def test_plan_chunks_trims_head_tail(self):
+        self.cfg.prep_keep_pad_ms = 200
+        chunks, trim = audio_prep._plan_chunks(self.cfg, 10.0, [(1.0, 2.0), (3.0, 4.0)])
+        self.assertEqual(chunks, [(0.8, 4.2)])
+        self.assertTrue(trim["applied"])
+        self.assertEqual(trim["time_map"][0]["orig_start_ms"], 800)
+
+    def test_time_map_round_trip(self):
+        self.cfg.prep_keep_pad_ms = 250
+        _, trim = audio_prep._plan_chunks(self.cfg, 10.0, [(1.0, 2.0), (3.0, 4.0)])
+        mapped = audio_prep.apply_time_map(
+            [{"start_ms": 0, "end_ms": 500}], trim["time_map"]
+        )
+        self.assertEqual(mapped[0]["start_ms"], 750)
+        self.assertEqual(mapped[0]["end_ms"], 1250)
+
+    def test_quiet_audio_skips_denoise(self):
+        filters, decisions = audio_prep._build_pre_chain(
+            self.cfg,
+            {"noise_floor_dbfs": -75, "snr_db_est": 45, "clip_suspect": False},
+            {},
+        )
+        self.assertFalse(any("afftdn" in f for f in filters))
+        steps = {d["step"]: d for d in decisions}
+        self.assertEqual(steps["denoise"]["action"], "off")
+        self.assertTrue(any("highpass" in f for f in filters))
+
+    def test_noisy_audio_enables_denoise(self):
+        filters, _ = audio_prep._build_pre_chain(
+            self.cfg,
+            {"noise_floor_dbfs": -35, "snr_db_est": 12, "clip_suspect": True},
+            {},
+        )
+        self.assertTrue(any("afftdn" in f for f in filters))
+        self.assertLessEqual(self.cfg.prep_denoise_nr, 12)
+
+    @unittest.skipUnless(Path(Settings().ffmpeg).is_file() or shutil.which("ffmpeg"),
+                         "需要 ffmpeg")
+    def test_preprocess_end_to_end(self):
+        src = self._wav(6)
+        dst = self.tmp / "out.wav"
+        report_path = self.tmp / "report.json"
+        report = audio_prep.preprocess(self.cfg, src, dst, report_path)
+
+        self.assertTrue(dst.is_file())
+        self.assertTrue(report_path.is_file())
+        out = audio_prep.probe(self.cfg, dst)
+        self.assertEqual(out["sample_rate"], 16000)
+        self.assertEqual(out["channels"], 1)
+        self.assertEqual(out["codec"], "pcm_s16le")
+        self.assertIn("diagnosis", report)
+        self.assertIn("decisions", report)
+        self.assertIn("delta", report)
+        self.assertGreater(report["output"]["duration_s"], 0)
 
 
 # ===========================================================================
@@ -1132,6 +1282,38 @@ class EndToEndTest(unittest.TestCase):
         status, body = self._req("GET", f"/sessions/{sid}")
         self.assertEqual(status, 404)
         self.assertFalse((self.cfg.audio_dir / f"{sid}.wav").exists())
+
+
+class AsrMappingTest(unittest.TestCase):
+    def test_fixed_language_zero_probability_is_not_low_confidence(self):
+        """显式指定语言时上游返回 probability=0，不能把全部分段判成低置信度。"""
+        from app.asr_client import map_segments
+
+        result = {
+            "language": "en",
+            "language_probability": 0.0,
+            "segments": [
+                {"start": 0.0, "end": 1.5, "text": "Tumour size 3.5 cm, no perforation."},
+                {"start": 1.5, "end": 3.0, "text": "Margins negative."},
+            ],
+        }
+        segs = map_segments(result, threshold=0.6)
+        self.assertEqual(len(segs), 2)
+        for seg in segs:
+            self.assertEqual(seg["confidence"], 1.0)
+            self.assertEqual(seg["confidence_source"], "asr-fixed-language")
+            self.assertFalse(seg["low_confidence"])
+
+    def test_real_low_probability_still_gated(self):
+        from app.asr_client import map_segments
+
+        result = {
+            "language": "zh",
+            "language_probability": 0.4,
+            "segments": [{"start": 0.0, "end": 1.0, "text": "患者反复上腹痛三个月"}],
+        }
+        segs = map_segments(result, threshold=0.6)
+        self.assertTrue(segs[0]["low_confidence"])
 
 
 if __name__ == "__main__":

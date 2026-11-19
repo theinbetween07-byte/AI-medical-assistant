@@ -46,8 +46,15 @@ for _m in SUPPORTED_MODELS:
         LOCAL_MODELS[_m] = str(_candidate)
 
 DEFAULT_MODEL = os.environ.get("WHISPER_MODEL", "small")
-DEVICE = os.environ.get("WHISPER_DEVICE", "cpu")
-COMPUTE_TYPE = os.environ.get("WHISPER_COMPUTE_TYPE", "int8")
+# auto：有可用的 CUDA 就走 GPU（float16），否则 CPU（int8）。
+# 发行版 runtime 自带 nvidia-cublas-cu12 / nvidia-cudnn-cu12，DLL 由 asr.py 注册。
+DEVICE = os.environ.get("WHISPER_DEVICE", "auto")
+COMPUTE_TYPE = os.environ.get("WHISPER_COMPUTE_TYPE", "auto")
+# CPU 推理线程数；0 = 自动（上限 8，全核反而更慢且易触发内存分配失败）
+ASR_CPU_THREADS = int(os.environ.get("WHISPER_CPU_THREADS", "0"))
+# 分块解码长度（秒）。块内开启上下文续写以恢复标点/专名，块间互不影响，
+# 避免长音频开启上下文后续写导致的循环重复与幻觉。
+ASR_CHUNK_SECONDS = int(os.environ.get("WHISPER_CHUNK_SECONDS", "30"))
 
 # ============ 擴展模塊 ============
 EXTENSIONS_ROOT = Path(
@@ -61,8 +68,16 @@ DEFAULT_BEAM_SIZE = 5
 DEFAULT_VAD_FILTER = True
 
 # 醫學術語提示詞（注入 Whisper，提升專有名詞識別率）
-# 注意：粵語書面語常用繁體字，這裡用繁體引導
-INITIAL_PROMPT = (
+# 普通話 / 內地門診：用簡體引導，避免輸出被「繁化」
+INITIAL_PROMPT_ZH = (
+    "以下是一段医生的临床口述记录，内容涉及主诉、现病史、既往史、过敏史、"
+    "个人史、体格检查、辅助检查、诊断、处理计划、处方与随访，可能混用英文医学缩写。"
+    "常见词汇：主诉、现病史、既往史、体格检查、血压、心率、血常规、尿常规、"
+    "心电图 ECG、CT、MRI、慢性胃炎、高血压、糖尿病、冠心病、"
+    "奥美拉唑、阿莫西林、头孢、低脂饮食、规律作息、复诊、随访。"
+)
+# 粵語（香港醫療場景）：繁體引導，並給出粵語常用字
+INITIAL_PROMPT_YUE = (
     "以下是一段香港醫生的臨床口述記錄，內容涉及問診、查體、診斷、處方、"
     "檢驗檢查、影像所見等。可能混合使用粵語、普通話及英文醫學術語。"
     "常見醫學詞彙：心電圖 ECG、CT scan、MRI、血壓 hypertension、"
@@ -72,6 +87,8 @@ INITIAL_PROMPT = (
     "外科 surgery、兒科 paediatrics、婦產科 O&G、急症科 A&E。"
     "粵語常用字：睇、嘅、喺、咁、冇、咩、畀、攞、醫生、醫院。"
 )
+# 兼容舊引用；自動識別時按普通話處理
+INITIAL_PROMPT = INITIAL_PROMPT_ZH
 
 # ============ 服務 ============
 HOST = os.environ.get("HOST", "0.0.0.0")

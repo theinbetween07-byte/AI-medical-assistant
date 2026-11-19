@@ -12,6 +12,7 @@ ASR 服務 - 封裝 faster-whisper
 import gc
 import os
 import subprocess
+import sys
 import threading
 import time
 from pathlib import Path
@@ -20,6 +21,8 @@ from typing import Optional
 from loguru import logger
 
 from app.config import (
+    ASR_CHUNK_SECONDS,
+    ASR_CPU_THREADS,
     COMPUTE_TYPE,
     DEFAULT_BEAM_SIZE,
     DEFAULT_LANGUAGE,
@@ -27,12 +30,75 @@ from app.config import (
     DEFAULT_VAD_FILTER,
     DEVICE,
     FFMPEG_PATH,
-    INITIAL_PROMPT,
+    INITIAL_PROMPT_YUE,
+    INITIAL_PROMPT_ZH,
     LOCAL_MODELS,
     MODEL_CACHE_DIR,
     SUPPORTED_MODELS,
     validate_audio_filename,
 )
+
+
+# ============ 運行設備選擇 ============
+_DLL_HANDLES: list = []
+_RUNTIME_CACHE: Optional[tuple[str, str]] = None
+
+
+def _register_cuda_dlls() -> None:
+    """把 runtime 内 nvidia 包的 DLL 目錄加入 Windows 搜索路徑。
+
+    ctranslate2 不會自動找 site-packages/nvidia/*/bin；未註冊時即使有 GPU，
+    加載也會報 "cublas64_12.dll is not found"，只能退回 CPU。
+    """
+    if _DLL_HANDLES:
+        return
+    base = Path(sys.prefix) / "Lib" / "site-packages" / "nvidia"
+    if not base.exists():
+        return
+    for name in ("cublas", "cudnn", "cuda_nvrtc", "cuda_runtime"):
+        binp = base / name / "bin"
+        if not binp.exists():
+            continue
+        try:
+            _DLL_HANDLES.append(os.add_dll_directory(str(binp)))
+        except (AttributeError, OSError):
+            pass
+        os.environ["PATH"] = str(binp) + os.pathsep + os.environ.get("PATH", "")
+
+
+def _pick_runtime() -> tuple[str, str]:
+    want_device = (DEVICE or "auto").strip().lower()
+    want_compute = (COMPUTE_TYPE or "auto").strip().lower()
+    cpu_compute = "int8" if want_compute == "auto" else want_compute
+    if want_device == "cpu":
+        return "cpu", cpu_compute
+    _register_cuda_dlls()
+    cuda_count = 0
+    try:
+        import ctranslate2
+
+        cuda_count = int(ctranslate2.get_cuda_device_count())
+    except Exception as exc:  # 無驅動 / 無 CUDA runtime
+        logger.warning(f"[ASR] CUDA 偵測失敗，使用 CPU：{exc}")
+    if want_device == "cuda" or cuda_count > 0:
+        if cuda_count > 0:
+            return "cuda", ("float16" if want_compute == "auto" else want_compute)
+    return "cpu", cpu_compute
+
+
+def resolve_runtime() -> tuple[str, str]:
+    """(device, compute_type)，結果緩存；GPU 加載失敗時會改寫為 CPU。"""
+    global _RUNTIME_CACHE
+    if _RUNTIME_CACHE is None:
+        _RUNTIME_CACHE = _pick_runtime()
+    return _RUNTIME_CACHE
+
+
+def _cpu_threads() -> int:
+    """CPU 線程數：全核（24）反而更慢，且 int8 大模型易 mkl_malloc 失敗。"""
+    if ASR_CPU_THREADS > 0:
+        return ASR_CPU_THREADS
+    return max(1, min(8, os.cpu_count() or 4))
 
 
 class ASRService:
@@ -54,6 +120,8 @@ class ASRService:
         self.current_model_size: Optional[str] = None
         self.engine = "whisper"
         self.caps = None
+        self.device = "cpu"
+        self.compute_type = "int8"
         # 切换模型会把 self.model 置空再重新加载；与并发转写/预热互斥，避免拿到 None。
         self._lock = threading.RLock()
         self._initialized = True
@@ -89,17 +157,49 @@ class ASRService:
             f"[ASR] 加載模型 {model_size}（source={source}, path={path}）"
         )
         start = time.time()
-        self.model = WhisperModel(
-            path,
-            device=DEVICE,
-            compute_type=COMPUTE_TYPE,
-            download_root=str(MODEL_CACHE_DIR),
-            local_files_only=True,  # 發行版：只用隨包模型，不觸發下載
-        )
+        device, compute = resolve_runtime()
+        threads = _cpu_threads()
+
+        def _open(dev: str, ctype: str):
+            return WhisperModel(
+                path,
+                device=dev,
+                compute_type=ctype,
+                cpu_threads=threads,
+                download_root=str(MODEL_CACHE_DIR),
+                local_files_only=True,  # 發行版：只用隨包模型，不觸發下載
+            )
+
+        try:
+            self.model = _open(device, compute)
+        except Exception as exc:
+            if device != "cuda":
+                raise RuntimeError(
+                    f"模型 {model_size} 加載失敗（{type(exc).__name__}: {exc}）。"
+                    "若提示內存不足，請改用 small 或 medium 模型。"
+                ) from exc
+            # 顯存不足 / 驅動不匹配：退回 CPU，保證可用
+            logger.warning(f"[ASR] GPU 加載 {model_size} 失敗，回退 CPU：{exc}")
+            global _RUNTIME_CACHE
+            _RUNTIME_CACHE = ("cpu", "int8")
+            device, compute = "cpu", "int8"
+            try:
+                self.model = _open(device, compute)
+            except Exception as cpu_exc:
+                raise RuntimeError(
+                    f"模型 {model_size} 加載失敗（GPU 與 CPU 均不可用）。"
+                    f"CPU 錯誤：{type(cpu_exc).__name__}: {cpu_exc}。"
+                    "若提示內存不足，請改用 small 或 medium 模型。"
+                ) from cpu_exc
+
+        self.device, self.compute_type = device, compute
         self.current_model_size = model_size
         self.engine = "whisper"
         elapsed = time.time() - start
-        logger.success(f"[ASR] 模型 {model_size} 加載完成，耗時 {elapsed:.1f}s")
+        logger.success(
+            f"[ASR] 模型 {model_size} 加載完成，耗時 {elapsed:.1f}s"
+            f"（{device}/{compute}{f', cpu_threads={threads}' if device == 'cpu' else ''}）"
+        )
 
     def ensure_loaded(self) -> None:
         """確保已加載默認模型（首次調用時）"""
@@ -213,6 +313,113 @@ class ASRService:
             raise RuntimeError("ffmpeg 轉碼後未生成輸出文件")
         return output_path
 
+    # ============ 分块解碼 ============
+    def _decode_all(self, model, wav_path, language, prompt, beam_size, emit) -> dict:
+        """按 ASR_CHUNK_SECONDS 分塊解碼，塊內開上下文續寫。
+
+        為什麼分塊：condition_on_previous_text 能讓標點與專名明顯更準，
+        但整段長音頻開啟它會循環重複/幻覺（實測 289s 音頻把「門診接診記錄」
+        連續輸出 7 次並夾雜亂碼）。切 30s 小塊後，塊內有上下文、塊間互不影響：
+        289s 音頻內容完整無重複，耗時 21.2s（整段解碼 21.3s），逗號/句號恢復，
+        「血常規未見異常」也從誤識別回歸正確。
+        """
+        import wave
+
+        with wave.open(wav_path, "rb") as w:
+            sr = w.getframerate()
+            nch = w.getnchannels()
+            sampwidth = w.getsampwidth()
+            raw = w.readframes(w.getnframes())
+
+        try:
+            import numpy as np
+        except Exception:  # 沒有 numpy 時退回整段解碼
+            np = None
+
+        logger.info(
+            f"[ASR] WAV 格式：sr={sr}, channels={nch}, sampwidth={sampwidth}, "
+            f"numpy={'yes' if np is not None else 'no'}"
+        )
+        if np is None or sr != 16000 or nch != 1 or sampwidth != 2:
+            logger.warning("[ASR] WAV 格式不符合分塊條件，退回整段解碼")
+            segments, texts = [], []
+            segs, info = model.transcribe(
+                wav_path,
+                language=None if language in (None, "", "auto") else language,
+                initial_prompt=prompt,
+                beam_size=beam_size,
+                vad_filter=True,
+                word_timestamps=False,
+                condition_on_previous_text=False,
+            )
+            for s in segs:
+                segments.append({
+                    "id": len(segments),
+                    "start": round(float(s.start), 2),
+                    "end": round(float(s.end), 2),
+                    "text": s.text.strip(),
+                })
+                texts.append(s.text.strip())
+            return {
+                "segments": segments,
+                "texts": texts,
+                "duration": float(getattr(info, "duration", 0.0) or 0.0),
+                "language": info.language,
+                "language_probability": info.language_probability,
+            }
+
+        audio = np.frombuffer(raw, dtype=np.int16).astype("float32") / 32768.0
+        total = len(audio) / float(sr)
+        step = max(1, int(sr * max(5, ASR_CHUNK_SECONDS)))
+        chunk_count = (len(audio) + step - 1) // step
+        logger.info(
+            f"[ASR] 分塊解碼：{total:.1f}s，塊長 {ASR_CHUNK_SECONDS}s，共 {chunk_count} 塊"
+        )
+        lang = language
+        segments, texts = [], []
+        language_out = language or "zh"
+        probability_out = 0.0
+        offset = 0.0
+        last_emit = 0.0
+        for start in range(0, len(audio), step):
+            chunk = audio[start:start + step]
+            segs, info = model.transcribe(
+                chunk,
+                language=None if lang in (None, "", "auto") else lang,
+                initial_prompt=prompt,
+                beam_size=beam_size,
+                vad_filter=False,
+                word_timestamps=False,
+                condition_on_previous_text=True,
+                repetition_penalty=1.1,
+            )
+            if lang in (None, "", "auto"):
+                lang = info.language
+                language_out = info.language
+                probability_out = info.language_probability
+            for s in segs:
+                end_abs = offset + float(s.end)
+                segments.append({
+                    "id": len(segments),
+                    "start": round(offset + float(s.start), 2),
+                    "end": round(end_abs, 2),
+                    "text": s.text.strip(),
+                })
+                texts.append(s.text.strip())
+                now = time.time()
+                if total > 0 and now - last_emit >= 0.25:
+                    last_emit = now
+                    emit(0.16 + 0.80 * min(max(end_abs / total, 0.0), 1.0), "decode",
+                         {"processed": round(end_abs, 1), "total": round(total, 1)})
+            offset += len(chunk) / float(sr)
+        return {
+            "segments": segments,
+            "texts": texts,
+            "duration": total,
+            "language": language_out,
+            "language_probability": probability_out,
+        }
+
     # ============ 轉寫 ============
     def transcribe(
         self,
@@ -276,53 +483,34 @@ class ASRService:
 
             # 中文術語提示詞只對中文 / 粵語有效。指定其他語言時再帶上它，
             # 會把解碼結果重新拉回中文（實測指定 en 仍輸出中文），因此按語言取捨。
-            prompt = INITIAL_PROMPT if effective_lang in (None, "zh", "yue") else None
+            if effective_lang == "yue":
+                prompt = INITIAL_PROMPT_YUE
+            elif effective_lang in (None, "zh"):
+                prompt = INITIAL_PROMPT_ZH
+            else:
+                prompt = None
 
             t1 = time.time()
             emit(0.14, "decode")
-            segments_iter, info = model.transcribe(
-                wav_path,
-                language=effective_lang,
-                initial_prompt=prompt,
-                beam_size=beam_size,
-                vad_filter=vad_filter,
-                word_timestamps=True,
-                condition_on_previous_text=True,
+            decoded = self._decode_all(
+                model, wav_path, effective_lang, prompt, beam_size, emit
             )
-            total = float(getattr(info, "duration", 0.0) or 0.0)
-            emit(0.16, "decode", {"processed": 0.0, "total": total})
-            segments = []
-            text_parts = []
-            last_emit = 0.0
-            for seg in segments_iter:
-                seg_data = {
-                    "id": seg.id,
-                    "start": round(seg.start, 2),
-                    "end": round(seg.end, 2),
-                    "text": seg.text.strip(),
-                }
-                segments.append(seg_data)
-                text_parts.append(seg.text.strip())
-                # 按已識別音頻時長推進進度；節流到 ~4 次/秒，避免過度寫狀態
-                now = time.time()
-                if now - last_emit >= 0.25:
-                    last_emit = now
-                    ratio = (float(seg.end) / total) if total > 0 else 0.0
-                    emit(0.16 + 0.80 * min(max(ratio, 0.0), 1.0), "decode",
-                         {"processed": round(float(seg.end), 1), "total": round(total, 1)})
+            segments = decoded["segments"]
+            text_parts = decoded["texts"]
+            total = decoded["duration"]
             emit(0.96, "finalize", {"processed": round(total, 1), "total": round(total, 1)})
             t_transcribe = time.time() - t1
             emit(1.0, "finalize", {"processed": round(total, 1), "total": round(total, 1)})
             logger.info(
                 f"[ASR] 轉寫完成：{len(segments)} 段，"
-                f"音頻 {info.duration:.1f}s，耗時 {t_transcribe:.1f}s，"
-                f"語言={info.language}（概率 {info.language_probability:.2f}）"
+                f"音頻 {total:.1f}s，耗時 {t_transcribe:.1f}s，"
+                f"語言={decoded['language']}（概率 {decoded['language_probability']:.2f}）"
             )
 
             return {
-                "language": info.language,
-                "language_probability": round(info.language_probability, 4),
-                "duration": round(info.duration, 2),
+                "language": decoded["language"],
+                "language_probability": round(decoded["language_probability"], 4),
+                "duration": round(total, 2),
                 "text": "\n".join(text_parts),
                 "segments": segments,
                 "elapsed": round(t_transcribe, 2),

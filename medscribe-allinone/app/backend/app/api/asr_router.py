@@ -15,7 +15,7 @@ import time
 import uuid
 from typing import Optional
 
-from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile
+from fastapi import APIRouter, Depends, File, Form, Header, HTTPException, UploadFile
 from loguru import logger
 
 from app import db
@@ -23,7 +23,7 @@ from app.auth import get_current_user
 from app.config import BASE_DIR, LOCAL_MODELS, SUPPORTED_MODELS
 from app.models import HealthResponse, TranscribeResponse
 from app.services import extensions
-from app.services.asr import get_asr_service
+from app.services.asr import get_asr_service, resolve_runtime
 
 
 router = APIRouter(prefix="", tags=["ASR"])
@@ -37,8 +37,8 @@ async def health():
     return HealthResponse(
         ok=True,
         model=asr.current_model_size or os.environ.get("WHISPER_MODEL", "small"),
-        device=os.environ.get("WHISPER_DEVICE", "cpu"),
-        compute_type=os.environ.get("WHISPER_COMPUTE_TYPE", "int8"),
+        device=resolve_runtime()[0],
+        compute_type=resolve_runtime()[1],
         model_loaded=asr.model is not None,
         root=str(BASE_DIR),
     )
@@ -186,6 +186,10 @@ def transcribe(
 _JOBS: dict[str, dict] = {}
 _JOBS_LOCK = threading.Lock()
 _JOB_TTL_S = 1800
+# 冪等鍵：集成層讀響應超時/被重置時會重發同一個 POST 任務請求，
+# 沒有去重會把同一段音頻重複轉寫（實測 ×3，耗時直接翻三倍）。
+_IDEMPOTENCY: dict[str, dict] = {}
+_IDEMPOTENCY_TTL_S = 300
 # faster-whisper 的模型实例不是线程安全的：并发解码会串扰上下文，
 # 实测会退化成重复的占位符号。这里强制串行，同一时刻只跑一个转写。
 _DECODE_LOCK = threading.Lock()
@@ -276,6 +280,7 @@ async def create_transcribe_job(
     template: str = Form(default="discharge_summary"),
     language: Optional[str] = Form(default="auto"),
     beam_size: int = Form(default=5),
+    idempotency_key: Optional[str] = Header(default=None, alias="X-Idempotency-Key"),
     user=Depends(get_current_user),
 ):
     """上傳音頻後立即返回 job_id，轉寫在後台線程執行。"""
@@ -286,6 +291,25 @@ async def create_transcribe_job(
         raise HTTPException(400, "上傳文件為空")
     if len(content) > 50 * 1024 * 1024:
         raise HTTPException(413, "文件超過 50MB 限制")
+
+    if idempotency_key:
+        _job_sweep()
+        now = time.time()
+        with _JOBS_LOCK:
+            stale = [
+                k for k, v in _IDEMPOTENCY.items()
+                if now - v.get("ts", now) > _IDEMPOTENCY_TTL_S
+            ]
+            for k in stale:
+                _IDEMPOTENCY.pop(k, None)
+            hit = _IDEMPOTENCY.get(idempotency_key)
+            if hit and hit.get("job_id") in _JOBS:
+                reused = _JOBS[hit["job_id"]]
+                logger.info(
+                    f"[API] 重複提交（idempotency={idempotency_key[:8]}），"
+                    f"復用任務 {hit['job_id']}"
+                )
+                return {"job_id": hit["job_id"], "status": reused.get("status", "running")}
 
     tmp = tempfile.NamedTemporaryFile(delete=False, suffix=suffix)
     tmp_path = tmp.name
@@ -318,6 +342,9 @@ async def create_transcribe_job(
         daemon=True,
         name=f"asr-job-{job_id[:8]}",
     ).start()
+    if idempotency_key:
+        with _JOBS_LOCK:
+            _IDEMPOTENCY[idempotency_key] = {"job_id": job_id, "ts": time.time()}
     return {"job_id": job_id, "status": "running"}
 
 

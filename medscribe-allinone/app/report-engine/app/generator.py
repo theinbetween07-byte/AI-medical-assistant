@@ -105,10 +105,13 @@ def _prefix_owner(
     best: tuple[int, int, str, str] | None = None
     for template_field in ordered:
         for prefix in _label_parts(template_field):
+            # 分隔符必须是显式的冒号/系动词。不能是可选的，否则
+            # "tumor size 6 cm" 会被剥成 "6 cm"、"lymphatic and venous
+            # invasion absent" 会被剥成 "absent"，字段值丢失关键上下文。
             pattern = re.compile(
                 r"^"
                 + re.escape(prefix)
-                + r"\s*\.?\s*(?::|：|is|was|were|are|of)?\s*(?P<value>.*\S)\s*$",
+                + r"\s*\.?\s*(?::|：|is|was|were|are|為|为)\s*(?P<value>.*\S)\s*$",
                 re.IGNORECASE | re.DOTALL,
             )
             match = pattern.match(raw)
@@ -369,6 +372,17 @@ def generate_report(
             + "、".join(e.id for e in unclaimed)
         )
     warnings.extend(compose_notes)
+
+    # 全空不是"正常留白"：多数情况是模板与口述科室不匹配（如病理标本用了
+    # 门诊模板），或转写文本无法归类。必须给出可操作提示，而不是让用户
+    # 对着一屏"未提及"自己猜（实测报障点）。
+    filled = [f for f in fields if f.ai_value and f.ai_value != PLACEHOLDER_MISSING]
+    if elements and not filled:
+        warnings.append(
+            "所有字段均为「未提及」：口述内容没有落入当前模板的任何字段。"
+            "请先确认模板选择（病理标本/会诊录音应选择病理报告模板），"
+            "再检查转写文本是否完整、是否选对了识别语言。"
+        )
 
     return GeneratedReport(
         id=f"RPT-{uuid.uuid4().hex[:12]}",
