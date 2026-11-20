@@ -15,6 +15,7 @@ from __future__ import annotations
 import json
 import re
 from dataclasses import dataclass, field
+from functools import lru_cache
 from pathlib import Path
 
 from .schemas import ClinicalElement, ElementType, SourceSpan, TranscriptSegment
@@ -27,6 +28,61 @@ SENTENCE_RE = re.compile(
 LOW_CONFIDENCE_THRESHOLD = 0.6
 SECTIONS: tuple[ElementType, ...] = ("S", "O", "A", "P")
 
+_CJK_RE = re.compile(r"[\u3400-\u4dbf\u4e00-\u9fff]")
+
+# 叙述性时间词：句子在讲"今天来过/刚刚发生"，不是计划。
+_NARRATIVE_TIME = (
+    "今日", "今天", "昨日", "昨天", "今次", "這次", "这次", "頭先", "头先",
+    "啱啱", "剛剛", "刚刚",
+)
+# 计划性时间/意图词：出现即说明句子在安排将来，不做降级。
+_PLAN_TIME = (
+    "後", "后", "下次", "next", "明天", "明日", "開始", "开始", "start",
+    "安排", "預約", "预约",
+)
+
+
+def _narrative_plan_guard(text: str, best: str) -> str | None:
+    """把「病人今日覆診」这类叙述句从计划里拉回来。
+
+    "覆診" 同时是计划标记词和叙述词：只凭它判定计划，会把「病人今日返嚟覆診」
+    整句塞进处理计划字段（v1.0.3 评测 soap-04 实测）。判据是时间指向：
+    有"今日/昨日/剛剛"且没有"後/下次/安排"时，这是已发生的就诊，不是计划。
+    """
+    if best != "P":
+        return None
+    if any(cue in text for cue in _PLAN_TIME):
+        return None
+    if any(cue in text for cue in _NARRATIVE_TIME):
+        return "S"
+    return None
+
+
+@lru_cache(maxsize=4096)
+def _ascii_pattern(needle: str) -> re.Pattern | None:
+    """ASCII 词表项编译成带词边界的正则；中文项返回 None（走子串匹配）。
+
+    为什么需要词边界：纯子串匹配会让 practice 命中 ct、positive 命中 po、
+    labour 命中 lab、abdominal 命中 BD，把「阳性发现」判成「处理计划」。
+    边界只排除字母，不排除数字，保证 "5mg" 仍能命中单位 mg。
+    多词短语内部允许空格或连字符，兼容 follow up / follow-up 两种写法。
+    """
+    if _CJK_RE.search(needle):
+        return None
+    body = re.escape(needle).replace(r"\ ", r"[\s\-]+")
+    return re.compile(rf"(?<![a-z]){body}(?![a-z])", re.IGNORECASE)
+
+
+def _matches(haystack: str, needle: str) -> bool:
+    """统一匹配口径：中文子串，ASCII 词边界。haystack 需为小写。"""
+    if not needle:
+        return False
+    pattern = _ascii_pattern(needle)
+    if pattern is None:
+        return needle in haystack
+    return pattern.search(haystack) is not None
+
+
 _DEFAULT_RULES: dict = {
     "markers": {"S": ["主訴", "主诉", "history"], "O": ["檢查", "检查", "examination"],
                 "A": ["診斷", "诊断", "diagnosis"], "P": ["計劃", "计划", "plan"]},
@@ -34,6 +90,21 @@ _DEFAULT_RULES: dict = {
                  "A": {"diagnosis": 1.5}, "P": {"mg": 1.5, "follow up": 1.2}},
     "thresholds": {"assign_min_score": 1.0},
 }
+
+
+def _marker_bonus(thresholds: dict) -> float:
+    """读取标记词加权：以 marker_bonus 为准，兼容早期配置里的 marker_score。
+
+    v1.0.2 的 extraction_rules.json 写的是 marker_score，代码读 marker_bonus，
+    配置项因此静默失效、一直用默认值。这里两个键都接受，避免再次出现"改了没生效"。
+    """
+    for key in ("marker_bonus", "marker_score"):
+        if key in thresholds:
+            try:
+                return float(thresholds[key])
+            except (TypeError, ValueError):
+                break
+    return 1.6
 
 
 @dataclass
@@ -70,7 +141,7 @@ class ExtractionRules:
             markers=markers,
             keywords=keywords,
             assign_min_score=float(thresholds.get("assign_min_score", 1.0)),
-            marker_bonus=float(thresholds.get("marker_bonus", 1.6)),
+            marker_bonus=_marker_bonus(thresholds),
             version=data.get("version", ""),
         )
 
@@ -123,10 +194,10 @@ def classify(sentence: Sentence, rules: ExtractionRules) -> tuple[ElementType, f
     scores: dict[str, float] = {s: 0.0 for s in SECTIONS}
     matched: list[str] = []
 
-    # 章节标记词：最长命中优先，避免 "檢查" 与 "報告" 同时命中时的歧义
+    # 章节标记词：每个 section 只加一次，命中即停
     for section, markers in rules.markers.items():
         for marker in markers:
-            if marker and marker in haystack:
+            if _matches(haystack, marker):
                 scores[section] = scores.get(section, 0.0) + rules.marker_bonus
                 matched.append(f"marker:{marker}")
                 break
@@ -134,7 +205,7 @@ def classify(sentence: Sentence, rules: ExtractionRules) -> tuple[ElementType, f
     # 关键词打分
     for section, table in rules.keywords.items():
         for keyword, weight in table.items():
-            if keyword and keyword in haystack:
+            if _matches(haystack, keyword):
                 scores[section] = scores.get(section, 0.0) + weight
                 matched.append(f"kw:{keyword}")
 
@@ -143,6 +214,9 @@ def classify(sentence: Sentence, rules: ExtractionRules) -> tuple[ElementType, f
     best = max(SECTIONS, key=lambda s: scores.get(s, 0.0))
     if scores.get(best, 0.0) < rules.assign_min_score:
         return "uncategorized", scores.get(best, 0.0), matched
+    guarded = _narrative_plan_guard(sentence.text, best)
+    if guarded:
+        return guarded, scores.get(best, 0.0), matched + ["guard:narrative_past"]
     return best, scores.get(best, 0.0), matched
 
 

@@ -1,0 +1,292 @@
+{
+  "version": "2026-11-20",
+  "description": "字段级评测语料（合成数据，非真实病例）。gold 为字段值必须包含的片段；expect_missing 为必须保持「未提及」的字段。",
+  "cases": [
+    {
+      "id": "path-01",
+      "template": "pathology_colorectal",
+      "segments": [
+        "Case No.: SP-2026-0101.",
+        "Tumour site: caecum.",
+        "Operative procedure: right hemicolectomy.",
+        "Histological tumour type: adenocarcinoma.",
+        "Histological tumour grade: well differentiated.",
+        "Tumour dimension: 4.0 x 3.0 x 2.0 cm.",
+        "Perforation: not identified.",
+        "Relation of tumour to anterior peritoneal reflection: not applicable.",
+        "Plane of mesorectal excision: not applicable.",
+        "Extent of invasion: tumour invades into subserosa.",
+        "Lymphatic and venous invasion: not identified.",
+        "Perineural invasion: absent.",
+        "Lymph node status: 0 out of 18 lymph nodes show metastatic carcinoma.",
+        "Tumour deposits: absent.",
+        "Proximal margin: free of tumour, 9.0 cm from tumour.",
+        "Distal margin: free of tumour, 7.5 cm from tumour.",
+        "Circumferential margin: free of tumour, 3.0 cm.",
+        "Macroscopic examination.",
+        "The specimen consists of a segment of ascending colon measuring 22 cm.",
+        "A fungating tumour is seen 9 cm from the proximal margin.",
+        "Microscopic examination.",
+        "Sections show well differentiated adenocarcinoma invading into the subserosa.",
+        "No lymphovascular or perineural invasion is identified.",
+        "Diagnosis."
+      ],
+      "gold": {
+        "tumour_site": ["caecum"],
+        "operative_procedure": ["right hemicolectomy"],
+        "tumour_grade": ["well differentiated"],
+        "extent_of_invasion": ["invades into subserosa"],
+        "lymph_node_status": ["0 out of 18"],
+        "proximal_margin": ["9.0 cm"],
+        "macroscopic_examination": ["ascending colon", "fungating tumour"],
+        "microscopic_examination": ["well differentiated adenocarcinoma", "No lymphovascular"],
+        "diagnosis": ["caecum", "well differentiated"]
+      },
+      "expect_missing": []
+    },
+    {
+      "id": "path-02",
+      "template": "pathology_colorectal",
+      "segments": [
+        "Case No.: SP-2026-0202.",
+        "Tumour site: rectum.",
+        "Operative procedure: low anterior resection.",
+        "Histological tumour type: adenocarcinoma.",
+        "Histological tumour grade: moderately differentiated.",
+        "Tumour dimension: 5.0 x 4.0 x 3.0 cm.",
+        "Perforation: not identified.",
+        "Relation of tumour to anterior peritoneal reflection: involved.",
+        "Plane of mesorectal excision: complete.",
+        "Extent of invasion: tumour invades through muscularis propria into perirectal fat.",
+        "Lymphatic and venous invasion: present.",
+        "Perineural invasion: present.",
+        "Lymph node status: 3 out of 14 lymph nodes show metastatic carcinoma.",
+        "Tumour deposits: present.",
+        "Proximal margin: free of tumour, 8.0 cm from tumour.",
+        "Distal margin: free of tumour, 2.5 cm from tumour.",
+        "Circumferential margin: free of tumour, 1.5 cm.",
+        "Macroscopic examination.",
+        "The specimen is a segment of rectum measuring 20 cm.",
+        "Microscopic examination.",
+        "Sections show moderately differentiated adenocarcinoma invading into perirectal fat.",
+        "Lymphovascular invasion is present.",
+        "Diagnosis."
+      ],
+      "gold": {
+        "tumour_site": ["rectum"],
+        "mesorectal_excision_plane": ["complete"],
+        "extent_of_invasion": ["perirectal fat"],
+        "lymph_node_status": ["3 out of 14"],
+        "distal_margin": ["2.5 cm"],
+        "macroscopic_examination": ["segment of rectum"],
+        "microscopic_examination": ["Sections show"],
+        "lymphovascular_invasion": ["present"]
+      },
+      "expect_missing": []
+    },
+    {
+      "id": "path-03",
+      "template": "pathology_colorectal",
+      "segments": [
+        "Macroscopic examination.",
+        "The specimen consists of a right hemicolectomy specimen measuring 25 cm.",
+        "A caecal tumour measuring 6 cm is identified.",
+        "Microscopic examination.",
+        "Sections show a mucinous adenocarcinoma invading the muscularis propria.",
+        "Background mucosa shows tubular adenoma."
+      ],
+      "gold": {
+        "macroscopic_examination": ["caecal tumour"],
+        "microscopic_examination": ["mucinous adenocarcinoma", "tubular adenoma"]
+      },
+      "expect_missing": [
+        "tumour_site",
+        "operative_procedure",
+        "lymph_node_status",
+        "distal_margin",
+        "proximal_margin"
+      ]
+    },
+    {
+      "id": "path-04",
+      "template": "pathology_colorectal",
+      "segments": [
+        "Tumour site: sigmoid colon.",
+        "Operative procedure: sigmoid colectomy.",
+        "Histological tumour type: adenocarcinoma.",
+        "Histological tumour grade: poorly differentiated.",
+        "Extent of invasion: tumour invades into subserosa.",
+        "Diagnosis: poorly differentiated adenocarcinoma of the sigmoid colon, invading subserosa."
+      ],
+      "gold": {
+        "tumour_site": ["sigmoid colon"],
+        "diagnosis": ["poorly differentiated adenocarcinoma of the sigmoid colon"]
+      },
+      "expect_missing": ["lymph_node_status"]
+    },
+    {
+      "id": "path-05",
+      "template": "pathology_colorectal",
+      "segments": [
+        "肿瘤部位：乙状结肠。",
+        "手术方式：腹腔镜前切除术。",
+        "组织学类型：腺癌。",
+        "组织学分级：中分化。",
+        "肿瘤大小：3.0 x 2.0 x 1.5 cm。",
+        "浸润深度：浸润至浆膜下层。",
+        "淋巴结状态：16 枚淋巴结中 2 枚见转移癌。",
+        "近端切缘：未见肿瘤，距肿瘤 5.0 cm。",
+        "远端切缘：未见肿瘤。",
+        "环周切缘：未见肿瘤，1.0 cm。",
+        "镜下检查。",
+        "镜下见中分化腺癌，浸润至浆膜下层。",
+        "诊断。"
+      ],
+      "gold": {
+        "tumour_site": ["乙状结肠"],
+        "operative_procedure": ["腹腔镜前切除术"],
+        "extent_of_invasion": ["浆膜下层"],
+        "lymph_node_status": ["16 枚淋巴结"],
+        "proximal_margin": ["5.0 cm"],
+        "microscopic_examination": ["中分化腺癌"]
+      },
+      "expect_missing": ["perforation"]
+    },
+    {
+      "id": "path-06",
+      "template": "pathology_colorectal",
+      "segments": [
+        "Tumour site transverse colon.",
+        "Tumour size 5.5 cm.",
+        "Perforation not identified."
+      ],
+      "gold": {
+        "tumour_site": ["transverse colon"],
+        "tumour_dimension": ["5.5 cm"],
+        "perforation": ["not identified"]
+      },
+      "expect_missing": ["case_number", "diagnosis"]
+    },
+    {
+      "id": "path-07",
+      "template": "pathology_colorectal",
+      "segments": [
+        "Macroscopic examination: the specimen measures 18 cm.",
+        "Microscopic examination: sections show adenocarcinoma.",
+        "Diagnosis."
+      ],
+      "gold": {
+        "macroscopic_examination": ["18 cm"],
+        "microscopic_examination": ["sections show adenocarcinoma"]
+      },
+      "expect_missing": ["tumour_site"]
+    },
+    {
+      "id": "soap-01",
+      "template": "general_soap",
+      "segments": [
+        "Chief complaint: sore throat for three days.",
+        "On examination, blood pressure 130 over 80, temperature 37.2.",
+        "Throat is erythematous.",
+        "No known drug allergy.",
+        "Impression is viral pharyngitis.",
+        "Advise rest and hydration, follow up in one week."
+      ],
+      "gold": {
+        "chief_complaint": ["sore throat"],
+        "physical_examination": ["130 over 80", "Throat is erythematous"],
+        "allergy_history": ["No known drug allergy"],
+        "assessment": ["viral pharyngitis"],
+        "plan": ["Advise rest"]
+      },
+      "expect_missing": ["investigations", "medications"]
+    },
+    {
+      "id": "soap-02",
+      "template": "general_soap",
+      "segments": [
+        "病人講喉嚨痛，痛咗三日。",
+        "佢話有咳，無發燒。",
+        "檢查：血壓 128 over 76，體溫 36.8。",
+        "冇藥物敏感。",
+        "診斷：上呼吸道感染。",
+        "建議多休息，一星期後覆診。"
+      ],
+      "gold": {
+        "chief_complaint": ["喉嚨痛"],
+        "history_of_present_illness": ["有咳"],
+        "physical_examination": ["128 over 76"],
+        "assessment": ["上呼吸道感染"],
+        "plan": ["一星期後覆診"]
+      },
+      "expect_missing": ["medications"]
+    },
+    {
+      "id": "soap-03",
+      "template": "general_soap",
+      "segments": [
+        "主訴：頭痛兩日。",
+        "計劃：處方止痛藥，三日後覆診。"
+      ],
+      "gold": {
+        "chief_complaint": ["頭痛兩日"],
+        "plan": ["三日後覆診"]
+      },
+      "expect_missing": ["investigations", "history_of_present_illness", "allergy_history"]
+    },
+    {
+      "id": "soap-04",
+      "template": "general_soap",
+      "segments": [
+        "病人今日覆診。",
+        "檢查：血壓 150 over 90。",
+        "雙腳有水腫。",
+        "抽血報告顯示腎功能正常。"
+      ],
+      "gold": {
+        "history_of_present_illness": ["病人今日覆診"],
+        "physical_examination": ["150 over 90", "雙腳有水腫"],
+        "investigations": ["腎功能正常"]
+      },
+      "expect_missing": ["medications"]
+    },
+    {
+      "id": "soap-05",
+      "template": "general_soap",
+      "segments": [
+        "Vitals: BP 118/72, pulse 70, SpO2 98 percent.",
+        "Blood test shows Hb 10.5 and MCV 78."
+      ],
+      "gold": {
+        "physical_examination": ["118/72"],
+        "investigations": ["Hb 10.5"]
+      },
+      "expect_missing": ["allergy_history"]
+    },
+    {
+      "id": "soap-06",
+      "template": "general_soap",
+      "segments": [
+        "Patient has penicillin allergy.",
+        "He is not allergic to aspirin."
+      ],
+      "gold": {
+        "allergy_history": ["penicillin allergy", "not allergic to aspirin"]
+      },
+      "expect_missing": ["assessment"]
+    },
+    {
+      "id": "soap-07",
+      "template": "general_soap",
+      "segments": [
+        "Past history of diabetes mellitus.",
+        "Current medications include metformin 500 mg twice daily."
+      ],
+      "gold": {
+        "past_medical_history": ["diabetes mellitus"],
+        "medications": ["metformin 500 mg"]
+      },
+      "expect_missing": ["chief_complaint"]
+    }
+  ]
+}

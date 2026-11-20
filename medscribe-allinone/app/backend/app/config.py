@@ -55,6 +55,9 @@ ASR_CPU_THREADS = int(os.environ.get("WHISPER_CPU_THREADS", "0"))
 # 分块解码长度（秒）。块内开启上下文续写以恢复标点/专名，块间互不影响，
 # 避免长音频开启上下文后续写导致的循环重复与幻觉。
 ASR_CHUNK_SECONDS = int(os.environ.get("WHISPER_CHUNK_SECONDS", "60"))
+# 分块重叠（秒）。60s 硬切会落在词中间，下一块看不到被切断的词；
+# 重叠 1s 让每个切口都有完整上下文，多出的重复文本由 _decode_all 去重。
+ASR_CHUNK_OVERLAP = float(os.environ.get("WHISPER_CHUNK_OVERLAP", "1.0"))
 
 # ============ 擴展模塊 ============
 EXTENSIONS_ROOT = Path(

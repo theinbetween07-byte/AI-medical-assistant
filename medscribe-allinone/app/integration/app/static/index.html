@@ -192,10 +192,10 @@
           <button class="speed" type="button" id="speed-btn" aria-label="播放速度" data-i18n-aria="audio.speed">1.0×</button>
           <div class="audio-tools">
             <button class="tool-btn" id="btn-record" type="button"><span class="rec-dot"></span><span id="record-label" data-i18n="audio.record">录音</span></button>
-            <label class="tool-btn upload-label" title="上传音频文件">
-              <input type="file" id="file-input" accept="audio/*" hidden>
+            <button class="tool-btn upload-label" id="btn-upload" type="button" title="上传音频文件">
               <span data-i18n="audio.upload">上传音频</span>
-            </label>
+            </button>
+            <input type="file" id="file-input" accept="audio/*" hidden>
           </div>
           <audio id="player" preload="none"></audio>
         </div>
@@ -214,7 +214,7 @@
           </select>
           <label class="pipeline-label" for="template-select" data-i18n="action.template">模板</label>
           <select class="pipeline-select" id="template-select"></select>
-          <button class="tool-btn" id="btn-transcribe" type="button" data-i18n="action.transcribe">转写</button>
+          <button class="tool-btn primary" id="btn-transcribe" type="button" data-i18n="action.transcribe">转写</button>
           <button class="tool-btn" id="btn-correct" type="button" data-i18n="action.correct">术语纠正</button>
           <button class="tool-btn" id="btn-undo" type="button" data-i18n="action.undo">撤销纠正</button>
           <button class="tool-btn" id="btn-extract" type="button" data-i18n="action.extract">抽取 S/O/A/P</button>

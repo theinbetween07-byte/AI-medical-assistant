@@ -4,9 +4,13 @@
 未被口述覆盖的字段一律写"未提及"，绝不填充推测内容（BR-03）。
 
 字段选材优先级（从强到弱）：
-  1. 章节标题：口述出现「MACROSCOPIC EXAMINATION」这类标题后，后续内容归该字段；
+  1. 章节标题：口述出现「MACROSCOPIC EXAMINATION」这类标题后，后续内容归该字段，
+     且**标题作用域强于关键词**——镜下描述里出现 "invading through" 不会把整段
+     搬去浸润深度字段（v1.0.2 的实测错位就出在这里）；
   2. 标签直配：「Tumour site: sigmoid colon」按最长标签匹配，值取冒号之后的部分；
+     口述提示语（病人講 / 主訴 / complains of）没有冒号时也剥掉，只留症状内容；
   3. 关键词匹配：命中越长的关键词越具体（"past history" 优先于 "history"）；
+     同一 S/O/A/P 分区内，无关键词的续写句归上一句所属字段（查体续述）；
   4. 兜底：accepts_fallback 的字段按模板顺序领取尚未被认领的内容。
 
 派生字段（模板声明 compose）：本字段没有被口述/粘贴覆盖时，用其他字段**已抽取值**拼一句话
@@ -17,6 +21,7 @@ from __future__ import annotations
 
 import re
 import uuid
+from functools import lru_cache
 
 from .schemas import (
     ClinicalElement,
@@ -71,6 +76,52 @@ def _norm(text: str) -> str:
     return re.sub(r"\s+", " ", (text or "").strip())
 
 
+# 口述提示语：这类前缀不是字段标签，而是"病人说"的引语，必须剥掉。
+# 例：「病人講喉嚨痛，痛咗三日」若整句保留，主诉字段会变成一句带叙事主语的二手转述。
+SPEECH_CUES = (
+    "病人講", "病人讲", "病人說", "病人说", "主訴", "主诉",
+    "chief complaint", "complaint of", "complains of", "complains", "complain",
+    "c/o", "presents with", "presented with",
+)
+_SPEECH_CUE_RES = tuple(
+    (
+        cue,
+        re.compile(
+            rf"^{re.escape(cue)}(?![a-z])\s*[:：,，]?\s*" if cue.isascii()
+            else rf"^{re.escape(cue)}\s*[:：,，]?\s*",
+            re.IGNORECASE,
+        ),
+    )
+    for cue in SPEECH_CUES
+)
+
+
+def _strip_speech_cue(raw: str) -> str:
+    """剥掉句首引语；剥完为空则保留原句，避免产生空字段值。"""
+    for _cue, pattern in _SPEECH_CUE_RES:
+        match = pattern.match(raw)
+        if match:
+            rest = raw[match.end():].strip().rstrip("。.").strip()
+            return rest or raw
+    return raw
+
+
+@lru_cache(maxsize=None)
+def _prefix_pattern(prefix: str) -> re.Pattern:
+    """「标签 + 可选分隔符 + 值」的正则，按标签缓存。
+
+    v1.0.2 在 assign_elements 里为每个要素、每个字段、每个标签现编译一次正则，
+    300 句时报文分配要 71 ms，其中大部分耗在重复编译上。
+    """
+    return re.compile(
+        r"^"
+        + re.escape(prefix)
+        + r"\s*\.?\s*(?:(?::|：|is|was|were|are|為|为)\s*(?P<value>.*\S)|(?P<rest>.*\S))\s*$",
+        re.IGNORECASE | re.DOTALL,
+    )
+
+
+
 def _label_parts(template_field: TemplateField) -> list[str]:
     """字段可用的标签前缀：关键词 + label 的中英文部分。"""
     parts = [k.strip() for k in template_field.keywords if k and k.strip()]
@@ -108,21 +159,16 @@ def _prefix_owner(
             # 有显式冒号/系动词才剥掉标签；口述里 "tumor size 6 cm" /
             # "主诉反复上腹痛" 没有分隔符，标签只用于确定字段归属，
             # 值保留整句，否则会变成 "6 cm" 这种丢上下文的碎片。
-            pattern = re.compile(
-                r"^"
-                + re.escape(prefix)
-                + r"\s*\.?\s*(?:(?::|：|is|was|were|are|為|为)\s*(?P<value>.*\S)|(?P<rest>.*\S))\s*$",
-                re.IGNORECASE | re.DOTALL,
-            )
-            match = pattern.match(raw)
+            match = _prefix_pattern(prefix).match(raw)
             if not match:
                 continue
             if match.group("value") is not None:
                 value = match.group("value").strip().rstrip("。.").strip()
                 value = value.lstrip(" ,，、;；:：").strip()
             else:
-                # 无分隔符：整句即字段值，保留可读上下文
-                value = raw.strip()
+                # 无分隔符：保留整句，但剥掉「病人講 / complains of」这类引语，
+                # 否则主诉字段会变成一句带叙事主语的转述
+                value = _strip_speech_cue(raw.strip())
             candidate = (len(prefix), -template_field.order, template_field.key, value)
             if best is None or candidate[:3] > best[:3]:
                 best = candidate
@@ -149,6 +195,7 @@ def assign_elements(
     每个要素最多归属一个字段，保证来源引用不重复、可追溯（FR-04）。
     """
     ordered = template.sorted_fields()
+    by_key = {f.key: f for f in ordered}
     selection: dict[str, list[ClinicalElement]] = {f.key: [] for f in ordered}
     overrides: dict[str, str] = {}
     claimed: set[str] = set()
@@ -162,15 +209,54 @@ def assign_elements(
             grouped.setdefault(element.type, []).append(element)
         pool_for = {f.key: grouped.get(f.section, []) for f in ordered}
 
+    def best_keyword_owner(element: ClinicalElement) -> tuple[int, int, str] | None:
+        best: tuple[int, int, str] | None = None
+        for template_field in ordered:
+            keywords = [k for k in template_field.keywords if k]
+            if not keywords:
+                continue
+            # 非病理模板按 S/O/A/P 分区池化：字段只在自己的分区里选材。
+            # 用分区比较而不是 `element in pool_for[key]`，避免 300 句时的列表相等比较开销。
+            if not template.pool_all_sections and element.type != template_field.section:
+                continue
+            score = _keyword_score(element, keywords)
+            if not score:
+                continue
+            candidate = (score, -template_field.order, template_field.key)
+            if best is None or candidate > best:
+                best = candidate
+        return best
+
+    # 每个 S/O/A/P 分区里「承接剩余叙述」的字段（模板中第一个 accepts_fallback 的字段）。
+    # 通用 SOAP 里是现病史：开场白、咳嗽、无发烧这类拆不开的 S 句归它，而不是并进主诉。
+    residual_by_section: dict[str, str] = {}
+    for template_field in ordered:
+        section = template_field.section
+        if (
+            template_field.accepts_fallback
+            and section != "uncategorized"
+            and section not in residual_by_section
+        ):
+            residual_by_section[section] = template_field.key
+
     # 1) 章节标题 + 2) 标签直配 + 3) 作用域内归属（按时间顺序扫描）
     scope: str | None = None
+    # weak：标签/关键词建立的段落，遇到更具体的关键词可以被抢走；
+    # strong：整句标题建立的段落（MACROSCOPIC / MICROSCOPIC / DIAGNOSIS），
+    #         段落内的叙述一律归该字段，关键词只用于段落内的字段定位而不跳段。
+    scope_strength = "weak"
     owners: dict[str, tuple[int, int, str]] = {}
+    last_owner: dict[str, str] = {}
+    last_owner_any: str | None = None
+
     for element in sorted(elements, key=_sort_key):
         heading = _heading_owner(element.text, ordered)
         if heading:
             scope = heading
+            scope_strength = "strong"
             claimed.add(element.id)  # 标题自身不进字段值，避免污染
             continue
+
         direct = _prefix_owner(element.text, ordered)
         if direct:
             key, value = direct
@@ -180,50 +266,66 @@ def assign_elements(
             claimed.add(element.id)  # 纯标签句自身不进值，只用来开启段落归属
             if template.pool_all_sections:
                 scope = key
+                scope_strength = "weak"
+            last_owner[by_key[key].section] = key
+            last_owner_any = key
             continue
-        if scope:
-            # scope 只接收“没有自己关键词”的续写内容；
-            # 关键词优先，避免上一个标签的 scope 吞掉下一个字段的标签句（BR-03）
-            best: tuple[int, int, str] | None = None
-            for template_field in ordered:
-                keywords = [k for k in template_field.keywords if k]
-                if not keywords or element not in pool_for[template_field.key]:
-                    continue
-                score = _keyword_score(element, keywords)
-                if not score:
-                    continue
-                candidate = (score, -template_field.order, template_field.key)
-                if best is None or candidate > best:
-                    best = candidate
-            if best:
-                owners[element.id] = best
-                if template.pool_all_sections:
-                    scope = best[2]
-                    if _looks_like_label(element.text, best[2], ordered):
-                        claimed.add(element.id)
-                continue
+
+        if scope and scope_strength == "strong":
+            # 标题段落内的叙述不再让关键词抢走：镜下描述里的
+            # "invading through / lymph nodes / margins" 曾把整段搬进 synoptic 字段
             selection[scope].append(element)
+            claimed.add(element.id)
+            last_owner_any = scope
+            continue
+
+        best = best_keyword_owner(element)
+        if best:
+            owners[element.id] = best
+            key = best[2]
+            last_owner[by_key[key].section] = key
+            last_owner_any = key
+            if template.pool_all_sections:
+                # 病理 synoptic 报告：标签即段落，后续无标签句归入该字段
+                scope = key
+                scope_strength = "weak"
+                if _looks_like_label(element.text, key, ordered):
+                    claimed.add(element.id)
+            continue
+
+        if scope:
+            # 弱作用域续写；关键词已经在上面优先处理过
+            selection[scope].append(element)
+            claimed.add(element.id)
+            last_owner_any = scope
+            continue
+
+        # 没有临床关键词的口语残句（如查体段的「Throat is erythematous」）：
+        # 非病理模板下跟随上一句的字段，避免内容被静默丢弃（AC-04）。
+        if not template.pool_all_sections and element.type == "uncategorized" and last_owner_any:
+            selection[last_owner_any].append(element)
             claimed.add(element.id)
             continue
 
-        best: tuple[int, int, str] | None = None
-        for template_field in ordered:
-            keywords = [k for k in template_field.keywords if k]
-            if not keywords or element not in pool_for[template_field.key]:
+        # 分区残句归属：模板给该分区指定了「承接剩余叙述」的字段（现病史）时，
+        # 拆不开归属的句子直接归它，不要再被上一句的字段顺手带走。
+        if not template.pool_all_sections:
+            residual = residual_by_section.get(element.type)
+            if residual:
+                selection[residual].append(element)
+                claimed.add(element.id)
+                last_owner_any = residual
                 continue
-            score = _keyword_score(element, keywords)
-            if not score:
-                continue
-            candidate = (score, -template_field.order, template_field.key)
-            if best is None or candidate > best:
-                best = candidate
-        if best:
-            owners[element.id] = best
-            if template.pool_all_sections:
-                # 病理 synoptic 报告：标签即段落，后续无标签句归入该字段
-                scope = best[2]
-                if _looks_like_label(element.text, best[2], ordered):
-                    claimed.add(element.id)
+
+        # 查体续述：O 段没有关键词的句子归上一句所属字段
+        # （「On examination, BP 128/76…」之后的「Throat is mildly injected」）。
+        # 只在 O 段启用：S 段的零散叙述通常是现病史，不应并进主诉。
+        if not template.pool_all_sections and element.type == "O":
+            key = last_owner.get(element.type)
+            if key:
+                selection[key].append(element)
+                claimed.add(element.id)
+                last_owner_any = key
 
     for element in sorted(elements, key=_sort_key):
         if element.id in claimed:
@@ -247,11 +349,7 @@ def assign_elements(
     for key in selection:
         selection[key] = sorted(selection[key], key=_sort_key)
 
-    unclaimed = [
-        e
-        for e in elements
-        if e.id not in claimed and (e.type != "uncategorized" or template.pool_all_sections)
-    ]
+    unclaimed = [e for e in elements if e.id not in claimed]
     return selection, unclaimed, overrides
 
 
@@ -330,10 +428,23 @@ def build_fields(
     for template_field in template.sorted_fields():
         selected = selection.get(template_field.key, [])
         sources = [span for e in selected for span in e.sources]
-        value = template.field_separator.join(
-            overrides.get(e.id, _element_text(e)) for e in selected
+        parts = [
+            overrides.get(e.id, _element_text(e))
+            for e in selected
             if overrides.get(e.id, _element_text(e))
-        ).strip()
+        ]
+        # 同一字段同时被 synoptic 行和镜下重述两遍时只留一份：
+        # "Lymphatic and venous invasion: present" + "Lymphovascular invasion is present"
+        # 曾拼成 "present present"。
+        unique: list[str] = []
+        seen: set[str] = set()
+        for part in parts:
+            key_norm = re.sub(r"\s+", " ", part.strip().rstrip("。.")).lower()
+            if key_norm in seen:
+                continue
+            seen.add(key_norm)
+            unique.append(part)
+        value = template.field_separator.join(unique).strip()
         flags: list[str] = []
         if any(
             rule.startswith("low_confidence") for e in selected for rule in e.matched_rules

@@ -433,7 +433,10 @@ def map_segments(result: dict, threshold: float) -> list[dict]:
                 "start_ms": int(round(float(seg.get("start") or 0) * 1000)),
                 "end_ms": int(round(float(seg.get("end") or 0) * 1000)),
                 "text": text,
-                "text_raw": text,
+                # text_raw 只承载「术语纠正前的文本」，由纠正层在被替换时写入。
+                # 转写阶段先留空：refine_segments 会把长段切成多句，若这里塞原文，
+                # 每个切片都会继承整段原文，撤销时整段文本被写回每一片。
+                "text_raw": None,
                 "lang": lang,
                 "confidence": conf,
                 "confidence_source": source,

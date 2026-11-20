@@ -21,6 +21,7 @@ from typing import Optional
 from loguru import logger
 
 from app.config import (
+    ASR_CHUNK_OVERLAP,
     ASR_CHUNK_SECONDS,
     ASR_CPU_THREADS,
     AUTO_LANGUAGE,
@@ -43,6 +44,42 @@ from app.config import (
 # ============ 運行設備選擇 ============
 _DLL_HANDLES: list = []
 _RUNTIME_CACHE: Optional[tuple[str, str]] = None
+
+_PUNCT_SKIP = set(" \t\r\n，。、；：,.!?;:")
+
+
+def _overlap_key(text: str) -> list[tuple[int, str]]:
+    """归一化后的 (原索引, 小写字符)，忽略空白与标点，用于判断重复开头。"""
+    return [(i, ch.lower()) for i, ch in enumerate(text)
+            if ch not in _PUNCT_SKIP and not ch.isspace()]
+
+
+def _extends_previous(prev_text: str, cur_text: str) -> bool:
+    """上一块输出的是被切口截断的半句，这一块才是完整版。"""
+    prev_key = [ch for _, ch in _overlap_key(prev_text)]
+    cur_key = [ch for _, ch in _overlap_key(cur_text)]
+    if len(prev_key) < 6 or len(cur_key) <= len(prev_key):
+        return False
+    return cur_key[:len(prev_key)] == prev_key
+
+
+def _trim_overlap_text(text: str, prev_tail: str, max_overlap: int = 16) -> str:
+    """去掉 text 开头与上一块结尾重复的部分。
+
+    分块重叠后，切口附近的句子会被两块各解一次：上一块是截断版，
+    这一块是完整版。这里按最长公共前后缀裁掉重复开头，保留完整表达。
+    完全重复时返回空串，由调用方丢弃。
+    """
+    if not prev_tail or not text:
+        return text
+    prev_key = _overlap_key(prev_tail)
+    cur_key = _overlap_key(text)
+    limit = min(len(prev_key), len(cur_key), max_overlap)
+    for k in range(limit, 3, -1):
+        if [ch for _, ch in prev_key[-k:]] == [ch for _, ch in cur_key[:k]]:
+            end_index = cur_key[k - 1][0] + 1
+            return text[end_index:].lstrip(" \t，。、；：,.;:!?")
+    return text
 
 
 def _register_cuda_dlls() -> None:
@@ -151,7 +188,17 @@ class ASRService:
 
     def _load(self, model_size: str) -> None:
         """底層加載某個型號到 self.model"""
-        from faster_whisper import WhisperModel
+        try:
+            from faster_whisper import WhisperModel
+        except Exception as exc:
+            # PyAV 的 FFmpeg DLL 依賴在 Windows 上有 260 字元路徑上限；
+            # 安裝目錄過深時，底層只報 "__reduce_cython__" 之類的怪錯，這裡換成人能看懂的話
+            raise RuntimeError(
+                "音频解码库加载失败，转写无法开始。最常见原因是安装路径过深"
+                "（Windows 对 DLL 路径有 260 字符上限）。请把 MedScribe 文件夹移到"
+                " C:\\MedScribe 这类短目录后重启服务。"
+                f"原始错误：{type(exc).__name__}: {exc}"
+            ) from exc
 
         path, source = self._resolve_model_path(model_size)
         logger.info(
@@ -371,19 +418,25 @@ class ASRService:
 
         audio = np.frombuffer(raw, dtype=np.int16).astype("float32") / 32768.0
         total = len(audio) / float(sr)
-        step = max(1, int(sr * max(5, ASR_CHUNK_SECONDS)))
+        chunk_seconds = max(5, ASR_CHUNK_SECONDS)
+        overlap = max(0.0, min(ASR_CHUNK_OVERLAP, chunk_seconds / 2.0))
+        window = max(1, int(sr * chunk_seconds))
+        step = max(1, int(sr * max(1.0, chunk_seconds - overlap)))
         chunk_count = (len(audio) + step - 1) // step
         logger.info(
-            f"[ASR] 分塊解碼：{total:.1f}s，塊長 {ASR_CHUNK_SECONDS}s，共 {chunk_count} 塊"
+            f"[ASR] 分塊解碼：{total:.1f}s，塊長 {chunk_seconds}s，"
+            f"重疊 {overlap:.1f}s，共 {chunk_count} 塊"
         )
         lang = language
         segments, texts = [], []
         language_out = language or "zh"
         probability_out = 0.0
-        offset = 0.0
+        covered_until = -1.0
+        prev_tail = ""
         last_emit = 0.0
         for start in range(0, len(audio), step):
-            chunk = audio[start:start + step]
+            chunk = audio[start:start + window]
+            chunk_start = start / float(sr)
             segs, info = model.transcribe(
                 chunk,
                 language=None if lang in (None, "", "auto") else lang,
@@ -399,20 +452,42 @@ class ASRService:
                 language_out = info.language
                 probability_out = info.language_probability
             for s in segs:
-                end_abs = offset + float(s.end)
+                abs_start = chunk_start + float(s.start)
+                end_abs = chunk_start + float(s.end)
+                text = s.text.strip()
+                if not text:
+                    continue
+                # 完全落在已覆盖区间：上一块已经输出过，跳过
+                if covered_until > 0 and end_abs <= covered_until + 0.05:
+                    continue
+                # 上一块的截断版被这一块的完整版覆盖：用完整版替换，保留更早的开始时间
+                replaced_tail = False
+                if segments and _extends_previous(segments[-1]["text"], text):
+                    replaced = segments.pop()
+                    if texts:
+                        texts.pop()
+                    abs_start = min(abs_start, float(replaced["start"]))
+                    covered_until = max(covered_until, float(replaced["end"]))
+                    replaced_tail = True
+                # 跨在切口上的句子：去掉与上一块重复的开头，避免同一句出现两次
+                if not replaced_tail and abs_start < covered_until:
+                    text = _trim_overlap_text(text, prev_tail)
+                    if not text:
+                        continue
                 segments.append({
                     "id": len(segments),
-                    "start": round(offset + float(s.start), 2),
+                    "start": round(abs_start, 2),
                     "end": round(end_abs, 2),
-                    "text": s.text.strip(),
+                    "text": text,
                 })
-                texts.append(s.text.strip())
+                texts.append(text)
+                prev_tail = " ".join(texts[-2:])[-120:]
                 now = time.time()
                 if total > 0 and now - last_emit >= 0.25:
                     last_emit = now
                     emit(0.16 + 0.80 * min(max(end_abs / total, 0.0), 1.0), "decode",
                          {"processed": round(end_abs, 1), "total": round(total, 1)})
-            offset += len(chunk) / float(sr)
+            covered_until = max(covered_until, chunk_start + len(chunk) / float(sr))
         return {
             "segments": segments,
             "texts": texts,

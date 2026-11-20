@@ -24,6 +24,7 @@
     { value: 'ar', key: 'asr.lang.ar' }
   ];
   var ASR_LANG_KEY = 'medscribe-asr-language';
+  var TEMPLATE_KEY = 'medscribe-template';
   var root = document.documentElement;
   var media = window.matchMedia('(prefers-color-scheme: dark)');
 
@@ -40,6 +41,7 @@
     detail: null,
     sessions: [],
     templates: [],
+    templateId: '',
     models: [],
     asrModel: '',
     asrLanguage: 'yue',
@@ -47,6 +49,7 @@
     filter: 'all',
     exportFormat: 'pdf',
     busy: false,
+    creating: false,
     recorder: null,
     chunks: [],
     recTimer: null,
@@ -1603,7 +1606,8 @@
       !(state.detail.corrections && state.detail.corrections.length);
     $('btn-extract').disabled = signed || state.busy || level < rank('transcribed');
     $('btn-generate').disabled = signed || state.busy || level < rank('transcribed');
-    $('template-select').disabled = signed || state.busy;
+    // 转写进行中不锁模板：转写只读录音，模板只影响后续生成
+    $('template-select').disabled = signed || (state.busy && !state.transcribing);
     $('model-select').disabled = signed || state.busy || !state.models.length;
     $('btn-record').disabled = signed || state.busy;
 
@@ -1644,10 +1648,39 @@
     syncTemplateSelect();
   }
 
+  function templateLabel(template) {
+    var full = String((template && template.name) || (template && template.id) || '');
+    // 模板名是「简体中文 / English」双语串：只显示当前界面语言那一半
+    var parts = full.split(' / ');
+    if (parts.length < 2) return full;
+    return state.lang === 'en' ? parts[parts.length - 1] : parts[0];
+  }
+
+  function renderTemplateOptions() {
+    var select = $('template-select');
+    if (!select) return;
+    select.innerHTML = state.templates.map(function (template) {
+      return '<option value="' + esc(template.id) + '">' + esc(templateLabel(template)) + '</option>';
+    }).join('');
+    var wanted = state.templateId || (state.detail && state.detail.session && state.detail.session.template_id);
+    if (wanted && state.templates.some(function (t) { return t.id === wanted; })) {
+      select.value = wanted;
+    }
+  }
+
   function syncTemplateSelect() {
-    if (!state.detail) return;
-    var session = state.detail.session;
-    if (session.template_id) $('template-select').value = session.template_id;
+    if (!state.templates.length) return;
+    var session = state.detail ? state.detail.session : null;
+    if (session && session.template_id &&
+        state.templates.some(function (t) { return t.id === session.template_id; })) {
+      state.templateId = session.template_id;
+    }
+    var wanted = state.templateId;
+    if (!wanted || !state.templates.some(function (t) { return t.id === wanted; })) {
+      wanted = state.templates[0].id;
+    }
+    state.templateId = wanted;
+    $('template-select').value = wanted;
   }
 
   function setDrawer(open) {
@@ -1660,13 +1693,15 @@
     try {
       state.templates = await api('/templates');
     } catch (e) {
-      state.templates = [{ id: 'general_soap', name: '通用 SOAP' }];
+      state.templates = [{ id: 'general_soap', name: '通用 SOAP 记录 / General SOAP Note' }];
     }
-    if (!state.templates.length) state.templates = [{ id: 'general_soap', name: '通用 SOAP' }];
-    $('template-select').innerHTML = state.templates.map(function (template) {
-      return '<option value="' + esc(template.id) + '">' +
-        esc(template.name || template.id) + '</option>';
-    }).join('');
+    if (!state.templates.length) {
+      state.templates = [{ id: 'general_soap', name: '通用 SOAP 记录 / General SOAP Note' }];
+    }
+    if (!state.templateId) {
+      try { state.templateId = localStorage.getItem(TEMPLATE_KEY) || ''; } catch (err) {}
+    }
+    renderTemplateOptions();
     syncTemplateSelect();
   }
 
@@ -1844,20 +1879,35 @@
     }
   }
 
+  function pad2(n) { return (n < 10 ? '0' : '') + n; }
+
+  function defaultSessionTitle() {
+    var now = new Date();
+    var hh = pad2(now.getHours());
+    var mm = pad2(now.getMinutes());
+    if (state.lang === 'en') {
+      var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      return months[now.getMonth()] + ' ' + now.getDate() + ', ' + hh + ':' + mm;
+    }
+    return (now.getMonth() + 1) + '月' + now.getDate() + '日 ' + hh + ':' + mm;
+  }
+
   async function createSession() {
-    if (state.busy) return;
-    state.busy = true;
+    // 转写是后台任务（busy 会一直为 true），不能用它拦住新建会话
+    if (state.creating) return;
+    state.creating = true;
     try {
       var created = await api('/sessions', jsonOptions('POST', {
-        template_id: $('template-select').value || '',
-        title: ''
+        template_id: state.templateId || $('template-select').value || '',
+        title: defaultSessionTitle()
       }));
-      state.busy = false;
+      state.creating = false;
       showToast(t('toast.created'));
       await loadSessions();
       await selectSession(created.id);
     } catch (e) {
-      state.busy = false;
+      state.creating = false;
       fail(e);
     }
   }
@@ -2362,9 +2412,12 @@
 
   function uploadFile(input) {
     var file = input.files && input.files[0];
+    input.value = '';
+    // 文件对话框关闭后把焦点还给本窗口，避免焦点留在隐藏 input 或跳到别的窗口
+    try { input.blur(); } catch (e) {}
+    setTimeout(function () { try { window.focus(); } catch (e) {} }, 0);
     if (!file) return;
     uploadAudio(file, file.name);
-    input.value = '';
   }
 
   /* ---------------------------------------------------------------- health */
@@ -2431,6 +2484,7 @@
     applyTheme(root.dataset.themeMode || 'system', false);
     $('record-label').textContent = t('audio.record');
     renderSessions();
+    renderTemplateOptions();
     renderAll();
     renderModelSelect();
     renderLanguageOptions();
@@ -2441,6 +2495,20 @@
   /* ------------------------------------------------------------------ wiring */
   document.querySelectorAll('[data-theme-set]').forEach(function (btn) {
     btn.addEventListener('click', function () { applyTheme(btn.dataset.themeSet, true); });
+  });
+  $('template-select').addEventListener('change', function () {
+    var value = this.value || '';
+    state.templateId = value;
+    try { localStorage.setItem(TEMPLATE_KEY, value); } catch (e) {}
+    if (!state.sessionId || !state.detail) return;
+    // 落到会话上：上传音频、切会话、切语言都会 refresh 并按会话模板回填，
+    // 不持久化就会被重置成默认模板。
+    if (state.detail.session) state.detail.session.template_id = value;
+    api('/sessions/' + encodeURIComponent(state.sessionId),
+      jsonOptions('PATCH', { template_id: value })).catch(function (err) {
+        // 保存失败时提示，但不把下拉框打回旧值，避免用户以为改不动
+        showToast(t('toast.error', { msg: err && err.message ? err.message : '' }));
+      });
   });
   $('model-select').addEventListener('change', function () {
     var picked = state.models.filter(function (model) { return model.id === this.value; }.bind(this))[0];
@@ -2762,6 +2830,12 @@
   $('btn-generate').addEventListener('click', doGenerate);
   $('btn-record').addEventListener('click', toggleRecord);
   $('file-input').addEventListener('change', function () { uploadFile(this); });
+  $('btn-upload').addEventListener('click', function () {
+    // 用按钮显式触发：label 包隐藏 input 在 Windows 文件对话框关闭后会把焦点
+    // 留在隐藏控件上，表现为「焦点窗口无故被切走」。
+    var input = $('file-input');
+    try { input.click(); } catch (e) { fail(e); }
+  });
 
   playBtn.addEventListener('click', function () {
     if (!state.detail || !state.detail.session.audio_path) {

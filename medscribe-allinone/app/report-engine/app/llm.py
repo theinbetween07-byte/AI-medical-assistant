@@ -28,6 +28,9 @@ class LLMRefiner:
     def __init__(self, settings: Settings) -> None:
         self.settings = settings
         self.calls = 0
+        # 计数按报告重置：服务进程常驻，若只累加，进程内第二份报告之后
+        # 精修会永久失效（v1.0.2 的缺陷）。
+        self._report_id: str | None = None
 
     @property
     def available(self) -> bool:
@@ -59,6 +62,9 @@ class LLMRefiner:
         """返回 (key -> 建议值, 说明)。任何失败都不抛出，交由上层记录。"""
         if not self.available:
             return {}, "LLM 未启用或未配置"
+        if report.id != self._report_id:
+            self._report_id = report.id
+            self.calls = 0
         if self.calls >= self.settings.llm_max_calls_per_report:
             return {}, "已达单份报告的 LLM 调用上限（NFR-11）"
 

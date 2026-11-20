@@ -9,6 +9,7 @@ from __future__ import annotations
 import json
 import re
 import unicodedata
+from functools import lru_cache
 from pathlib import Path
 
 from .schemas import TermCorrection, TranscriptSegment
@@ -46,8 +47,9 @@ def levenshtein(a: str, b: str, max_dist: int | None = None) -> int:
     return prev[-1]
 
 
+@lru_cache(maxsize=None)
 def _alias_pattern(alias: str) -> re.Pattern[str]:
-    """纯 ASCII 别名加词边界，避免 'tab' 命中 'tablet'。"""
+    """纯 ASCII 别名加词边界，避免 'tab' 命中 'tablet'；按别名缓存。"""
     escaped = re.escape(alias)
     if _ASCII_ALIAS.fullmatch(alias):
         return re.compile(rf"(?<![A-Za-z0-9]){escaped}(?![A-Za-z0-9])", re.IGNORECASE)
@@ -71,6 +73,30 @@ class Terminology:
                     self._alias_map.setdefault(key, entry)
         # 长别名优先，避免短别名抢先命中
         self._alias_items = sorted(self._alias_map.items(), key=lambda kv: -len(kv[0]))
+        # 首字符索引 + 长度索引：原实现每段文本都要扫全部别名（实测 1181 个、21 ms/77 字）。
+        # 文本里出现过的字符通常只有几十个，按首字符取候选即可砍掉绝大部分无效匹配；
+        # 候选内仍按长度降序，保持"最长别名优先"的替换顺序。
+        self._by_first: dict[str, list[tuple[str, dict]]] = {}
+        self._by_len: dict[int, list[tuple[str, dict]]] = {}
+        for key, entry in self._alias_map.items():
+            if not key:
+                continue
+            self._by_first.setdefault(key[0], []).append((key, entry))
+            self._by_len.setdefault(len(key), []).append((key, entry))
+        for bucket in self._by_first.values():
+            bucket.sort(key=lambda kv: -len(kv[0]))
+        # 候选按原顺序（长度降序 + 载入顺序）返回，保证替换顺序与 v1.0.2 完全一致，
+        # 不因索引遍历顺序变化而改变同长度别名的先后
+        self._order = {key: i for i, (key, _entry) in enumerate(self._alias_items)}
+
+    def _candidates(self, text: str) -> list[tuple[str, dict]]:
+        """只在文本里出现过的首字符下取别名，仍按原优先级返回。"""
+        found: dict[str, dict] = {}
+        for ch in normalize(text):
+            for key, entry in self._by_first.get(ch, ()):
+                if key not in found:
+                    found[key] = entry
+        return sorted(found.items(), key=lambda kv: self._order.get(kv[0], 0))
 
     @classmethod
     def load(cls, terms_dir: Path) -> "Terminology":
@@ -88,8 +114,8 @@ class Terminology:
         corrections: list[TermCorrection] = []
         result = text
 
-        # 1) 精确匹配（含别名）
-        for alias_key, entry in self._alias_items:
+        # 1) 精确匹配（含别名），只扫文本首字符能命中的候选
+        for alias_key, entry in self._candidates(result):
             if len(alias_key) < 2:
                 continue
             norm_term = normalize(entry.get("term_norm", ""))
@@ -123,12 +149,15 @@ class Terminology:
             if token_norm in self._alias_map:
                 continue
             best: tuple[int, dict] | None = None
-            for alias_key, entry in self._alias_items:
-                if abs(len(alias_key) - len(token_norm)) > _MAX_FUZZY_DIST:
-                    continue
-                dist = levenshtein(token_norm, alias_key, _MAX_FUZZY_DIST)
-                if dist <= _MAX_FUZZY_DIST and (best is None or dist < best[0]):
-                    best = (dist, entry)
+            # 编辑距离 ≤ 2 只可能出现在长度相差 ≤ 2 的别名里，按长度取桶；
+            # 从长到短扫描，保持"距离相同取更长的别名"的原顺序。
+            for length in range(
+                len(token_norm) + _MAX_FUZZY_DIST, len(token_norm) - _MAX_FUZZY_DIST - 1, -1
+            ):
+                for alias_key, entry in self._by_len.get(length, ()):
+                    dist = levenshtein(token_norm, alias_key, _MAX_FUZZY_DIST)
+                    if dist <= _MAX_FUZZY_DIST and (best is None or dist < best[0]):
+                        best = (dist, entry)
             if best is None:
                 continue
             entry = best[1]

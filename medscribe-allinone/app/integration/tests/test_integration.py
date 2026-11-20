@@ -41,7 +41,7 @@ from app.config import Settings  # noqa: E402
 from app.terms import TermCorrector, compile_terms  # noqa: E402
 from app.postprocess import EMPTY_MARK, hide_rebalanced_source, rebalance_report  # noqa: E402
 from app.suggest import assessment_hints, chief_candidate, suggest_missing  # noqa: E402
-from app.textsplit import refine_segments  # noqa: E402
+from app.textsplit import MAX_CHARS, refine_segments, split_text  # noqa: E402
 
 
 # ===========================================================================
@@ -718,6 +718,38 @@ class TextSplitTest(unittest.TestCase):
         self.assertIn("，", out[0]["text"])
         self.assertNotIn("﹐", out[0]["text"])
 
+    def test_refined_pieces_drop_stale_raw(self):
+        # 回归：ASR 段的 text_raw 是切分前整段原文；切片若继承它，
+        # 撤销术语纠正时每片都会被还原成整段。
+        text = "病人今日有發燒，血壓高，照咗胸肺片，無明顯異常，建議食退燒藥"
+        out = refine_segments([{"id": "S-001", "index": 0, "start_ms": 0, "end_ms": 8000,
+                                "text": text, "text_raw": text}])
+        self.assertGreater(len(out), 1)
+        for seg in out:
+            self.assertIsNone(seg["text_raw"])
+
+    def test_long_unpunctuated_cn_keeps_numbers_and_units(self):
+        # v1.0.2 的 24 字硬切会把「一百二十八」切成「一百二十」+「八」、
+        # 把「體溫」切成「體」+「溫」，术语与数值同时失配。v1.0.3 在软上限
+        # 附近寻找安全切口：不切断数字、中文数词、单位与英文单词。
+        text = "血壓一百二十八over七十四心跳每分鐘七十八下體溫三十六度八血氧九十七percent" * 2
+        out = split_text(text)
+        self.assertGreater(len(out), 1)
+        self.assertEqual("".join(out), text)
+        for token in ("一百二十八", "七十四", "三十六度八", "九十七percent"):
+            self.assertTrue(any(token in piece for piece in out), token)
+        self.assertLessEqual(max(len(piece) for piece in out), MAX_CHARS * 2)
+
+    def test_cut_moves_off_decimal_and_unit(self):
+        # 切口落在小数或数字与单位之间时会后移，不产生 "36." / "8 mg" 碎片
+        text = ("病人今日覆診心跳每分鐘七十八下血壓一百二十八over七十四"
+                "體溫三十六點八度血氧九十七percent" * 3)
+        out = split_text(text)
+        self.assertEqual("".join(out), text)
+        for piece in out:
+            self.assertFalse(piece.endswith("一百二十"))
+            self.assertFalse(piece.endswith("點"))
+
     def test_latin_long_segment_splits_on_commas_not_words(self):
         # 实测病理口述：Whisper 输出一整段无句号的英文，旧逻辑按 24 字符硬切，
         # 产生 "laparo" / "scopic" 这种词中间碎片，报告字段全部匹配失败。
@@ -1302,6 +1334,38 @@ class EndToEndTest(unittest.TestCase):
         # 空白标题必须拒绝，避免列表里出现无法辨认的空条目
         status, _ = self._req("PATCH", f"/sessions/{sid}", {"title": "   "})
         self.assertEqual(status, 400)
+
+    def test_update_session_template(self):
+        status, session = self._req("POST", "/sessions", {"template_id": "general_soap"})
+        self.assertEqual(status, 200)
+        sid = session["id"]
+        status, body = self._req("PATCH", f"/sessions/{sid}", {"template_id": "general_soap"})
+        self.assertEqual(status, 200, body)
+        self.assertEqual(body["template_id"], "general_soap")
+        # 模板名必须校验，避免前端写入拼错的 id 后生成失败
+        status, _ = self._req("PATCH", f"/sessions/{sid}", {"template_id": "no_such_template"})
+        self.assertEqual(status, 400)
+
+    def test_undo_does_not_bloat_segments(self):
+        # 回归：长 ASR 段被切成多片后，撤销纠正不能把每一片写回整段原文
+        long_text = ("病人今日有發燒，有高血壓，體溫38.5度，照咗胸肺片，"
+                     "無明顯異常，建議食退燒藥，兩日後覆診")
+        AsrState.segments = [{"id": 0, "start": 0.0, "end": 12.0, "text": long_text}]
+        status, session = self._req("POST", "/sessions", {"template_id": "general_soap"})
+        sid = session["id"]
+        status, up = self._upload(sid, make_wav(12))
+        self.assertEqual(status, 200, up)
+        status, body = self._req("POST", f"/sessions/{sid}/transcribe", {"language": "yue"})
+        self.assertEqual(status, 200, body)
+        self.assertGreater(len(body["segments"]), 1)
+
+        self._req("POST", f"/sessions/{sid}/correct-terms", {})
+        status, body = self._req("POST", f"/sessions/{sid}/correct-terms/undo", {})
+        self.assertEqual(status, 200)
+        status, detail = self._req("GET", f"/sessions/{sid}")
+        for seg in detail["segments"]:
+            self.assertNotEqual(seg["text"], long_text)
+            self.assertLess(len(seg["text"]), len(long_text))
 
     def test_duplicate_session_copies_audio(self):
         status, session = self._req("POST", "/sessions", {"title": "to-copy"})

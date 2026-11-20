@@ -9,6 +9,7 @@
     {"key": "chief_complaint", "label": "主诉 / Chief Complaint", "section": "S", "required": true, "order": 1,
      "keywords": ["chief complaint", "主訴", "主诉", "complain", "病人講", "病人说"]},
     {"key": "history_of_present_illness", "label": "现病史 / History of Present Illness", "section": "S", "order": 2,
+     "accepts_fallback": true,
      "keywords": ["history", "現病史", "现病史", "since", "duration", "天", "day"]},
     {"key": "past_medical_history", "label": "既往史 / Past Medical History", "section": "S", "order": 3,
      "keywords": ["past history", "既往", "病史", "history of"]},

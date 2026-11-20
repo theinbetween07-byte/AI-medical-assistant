@@ -18,20 +18,24 @@
 
 ## 下载与安装（Windows，免安装）
 
-发布地址：<https://github.com/theinbetween07-byte/AI-medical-assistant/releases/tag/v1.0.1>
+最新发布：<https://github.com/theinbetween07-byte/AI-medical-assistant/releases/tag/v1.0.3>（含基础包、补丁与变更说明）
+历史版本：<https://github.com/theinbetween07-byte/AI-medical-assistant/releases>（v1.0.1 / v1.0.2 仍可下载）
 
 | 包 | 内容 | 文件 | 下载体积 | 解压后 |
 | --- | --- | --- | --- | --- |
-| 基础包 | 便携 Python 3.12、整合界面、报告引擎、Whisper small、ffmpeg | `MedScribe-base-v1.0.1.7z` | 0.52 GB | 908 MB |
-| 扩展：Qwen3-ASR | CapsWriter-Offline 高精度引擎（病理术语更强） | `MedScribe-ext-caps-qwen3-v1.0.1.7z.001`–`.002` | 2.23 GB | 2.9 GB |
-| 扩展：Whisper medium | 通用精度提升，CPU 约 2–3 倍耗时 | `MedScribe-ext-whisper-medium-v1.0.1.7z` | 1.30 GB | 1.43 GB |
-| 扩展：Whisper large-v3 | 精度最高，CPU 约 5–6 倍耗时，建议 16 GB 内存 | `MedScribe-ext-whisper-large-v3-v1.0.1.7z.001`–`.002` | 2.62 GB | 2.88 GB |
+| 基础包 | 便携 Python 3.12、整合界面、报告引擎（v1.0.3）、Whisper small、ffmpeg + ffprobe | `MedScribe-base-v1.0.3.7z` | 0.56 GB | 972 MB |
+| 扩展：Qwen3-ASR | CapsWriter-Offline 高精度引擎（病理术语更强） | `MedScribe-ext-caps-qwen3-v1.0.1-vol.7z.001`–`.006` | 2.39 GB | 2.9 GB |
+| 扩展：Whisper medium | 通用精度提升，CPU 约 2–3 倍耗时 | `MedScribe-ext-whisper-medium-v1.0.1-vol.7z.001`–`.004` | 1.40 GB | 1.43 GB |
+| 扩展：Whisper large-v3 | 精度最高，CPU 约 5–6 倍耗时，建议 16 GB 内存 | `MedScribe-ext-whisper-large-v3-v1.0.1-vol.7z.001`–`.007` | 2.81 GB | 2.88 GB |
 
 安装基础包：
 
-1. 下载 `MedScribe-base-v1.0.1.7z`，用 [7-Zip](https://www.7-zip.org/) 解压，得到 `MedScribe` 文件夹。
-2. 双击 `MedScribe\MedScribe.bat`，等待控制台显示三段服务就绪（首次 10–30 秒）。
-3. 浏览器自动打开 <http://127.0.0.1:8100>；关闭右上角提示或双击 `stop.bat` 停服。
+1. 下载 `MedScribe-base-v1.0.3.7z`，用 [7-Zip](https://www.7-zip.org/) 解压到**较短的路径**（建议 `C:\MedScribe`），得到 `MedScribe` 文件夹。路径过深（约 120 字符以上）会触发 Windows 的 260 字符 DLL 上限，转写时音频库加载失败；启动器检测到过长会直接提示。
+2. 双击 `MedScribe\MedScribe.bat`：服务在后台启动，系统托盘出现 MedScribe 图标（首次 10–30 秒），就绪后自动打开浏览器。托盘菜单可「打开界面 / 启动服务 / 停止服务 / 关于」。
+3. 浏览器地址为 <http://127.0.0.1:8100>；停服走托盘「停止服务」或 `stop.bat`。
+4. 模板下拉会记住当前会话的选择（上传音频、切会话、切界面语言都不丢）；新建会话的默认名按界面语言生成（中文「11月21日 14:05」、英文「Nov 21, 14:05」）。
+
+扩展包在 [v1.0.2 发布页](https://github.com/theinbetween07-byte/AI-medical-assistant/releases/tag/v1.0.2) 的三套 `-vol` 分卷里（模型文件未变，已装过无需重下）：
 
 安装扩展（可选，按需选一个或多个）：
 
@@ -41,7 +45,13 @@
 
 未安装的扩展会在下拉中显示「未安装」，点击弹出下载地址与步骤，不会联网自动下载。
 
-校验：`SHA256SUMS.txt` 与各分卷同目录，可用 `certutil -hashfile <文件名> SHA256` 逐个比对。系统要求：Windows 10/11 64 位、4 GB 内存（large-v3 扩展建议 16 GB）、约 1 GB 磁盘（每个扩展再占 1.4–2.9 GB）；默认 CPU，无需显卡。
+校验：`SHA256SUMS-v1.0.3.txt` 在 v1.0.3 发布页，覆盖基础包与补丁/源码包；扩展分卷见 v1.0.2 页的 `SHA256SUMS-v1.0.2.txt`（其中只有基础包的一行，扩展分卷按体积核对）。可用 `certutil -hashfile <文件名> SHA256` 逐个比对。基础包 `MedScribe-base-v1.0.3.7z` 的 SHA256 为 `9fda3c2cd6f1e04dfcea39a3a6e9149e520a3213bd875dbb78f0642abb719e0c`。系统要求：Windows 10/11 64 位、4 GB 内存（large-v3 扩展建议 16 GB）、约 1 GB 磁盘（每个扩展再占 1.4–2.9 GB）；默认 CPU，无需显卡。
+
+从 v1.0.2 升级到 v1.0.3（模板与模型未变，只换代码；不想整包重下可走补丁）：
+
+1. 整包方式：下载 `MedScribe-base-v1.0.3.7z` 解压到新目录，把旧目录的 `app\models\` 与 `app\integration\data\` 拷过去即可沿用模型与会话。
+2. 补丁方式：取 [v1.0.3 发布页](https://github.com/theinbetween07-byte/AI-medical-assistant/releases/tag/v1.0.3) 的 `MedScribe-v1.0.3.patch` 在源码上 `git apply`，或直接用 `MedScribe-v1.0.3-source.zip` 覆盖 `MedScribe\app\`；保留 `data\`、`models\`，只替换 `app\report-engine\`、`app\integration\app\`、`app\backend\app\`。
+3. 重启 `MedScribe.bat`；界面底部确认构建版本后自检：`http://127.0.0.1:8790/health` 应显示 `"version":"1.0.3"`、`"rules_version":"2026-11-20.1"`（旧版是 `2026-10-20`，说明还在跑旧规则）。再用一段病理口述确认 `microscopic_examination` 有内容、浸润深度 / 淋巴结状态 / 切缘不混入镜下叙述。
 
 ## 项目背景
 

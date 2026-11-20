@@ -1,5 +1,5 @@
 {
-  "version": "2026-10-20",
+  "version": "2026-11-20.1",
   "description": "SOAP 规则抽取配置。修改本文件即可调整抽取行为，无需重新打包（对齐《技术设计》2.3 声明式与 NFR-10 版本化）。",
   "markers": {
     "S": ["主诉", "現病史", "现病史", "病史", "病人講", "病人说", "病人表示", "患者訴", "患者诉", "complain", "complains", "complaining", "history", "history of", "presenting", "presented with", "symptoms", "C/O", "Hx"],
@@ -52,6 +52,6 @@
   },
   "thresholds": {
     "assign_min_score": 1.0,
-    "marker_score": 0.0
+    "marker_bonus": 1.6
   }
 }

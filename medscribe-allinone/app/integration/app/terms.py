@@ -18,6 +18,7 @@ from __future__ import annotations
 import json
 import re
 import unicodedata
+from functools import lru_cache
 from pathlib import Path
 from typing import Any, Iterable, Optional
 
@@ -302,6 +303,11 @@ def _count_reasons(glossary: list[dict]) -> dict[str, int]:
 # ---------------------------------------------------------------------------
 # 纠正算法（与 report-engine v0.1.0 对齐）
 # ---------------------------------------------------------------------------
+@lru_cache(maxsize=None)
+def _ascii_span_pattern(alias_key: str) -> re.Pattern[str]:
+    return re.compile(rf"(?<![a-z0-9]){re.escape(alias_key)}(?![a-z0-9])")
+
+
 class TermCorrector:
     def __init__(self, entries: Optional[list[dict]] = None, version: str = "") -> None:
         self.version = version
@@ -316,6 +322,29 @@ class TermCorrector:
                 if key:
                     self._alias_map.setdefault(key, entry)
         self._alias_items = sorted(self._alias_map.items(), key=lambda kv: -len(kv[0]))
+        # 首字符 + 长度索引：原实现每段文本把 1181 个别名全扫一遍，
+        # 每个别名还要重新折叠整段文本（实测 21 ms/77 字）。
+        # 按首字符取候选后，只对可能出现的别名做定位。
+        self._by_first: dict[str, list[tuple[str, dict]]] = {}
+        self._by_len: dict[int, list[tuple[str, dict]]] = {}
+        for key, entry in self._alias_map.items():
+            if not key:
+                continue
+            self._by_first.setdefault(key[0], []).append((key, entry))
+            self._by_len.setdefault(len(key), []).append((key, entry))
+        for bucket in self._by_first.values():
+            bucket.sort(key=lambda kv: -len(kv[0]))
+        # 候选按原顺序返回，保证替换顺序与旧实现一致（同长度别名的先后不随索引变化）
+        self._order = {key: i for i, (key, _entry) in enumerate(self._alias_items)}
+
+    def _candidates(self, folded_text: str) -> list[tuple[str, dict]]:
+        """文本里出现过的首字符下的别名，仍按原优先级返回。"""
+        found: dict[str, dict] = {}
+        for ch in set(folded_text):
+            for key, entry in self._by_first.get(ch, ()):
+                if key not in found:
+                    found[key] = entry
+        return sorted(found.items(), key=lambda kv: self._order.get(kv[0], 0))
 
     @classmethod
     def load(cls, terms_dir: Path) -> "TermCorrector":
@@ -356,7 +385,7 @@ class TermCorrector:
         if not hay or not alias_key:
             return []
         if _ASCII_ALIAS.fullmatch(alias_key):
-            pat = re.compile(rf"(?<![a-z0-9]){re.escape(alias_key)}(?![a-z0-9])")
+            pat = _ascii_span_pattern(alias_key)
             return [m.span() for m in pat.finditer(hay)]
         spans: list[tuple[int, int]] = []
         start = 0
@@ -377,7 +406,7 @@ class TermCorrector:
         corrections: list[dict] = []
         result = text
 
-        for alias_key, entry in self._alias_items:
+        for alias_key, entry in self._candidates(self._folded(result)):
             if len(alias_key) < 2:
                 continue
             norm_term = normalize(entry.get("term_norm", ""))
@@ -409,12 +438,12 @@ class TermCorrector:
                 continue
             best: tuple[int, dict] | None = None
             limit = _fuzzy_limit(len(token_norm))
-            for alias_key, entry in self._alias_items:
-                if abs(len(alias_key) - len(token_norm)) > limit:
-                    continue
-                dist = self.levenshtein(token_norm, alias_key, limit)
-                if dist <= limit and (best is None or dist < best[0]):
-                    best = (dist, entry)
+            # 只比较长度差在容忍范围内的别名；从长到短扫描，保持原有优先顺序
+            for length in range(len(token_norm) + limit, len(token_norm) - limit - 1, -1):
+                for alias_key, entry in self._by_len.get(length, ()):
+                    dist = self.levenshtein(token_norm, alias_key, limit)
+                    if dist <= limit and (best is None or dist < best[0]):
+                        best = (dist, entry)
             if best is None:
                 continue
             entry = best[1]

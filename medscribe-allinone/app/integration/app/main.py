@@ -183,11 +183,13 @@ def create_app() -> FastAPI:
     def get_session(session_id: str) -> dict:
         return service.get_detail(session_id).model_dump()
 
-    @app.patch("/sessions/{session_id}", summary="重命名会话")
-    def rename_session(
+    @app.patch("/sessions/{session_id}", summary="更新会话标题/报告模板")
+    def update_session(
         session_id: str, req: RenameSessionRequest = Body(default=RenameSessionRequest())
     ) -> dict:
-        return service.rename_session(session_id, req.title).model_dump()
+        if req.template_id is None and not req.title.strip():
+            raise InvalidState("标题或模板至少提供一项")
+        return service.update_session(session_id, req.title, req.template_id).model_dump()
 
     @app.post("/sessions/{session_id}/duplicate", summary="复制会话为副本（保留录音与转写）")
     def duplicate_session(

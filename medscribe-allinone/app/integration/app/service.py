@@ -207,13 +207,40 @@ class IntegrationService:
             created_at=now,
             updated_at=now,
             status="created",
-            title=title or f"会话 {now[:19].replace('T', ' ')}",
+            # 默认名按「日期 时间」即可，不带「会话」前缀；界面语言对应的
+            # 本地化命名由前端传入 title（zh / zh-Hant / en 各一套格式）。
+            title=title or now[:16].replace("T", " "),
             template_id=template_id or self.cfg.default_template,
             # 新会话排在列表最前，符合「刚建的放在手边」的使用习惯
             sort_order=self.store.next_sort_order(),
         )
         self.store.upsert_session(session.model_dump())
         self._audit(session.id, "session_created", {"template_id": session.template_id})
+        return session
+
+    def update_session(self, session_id: str, title: str = "",
+                       template_id: Optional[str] = None) -> Session:
+        """更新会话标题与/或报告模板。
+
+        模板选择必须落到会话上：前端在刷新（上传音频、切换会话、切语言）时会
+        用会话里的 template_id 回填下拉框，不持久化就会被重置成默认模板。
+        """
+        session = self._require(session_id)
+        if title.strip():
+            clean = " ".join(title.split())
+            session.title = clean[:80]
+        if template_id is not None and template_id.strip():
+            wanted = template_id.strip()
+            valid = {item.get("id") for item in self.templates()}
+            if valid and wanted not in valid:
+                raise InvalidState(f"未知模板：{wanted}")
+            session.template_id = wanted
+        self._save(session)
+        self._audit(
+            session_id,
+            "session_updated",
+            {"title": session.title, "template_id": session.template_id},
+        )
         return session
 
     def rename_session(self, session_id: str, title: str) -> Session:
@@ -747,16 +774,25 @@ class IntegrationService:
             raise InvalidState("报告已签署，内容锁定（BR-11）")
         segments = self._segments(session_id)
         prior = self.store.load_corrections(session_id)
+        # 只回滚真正发生过替换的分段：老数据里未参与纠正的分段也可能带
+        # text_raw（历史版本会把整段 ASR 原文写进每个切片），无条件按 text_raw
+        # 还原会让这些切片膨胀成整段文段。
+        touched = {
+            c.get("segment_id") for c in prior if c.get("segment_id")
+        }
         pending = [
             s for s in segments
             if s.get("text_raw") and s["text_raw"] != s["text"]
+            and (not touched or s["id"] in touched)
         ]
         restored = len(pending)
         if pending:
+            target_ids = {s["id"] for s in pending}
             self.store.replace_segments(
                 session_id,
                 [
-                    {**s, "text": s["text_raw"] or s["text"]}
+                    {**s, "text": s["text_raw"]}
+                    if s["id"] in target_ids else s
                     for s in segments
                 ],
             )

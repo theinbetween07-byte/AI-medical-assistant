@@ -128,9 +128,10 @@ class CreateSessionRequest(BaseModel):
 
 
 class RenameSessionRequest(BaseModel):
-    """会话重命名：标题为空会被拒绝。"""
+    """会话属性更新：标题为空会被拒绝；只提供 template_id 时只改模板。"""
 
     title: str = ""
+    template_id: Optional[str] = None
 
 
 class ReorderSessionsRequest(BaseModel):

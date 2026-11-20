@@ -16,9 +16,11 @@ from __future__ import annotations
 
 import re
 
-MAX_CHARS = 24          # 中文按字数切：中文没有词间空格，短句才便于规则匹配
+MAX_CHARS = 24          # 中文切分目标长度：短句便于规则匹配
 LATIN_MAX_CHARS = 80    # 英文/拉丁文按短语切：过短会把 "tumour size" 之类的关键词拆散
 MIN_CLAUSE = 6
+# 目标长度附近的可接受区间：宁可多 16 个字，也不切断数字/单位/英文单词
+CUT_CEILING = MAX_CHARS + 16
 
 # 中文句末标点无条件切；英文句号只在后接空白时切，避免把 "3.5 cm" 拆开
 _SENT = re.compile(r"(?<=[。！？!?])|(?<=[.])(?=\s)")
@@ -113,6 +115,81 @@ def _join(prev: str, cur: str) -> str:
     return p + " " + c
 
 
+_CN_NUM = frozenset("零〇一二三四五六七八九十百千万億亿两兩")
+_UNIT_CJK = frozenset("度克毫克升毫升分秒時时天年日月次下")
+
+
+def _is_cjk(ch: str) -> bool:
+    return bool(ch) and bool(_CJK_RE.match(ch))
+
+
+def _is_protected(text: str, cut: int) -> bool:
+    """切口落在不可分割单元内部时返回 True。
+
+    不可分割单元包括：英文单词内部、小数、数字连写、中文数词串、
+    数字与单位（38度5、10mg、3.5cm）之间。切在这些位置会让术语库与
+    关键词同时失配，且数值无法由上下文还原。
+    """
+    if cut <= 0 or cut >= len(text):
+        return True
+    left, right = text[cut - 1], text[cut]
+    if left.isascii() and left.isalpha() and right.isascii() and right.isalpha():
+        return True
+    if left.isdigit() and (right.isdigit() or right == "."):
+        return True
+    if left == "." and right.isdigit():
+        return True
+    if left.isdigit() and right.isascii() and right.isalpha():
+        return True
+    if left.isascii() and left.isalpha() and right.isdigit():
+        return True
+    if left.isdigit() and _is_cjk(right):
+        return True
+    if left in _CN_NUM and (_is_cjk(right) or (right.isascii() and right.isalpha())):
+        return True
+    if right in _CN_NUM and (left.isdigit() or left in _CN_NUM
+                              or (left.isascii() and left.isalpha())):
+        return True
+    if right in _UNIT_CJK and (left.isdigit() or left in _CN_NUM):
+        return True
+    return False
+
+
+def _cut_score(text: str, cut: int, target: int) -> float:
+    """切口接近目标长度、且落在语义边界上时得分更高。"""
+    left, right = text[cut - 1], text[cut]
+    score = 0.0
+    if left in "，、；;。!?！？":
+        score += 5.0
+    if left in _UNIT_CJK:
+        score += 3.0
+    if left.isascii() and left.isalpha() and not (right.isascii() and right.isalpha()):
+        score += 3.0
+    score -= abs(cut - target) * 0.15
+    return score
+
+
+def _choose_cut(text: str, target: int, ceiling: int) -> int:
+    """在目标长度附近选一个安全切口；都不可用就退到目标。
+
+    安全 = 不落在数字、小数、中文数词串、单位之间或英文单词内部。
+    在此之上优先单位结尾、标点、词尾这类语义边界，避免把
+    「下|體溫」粘在一段里，也避免「一百二十|八」这种数值腰斩。
+    """
+    lo = max(MIN_CLAUSE, target // 2)
+    hi = min(len(text) - MIN_CLAUSE, max(target, ceiling))
+    if hi <= lo:
+        return 0
+    best_cut, best_score = 0, float("-inf")
+    for cand in range(lo, hi + 1):
+        if _is_protected(text, cand):
+            continue
+        score = _cut_score(text, cand, target)
+        if score > best_score:
+            best_cut, best_score = cand, score
+    return best_cut or min(target, hi)
+
+
 def _split_long(part: str, max_chars: int) -> list[str]:
     if len(part) <= max_chars:
         return [part]
@@ -123,13 +200,13 @@ def _split_long(part: str, max_chars: int) -> list[str]:
             merged[-1] += piece
         else:
             merged.append(piece)
-    # 逗号也切不开的超长句，按词边界硬切，避免把单词劈成两半（anterior -> ant|erior）
+    # 逗号也切不开的超长句：在软上限附近找"安全切口"，避开数值、单位与英文单词内部
     out: list[str] = []
     for piece in merged:
         while len(piece) > max_chars * 2:
-            cut = piece.rfind(" ", 0, max_chars)
-            if cut < max_chars // 2:
-                cut = max_chars  # 中文等无空格文本：按字数切
+            cut = _choose_cut(piece, max_chars, CUT_CEILING)
+            if cut <= 0 or cut >= len(piece) - MIN_CLAUSE + 1:
+                break
             out.append(piece[:cut].rstrip())
             piece = piece[cut:].lstrip()
         out.append(piece)
@@ -221,5 +298,9 @@ def refine_segments(segments: list[dict], max_chars: int = MAX_CHARS) -> list[di
         item["start_ms"] = start
         item["end_ms"] = end
         item["text"] = text
+        # 切分后 text_raw 不再与 text 对齐：它记录的是切分前整段原文，
+        # 留着会让撤销把这个切片覆盖回整段（所有切片都变成完整文段）。
+        # text_raw 由术语纠正层在真正替换时重新写入。
+        item["text_raw"] = None
         out.append(item)
     return out
