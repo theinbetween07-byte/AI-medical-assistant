@@ -107,18 +107,27 @@ class Settings:
         # 目标响度：-20 LUFS 是 Whisper 类模型的稳妥值；-23 LUFS 为 EBU R128 广播标准
         self.prep_target_lufs: float = _env_float("MSHK_PREP_LUFS", -20.0)
         self.prep_true_peak: float = _env_float("MSHK_PREP_TP", -2.0)
-        self.prep_lra: float = _env_float("MSHK_PREP_LRA", 11.0)
+        # LRA 是"允许的最大响度范围"。设 11（广播标准）会让原始 LRA 12.9 的录音
+        # 无法线性归一化，loudnorm 自动回退到动态模式并压缩到 4.4 LU。
+        # ASR 不需要压动态，放宽到 30 以保证 linear 优先、避免压缩。
+        self.prep_lra: float = _env_float("MSHK_PREP_LRA", 30.0)
         self.prep_highpass_hz: int = _env_int("MSHK_PREP_HIGHPASS_HZ", 80)
         self.prep_denoise: str = _env("MSHK_PREP_DENOISE", "auto")      # auto|on|off
         self.prep_denoise_nr: float = _env_float("MSHK_PREP_DENOISE_NR", 10.0)
         self.prep_noise_gate_db: float = _env_float("MSHK_PREP_NOISE_GATE_DB", -55.0)
-        self.prep_snr_gate_db: float = _env_float("MSHK_PREP_SNR_GATE_DB", 30.0)
+        # 阈值由带参考文本的 5 dB / 15 dB 白噪语料校准（见 outputs/audio-preprocess/REPORT.md）：
+        # 估计 SNR 16 dB 时降噪使 WER 0.108→0.081；28 dB 时降噪反而使 WER 0.095→0.135。
+        self.prep_snr_gate_db: float = _env_float("MSHK_PREP_SNR_GATE_DB", 19.0)
         self.prep_dereverb: str = _env("MSHK_PREP_DEREVERB", "auto")    # auto|on|off
-        self.prep_dereverb_snr_gate_db: float = _env_float("MSHK_PREP_DEREVERB_SNR_DB", 18.0)
+        self.prep_dereverb_snr_gate_db: float = _env_float("MSHK_PREP_DEREVERB_SNR_DB", 12.0)
         self.prep_vad: bool = _env_bool("MSHK_PREP_VAD", True)
         self.prep_silence_db: float = _env_float("MSHK_PREP_SILENCE_DB", -38.0)
         self.prep_silence_min_s: float = _env_float("MSHK_PREP_SILENCE_MIN_S", 0.55)
         self.prep_keep_pad_ms: int = _env_int("MSHK_PREP_KEEP_PAD_MS", 250)
+        # 首尾静音短于该值时是否跳过裁剪。实测中"总是裁"在 clean 上略有益、
+        # 在部分混响样本上略有害，方向不稳定，故默认 0（保持已验证行为）；
+        # 混响/远场场景可调高到 1.5 以减少边界抖动。
+        self.prep_min_trim_s: float = _env_float("MSHK_PREP_MIN_TRIM_S", 0.0)
         self.prep_trim_mid: bool = _env_bool("MSHK_PREP_TRIM_MID", True)
         self.prep_mid_gap_ms: int = _env_int("MSHK_PREP_MID_GAP_MS", 8000)
 
@@ -136,7 +145,8 @@ class Settings:
 
         # ---- 默认值
         self.default_template: str = _env("MSHK_DEFAULT_TEMPLATE", "outpatient_record")
-        self.default_language: str = _env("MSHK_DEFAULT_LANGUAGE", "auto")
+        # 香港醫療場景默認粵語：Whisper 會把粵語檢測成 zh，按普通話解碼錯字率極高
+        self.default_language: str = _env("MSHK_DEFAULT_LANGUAGE", "yue")
         self.synthetic_tag: str = "【SYNTHETIC】"
         # 引擎自带脱敏基于简易 NER，会把「病人今日發熱」整句当成姓名替换成
         # [NAME_ZH_1]，破坏可读性；PRD 无强制脱敏要求，默认关闭。

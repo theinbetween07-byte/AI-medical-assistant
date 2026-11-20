@@ -54,7 +54,7 @@ COMPUTE_TYPE = os.environ.get("WHISPER_COMPUTE_TYPE", "auto")
 ASR_CPU_THREADS = int(os.environ.get("WHISPER_CPU_THREADS", "0"))
 # 分块解码长度（秒）。块内开启上下文续写以恢复标点/专名，块间互不影响，
 # 避免长音频开启上下文后续写导致的循环重复与幻觉。
-ASR_CHUNK_SECONDS = int(os.environ.get("WHISPER_CHUNK_SECONDS", "30"))
+ASR_CHUNK_SECONDS = int(os.environ.get("WHISPER_CHUNK_SECONDS", "60"))
 
 # ============ 擴展模塊 ============
 EXTENSIONS_ROOT = Path(
@@ -63,8 +63,13 @@ EXTENSIONS_ROOT = Path(
 EXTENSIONS_MANIFEST = EXTENSIONS_ROOT / "extensions.json"
 
 # ============ ASR 默認參數 ============
-DEFAULT_LANGUAGE = "auto"  # 默認粵語，香港醫療場景
+# 香港醫療場景默認粵語：Whisper 的語言檢測會把粵語判成 zh，按普通話解碼錯字率
+# 高達 40%+（hk-clinical-synthetic 實測），因此默認直接指定 yue。
+# 普通話/英語錄音可在界面切換，或用 MSHK_ASR_LANGUAGE 覆蓋。
+DEFAULT_LANGUAGE = os.environ.get("MSHK_ASR_LANGUAGE", "yue")
 DEFAULT_BEAM_SIZE = 5
+# auto 请求在本部署中按此语言解码；Whisper 的 zh 检测会把粤语带偏
+AUTO_LANGUAGE = os.environ.get("MSHK_ASR_AUTO_LANGUAGE", "yue")
 DEFAULT_VAD_FILTER = True
 
 # 醫學術語提示詞（注入 Whisper，提升專有名詞識別率）
@@ -76,17 +81,26 @@ INITIAL_PROMPT_ZH = (
     "心电图 ECG、CT、MRI、慢性胃炎、高血压、糖尿病、冠心病、"
     "奥美拉唑、阿莫西林、头孢、低脂饮食、规律作息、复诊、随访。"
 )
-# 粵語（香港醫療場景）：繁體引導，並給出粵語常用字
-INITIAL_PROMPT_YUE = (
-    "以下是一段香港醫生的臨床口述記錄，內容涉及問診、查體、診斷、處方、"
-    "檢驗檢查、影像所見等。可能混合使用粵語、普通話及英文醫學術語。"
-    "常見醫學詞彙：心電圖 ECG、CT scan、MRI、血壓 hypertension、"
-    "糖尿病 diabetes、心肌梗塞 myocardial infarction、覆診 follow-up、"
-    "處方 prescription、藥物 medication、轉介 referral。"
-    "常見專科：心臟科 cardiology、骨科 orthopaedics、內科 medicine、"
-    "外科 surgery、兒科 paediatrics、婦產科 O&G、急症科 A&E。"
-    "粵語常用字：睇、嘅、喺、咁、冇、咩、畀、攞、醫生、醫院。"
+# 粵語（香港醫療場景）：用一段同風格的粵英混雜口述做引導。
+# 相比術語清單，示例句能同時對齊「繁體字 + 中文數字 + 中英混排 + 口述節奏」，
+# hk-clinical-synthetic 上字錯率 0.058 → 0.047（術語清單反而稀釋了風格引導）。
+# 可用 MSHK_INITIAL_PROMPT_YUE / MSHK_PROMPT_YUE_FILE 覆蓋。
+INITIAL_PROMPT_YUE = os.environ.get("MSHK_INITIAL_PROMPT_YUE") or (
+    "以下係香港醫生嘅臨床口述。呢個病人因為發燒入院，今日冇胸痛，冇氣促。"
+    "血壓一百二十八 over 七十四，心跳每分鐘七十八下，SpO2 喺 room air 係九十七 percent。"
+    "Chest X-ray 見右下肺實變，blood culture 仲 pending。"
+    "計劃繼續 intravenous antibiotics，聽日 repeat full blood count 同 renal function。"
+    " 常見詞：醫囑、拇指、韌帶、併發症、手術、切除、麻醉、上臂。"
 )
+
+# 運維可把提示詞放在 UTF-8 文件裏，避免命令行環境變量編碼問題
+_prompt_file = os.environ.get("MSHK_PROMPT_YUE_FILE")
+if _prompt_file:
+    try:
+        INITIAL_PROMPT_YUE = Path(_prompt_file).read_text(encoding="utf-8").strip() or INITIAL_PROMPT_YUE
+    except OSError:
+        pass
+
 # 兼容舊引用；自動識別時按普通話處理
 INITIAL_PROMPT = INITIAL_PROMPT_ZH
 

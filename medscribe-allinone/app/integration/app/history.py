@@ -69,5 +69,11 @@ def filter_sessions(
             continue
         out.append(item)
 
+    # 两段稳定排序：先按更新时间倒序，再把手动排序过的会话按 sort_order 提到前面。
+    # 医生拖动过的项序号升序；没拖过的仍保持「最新在前」，不会因为新增字段而乱跳。
     out.sort(key=lambda r: str(r.get("updated_at") or r.get("created_at") or ""), reverse=True)
+    out.sort(key=lambda r: (
+        0 if isinstance(r.get("sort_order"), int) else 1,
+        r.get("sort_order") if isinstance(r.get("sort_order"), int) else 0,
+    ))
     return out[:limit] if limit > 0 else out

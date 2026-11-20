@@ -105,20 +105,24 @@ def _prefix_owner(
     best: tuple[int, int, str, str] | None = None
     for template_field in ordered:
         for prefix in _label_parts(template_field):
-            # 分隔符必须是显式的冒号/系动词。不能是可选的，否则
-            # "tumor size 6 cm" 会被剥成 "6 cm"、"lymphatic and venous
-            # invasion absent" 会被剥成 "absent"，字段值丢失关键上下文。
+            # 有显式冒号/系动词才剥掉标签；口述里 "tumor size 6 cm" /
+            # "主诉反复上腹痛" 没有分隔符，标签只用于确定字段归属，
+            # 值保留整句，否则会变成 "6 cm" 这种丢上下文的碎片。
             pattern = re.compile(
                 r"^"
                 + re.escape(prefix)
-                + r"\s*\.?\s*(?::|：|is|was|were|are|為|为)\s*(?P<value>.*\S)\s*$",
+                + r"\s*\.?\s*(?:(?::|：|is|was|were|are|為|为)\s*(?P<value>.*\S)|(?P<rest>.*\S))\s*$",
                 re.IGNORECASE | re.DOTALL,
             )
             match = pattern.match(raw)
             if not match:
                 continue
-            value = match.group("value").strip().rstrip("。.").strip()
-            value = value.lstrip(" ,，、;；:：").strip()
+            if match.group("value") is not None:
+                value = match.group("value").strip().rstrip("。.").strip()
+                value = value.lstrip(" ,，、;；:：").strip()
+            else:
+                # 无分隔符：整句即字段值，保留可读上下文
+                value = raw.strip()
             candidate = (len(prefix), -template_field.order, template_field.key, value)
             if best is None or candidate[:3] > best[:3]:
                 best = candidate

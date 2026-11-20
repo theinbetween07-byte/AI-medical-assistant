@@ -42,7 +42,7 @@
     templates: [],
     models: [],
     asrModel: '',
-    asrLanguage: 'auto',
+    asrLanguage: 'yue',
     asrDevice: '',
     filter: 'all',
     exportFormat: 'pdf',
@@ -53,7 +53,9 @@
     recSeconds: 0,
     playing: false,
     transcribing: false,
+    transcribingSessionId: null,
     transcribeJob: null,
+    seeking: false,
     pendingAudioName: '',
     extUrl: ''
   };
@@ -69,6 +71,7 @@
       'rail.today': '今天',
       'rail.earlier': '更早',
       'rail.count': '{n} 例',
+      'rail.all': '全部会话',
       'pref.theme': '界面主题',
       'pref.themeAria': '界面主题',
       'pref.language': '界面语言',
@@ -118,6 +121,7 @@
       'audio.play': '播放音频',
       'audio.pause': '暂停音频',
       'audio.speed': '播放速度',
+      'audio.seekAria': '播放进度',
       'audio.record': '录音',
       'audio.stop': '停止',
       'audio.upload': '上传音频',
@@ -311,6 +315,13 @@
       'more.aria': '更多操作',
       'more.title': '更多操作',
       'more.delete': '删除会话',
+      'session.menuAria': '会话操作',
+      'session.menu.duplicate': '复制为副本',
+      'session.menu.rename': '重命名',
+      'session.menu.delete': '删除',
+      'toast.renamed': '会话已重命名。',
+      'toast.duplicated': '已创建副本「{title}」。',
+      'toast.renameEmpty': '标题不能为空。',
       'field.empty': '（空）'
     },
     'zh-Hant': {
@@ -322,6 +333,7 @@
       'rail.today': '今天',
       'rail.earlier': '更早',
       'rail.count': '{n} 例',
+      'rail.all': '全部會話',
       'pref.theme': '介面主題',
       'pref.themeAria': '介面主題',
       'pref.language': '介面語言',
@@ -371,6 +383,7 @@
       'audio.play': '播放音頻',
       'audio.pause': '暫停音頻',
       'audio.speed': '播放速度',
+      'audio.seekAria': '播放進度',
       'audio.record': '錄音',
       'audio.stop': '停止',
       'audio.upload': '上傳音頻',
@@ -564,6 +577,13 @@
       'more.aria': '更多操作',
       'more.title': '更多操作',
       'more.delete': '刪除會話',
+      'session.menuAria': '會話操作',
+      'session.menu.duplicate': '複製為副本',
+      'session.menu.rename': '重新命名',
+      'session.menu.delete': '刪除',
+      'toast.renamed': '會話已重新命名。',
+      'toast.duplicated': '已建立副本「{title}」。',
+      'toast.renameEmpty': '標題不能為空。',
       'field.empty': '（空）'
     },
     en: {
@@ -575,6 +595,7 @@
       'rail.today': 'Today',
       'rail.earlier': 'Earlier',
       'rail.count': '{n} cases',
+      'rail.all': 'All sessions',
       'pref.theme': 'Theme',
       'pref.themeAria': 'Theme',
       'pref.language': 'Language',
@@ -624,6 +645,7 @@
       'audio.play': 'Play audio',
       'audio.pause': 'Pause audio',
       'audio.speed': 'Playback speed',
+      'audio.seekAria': 'Playback position',
       'audio.record': 'Record',
       'audio.stop': 'Stop',
       'audio.upload': 'Upload audio',
@@ -817,6 +839,13 @@
       'more.aria': 'More actions',
       'more.title': 'More actions',
       'more.delete': 'Delete session',
+      'session.menuAria': 'Session actions',
+      'session.menu.duplicate': 'Duplicate',
+      'session.menu.rename': 'Rename',
+      'session.menu.delete': 'Delete',
+      'toast.renamed': 'Session renamed.',
+      'toast.duplicated': 'Duplicate created: {title}.',
+      'toast.renameEmpty': 'Title cannot be empty.',
       'field.empty': '(empty)'
     }
   };
@@ -992,8 +1021,19 @@
   }
 
   /* ------------------------------------------------------------ rendering */
+  function sessionTimeLabel(session, showDate) {
+    var day = new Date(session.created_at || session.updated_at || Date.now());
+    if (isNaN(day.getTime())) return '';
+    var hm = String(day.getHours()).padStart(2, '0') + ':' +
+      String(day.getMinutes()).padStart(2, '0');
+    if (!showDate) return hm;
+    return String(day.getMonth() + 1).padStart(2, '0') + '-' +
+      String(day.getDate()).padStart(2, '0') + ' ' + hm;
+  }
+
   function renderSessions() {
     var box = $('session-list');
+    if (!box) return;
     var query = ($('session-search').value || '').trim().toLowerCase();
     var items = state.sessions.filter(function (session) {
       if (!query) return true;
@@ -1001,45 +1041,59 @@
     });
 
     if (!items.length) {
-      box.innerHTML = '<div class="rail-empty">' +
-        (query ? esc(t('rail.empty')) : esc(t('rail.empty'))) + '</div>';
+      box.innerHTML = '<div class="rail-empty">' + esc(t('rail.empty')) + '</div>';
       return;
     }
 
-    var groups = { today: [], earlier: [] };
-    var now = new Date();
-    items.forEach(function (session) {
-      var day = new Date(session.created_at || session.updated_at || Date.now());
-      var sameDay = day.getFullYear() === now.getFullYear() &&
-        day.getMonth() === now.getMonth() && day.getDate() === now.getDate();
-      (sameDay ? groups.today : groups.earlier).push(session);
+    // 拖动排序后按持久化的 sort_order 扁平展示，看到什么顺序就存什么顺序；
+    // 尚未手动排序时保留「今天 / 更早」分组。
+    var manual = items.some(function (session) {
+      return typeof session.sort_order === 'number';
     });
+    var canDrag = !query;
+
+    function itemHtml(session, showDate) {
+      var title = session.title || session.id;
+      var status = t('status.' + (session.status || 'created'));
+      var dotClass = session.report_status === 'signed' ? 'ok'
+        : session.status === 'generated' ? 'warn'
+        : session.status === 'created' ? 'muted' : 'live';
+      var busy = state.transcribing && state.transcribingSessionId === session.id;
+      return '<button class="session' + (session.id === state.sessionId ? ' active' : '') +
+        (busy ? ' is-transcribing' : '') +
+        '" type="button" data-session-id="' + esc(session.id) + '"' +
+        ' draggable="' + (canDrag ? 'true' : 'false') + '"' +
+        (session.id === state.sessionId ? ' aria-current="true"' : '') + '>' +
+        '<span class="session-main">' +
+        '<span class="session-name">' + esc(title) + '</span>' +
+        '<span class="session-meta"><span class="dot ' + dotClass + '"></span><span>' +
+        esc(status) + '</span></span></span>' +
+        '<span class="session-time">' + esc(sessionTimeLabel(session, showDate)) + '</span>' +
+        '</button>';
+    }
 
     var html = '';
-    [['today', 'rail.today'], ['earlier', 'rail.earlier']].forEach(function (pair) {
-      var list = groups[pair[0]];
-      if (!list.length) return;
-      html += '<div class="rail-label"><span>' + esc(t(pair[1])) + '</span><span>' +
-        esc(t('rail.count', { n: list.length })) + '</span></div>';
-      list.forEach(function (session) {
-        var title = session.title || session.id;
-        var status = t('status.' + (session.status || 'created'));
-        var day = new Date(session.created_at || Date.now());
-        var time = String(day.getHours()).padStart(2, '0') + ':' + String(day.getMinutes()).padStart(2, '0');
-        var dotClass = session.report_status === 'signed' ? 'ok'
-          : session.status === 'generated' ? 'warn'
-          : session.status === 'created' ? 'muted' : 'live';
-        html += '<button class="session' + (session.id === state.sessionId ? ' active' : '') +
-          '" type="button" data-session-id="' + esc(session.id) + '"' +
-          (session.id === state.sessionId ? ' aria-current="true"' : '') + '>' +
-          '<span class="session-main">' +
-          '<span class="session-name">' + esc(title) + '</span>' +
-          '<span class="session-meta"><span class="dot ' + dotClass + '"></span><span>' +
-          esc(status) + '</span></span></span>' +
-          '<span class="session-time">' + esc(time) + '</span>' +
-          '</button>';
+    if (manual) {
+      html += '<div class="rail-label"><span>' + esc(t('rail.all')) + '</span><span>' +
+        esc(t('rail.count', { n: items.length })) + '</span></div>';
+      items.forEach(function (session) { html += itemHtml(session, true); });
+    } else {
+      var groups = { today: [], earlier: [] };
+      var now = new Date();
+      items.forEach(function (session) {
+        var day = new Date(session.created_at || session.updated_at || Date.now());
+        var sameDay = day.getFullYear() === now.getFullYear() &&
+          day.getMonth() === now.getMonth() && day.getDate() === now.getDate();
+        (sameDay ? groups.today : groups.earlier).push(session);
       });
-    });
+      [['today', 'rail.today'], ['earlier', 'rail.earlier']].forEach(function (pair) {
+        var list = groups[pair[0]];
+        if (!list.length) return;
+        html += '<div class="rail-label"><span>' + esc(t(pair[1])) + '</span><span>' +
+          esc(t('rail.count', { n: list.length })) + '</span></div>';
+        list.forEach(function (session) { html += itemHtml(session, false); });
+      });
+    }
     box.innerHTML = html;
   }
 
@@ -1194,7 +1248,7 @@
     $('low-chip').hidden = low === 0;
     $('low-chip-text').textContent = lowPhrase(low);
 
-    if (state.transcribing) {
+    if (state.transcribing && state.transcribingSessionId === state.sessionId) {
       box.innerHTML = progressCardHtml();
       if (state.transcribeJob) updateTranscribeProgress(state.transcribeJob);
       return;
@@ -1541,8 +1595,9 @@
     var status = session.status;
     var level = rank(status);
     var signed = level >= rank('signed');
+    var transcribingHere = state.transcribing && state.transcribingSessionId === state.sessionId;
     $('btn-transcribe').disabled = signed || state.busy || level < rank('recorded');
-    $('btn-transcribe').textContent = t(state.transcribing ? 'action.transcribing' : 'action.transcribe');
+    $('btn-transcribe').textContent = t(transcribingHere ? 'action.transcribing' : 'action.transcribe');
     $('btn-correct').disabled = signed || state.busy || level < rank('transcribed');
     $('btn-undo').disabled = signed || state.busy ||
       !(state.detail.corrections && state.detail.corrections.length);
@@ -1553,7 +1608,7 @@
     $('btn-record').disabled = signed || state.busy;
 
     var hint = '';
-    if (state.transcribing) hint = t('toast.transcribing');
+    if (transcribingHere) hint = t('toast.transcribing');
     else if (level < rank('recorded')) hint = t('transcript.empty');
     else if (level < rank('transcribed')) hint = t('action.transcribe');
     else if (level < rank('generated')) hint = t('action.generate');
@@ -1808,13 +1863,19 @@
   }
 
   async function deleteSession() {
-    if (!state.sessionId) return;
+    await deleteSessionById(state.sessionId);
+  }
+
+  async function deleteSessionById(sessionId) {
+    if (!sessionId) return;
     if (!window.confirm(t('toast.confirmDelete'))) return;
     try {
-      await api('/sessions/' + encodeURIComponent(state.sessionId), { method: 'DELETE' });
-      state.sessionId = null;
-      state.detail = null;
-      renderAll();
+      await api('/sessions/' + encodeURIComponent(sessionId), { method: 'DELETE' });
+      if (state.sessionId === sessionId) {
+        state.sessionId = null;
+        state.detail = null;
+        renderAll();
+      }
       await loadSessions();
       showToast(t('toast.deleted'));
     } catch (e) {
@@ -1906,16 +1967,20 @@
     if (!state.sessionId) { showToast(t('toast.noSession')); return; }
     // 连点会让同一个会话建出多个转写任务（后端口虽会复用，但界面先要拦住）
     if (state.busy || state.transcribing) { return; }
+    var jobSessionId = state.sessionId;
     state.busy = true;
     state.transcribing = true;
+    // 进度卡只在发起转写的会话里显示，切到别的会话不能顶掉已有转写文本
+    state.transcribingSessionId = jobSessionId;
     state.transcribeStartedAt = Date.now();
+    renderSessions();
     state.transcribeJob = { progress: 0.02, phase: 'prepare', processed: 0, total: 0 };
     $('pipeline-hint').textContent = t('toast.transcribing');
     renderPipeline();
     renderSegments();
     startProgressTicker();
     try {
-      var job = await api('/sessions/' + encodeURIComponent(state.sessionId) + '/transcribe-jobs',
+      var job = await api('/sessions/' + encodeURIComponent(jobSessionId) + '/transcribe-jobs',
         jsonOptions('POST', {
           language: state.asrLanguage, beam_size: 5, asr_template: 'soap'
         }));
@@ -1934,9 +1999,12 @@
     } finally {
       stopProgressTicker();
       state.busy = false;
+      state.transcribing = false;
+      state.transcribingSessionId = null;
       state.transcribeJob = null;
       state.transcribeStartedAt = null;
       if (state.detail) renderPipeline();
+      renderSessions();
     }
   }
 
@@ -2138,6 +2206,40 @@
   var player = $('player');
   var playBtn = $('play-btn');
 
+  function audioDurationSec() {
+    if (player.duration && isFinite(player.duration) && player.duration > 0) {
+      return player.duration;
+    }
+    var dur = state.detail && state.detail.session ? state.detail.session.duration_ms : 0;
+    return Math.max(0, Number(dur) || 0) / 1000;
+  }
+
+  function paintAudioSeek(currentMs) {
+    var seek = $('audio-seek');
+    if (!seek) return;
+    var totalMs = Math.round(audioDurationSec() * 1000);
+    if (totalMs <= 0) {
+      seek.max = '0';
+      seek.value = '0';
+      seek.disabled = true;
+      seek.style.setProperty('--p', '0%');
+      if (!state.playing) $('audio-time').textContent = '00:00 / 00:00';
+      return;
+    }
+    seek.max = String(totalMs);
+    seek.disabled = false;
+    var ms = currentMs;
+    if (typeof ms !== 'number' || !isFinite(ms)) {
+      ms = Math.round(player.currentTime * 1000);
+    }
+    ms = Math.max(0, Math.min(totalMs, Math.round(ms)));
+    seek.value = String(ms);
+    seek.style.setProperty('--p', (ms / totalMs * 100).toFixed(2) + '%');
+    if (!state.seeking) {
+      $('audio-time').textContent = fmtClock(ms) + ' / ' + fmtClock(totalMs);
+    }
+  }
+
   function setPlaying(playing) {
     state.playing = playing;
     playBtn.setAttribute('aria-pressed', String(playing));
@@ -2150,20 +2252,23 @@
     var session = state.detail ? state.detail.session : null;
     var hasAudio = Boolean(session && session.audio_path);
     playBtn.disabled = !hasAudio;
+    var srcChanged = false;
     if (hasAudio) {
       var desired = '/sessions/' + encodeURIComponent(session.id) + '/audio';
       if (player.getAttribute('src') !== desired) {
         player.src = desired;
         setPlaying(false);
+        srcChanged = true;
       }
     } else {
       player.removeAttribute('src');
       player.load();
       setPlaying(false);
+      srcChanged = true;
     }
-    if (!state.playing) {
-      $('audio-time').textContent = '00:00 / ' + fmtClock(session ? session.duration_ms : 0);
-    }
+    if (srcChanged) state.seeking = false;
+    // 切换会话时进度归零；同一会话刷新时保留当前位置
+    paintAudioSeek(srcChanged ? 0 : undefined);
     // 文件名展示在波形与时长之间，方便确认导入的是哪一段录音
     var fileEl = $('audio-file');
     if (fileEl) {
@@ -2187,6 +2292,7 @@
     }
     try {
       player.currentTime = Math.max(0, (ms || 0) / 1000);
+      paintAudioSeek(ms || 0);
       if (player.paused) player.play().catch(function () {});
     } catch (e) { /* ignore */ }
   }
@@ -2397,8 +2503,229 @@
 
   $('session-list').addEventListener('click', function (event) {
     var item = event.target.closest('[data-session-id]');
+    hideSessionMenu();
     if (item) selectSession(item.dataset.sessionId);
   });
+
+  /* --------------------------------------------- 会话右键菜单 / 拖动排序 */
+  function findSession(id) {
+    return state.sessions.filter(function (session) { return session.id === id; })[0] || null;
+  }
+
+  function hideSessionMenu() {
+    var menu = $('session-menu');
+    if (menu) menu.hidden = true;
+  }
+
+  function showSessionMenu(event, sessionId) {
+    var menu = $('session-menu');
+    if (!menu) return;
+    menu.dataset.sessionId = sessionId;
+    menu.hidden = false;
+    // 先显示再量尺寸，靠近窗口边缘时向内翻转，避免被裁掉
+    var rect = menu.getBoundingClientRect();
+    var x = Math.min(event.clientX, window.innerWidth - rect.width - 8);
+    var y = Math.min(event.clientY, window.innerHeight - rect.height - 8);
+    menu.style.left = Math.max(8, x) + 'px';
+    menu.style.top = Math.max(8, y) + 'px';
+  }
+
+  $('session-list').addEventListener('contextmenu', function (event) {
+    var item = event.target.closest('[data-session-id]');
+    if (!item) return;
+    event.preventDefault();
+    showSessionMenu(event, item.dataset.sessionId);
+  });
+
+  $('session-list').addEventListener('scroll', hideSessionMenu);
+
+  $('session-menu').addEventListener('click', function (event) {
+    var button = event.target.closest('[data-session-action]');
+    var menu = $('session-menu');
+    if (!button || !menu) return;
+    var sessionId = menu.dataset.sessionId;
+    var action = button.dataset.sessionAction;
+    hideSessionMenu();
+    if (!sessionId) return;
+    if (action === 'duplicate') duplicateSession(sessionId);
+    else if (action === 'rename') startRenameSession(sessionId);
+    else if (action === 'delete') deleteSessionById(sessionId);
+  });
+
+  document.addEventListener('click', function (event) {
+    var menu = $('session-menu');
+    if (menu && !menu.hidden && !menu.contains(event.target)) hideSessionMenu();
+  }, true);
+
+  var dragSessionId = null;
+
+  function clearDropMarks() {
+    document.querySelectorAll('#session-list .drop-before, #session-list .drop-after')
+      .forEach(function (el) { el.classList.remove('drop-before', 'drop-after'); });
+  }
+
+  $('session-list').addEventListener('dragstart', function (event) {
+    var item = event.target.closest('[data-session-id]');
+    if (!item || item.getAttribute('draggable') !== 'true') {
+      event.preventDefault();
+      return;
+    }
+    dragSessionId = item.dataset.sessionId;
+    item.classList.add('dragging');
+    if (event.dataTransfer) {
+      event.dataTransfer.effectAllowed = 'move';
+      event.dataTransfer.setData('text/plain', dragSessionId);
+    }
+    hideSessionMenu();
+  });
+
+  $('session-list').addEventListener('dragend', function (event) {
+    var item = event.target.closest('[data-session-id]');
+    if (item) item.classList.remove('dragging');
+    clearDropMarks();
+    dragSessionId = null;
+  });
+
+  $('session-list').addEventListener('dragover', function (event) {
+    if (!dragSessionId) return;
+    event.preventDefault();
+    if (event.dataTransfer) event.dataTransfer.dropEffect = 'move';
+    var item = event.target.closest('[data-session-id]');
+    clearDropMarks();
+    if (!item || item.dataset.sessionId === dragSessionId) return;
+    var rect = item.getBoundingClientRect();
+    item.classList.add(event.clientY > rect.top + rect.height / 2 ? 'drop-after' : 'drop-before');
+  });
+
+  $('session-list').addEventListener('drop', function (event) {
+    if (!dragSessionId) return;
+    event.preventDefault();
+    var dragging = dragSessionId;
+    dragSessionId = null;
+    var item = event.target.closest('[data-session-id]');
+    clearDropMarks();
+    if (!item || item.dataset.sessionId === dragging) return;
+    var rect = item.getBoundingClientRect();
+    var after = event.clientY > rect.top + rect.height / 2;
+    persistSessionOrder(dragging, item.dataset.sessionId, after);
+  });
+
+  async function persistSessionOrder(dragId, targetId, after) {
+    var ids = state.sessions.map(function (session) { return session.id; });
+    var from = ids.indexOf(dragId);
+    if (from < 0 || ids.indexOf(targetId) < 0) return;
+    ids.splice(from, 1);
+    var to = ids.indexOf(targetId);
+    ids.splice(after ? to + 1 : to, 0, dragId);
+
+    var byId = {};
+    state.sessions.forEach(function (session) { byId[session.id] = session; });
+    state.sessions = ids.map(function (id) { return byId[id]; });
+    state.sessions.forEach(function (session, index) { session.sort_order = index; });
+    renderSessions();
+
+    try {
+      var ordered = await api('/sessions/reorder', jsonOptions('POST', { ids: ids }));
+      if (Array.isArray(ordered)) {
+        state.sessions = ordered;
+        renderSessions();
+      }
+    } catch (e) {
+      fail(e);
+      await loadSessions();
+    }
+  }
+
+  var renamingSessionId = null;
+
+  function startRenameSession(sessionId) {
+    var session = findSession(sessionId);
+    var item = document.querySelector('#session-list [data-session-id="' +
+      CSS.escape(sessionId) + '"]');
+    if (!session || !item) return;
+    if (renamingSessionId) renderSessions();
+    var nameEl = item.querySelector('.session-name');
+    if (!nameEl) return;
+    renamingSessionId = sessionId;
+    item.classList.add('renaming');
+    item.setAttribute('draggable', 'false');
+
+    var input = document.createElement('input');
+    input.className = 'session-rename';
+    input.type = 'text';
+    input.maxLength = 80;
+    input.value = session.title || '';
+    input.setAttribute('aria-label', t('session.menu.rename'));
+    nameEl.replaceWith(input);
+    input.focus();
+    input.select();
+
+    function finish() {
+      renamingSessionId = null;
+      input.removeEventListener('keydown', onKey);
+      input.removeEventListener('blur', onBlur);
+    }
+    function commit() {
+      var value = input.value;
+      finish();
+      renderSessions();
+      submitRename(sessionId, value);
+    }
+    function cancel() {
+      finish();
+      renderSessions();
+    }
+    function onKey(event) {
+      if (event.key === 'Enter') { event.preventDefault(); commit(); }
+      else if (event.key === 'Escape') { event.preventDefault(); cancel(); }
+    }
+    function onBlur() { commit(); }
+    input.addEventListener('keydown', onKey);
+    input.addEventListener('blur', onBlur);
+  }
+
+  function cancelRenameSession() {
+    if (renamingSessionId) {
+      renamingSessionId = null;
+      renderSessions();
+    }
+  }
+
+  async function submitRename(sessionId, title) {
+    var clean = String(title || '').trim();
+    if (!clean) {
+      showToast(t('toast.renameEmpty'));
+      return;
+    }
+    var current = findSession(sessionId);
+    if (current && current.title === clean) return;
+    try {
+      var updated = await api('/sessions/' + encodeURIComponent(sessionId),
+        jsonOptions('PATCH', { title: clean }));
+      if (current) current.title = updated.title || clean;
+      if (state.detail && state.detail.session.id === sessionId) {
+        state.detail.session.title = updated.title || clean;
+        renderHeader();
+      }
+      renderSessions();
+      showToast(t('toast.renamed'));
+    } catch (e) {
+      fail(e);
+      renderSessions();
+    }
+  }
+
+  async function duplicateSession(sessionId) {
+    try {
+      var created = await api('/sessions/' + encodeURIComponent(sessionId) + '/duplicate',
+        jsonOptions('POST', {}));
+      await loadSessions();
+      await selectSession(created.id);
+      showToast(t('toast.duplicated', { title: created.title || '' }));
+    } catch (e) {
+      fail(e);
+    }
+  }
 
   var searchTimer = null;
   $('session-search').addEventListener('input', function () {
@@ -2446,11 +2773,26 @@
   });
   player.addEventListener('play', function () { setPlaying(true); });
   player.addEventListener('pause', function () { setPlaying(false); });
-  player.addEventListener('ended', function () { setPlaying(false); });
+  player.addEventListener('ended', function () { setPlaying(false); paintAudioSeek(); });
+  player.addEventListener('loadedmetadata', function () { paintAudioSeek(); });
+  player.addEventListener('durationchange', function () { paintAudioSeek(); });
   player.addEventListener('timeupdate', function () {
-    var duration = player.duration && isFinite(player.duration)
-      ? player.duration : (state.detail ? state.detail.session.duration_ms / 1000 : 0);
-    $('audio-time').textContent = fmtClock(player.currentTime * 1000) + ' / ' + fmtClock(duration * 1000);
+    if (!state.seeking) paintAudioSeek();
+  });
+
+  var seekInput = $('audio-seek');
+  seekInput.addEventListener('input', function () {
+    state.seeking = true;
+    var totalMs = Math.round(audioDurationSec() * 1000);
+    var target = Math.max(0, Math.min(totalMs, Number(this.value) || 0));
+    this.style.setProperty('--p', totalMs > 0 ? (target / totalMs * 100).toFixed(2) + '%' : '0%');
+    $('audio-time').textContent = fmtClock(target) + ' / ' + fmtClock(totalMs);
+    if (!state.detail || !state.detail.session.audio_path) return;
+    try { player.currentTime = target / 1000; } catch (e) { /* ignore */ }
+  });
+  seekInput.addEventListener('change', function () {
+    state.seeking = false;
+    paintAudioSeek();
   });
 
   $('speed-btn').addEventListener('click', function () {
@@ -2502,6 +2844,8 @@
     if (event.key === 'Escape') {
       $('health-popover').hidden = true;
       $('health-pill').setAttribute('aria-expanded', 'false');
+      hideSessionMenu();
+      cancelRenameSession();
       setDrawer(false);
     }
   });

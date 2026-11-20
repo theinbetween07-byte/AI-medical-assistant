@@ -29,7 +29,8 @@ CREATE TABLE IF NOT EXISTS sessions (
     report_id TEXT,
     segment_count INTEGER DEFAULT 0,
     warnings TEXT DEFAULT '[]',
-    deleted_at TEXT
+    deleted_at TEXT,
+    sort_order INTEGER
 );
 
 CREATE TABLE IF NOT EXISTS segments (
@@ -109,6 +110,11 @@ class Store:
         if "local_path" not in cols:
             self._conn.execute("ALTER TABLE exports ADD COLUMN local_path TEXT DEFAULT ''")
 
+        # 会话列表支持医生手动拖动排序（NULL = 未排序，仍按更新时间倒序）
+        session_cols = {row["name"] for row in self._conn.execute("PRAGMA table_info(sessions)")}
+        if "sort_order" not in session_cols:
+            self._conn.execute("ALTER TABLE sessions ADD COLUMN sort_order INTEGER")
+
         # 早期版本把 segments.id 当全局主键，导致不同会话的 S-001 冲突。
         # 现在改为 (session_id, id) 复合主键。
         info = list(self._conn.execute("PRAGMA table_info(segments)"))
@@ -167,6 +173,7 @@ class Store:
             "id", "created_at", "updated_at", "status", "title", "audio_filename",
             "audio_path", "duration_ms", "language", "language_probability",
             "template_id", "report_id", "segment_count", "warnings", "deleted_at",
+            "sort_order",
         ]
         values = [payload.get(c) for c in cols]
         placeholders = ",".join("?" for _ in cols)
@@ -184,7 +191,10 @@ class Store:
     def list_sessions(self, limit: int = 50, include_deleted: bool = False) -> list[dict]:
         where = "" if include_deleted else "WHERE deleted_at IS NULL"
         rows = self._query(
-            f"SELECT * FROM sessions {where} ORDER BY created_at DESC LIMIT ?", (limit,)
+            "SELECT * FROM sessions "
+            f"{where} "
+            "ORDER BY sort_order IS NULL, sort_order, updated_at DESC, created_at DESC LIMIT ?",
+            (limit,),
         )
         return [dict(r) for r in rows]
 
@@ -194,10 +204,30 @@ class Store:
             "SELECT s.*, IFNULL(r.payload, '') AS report_payload"
             " FROM sessions s LEFT JOIN reports r ON r.session_id = s.id"
             " WHERE s.deleted_at IS NULL"
-            " ORDER BY s.updated_at DESC, s.created_at DESC LIMIT ?",
+            " ORDER BY s.sort_order IS NULL, s.sort_order, s.updated_at DESC, s.created_at DESC"
+            " LIMIT ?",
             (limit,),
         )
         return [dict(r) for r in rows]
+
+    def next_sort_order(self) -> Optional[int]:
+        """新会话插到最前的序号。
+
+        只有列表已经存在手动排序（sort_order 非空）时才返回数字；否则保持 NULL，
+        继续按更新时间倒序，这样未拖动过的列表仍能按「今天/更早」分组展示。
+        """
+        rows = self._query("SELECT MIN(sort_order) AS m FROM sessions WHERE deleted_at IS NULL")
+        current = rows[0]["m"] if rows else None
+        return (int(current) - 1) if current is not None else None
+
+    def set_sort_orders(self, ordered_ids: list[str]) -> None:
+        """按给定顺序重写排序序号；未出现的会话保持原值。"""
+        with self._lock:
+            for index, session_id in enumerate(ordered_ids):
+                self._conn.execute(
+                    "UPDATE sessions SET sort_order = ? WHERE id = ?", (index, session_id)
+                )
+            self._conn.commit()
 
     def mark_deleted(self, session_id: str, at: str) -> None:
         self._exec(

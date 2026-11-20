@@ -176,6 +176,52 @@ def _silences(text: str) -> list[tuple[float, float]]:
     return out
 
 
+def _adaptive_silence_db(cfg: Settings, m: dict) -> float:
+    """VAD 阈值随录音电平自适应。
+
+    固定 -38 dBFS 对轻声录音（整体约 -32 LUFS）会把部分语音误判为静音并裁掉。
+    用语音电平（帧 RMS P90）向下 22 dB 作为阈值：正常音量下仍约 -38 dBFS，
+    轻声录音自动下探（下限 -55 dBFS）。
+    """
+    base = float(cfg.prep_silence_db)
+    speech = m.get("speech_level_dbfs")
+    if speech is None:
+        return base
+    return max(-55.0, min(-30.0, float(speech) - 22.0))
+
+
+def _detect_silences(
+    cfg: Settings, src: Path, threshold_db: float, min_s: float
+) -> list[tuple[float, float]]:
+    text = _run(
+        cfg,
+        [
+            "-i", str(src), "-vn", "-ac", "1", "-ar", "16000",
+            "-af", f"silencedetect=noise={threshold_db:g}dB:d={max(0.15, float(min_s)):g}",
+            "-f", "null", "-",
+        ],
+    )
+    return _silences(text)
+
+
+def _apply_silences(m: dict, total_s: float, silences: list[tuple[float, float]]) -> None:
+    """用新的静音检测结果刷新派生指标，保证报告前后一致。"""
+    silence_duration = sum(e - s for s, e in silences)
+    regions = _speech_regions(total_s, silences)
+    lengths = sorted(b - a for a, b in regions)
+    m["silence_ratio"] = round(
+        max(0.0, min(1.0, silence_duration / total_s)) if total_s else 0.0, 4
+    )
+    m["silence_segments"] = len(silences)
+    m["speech_duration_s"] = round(sum(b - a for a, b in regions), 2)
+    m["speech_ratio"] = round((m["speech_duration_s"] / total_s) if total_s else 0.0, 4)
+    m["speech_segments"] = len(regions)
+    m["median_speech_segment_s"] = round(lengths[len(lengths) // 2], 2) if lengths else 0.0
+    m["max_silence_s"] = round(max((e - s for s, e in silences), default=0.0), 2)
+    m["_silences"] = silences
+    m["_regions"] = regions
+
+
 def _speech_regions(total_s: float, silences: Iterable[tuple[float, float]]) -> list[tuple[float, float]]:
     regions: list[tuple[float, float]] = []
     cursor = 0.0
@@ -359,24 +405,38 @@ def _build_pre_chain(cfg: Settings, m: dict, scene: dict) -> tuple[list[str], li
     elif want == "off":
         reason = "配置关闭"
     else:
-        noisy = noise_floor is not None and noise_floor > float(cfg.prep_noise_gate_db)
+        # 只用"估计 SNR"作为主判据；噪声底绝对值受增益影响，单独使用会误判。
+        # 例外：噪声底高于 -30 dBFS 时几乎不可能正常转写，直接降噪。
         low_snr = snr is not None and snr < float(cfg.prep_snr_gate_db)
-        use_denoise = bool(noisy or low_snr)
+        very_noisy = noise_floor is not None and noise_floor > -30.0
+        use_denoise = bool(low_snr or very_noisy)
         reason = (
-            f"噪声底 {noise_floor} dBFS（阈值 {cfg.prep_noise_gate_db}）/ "
-            f"估计 SNR {snr} dB（阈值 {cfg.prep_snr_gate_db}）"
+            f"估计 SNR {snr} dB（阈值 {cfg.prep_snr_gate_db}）/ "
+            f"噪声底 {noise_floor} dBFS（强制线 -30）"
             if (noise_floor is not None and snr is not None)
             else "噪声指标缺失，按保守策略跳过"
         )
 
     if use_denoise:
         nr = max(0.0, min(12.0, float(cfg.prep_denoise_nr)))
-        filters.append(f"afftdn=nr={nr:g}:nf=-45:tn=1")
+        # afftdn 的 nf 是"初始噪声底"。固定 -45 dB 对高噪声录音（噪声底 -19 dB）
+        # 会严重失配；按实测噪声底 +2 dB 初始化，并限制在 [-80, -20]。
+        nf = -45.0
+        source = "default"
+        if noise_floor is not None:
+            nf = max(-80.0, min(-20.0, float(noise_floor) + 2.0))
+            source = "measured"
+        filters.append(f"afftdn=nr={nr:g}:nf={nf:g}:tn=1")
         decisions.append({
             "step": "denoise",
             "action": "on",
             "tool": "ffmpeg afftdn（FFT 谱减 + 噪声跟踪）",
-            "params": {"nr_db": nr, "noise_floor_db": -45, "track_noise": 1},
+            "params": {
+                "nr_db": nr,
+                "noise_floor_db": round(nf, 1),
+                "noise_floor_source": source,
+                "track_noise": 1,
+            },
             "reason": reason,
             "risk": "降噪过强会削弱弱辅音/气声；nr 上限 12 dB，且只在噪声确实偏高时启用",
         })
@@ -432,8 +492,11 @@ def _plan_chunks(cfg: Settings, total_s: float, regions: list[tuple[float, float
         return [(0.0, total_s)], {"applied": False, "reason": "VAD 关闭或无有效语音段", "time_map": []}
 
     pad = max(0.0, float(cfg.prep_keep_pad_ms) / 1000.0)
-    start = max(0.0, regions[0][0] - pad)
-    end = min(total_s, regions[-1][1] + pad)
+    min_trim = max(0.0, float(getattr(cfg, "prep_min_trim_s", 1.5)))
+    # 首尾静音太短时不裁：收益低，但会改变 ASR 分段边界（混响下尤其不稳定）
+    start = max(0.0, regions[0][0] - pad) if regions[0][0] >= min_trim else 0.0
+    tail = total_s - regions[-1][1]
+    end = min(total_s, regions[-1][1] + pad) if tail >= min_trim else total_s
 
     chunks: list[tuple[float, float]] = []
     removed_s = 0.0
@@ -573,6 +636,13 @@ def preprocess(
         )
 
     before = measure(cfg, src, total_s)
+    # VAD 阈值按录音电平自适应，避免轻声录音被固定 -38 dBFS 误裁
+    silence_db = _adaptive_silence_db(cfg, before)
+    if abs(silence_db - float(cfg.prep_silence_db)) >= 2.0:
+        adaptive_silences = _detect_silences(cfg, src, silence_db, cfg.prep_silence_min_s)
+        if adaptive_silences or before.get("silence_segments"):
+            _apply_silences(before, total_s, adaptive_silences)
+    before["silence_threshold_db"] = round(silence_db, 2)
     scene = classify_scene(info, before)
 
     # 16 kHz 单声道 PCM 且各指标无需处理时，直接复制，避免二次编码
@@ -582,6 +652,13 @@ def preprocess(
         and info.get("codec") == "pcm_s16le"
         and abs(float(before.get("integrated_lufs") or -120) - float(cfg.prep_target_lufs)) < 0.5
         and not before.get("clip_suspect")
+        # 只有"没有任何需要处理的地方"才直通；有静音需要裁剪时不能跳过
+        and before.get("silence_ratio", 0) < 0.05
+        and before.get("max_silence_s", 0) < 1.0
+        and (
+            before.get("snr_db_est") is None
+            or float(before["snr_db_est"]) >= float(cfg.prep_snr_gate_db)
+        )
     )
     if already_ok:
         dst.write_bytes(src.read_bytes())
@@ -623,7 +700,8 @@ def preprocess(
         "action": "on" if trim.get("applied") else "off",
         "tool": "ffmpeg silencedetect + atrim/concat",
         "params": {
-            "silence_threshold_db": cfg.prep_silence_db,
+            "silence_threshold_db": round(silence_db, 1),
+            "adaptive_threshold": abs(silence_db - float(cfg.prep_silence_db)) >= 2.0,
             "min_silence_s": cfg.prep_silence_min_s,
             "keep_pad_ms": cfg.prep_keep_pad_ms,
             "mid_gap_ms": cfg.prep_mid_gap_ms,
@@ -829,7 +907,9 @@ def summary(report: dict) -> dict:
             "silence_ratio": after.get("silence_ratio"),
             "speech_duration_s": after.get("speech_duration_s"),
         },
-        "steps": [d.get("step") for d in (report.get("decisions") or [])],
+        "steps": [
+            f"{d.get('step')}={d.get('action')}" for d in (report.get("decisions") or [])
+        ],
         "warnings": report.get("warnings") or [],
         "time_map": (report.get("chain") or {}).get("trim", {}).get("time_map") or [],
     }

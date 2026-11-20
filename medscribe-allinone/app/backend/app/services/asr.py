@@ -23,6 +23,7 @@ from loguru import logger
 from app.config import (
     ASR_CHUNK_SECONDS,
     ASR_CPU_THREADS,
+    AUTO_LANGUAGE,
     COMPUTE_TYPE,
     DEFAULT_BEAM_SIZE,
     DEFAULT_LANGUAGE,
@@ -475,8 +476,14 @@ class ASRService:
             model = self.model
             model_size = self.current_model_size
             if language in (None, "", "auto", "mix"):
-                effective_lang = None
-                logger.info("[ASR] 語言：自動檢測")
+                # Whisper 的语言检测会把粤语判成 zh，按普通话解码错字率极高。
+                # 本部署把 auto 固定为粤语；需要普通话/英语时显式指定。
+                if AUTO_LANGUAGE and AUTO_LANGUAGE not in ("auto", ""):
+                    effective_lang = AUTO_LANGUAGE
+                    logger.info(f"[ASR] 語言：自動 → {effective_lang}（部署默認）")
+                else:
+                    effective_lang = None
+                    logger.info("[ASR] 語言：自動檢測")
             else:
                 effective_lang = language
                 logger.info(f"[ASR] 語言：{language}（手動指定）")

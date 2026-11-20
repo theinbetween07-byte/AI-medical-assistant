@@ -82,6 +82,8 @@ class Session(BaseModel):
     segment_count: int = 0
     warnings: list[str] = Field(default_factory=list)
     deleted_at: Optional[str] = None
+    # 医生手动拖动排序后的序号；空表示仍按更新时间倒序
+    sort_order: Optional[int] = None
     # 派生字段：列表页用 signed / draft / none 区分「签没签」，不落库
     report_status: str = ""
 
@@ -122,6 +124,24 @@ class AuditEvent(BaseModel):
 
 class CreateSessionRequest(BaseModel):
     template_id: Optional[str] = None
+    title: str = ""
+
+
+class RenameSessionRequest(BaseModel):
+    """会话重命名：标题为空会被拒绝。"""
+
+    title: str = ""
+
+
+class ReorderSessionsRequest(BaseModel):
+    """会话列表拖动排序：按数组顺序重写 sort_order。"""
+
+    ids: list[str] = Field(default_factory=list)
+
+
+class DuplicateSessionRequest(BaseModel):
+    """复制为副本；title 为空时后端自动追加“副本”。"""
+
     title: str = ""
 
 

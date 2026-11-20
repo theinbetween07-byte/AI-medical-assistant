@@ -30,10 +30,13 @@ from .config import settings
 from .schemas import (
     CorrectTermsOptions,
     CreateSessionRequest,
+    DuplicateSessionRequest,
     ExportRequest,
     ExtractOptions,
     GenerateOptions,
     ModelSwitchRequest,
+    RenameSessionRequest,
+    ReorderSessionsRequest,
     ReviewRequest,
     SegmentPatch,
     SignRequest,
@@ -179,6 +182,24 @@ def create_app() -> FastAPI:
     @app.get("/sessions/{session_id}", summary="读取会话全量状态（转写/要素/差异/导出）")
     def get_session(session_id: str) -> dict:
         return service.get_detail(session_id).model_dump()
+
+    @app.patch("/sessions/{session_id}", summary="重命名会话")
+    def rename_session(
+        session_id: str, req: RenameSessionRequest = Body(default=RenameSessionRequest())
+    ) -> dict:
+        return service.rename_session(session_id, req.title).model_dump()
+
+    @app.post("/sessions/{session_id}/duplicate", summary="复制会话为副本（保留录音与转写）")
+    def duplicate_session(
+        session_id: str, req: DuplicateSessionRequest = Body(default=DuplicateSessionRequest())
+    ) -> dict:
+        return service.duplicate_session(session_id, req.title).model_dump()
+
+    @app.post("/sessions/reorder", summary="按拖动后的顺序保存会话列表排序")
+    def reorder_sessions(
+        req: ReorderSessionsRequest = Body(default=ReorderSessionsRequest())
+    ) -> list[dict]:
+        return [s.model_dump() for s in service.reorder_sessions(req.ids)]
 
     @app.delete("/sessions/{session_id}", summary="删除会话（级联删除音频与报告，BR-12）")
     def delete_session(session_id: str) -> dict:

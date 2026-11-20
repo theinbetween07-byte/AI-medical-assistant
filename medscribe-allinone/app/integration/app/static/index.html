@@ -30,6 +30,8 @@
   <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M9.6 9.2a2.5 2.5 0 0 1 4.9.7c0 1.7-2.5 2-2.5 3.8M12 17.2v.2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
   <symbol id="i-x" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
   <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4.5 6.5h15M9 6.5V4.8h6v1.7M6.5 6.5l.8 13.2h9.4l.8-13.2M10 10v6M14 10v6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8.5" y="8.5" width="11" height="11" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M15.5 8.5V6.7A1.7 1.7 0 0 0 13.8 5H6.2A1.7 1.7 0 0 0 4.5 6.7v7.6a1.7 1.7 0 0 0 1.7 1.7h1.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24"><path d="m5 19 4.2-1 9.6-9.6a1.8 1.8 0 0 0 0-2.6l-.6-.6a1.8 1.8 0 0 0-2.6 0L6 14.8 5 19Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="m13.8 6.9 3.3 3.3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
   <symbol id="i-pulse" viewBox="0 0 24 24"><path d="M2.5 12h4l2.2-6 4.1 12 2.4-6h6.3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   <symbol id="i-list" viewBox="0 0 24 24"><path d="M4 6.5h16M4 12h16M4 17.5h16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
 </svg>
@@ -176,9 +178,17 @@
             <svg class="icon play-icon"><use href="#i-play"/></svg>
             <svg class="icon pause-icon"><use href="#i-pause"/></svg>
           </button>
-          <div class="waveform" id="waveform" aria-hidden="true"></div>
-          <span class="audio-file" id="audio-file" hidden></span>
-          <span class="audio-time" id="audio-time">00:00 / 00:00</span>
+          <div class="audio-main">
+            <div class="audio-track" id="audio-track">
+              <div class="waveform" id="waveform" aria-hidden="true"></div>
+              <input class="audio-seek" id="audio-seek" type="range" min="0" max="0" step="50" value="0"
+                     aria-label="播放进度" data-i18n-aria="audio.seekAria" disabled>
+            </div>
+            <div class="audio-line">
+              <span class="audio-file" id="audio-file" hidden></span>
+              <span class="audio-time" id="audio-time">00:00 / 00:00</span>
+            </div>
+          </div>
           <button class="speed" type="button" id="speed-btn" aria-label="播放速度" data-i18n-aria="audio.speed">1.0×</button>
           <div class="audio-tools">
             <button class="tool-btn" id="btn-record" type="button"><span class="rec-dot"></span><span id="record-label" data-i18n="audio.record">录音</span></button>
@@ -435,6 +445,21 @@
     <button class="confirm" id="download-export" type="button" data-i18n="export.download">下载 PDF</button>
   </div>
 </dialog>
+
+<div class="session-menu" id="session-menu" role="menu" aria-label="会话操作" data-i18n-aria="session.menuAria" hidden>
+  <button type="button" role="menuitem" data-session-action="duplicate">
+    <svg class="icon icon-sm"><use href="#i-copy"/></svg>
+    <span data-i18n="session.menu.duplicate">复制为副本</span>
+  </button>
+  <button type="button" role="menuitem" data-session-action="rename">
+    <svg class="icon icon-sm"><use href="#i-edit"/></svg>
+    <span data-i18n="session.menu.rename">重命名</span>
+  </button>
+  <button type="button" role="menuitem" class="danger" data-session-action="delete">
+    <svg class="icon icon-sm"><use href="#i-trash"/></svg>
+    <span data-i18n="session.menu.delete">删除</span>
+  </button>
+</div>
 
 <script src="/static/app.js?v=__ASSET_VERSION__"></script>
 </body>

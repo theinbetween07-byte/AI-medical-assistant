@@ -891,6 +891,8 @@ class AudioPrepTest(unittest.TestCase):
         self.cfg.prep_dereverb = "off"
         self.cfg.prep_vad = True
         self.cfg.prep_trim_mid = False
+        # 单元测试聚焦裁剪逻辑本身，不受"最短 1.5 s 才裁"的策略影响
+        self.cfg.prep_min_trim_s = 0.0
 
     def _wav(self, seconds: float = 6.0, freq: int = 220, amp: int = 9000) -> Path:
         path = self.tmp / "in.wav"
@@ -929,6 +931,14 @@ class AudioPrepTest(unittest.TestCase):
         self.assertEqual(chunks, [(0.8, 4.2)])
         self.assertTrue(trim["applied"])
         self.assertEqual(trim["time_map"][0]["orig_start_ms"], 800)
+
+    def test_short_head_silence_is_kept(self):
+        self.cfg.prep_keep_pad_ms = 250
+        self.cfg.prep_min_trim_s = 1.5
+        chunks, trim = audio_prep._plan_chunks(self.cfg, 10.0, [(1.0, 2.0), (3.0, 9.5)])
+        # 首部只有 1.0 s（<1.5 s）不裁；尾部 0.5 s 也不裁
+        self.assertEqual(chunks, [(0.0, 10.0)])
+        self.assertFalse(trim["applied"])
 
     def test_time_map_round_trip(self):
         self.cfg.prep_keep_pad_ms = 250
@@ -1283,6 +1293,44 @@ class EndToEndTest(unittest.TestCase):
         self.assertEqual(status, 404)
         self.assertFalse((self.cfg.audio_dir / f"{sid}.wav").exists())
 
+    def test_rename_session(self):
+        status, session = self._req("POST", "/sessions", {"title": "before"})
+        sid = session["id"]
+        status, body = self._req("PATCH", f"/sessions/{sid}", {"title": "  术后随访  "})
+        self.assertEqual(status, 200)
+        self.assertEqual(body["title"], "术后随访")
+        # 空白标题必须拒绝，避免列表里出现无法辨认的空条目
+        status, _ = self._req("PATCH", f"/sessions/{sid}", {"title": "   "})
+        self.assertEqual(status, 400)
+
+    def test_duplicate_session_copies_audio(self):
+        status, session = self._req("POST", "/sessions", {"title": "to-copy"})
+        sid = session["id"]
+        self._upload(sid, make_wav(12))
+        status, copy = self._req("POST", f"/sessions/{sid}/duplicate", {})
+        self.assertEqual(status, 200)
+        self.assertNotEqual(copy["id"], sid)
+        self.assertIn("副本", copy["title"])
+        self.assertGreaterEqual(copy["duration_ms"], 11000)
+        self.assertTrue((self.cfg.audio_dir / copy["audio_path"]).is_file())
+        # 副本与原会话各有独立音频：删除副本后原音频必须仍在
+        self._req("DELETE", f"/sessions/{copy['id']}")
+        self.assertTrue((self.cfg.audio_dir / f"{sid}.wav").is_file())
+
+    def test_reorder_sessions(self):
+        ids = []
+        for index in range(3):
+            status, session = self._req("POST", "/sessions", {"title": f"order-{index}"})
+            ids.append(session["id"])
+        wanted = list(reversed(ids))
+        status, body = self._req("POST", "/sessions/reorder", {"ids": wanted})
+        self.assertEqual(status, 200)
+        self.assertEqual([item["id"] for item in body if item["id"] in ids], wanted)
+        # 重新拉列表仍保持拖动后的顺序（sort_order 已落库）
+        status, rows = self._req("GET", "/sessions?limit=200")
+        self.assertEqual([row["id"] for row in rows if row["id"] in ids], wanted)
+        self.assertTrue(all(isinstance(row["sort_order"], int) for row in rows if row["id"] in ids))
+
 
 class AsrMappingTest(unittest.TestCase):
     def test_fixed_language_zero_probability_is_not_low_confidence(self):
@@ -1314,6 +1362,41 @@ class AsrMappingTest(unittest.TestCase):
         }
         segs = map_segments(result, threshold=0.6)
         self.assertTrue(segs[0]["low_confidence"])
+
+
+class CantoneseFixTest(unittest.TestCase):
+    """粤语同音字修正：只修多字临床组合，不动合法词。"""
+
+    def test_fixes_clinical_homophones(self):
+        from app.clinical_fix import fix_cantonese_clinical as fix
+
+        cases = {
+            "急性爛尾炎": "急性闌尾炎",
+            "佢之前咳嗅": "佢之前咳嗽",
+            "有黃談": "有黃痰",
+            "胸腱見實變": "胸片見實變",
+            "可以用藥換解": "可以用藥緩解",
+            "鬥性心律": "竇性心律",
+            "複合培養結果": "覆核培養結果",
+            "型心搞痛": "型心絞痛",
+            "又腳腫": "右腳腫",
+            "記錄今次查訪": "記錄今次查房",
+            "術後醫足": "術後醫囑",
+            "右手冇指麻痺": "右手無名指麻痺",
+        }
+        for src, want in cases.items():
+            self.assertEqual(fix(src), want, src)
+
+    def test_keeps_valid_terms_and_idempotent(self):
+        from app.clinical_fix import fix_cantonese_clinical as fix
+
+        for text in ("咳嗽", "闌尾炎", "胸片", "緩解", "竇性心律", "覆核培養"):
+            self.assertEqual(fix(text), text)
+        # 单独出现的合法词不替换
+        self.assertEqual(fix("複合骨折"), "複合骨折")
+        self.assertEqual(fix("家訪查詢"), "家訪查詢")
+        once = fix("急性爛尾炎，咳嗅，黃談")
+        self.assertEqual(fix(once), once)
 
 
 if __name__ == "__main__":

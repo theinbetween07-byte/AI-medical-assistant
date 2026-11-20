@@ -209,10 +209,92 @@ class IntegrationService:
             status="created",
             title=title or f"会话 {now[:19].replace('T', ' ')}",
             template_id=template_id or self.cfg.default_template,
+            # 新会话排在列表最前，符合「刚建的放在手边」的使用习惯
+            sort_order=self.store.next_sort_order(),
         )
         self.store.upsert_session(session.model_dump())
         self._audit(session.id, "session_created", {"template_id": session.template_id})
         return session
+
+    def rename_session(self, session_id: str, title: str) -> Session:
+        session = self._require(session_id)
+        clean = " ".join((title or "").split())
+        if not clean:
+            raise InvalidState("会话标题不能为空")
+        session.title = clean[:80]
+        self._save(session)
+        self._audit(session_id, "session_renamed", {"title": session.title})
+        return session
+
+    def duplicate_session(self, session_id: str, title: str = "") -> Session:
+        """复制为副本：带录音、转写分段、术语纠正与要素，但不复制报告。
+
+        报告 ID 全局唯一且签署态不可伪造；副本从「未生成初稿」开始，医生可基于
+        同一份录音重新抽取/生成，不会污染原报告的审计链。
+        """
+        source = self._require(session_id)
+        now = utcnow_iso()
+        new_id = f"ses_{uuid.uuid4().hex[:12]}"
+        base_title = (title or "").strip() or source.title or "会话"
+        new_session = Session(
+            id=new_id,
+            created_at=now,
+            updated_at=now,
+            status="created",
+            title=(base_title + "（副本）")[:80],
+            audio_filename=source.audio_filename,
+            duration_ms=source.duration_ms,
+            language=source.language,
+            language_probability=source.language_probability,
+            template_id=source.template_id,
+            warnings=list(source.warnings or []),
+            sort_order=self.store.next_sort_order(),
+        )
+
+        # 音频按会话 ID 命名，复制一份给副本独立使用（删除副本不会影响原会话）
+        if source.audio_path:
+            src = self.cfg.audio_dir / source.audio_path
+            if src.is_file():
+                dst_name = f"{new_id}.wav"
+                shutil.copyfile(src, self.cfg.audio_dir / dst_name)
+                new_session.audio_path = dst_name
+
+        segments = self._segments(session_id)
+        if segments:
+            self.store.replace_segments(new_id, [dict(seg) for seg in segments])
+            new_session.segment_count = len(segments)
+            new_session.status = "transcribed"
+
+        corrections = self.store.load_corrections(session_id)
+        if corrections:
+            self.store.save_corrections(new_id, corrections, now)
+            new_session.status = "corrected"
+
+        elements = self.store.load_elements(session_id)
+        if elements:
+            self.store.save_elements(new_id, elements, now)
+            if _rank(new_session.status) < _rank("extracted"):
+                new_session.status = "extracted"
+        elif new_session.audio_path and not segments:
+            new_session.status = "recorded"
+
+        self.store.upsert_session(new_session.model_dump())
+        self._audit(new_id, "session_duplicated", {"source_session_id": session_id})
+        return new_session
+
+    def reorder_sessions(self, ids: list[str]) -> list[Session]:
+        """按前端拖动后的顺序持久化 sort_order（忽略重复与空值）。"""
+        ordered: list[str] = []
+        seen: set[str] = set()
+        for session_id in ids:
+            if not session_id or session_id in seen:
+                continue
+            seen.add(session_id)
+            ordered.append(session_id)
+        self.store.set_sort_orders(ordered)
+        self._audit("", "sessions_reordered", {"count": len(ordered)})
+        # 只回传列表页默认条数，避免前端把「全部历史会话」一次性渲染出来
+        return self.list_sessions(limit=50)
 
     def list_sessions(
         self, limit: int = 50, q: str = "", status: str = "", days: int = 0

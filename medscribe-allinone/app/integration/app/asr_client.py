@@ -27,6 +27,7 @@ import uuid
 from pathlib import Path
 from typing import Any, Optional
 
+from .clinical_fix import fix_cantonese_clinical
 from .config import Settings
 
 
@@ -409,6 +410,9 @@ def map_segments(result: dict, threshold: float) -> list[dict]:
         if not text or not _has_content(text):
             continue
         lang = detect_lang(text, global_lang)
+        # 整段判为粤语时，中英混排的小段也要修正（规则只匹配中文词，不会动英文）
+        if lang in ("zh", "zh-yue") or global_lang in ("yue", "zh-yue"):
+            text = fix_cantonese_clinical(text)
         # 代理置信度：整段概率 × 语种一致性折扣
         consistent = (
             (lang in ("zh", "zh-yue") and global_lang in ("yue", "zh-yue", "zh"))
