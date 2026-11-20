@@ -746,11 +746,13 @@ class IntegrationService:
         if _rank(session.status) >= _rank("signed"):
             raise InvalidState("报告已签署，内容锁定（BR-11）")
         segments = self._segments(session_id)
-        restored = 0
-        for seg in segments:
-            if seg.get("text_raw") and seg["text_raw"] != seg["text"]:
-                restored += 1
-        if restored:
+        prior = self.store.load_corrections(session_id)
+        pending = [
+            s for s in segments
+            if s.get("text_raw") and s["text_raw"] != s["text"]
+        ]
+        restored = len(pending)
+        if pending:
             self.store.replace_segments(
                 session_id,
                 [
@@ -758,7 +760,16 @@ class IntegrationService:
                     for s in segments
                 ],
             )
-        self.store.save_corrections(session_id, [], utcnow_iso())
+        elif prior:
+            # 幂等：本机回环连接被重置时客户端会重发撤销，第一次已把
+            # text 还原成 text_raw，此时差异为 0。沿用原纠正记录的段数，
+            # 避免前端把「已撤销」误判成「没有可撤销内容」。
+            restored = len({
+                c.get("segment_id") for c in prior if c.get("segment_id")
+            })
+        # 故意不清空纠正记录：它是再次撤销的幂等依据，也是后续重复
+        # 纠正时保留 text_raw 基线的开关；text_raw 已等于 text，
+        # _engine_segments 不会重复回滚。
         session.status = "transcribed"
         self._save(session)
         self._audit(session_id, "terms_undone", {"restored_segments": restored})

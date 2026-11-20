@@ -17,6 +17,7 @@ medscribe-allinone/app/models/ext/*
 *.pyc
 
 # 本地证据、构建产物与临时文件
+MedScribe/
 outputs/
 .deepworks/
 .opencode/
